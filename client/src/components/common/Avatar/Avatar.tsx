@@ -1,9 +1,9 @@
-import classes from "./Avatar.module.scss"
-import React, {useEffect, useState} from "react"
-import classnames from "classnames"
-import editIconWhite from "../../../assets/images/edit-icon-white.svg"
-import Popup from "reactjs-popup"
-import defaultAvatarImage from "../../../assets/images/avatar-default.jpg"
+import classes from './Avatar.module.scss'
+import React, {useEffect, useState} from 'react'
+import classnames from 'classnames'
+import editIconWhite from '../../../assets/images/edit-icon-white.svg'
+import Popup from 'reactjs-popup'
+import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
 import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
 
 type PropsType = {
@@ -16,13 +16,13 @@ type PropsType = {
 }
 
 const Avatar: React.FC<PropsType> = ({
-                                                    img,
-                                                    size,
-                                                    contextBgColor,
-                                                    owner,
-                                                    online,
-                                                    onSubmit
-                                                }) => {
+                                         img,
+                                         size = 'md',
+                                         contextBgColor = 'white',
+                                         owner,
+                                         online,
+                                         onSubmit
+                                     }) => {
 
     // close modal with file-selection if avatar changed
     const [open, setOpen] = useState(false)
@@ -51,18 +51,14 @@ const Avatar: React.FC<PropsType> = ({
             </div>}
 
             <img className={classes.image} src={img || defaultAvatarImage} alt="avatar"
-                 style={{borderColor: contextBgColor || "white"}}/>
+                 style={{borderColor: contextBgColor || 'white'}}/>
 
             {online &&
-            <div className={classes.onLineIndicator} style={{borderColor: contextBgColor || "white"}}/>}
+            <div className={classes.onLineIndicator} style={{borderColor: contextBgColor || 'white'}}/>}
 
         </div>
     )
 }
 
-Avatar.defaultProps = {
-    size: 'md',
-    contextBgColor: "white"
-}
 
 export default Avatar

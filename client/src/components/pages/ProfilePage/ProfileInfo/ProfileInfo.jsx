@@ -9,6 +9,7 @@ import ProfileInfoItem from "./ProfileInfoItem/ProfileInfoItem";
 import 'reactjs-popup/dist/index.css';
 import {NavLink} from "react-router-dom";
 import Moment from 'react-moment';
+import {capitalize} from '../../../../utils/functions'
 
 const ProfileInfo = (props) => {
     const owner = props.authorized && (props.authorizedUserId === props.userId)
@@ -46,8 +47,8 @@ const ProfileInfo = (props) => {
                     </ProfileInfoItem>}
 
                     {Object.keys(props.contacts).map(key => {
-                        const title = key.charAt(0).toUpperCase() + key.slice(1) + ":"
-                        if (props.contacts[key]) return <ProfileInfoItem title={title}>{props.contacts[key]}</ProfileInfoItem>
+                        if (props.contacts[key]) return <ProfileInfoItem title={capitalize(key) + ':'}>{props.contacts[key]}</ProfileInfoItem>
+                        return null
                     })}
                 </div>
                 {props.bio && <div className={classes.profileInfoColumn}>

@@ -5,7 +5,6 @@ import Form from "../../../common/Form/Form";
 import {Field, reduxForm} from "redux-form";
 import {required} from "../../../../utils/validators";
 import {useHistory} from 'react-router-dom'
-import ProfileInfoItem from "../../ProfilePage/ProfileInfo/ProfileInfoItem/ProfileInfoItem";
 
 const EditProfileForm = (props) => {
     const {contacts} = props.initialValues

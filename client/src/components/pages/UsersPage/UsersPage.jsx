@@ -3,19 +3,7 @@ import React, {useEffect} from 'react'
 import {addFriend, deleteFriend, follow, getUsers, unfollow} from "../../../redux/reducers/users.reducer";
 import {connect} from "react-redux";
 
-const UsersPage = (props) => {
-    return (
-        <Users
-            authorized={props.authorized}
-            authorizedUserId={props.authorizedUserId}
-            users={props.users}
-            addFriend={props.addFriend}
-            deleteFriend={props.deleteFriend}
-            follow={props.follow}
-            unfollow={props.unfollow}
-        />
-    )
-}
+const UsersPage = (props) => <Users {...props}/>
 
 const UsersPageContainer = (props) => {
     const {getUsers} = props
