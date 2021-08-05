@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+.form {
+  padding: 28px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  & + & {
+    margin-top: 14px;
+  }
+}
+
+.item {
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.error {
+  color: $error;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.success {
+  color: $success;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}

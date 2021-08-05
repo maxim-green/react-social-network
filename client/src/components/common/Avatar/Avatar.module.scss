@@ -1,0 +1,91 @@
+@import '../../../variables';
+
+.avatar {
+  position: relative;
+  overflow: hidden;
+
+  &.editable {
+    &:hover {
+
+    }
+    .editButton {
+      &:hover {
+        opacity: 1;
+      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: .15s;
+      opacity: 0;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 118px;
+      height: 118px;
+      color: red;
+      border: none;
+      border-radius: 50%;
+      box-shadow: none;
+      background-color: rgba($black, .6);
+      z-index: 1;
+      cursor: pointer;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  &.sm {
+    height: 45px;
+    width: 45px;
+    .onLineIndicator {
+      bottom: 3px;
+      right: 0;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &.md {
+    height: 76px;
+    width: 76px;
+    .onLineIndicator {
+      bottom: 0;
+      right: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.lg {
+    height: 128px;
+    width: 128px;
+    .onLineIndicator {
+      bottom: 10px;
+      right: 10px;
+      width: 18px;
+      height: 18px;
+    }
+    .image {
+      border: 5px solid white;
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+.onLineIndicator {
+  position: absolute;
+  border-radius: 50%;
+  background-color: $green-success;
+  border: 3px solid white;
+  z-index: 3;
+}

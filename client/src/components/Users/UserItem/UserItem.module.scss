@@ -1,0 +1,45 @@
+@import "../../../variables";
+
+.userItem {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  & + & {
+    border-top: 1px solid $light-grey-2;
+  }
+}
+
+.info {
+  margin-left: 30px;
+}
+
+.avatar {
+
+}
+
+.userName {
+  font-size: 18px;
+  color: $accent;
+  margin-bottom: 5px;
+}
+
+.mutualFriends {
+  color: $accent;
+}
+
+.controls {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.button {
+  margin-left: 10px;
+}

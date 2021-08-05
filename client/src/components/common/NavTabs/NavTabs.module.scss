@@ -1,0 +1,17 @@
+@import "../../../variables";
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  a {
+    font-size: 18px;
+    color: $accent;
+    padding: 20px;
+    display: block;
+    border-bottom: 1px solid $light-grey-2;
+    outline: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

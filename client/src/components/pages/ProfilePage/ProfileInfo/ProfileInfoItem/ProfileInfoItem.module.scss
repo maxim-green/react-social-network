@@ -1,0 +1,21 @@
+@import "../../../../../variables";
+
+.profileInfoItem {
+  display: flex;
+  &.vertical {
+    flex-direction: column;
+  }
+}
+
+.itemTitle {
+  margin-bottom: 12px;
+  white-space: nowrap;
+  color: $mid-grey;
+  width: 100px;
+}
+
+.itemValue {
+  margin-bottom: 12px;
+  max-width: 180px;
+  width: 100%;
+}

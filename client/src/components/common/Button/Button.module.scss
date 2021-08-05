@@ -1,0 +1,60 @@
+@import "../../../variables";
+
+.button {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px 5px 10px;
+  border: none;
+  border-radius: 16px;
+  background-color: $light-blue-2;
+  cursor: pointer;
+  outline: none;
+  &:focus {
+    box-shadow: 0 0 0 2px $dark-grey;
+  }
+  .icon {
+    height: 18px;
+    width: 18px;
+    + .caption {
+      margin-left: 6px;
+    }
+    display: block;
+  }
+  .caption {
+    font-size: 12px;
+  }
+  &.iconOnly {
+    padding: 5px;
+  }
+  &.primary {
+    color: $white;
+    background-color: $accent;
+  }
+  &.secondary {
+    color: $dark-grey;
+    background-color: $light-blue-2;
+  }
+  &.neutral {
+    color: $dark-grey;
+    background-color: $light-grey-2;
+  }
+  &.text {
+    color: $accent;
+    background-color: transparent;
+  }
+  &.sm {
+    .icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+  &.lg {
+    .caption {
+      font-size: 16px;
+      line-height: 16px;
+    }
+    padding: 12px 24px;
+    border-radius: 22px;
+  }
+}
+

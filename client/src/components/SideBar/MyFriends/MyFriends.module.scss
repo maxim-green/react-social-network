@@ -1,0 +1,25 @@
+@import '../../../variables';
+
+.Title {
+  font-size: 16px;
+  font-weight: 700;
+  color: $dark-grey;
+  padding: 20px 28px;
+  border-bottom: 1px solid $light-grey-2;
+}
+
+.Avatars {
+  padding: 20px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.Link {
+  padding: 0 28px 20px;
+  a {
+    color: $accent;
+    font-size: 16px;
+  }
+}

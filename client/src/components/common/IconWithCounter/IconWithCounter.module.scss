@@ -1,0 +1,22 @@
+@import '../../../variables';
+
+.IconWithCounter {
+  position: relative;
+  margin: 0 4px;
+  width: 32px;
+  height: 30px;
+}
+
+.counter {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: $light-blue;
+  color: $dark-grey;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  top: -4px;
+  right: 0;
+}
