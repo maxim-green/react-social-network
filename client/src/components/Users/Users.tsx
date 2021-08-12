@@ -42,7 +42,7 @@ const Users: React.FC<PropsType> = ({
                         key={user.userId}
                         authorized={authorized}
                         authorizedUserId={authorizedUserId}
-                        {...user}
+                        user={user}
                         addFriend={addFriend}
                         deleteFriend={deleteFriend}
                         follow={follow}

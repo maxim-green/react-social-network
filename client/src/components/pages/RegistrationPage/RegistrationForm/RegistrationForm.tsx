@@ -2,10 +2,16 @@ import React from 'react'
 import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import Form from "../../../common/Form/Form";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import {email, minLength6, required} from "../../../../utils/validators";
+import {RegistrationDataType} from '../../../../types/types'
 
-const RegistrationForm = (props) => {
+type NativePropsType = {
+    registrationSuccessful: boolean
+}
+type PropsType = InjectedFormProps<RegistrationDataType, NativePropsType> & NativePropsType
+
+const RegistrationForm: React.FC<PropsType> = (props) => {
     return (
         <Form onSubmit={props.handleSubmit}>
             {props.error && <Form.Error>{props.error}</Form.Error>}
@@ -32,6 +38,6 @@ const RegistrationForm = (props) => {
     )
 }
 
-export default reduxForm({
+export default reduxForm<RegistrationDataType, NativePropsType>({
     form: 'registration'
 })(RegistrationForm)

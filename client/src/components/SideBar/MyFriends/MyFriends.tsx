@@ -1,11 +1,14 @@
-import Card from "../../common/Card/Card";
-import React from "react";
+import Card from '../../common/Card/Card'
+import React from 'react'
 import classes from './MyFriends.module.scss'
-import Avatar from "../../common/Avatar/Avatar";
-import {NavLink} from "react-router-dom";
+import Avatar from '../../common/Avatar/Avatar'
+import {NavLink} from 'react-router-dom'
 
+type PropsType = {
+    friendsCount: number
+}
 
-const MyFriends = (props) => {
+const MyFriends: React.FC<PropsType> = ({friendsCount}) => {
     return (
         <Card>
             <div className={classes.Title}>My Friends</div>
@@ -20,7 +23,7 @@ const MyFriends = (props) => {
                 <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
                 <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
             </div>
-            <div className={classes.Link}><NavLink to='/friends'>View All ({props.friendsCount})</NavLink></div>
+            <div className={classes.Link}><NavLink to='/friends'>View All ({friendsCount})</NavLink></div>
         </Card>
     )
 }

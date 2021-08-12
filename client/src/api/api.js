@@ -6,9 +6,9 @@ const api = axios.create({
 })
 
 export const authApi = {
-    login: (email, password, rememberMe) => api.post(
+    login: (loginData) => api.post(
         "/auth/login",
-        {email, password, rememberMe}
+        loginData
     )
         .then(res => res.data)
         .catch(err => err.response.data),
@@ -21,9 +21,9 @@ export const authApi = {
         .then(res => res.data)
         .catch(err => err.response.data),
 
-    register: (firstName, lastName, username, email, password) => api.post(
+    register: (registrationData) => api.post(
         "/auth/register",
-        {firstName, lastName, username, email, password}
+        registrationData
     )
         .then(res => res.data)
         .catch(err => err.response.data)

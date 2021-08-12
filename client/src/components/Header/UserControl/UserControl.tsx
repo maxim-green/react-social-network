@@ -4,8 +4,12 @@ import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import Button from "../../common/Button/Button";
 
+type PropsType = {
+    username: string | null
+    logout: () => void
+}
 
-const UserControl = (props) => {
+const UserControl: React.FC<PropsType> = (props) => {
     const [isOpened, setIsOpened] = useState(false)
 
     const clickHandler = () => {
@@ -16,7 +20,7 @@ const UserControl = (props) => {
         <div className={classes.userControl}>
             <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" contextBgColor="#373C42" online size='sm'/></NavLink>
             <div className={classes.userControlDropdown}>
-                <button className={classes.userControlUsername} onClick={clickHandler}>{props.userName}</button>
+                <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
                 {isOpened && <div className={classes.userControlList}>
                     <ul>
                         <li><NavLink to='/settings'><Button variant="text" caption="Settings"/></NavLink></li>

@@ -1,5 +1,6 @@
 import {authApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
+import {LoginDataType, RegistrationDataType} from '../../types/types'
 
 // ACTION STRINGS
 const SET_USER = 'authReducer/SET_USER'
@@ -60,8 +61,8 @@ type SetRegistrationSuccessfulActionType = {type: typeof SET_REGISTRATION_SUCCES
 export const setRegistrationSuccessfulAC = (registrationSuccessful: boolean): SetRegistrationSuccessfulActionType => ({type: SET_REGISTRATION_SUCCESSFUL, registrationSuccessful})
 
 // THUNK CREATORS: string
-export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
-    const res = await authApi.login(email, password, rememberMe)
+export const login = (loginFormData: LoginDataType) => async (dispatch: any) => {
+    const res = await authApi.login(loginFormData)
     if (res.resultCode === 0) {
         dispatch(checkAuthorized())
     }
@@ -97,8 +98,8 @@ export const logout = () => async (dispatch: any) => {
     }
 }
 
-export const register = (firstName: string, lastName: string, username: string, email: string, password: string) => async (dispatch: any) => {
-    const res = await authApi.register(firstName, lastName, username, email, password)
+export const register = (registrationData: RegistrationDataType) => async (dispatch: any) => {
+    const res = await authApi.register(registrationData)
     if (res.resultCode === 0) {
         console.log(res)
         dispatch(setRegistrationSuccessfulAC(true))

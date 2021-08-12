@@ -7,9 +7,9 @@ import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
 import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
 
 type PropsType = {
-    img: string
-    size: 'sm' | 'md' | 'lg'
-    contextBgColor: string
+    img: string | null
+    size?: 'sm' | 'md' | 'lg'
+    contextBgColor?: string
     owner?: boolean
     online?: boolean
     onSubmit?: any // todo it seems like redux-form types needs to be used

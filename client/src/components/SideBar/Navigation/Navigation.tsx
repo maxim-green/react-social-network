@@ -1,7 +1,7 @@
-import Card from "../../common/Card/Card";
-import React from "react";
+import Card from '../../common/Card/Card'
+import React from 'react'
 import classes from './Navigation.module.scss'
-import {NavLink} from "react-router-dom";
+import {NavLink} from 'react-router-dom'
 import feedIcon from '../../../assets/images/feed-icon.svg'
 import dialogsIcon from '../../../assets/images/dialogs-icon.svg'
 import photosIcon from '../../../assets/images/photos-icon.svg'
@@ -10,8 +10,13 @@ import settingsIcon from '../../../assets/images/settings-icon.svg'
 import friendsIcon from '../../../assets/images/friends-icon.svg'
 import usersIcon from '../../../assets/images/members-icon.svg'
 
+type PropsType = {}
 
-const Navigation = (props) => {
+const Navigation: React.FC<PropsType> & {
+    Item: React.FC<{ to: string, icon: string, iconAlt?: string }>
+    Title: React.FC
+    List: React.FC
+} = () => {
     return (
         <Card>
             <div className={classes.Navigation}>
@@ -33,26 +38,26 @@ const Navigation = (props) => {
     )
 }
 
-Navigation.Title = (props) => {
+Navigation.Title = ({children}) => {
     return (
-        <div className={classes.NavigationTitle}>{props.children}</div>
+        <div className={classes.NavigationTitle}>{children}</div>
     )
 }
 
-Navigation.List = (props) => {
+Navigation.List = ({children}) => {
     return (
         <ul className={classes.NavigationList}>
-            {props.children}
+            {children}
         </ul>
     )
 }
 
-Navigation.Item = (props) => {
+Navigation.Item = ({to, icon, iconAlt = 'icon', children}) => {
     return (
         <li className={classes.NavigationItem}>
-            <NavLink to={props.to}>
-                <img src={props.icon} alt={props.iconAlt}/>
-                <span>{props.children}</span>
+            <NavLink to={to}>
+                <img src={icon} alt={iconAlt}/>
+                <span>{children}</span>
             </NavLink>
         </li>
     )

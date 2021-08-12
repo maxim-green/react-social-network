@@ -4,10 +4,17 @@ import Input from "../../../common/Input/Input";
 import Checkbox from "../../../common/Checkbox/Checkbox";
 import Button from "../../../common/Button/Button";
 import Form from "../../../common/Form/Form";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {email, minLength6, required} from "../../../../utils/validators";
+import {LoginDataType} from "../../../../types/types";
 
-const LoginForm = (props) => {
+type NativePropsType = {
+
+}
+
+type PropsType = InjectedFormProps<LoginDataType, NativePropsType> & NativePropsType
+
+const LoginForm: React.FC<PropsType> = (props) => {
     return (
         <Form onSubmit={props.handleSubmit}>
             {props.error && <Form.Error>{props.error}</Form.Error>}
@@ -34,6 +41,6 @@ const LoginForm = (props) => {
     )
 }
 
-export default reduxForm({
+export default reduxForm<LoginDataType, NativePropsType>({
     form: 'login'
 })(LoginForm)

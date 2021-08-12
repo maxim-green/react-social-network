@@ -2,21 +2,29 @@ import React from 'react'
 import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import Form from "../../../common/Form/Form";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {required} from "../../../../utils/validators";
 import {useHistory} from 'react-router-dom'
+import {ProfileStateType} from "../../../../redux/reducers/profile.reducer";
+import {capitalize} from "../../../../utils/functions";
 
-const EditProfileForm = (props) => {
-    const {contacts} = props.initialValues
+type NativePropsType = {
+
+}
+
+type PropsType = InjectedFormProps<ProfileStateType, NativePropsType> & NativePropsType
+
+const EditProfileForm: React.FC<PropsType> = (props) => {
+    const {contacts = {}} = props.initialValues
 
     const history = useHistory()
 
-    const submitHandler = (e) => {
+    const submitHandler = (e: any) => {
         props.handleSubmit(e)
         history.goBack()
     }
 
-    const backButtonClickHandler = (e) => {
+    const backButtonClickHandler = (e: any) => {
         e.preventDefault()
         history.goBack()
     }
@@ -50,9 +58,8 @@ const EditProfileForm = (props) => {
             </Form.Title>
             {
                 Object.keys(contacts).map(key => {
-                    const title = key.charAt(0).toUpperCase() + key.slice(1) + ":"
                     return <Form.Row>
-                        <Field name={"contacts." + key} type="text" component={Input} label={title} placeholder={title} block/>
+                        <Field name={"contacts." + key} type="text" component={Input} label={capitalize(key)} placeholder={capitalize(key)} block/>
                     </Form.Row>
                 })
             }
@@ -74,6 +81,6 @@ const EditProfileForm = (props) => {
     )
 }
 
-export default reduxForm({
+export default reduxForm<ProfileStateType, NativePropsType>({
     form: 'editProfile'
 })(EditProfileForm)

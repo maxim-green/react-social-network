@@ -7,7 +7,13 @@ import React from "react";
 import {useLocation} from "react-router-dom";
 import classNames from "classnames";
 
-const SideBar = (props) => {
+type PropsType = {
+    authorized: boolean
+}
+
+const SideBar: React.FC<PropsType> = ({
+    authorized
+                                      }) => {
     const location = useLocation()
     const pathname = location.pathname + '/'
     return (
@@ -16,9 +22,9 @@ const SideBar = (props) => {
             {[classes.hidden]: pathname.startsWith('/login/') || pathname.startsWith('/register/')}
         )
         }>
-            {!props.authorized && <Card><LoginForm/></Card>}
-            {props.authorized && <Navigation/>}
-            {props.authorized && <MyFriends friendsCount={45}/>}
+            {!authorized && <Card><LoginForm/></Card>}
+            {authorized && <Navigation/>}
+            {authorized && <MyFriends friendsCount={45}/>}
         </div>
     )
 }

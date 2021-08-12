@@ -18,7 +18,7 @@ const initialState = {
     location: {
         country: null,
         city: null,
-    } as LocationType | null,
+    } as LocationType,
     contacts: {
         website: null,
         phone: null,
@@ -27,13 +27,13 @@ const initialState = {
         facebook: null,
         github: null,
         telegram: null,
-    } as ContactsType | null,
+    } as ContactsType,
     avatar: {
         large: null,
         small: null,
-    } as AvatarType | null
+    } as AvatarType
 }
-type ProfileStateType = typeof initialState
+export type ProfileStateType = typeof initialState
 
 // REDUCER
 const reducer = (state: ProfileStateType = initialState, action: any): ProfileStateType => {

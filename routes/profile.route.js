@@ -38,8 +38,6 @@ router.put(
             }
             const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
 
-            console.log(req.body)
-
             const lgPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-lg${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
                 .toFile(path.join(__dirname, '..', lgPath))
@@ -54,6 +52,8 @@ router.put(
                     large: `http://localhost:${config.get('port')}${lgPath}`
             }
 
+            await User.findByIdAndUpdate(userId, {$set: {'profileData.avatar': avatar}})
+
             res.status(200).json({
                 resultCode: 0,
                 message: "File uploaded",
@@ -61,7 +61,7 @@ router.put(
             })
         } catch (e) {
             console.log(e)
-            res.status(500).json({resultCode: 1, message: "Something went wrong2 :("})
+            res.status(500).json({resultCode: 1, message: "Something went wrong2"})
         }
     }
 )

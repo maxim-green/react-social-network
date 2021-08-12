@@ -6,8 +6,24 @@ import LoginForm from "./LoginForm/LoginForm";
 import classes from "./LoginPage.module.scss"
 import {login} from "../../../redux/reducers/auth.reducer";
 import {connect} from "react-redux";
+import {StateType} from "../../../redux/store";
+import {LoginDataType} from "../../../types/types";
 
-const LoginPage = ({onSubmit}) => {
+type MapStatePropsType = {
+
+}
+
+type MapDispatchPropsType = {
+    login: (loginFormData: LoginDataType) => void
+}
+
+type NativePropsType = {
+
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
+
+const LoginPage: React.FC<PropsType & {onSubmit: any}> = ({onSubmit}) => {
     return (
         <div className={classes.LoginPage}>
             <Card width="650px">
@@ -21,9 +37,9 @@ const LoginPage = ({onSubmit}) => {
     )
 }
 
-const LoginPageContainer = (props) => {
-    const onSubmit = ({email, password, rememberMe}) => {
-        props.login(email, password, rememberMe)
+const LoginPageContainer: React.FC<PropsType> = (props) => {
+    const onSubmit = (loginFormData: LoginDataType) => {
+        props.login(loginFormData)
     }
 
     return (
@@ -31,8 +47,11 @@ const LoginPageContainer = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {}
 }
 
-export default connect(mapStateToProps, {login})(LoginPageContainer)
+export default connect<MapStatePropsType, MapDispatchPropsType, NativePropsType, StateType>(
+    mapStateToProps,
+    {login}
+    )(LoginPageContainer)
