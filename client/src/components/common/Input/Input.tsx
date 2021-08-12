@@ -1,8 +1,13 @@
-import classes from "./Input.module.scss"
+import classes from './Input.module.scss'
 import React from 'react'
 import classNames from 'classnames'
+import {WrappedFieldsProps} from 'redux-form'
 
-const Input = (props) => {
+type NativePropsType = {}
+
+type PropsType = NativePropsType & WrappedFieldsProps
+
+const Input: React.FC<PropsType> = (props) => {
     const {input, meta} = props
     const hasError = meta.touched && meta.error
 

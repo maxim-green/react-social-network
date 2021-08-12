@@ -24,7 +24,7 @@ type NativePropsType = {}
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
 
-const ProfilePage: React.FC<PropsType & {onAvatarSubmit: ({avatar}: {avatar: File}) => void}> = (props) => {
+const ProfilePage: React.FC<PropsType & { onAvatarSubmit: ({avatar}: { avatar: File }) => void }> = (props) => {
     return (
         <>
             <ProfileInfo
@@ -43,7 +43,7 @@ const ProfilePage: React.FC<PropsType & {onAvatarSubmit: ({avatar}: {avatar: Fil
 }
 
 const ProfilePageContainer: React.FC<PropsType> = (props) => {
-    const {username}: {username: string} = useParams()
+    const {username}: { username: string } = useParams()
 
     const {checkAuthorized, getUserData, updateAvatar} = props
     useEffect(() => {
@@ -51,7 +51,7 @@ const ProfilePageContainer: React.FC<PropsType> = (props) => {
         getUserData(username)
     }, [checkAuthorized, getUserData, username])
 
-    const onAvatarSubmit = ({avatar}: {avatar: File}) => {
+    const onAvatarSubmit = ({avatar}: { avatar: File }) => {
         const formData = new FormData()
         formData.append('avatar', avatar)
         console.log(formData.entries())

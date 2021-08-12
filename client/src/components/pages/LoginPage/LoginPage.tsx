@@ -1,32 +1,28 @@
 import React from 'react'
-import NavTabs from "../../common/NavTabs/NavTabs";
-import NavTab from "../../common/NavTabs/NavTab/NavTab";
-import Card from "../../common/Card/Card";
-import LoginForm from "./LoginForm/LoginForm";
-import classes from "./LoginPage.module.scss"
-import {login} from "../../../redux/reducers/auth.reducer";
-import {connect} from "react-redux";
-import {StateType} from "../../../redux/store";
-import {LoginDataType} from "../../../types/types";
+import NavTabs from '../../common/NavTabs/NavTabs'
+import NavTab from '../../common/NavTabs/NavTab/NavTab'
+import Card from '../../common/Card/Card'
+import LoginForm from './LoginForm/LoginForm'
+import classes from './LoginPage.module.scss'
+import {login} from '../../../redux/reducers/auth.reducer'
+import {connect} from 'react-redux'
+import {StateType} from '../../../redux/store'
+import {LoginDataType} from '../../../types/types'
 
-type MapStatePropsType = {
-
-}
+type MapStatePropsType = {}
 
 type MapDispatchPropsType = {
     login: (loginFormData: LoginDataType) => void
 }
 
-type NativePropsType = {
-
-}
+type NativePropsType = {}
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
 
-const LoginPage: React.FC<PropsType & {onSubmit: any}> = ({onSubmit}) => {
+const LoginPage: React.FC<PropsType & { onSubmit: any }> = ({onSubmit}) => {
     return (
         <div className={classes.LoginPage}>
-            <Card width="650px">
+            <Card>
                 <NavTabs>
                     <NavTab to="/login">Log In</NavTab>
                     <NavTab to="/register">Sign Up</NavTab>
@@ -54,4 +50,4 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
 export default connect<MapStatePropsType, MapDispatchPropsType, NativePropsType, StateType>(
     mapStateToProps,
     {login}
-    )(LoginPageContainer)
+)(LoginPageContainer)

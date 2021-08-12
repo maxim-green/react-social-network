@@ -1,7 +1,14 @@
-import classes from "./Checkbox.module.scss"
+import classes from './Checkbox.module.scss'
 import React from 'react'
+import {WrappedFieldProps} from 'redux-form'
 
-const Checkbox = (props) => {
+type NativePropsType = {
+    label: string
+}
+
+type PropsType = NativePropsType & WrappedFieldProps
+
+const Checkbox: React.FC<PropsType> = (props) => {
     const {input} = props
     return (
         <label className={classes.checkbox}>

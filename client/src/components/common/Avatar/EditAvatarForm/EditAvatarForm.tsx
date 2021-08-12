@@ -1,14 +1,12 @@
-import React from "react";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import Form from "../../Form/Form";
-import FilePicker from "../../FilePicker/FilePicker";
-import Button from "../../Button/Button";
+import React from 'react'
+import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import Form from '../../Form/Form'
+import FilePicker from '../../FilePicker/FilePicker'
+import Button from '../../Button/Button'
 
-type NativePropsType = {
+type NativePropsType = {}
 
-}
-
-type PropsType = InjectedFormProps<{avatar: File}, NativePropsType> & NativePropsType
+type PropsType = InjectedFormProps<{ avatar: File }, NativePropsType> & NativePropsType
 
 const EditAvatarForm: React.FC<PropsType> = (props) => {
     return (
@@ -23,6 +21,6 @@ const EditAvatarForm: React.FC<PropsType> = (props) => {
     )
 }
 
-export default reduxForm<{avatar: File}, NativePropsType>({
+export default reduxForm<{ avatar: File }, NativePropsType>({
     form: 'uploadAvatar'
 })(EditAvatarForm)

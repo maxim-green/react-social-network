@@ -1,15 +1,23 @@
 import React from 'react'
 import classes from './Form.module.scss'
 
-const Form = ({children, onSubmit}) => {
-    return(
+type PropsType = {}
+
+const Form: React.FC<PropsType & { onSubmit: any }> & {
+    Row: React.FC
+    Item: React.FC
+    Error: React.FC
+    Success: React.FC
+    Title: React.FC
+} = ({children, onSubmit}) => {
+    return (
         <form className={classes.form} onSubmit={onSubmit}>
             {children}
         </form>
     )
 }
 
-const Row = ({children}) => {
+Form.Row = ({children}) => {
     return (
         <div className={classes.row}>
             {children}
@@ -17,7 +25,7 @@ const Row = ({children}) => {
     )
 }
 
-const Item = ({children}) => {
+Form.Item = ({children}) => {
     return (
         <div className={classes.item}>
             {children}
@@ -25,33 +33,28 @@ const Item = ({children}) => {
     )
 }
 
-const Error = ({children}) => {
+Form.Error = ({children}) => {
     return (
-        <Row>
+        <Form.Row>
             <span className={classes.error}>{children}</span>
-        </Row>
+        </Form.Row>
     )
 }
 
-const Success = ({children}) => {
+Form.Success = ({children}) => {
     return (
-        <Row>
+        <Form.Row>
             <span className={classes.success}>{children}</span>
-        </Row>
+        </Form.Row>
     )
 }
 
-const Title = ({children}) => {
+Form.Title = ({children}) => {
     return (
-        <Row>
+        <Form.Row>
             <div className={classes.title}>{children}</div>
-        </Row>
+        </Form.Row>
     )
 }
 
-Form.Row = Row
-Form.Item = Item
-Form.Error = Error
-Form.Success = Success
-Form.Title = Title
 export default Form
