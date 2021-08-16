@@ -3,7 +3,7 @@ import classes from './IconWithCounter.module.scss'
 
 type PropsType = {
     src: string
-    alt: string
+    alt?: string
     count: number
 }
 

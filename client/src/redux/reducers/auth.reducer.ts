@@ -1,6 +1,6 @@
-import {authApi} from "../../api/api";
-import {stopSubmit} from "redux-form";
-import {LoginDataType, RegistrationDataType} from '../../types/types'
+import {authApi} from '../../api/api'
+import {stopSubmit} from 'redux-form'
+import {AsyncThunkType, AuthResultCodes, LoginDataType, RegistrationDataType, ResultCodes} from '../../types/types'
 
 // ACTION STRINGS
 const SET_USER = 'authReducer/SET_USER'
@@ -18,7 +18,7 @@ const initialState = {
 type AuthStateType = typeof initialState
 
 // REDUCER
-export const authReducer = (state: AuthStateType = initialState, action: any): AuthStateType => {
+export const authReducer = (state: AuthStateType = initialState, action: AuthActionType): AuthStateType => {
     switch (action.type) {
         case SET_USER: {
             return {
@@ -51,60 +51,62 @@ export const authReducer = (state: AuthStateType = initialState, action: any): A
 }
 
 // ACTION CREATORS
-type SetUserActionType = {type: typeof SET_USER, userId: string, email: string, username: string }
+export type SetUserActionType = {type: typeof SET_USER, userId: string, email: string, username: string }
 export const setUserAC = (userId: string, email: string, username: string): SetUserActionType => ({type: SET_USER, userId, email, username})
 
-type ClearUserActionType = {type: typeof CLEAR_USER}
+export type ClearUserActionType = {type: typeof CLEAR_USER}
 export const clearUserAC = (): ClearUserActionType => ({type: CLEAR_USER})
 
-type SetRegistrationSuccessfulActionType = {type: typeof SET_REGISTRATION_SUCCESSFUL, registrationSuccessful: boolean}
+export type SetRegistrationSuccessfulActionType = {type: typeof SET_REGISTRATION_SUCCESSFUL, registrationSuccessful: boolean}
 export const setRegistrationSuccessfulAC = (registrationSuccessful: boolean): SetRegistrationSuccessfulActionType => ({type: SET_REGISTRATION_SUCCESSFUL, registrationSuccessful})
 
+export type AuthActionType = SetUserActionType | ClearUserActionType | SetRegistrationSuccessfulActionType
+
 // THUNK CREATORS: string
-export const login = (loginFormData: LoginDataType) => async (dispatch: any) => {
+export const login = (loginFormData: LoginDataType): AsyncThunkType => async (dispatch) => {
     const res = await authApi.login(loginFormData)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(checkAuthorized())
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         dispatch(stopSubmit('login', {_error: res.message}))
     }
 }
 
 // todo needs refactoring
-export const checkAuthorized = () => async (dispatch: any) => {
+export const checkAuthorized = (): AsyncThunkType => async (dispatch) => {
     const res = await authApi.me()
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         const {userId, email, username} = res.data
         dispatch(setUserAC(userId, email, username))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         dispatch(clearUserAC())
         console.log(res)
     }
-    if (res.resultCode === 10) {
+    if (res.resultCode === AuthResultCodes.expiredToken) {
         dispatch(clearUserAC())
         console.log(res)
     }
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): AsyncThunkType => async (dispatch) => {
     const res = await authApi.logout()
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(clearUserAC())
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const register = (registrationData: RegistrationDataType) => async (dispatch: any) => {
+export const register = (registrationData: RegistrationDataType): AsyncThunkType => async (dispatch) => {
     const res = await authApi.register(registrationData)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         console.log(res)
         dispatch(setRegistrationSuccessfulAC(true))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         dispatch(stopSubmit('registration', {_error: res.message}))
     }
 }

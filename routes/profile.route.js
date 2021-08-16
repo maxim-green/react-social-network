@@ -57,7 +57,7 @@ router.put(
             res.status(200).json({
                 resultCode: 0,
                 message: "File uploaded",
-                avatar
+                data: avatar
             })
         } catch (e) {
             console.log(e)

@@ -1,5 +1,6 @@
-import {setUserAC} from "./auth.reducer";
+import {setUserAC} from './auth.reducer'
 import {authApi} from "../../api/api";
+import {AsyncThunkType} from '../../types/types'
 
 // ACTION STRINGS
 const INITIALIZE_APP = 'appReducer/INITIALIZE_APP'
@@ -11,7 +12,7 @@ const initialState = {
 type AppStateType = typeof initialState
 
 // REDUCER
-export const appReducer = (state: AppStateType = initialState, action: any): AppStateType => {
+export const appReducer = (state: AppStateType = initialState, action: AppActionType): AppStateType => {
     switch (action.type) {
         case INITIALIZE_APP: {
             return {
@@ -29,9 +30,11 @@ export const appReducer = (state: AppStateType = initialState, action: any): App
 type SetInitializedActionType = {type: typeof INITIALIZE_APP, initialized: boolean}
 const setInitializedAC = (initialized: boolean): SetInitializedActionType => ({type: INITIALIZE_APP, initialized})
 
+export type AppActionType = SetInitializedActionType
+
 // THUNK CREATORS
 // todo refactor repeating code!!!
-export const initializeApp = () => async (dispatch: any) => {
+export const initializeApp = (): AsyncThunkType => async (dispatch) => {
     const res = await authApi.me()
     if (res.resultCode === 0) {
         const {userId, email, username} = res.data

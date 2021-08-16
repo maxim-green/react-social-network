@@ -1,6 +1,6 @@
-import {profileApi} from "../../api/api";
-import {stopSubmit} from "redux-form";
-import {AvatarType, ContactsType, LocationType} from "../../types/types";
+import {profileApi} from '../../api/api'
+import {stopSubmit} from 'redux-form'
+import {AsyncThunkType, AvatarType, ContactsType, FormDataType, LocationType, ResultCodes} from '../../types/types'
 
 // ACTION STRINGS
 const SET_PROFILE = 'react-social-network/profile/SET_PROFILE'
@@ -36,7 +36,7 @@ const initialState = {
 export type ProfileStateType = typeof initialState
 
 // REDUCER
-const reducer = (state: ProfileStateType = initialState, action: any): ProfileStateType => {
+const reducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
     switch (action.type) {
         case SET_PROFILE: {
             return {
@@ -67,34 +67,36 @@ export const setProfileAC = (profileData: ProfileStateType): SetProfileActionTyp
 type SetAvatarActionType = { type: typeof SET_AVATAR, avatar: AvatarType }
 export const setAvatarAC = (avatar: AvatarType): SetAvatarActionType => ({type: SET_AVATAR, avatar})
 
-// THUNK CREATORS // todo: add proper types for dispatch and formData
-export const getUserData = (username: string) => async (dispatch: any) => {
+export type ProfileActionType = SetProfileActionType | SetAvatarActionType
+
+// THUNK CREATORS
+export const getUserData = (username: string): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.getProfile(username)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setProfileAC(res.data))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const updateProfile = (profileData: ProfileStateType) => async (dispatch: any) => {
+export const updateProfile = (profileData: ProfileStateType): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         console.log(res)
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
         dispatch(stopSubmit('editProfile', {_error: res.message}))
     }
 }
 
-export const updateAvatar = (formData: any) => async (dispatch: any) => {
+export const updateAvatar = (formData: FormDataType): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.updateAvatar(formData)
-    if (res.resultCode === 0) {
-        dispatch(setAvatarAC(res.avatar))
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(setAvatarAC(res.data))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }

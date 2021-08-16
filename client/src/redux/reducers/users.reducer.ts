@@ -1,5 +1,5 @@
-import {usersApi} from "../../api/api";
-import {UserType} from "../../types/types";
+import {usersApi} from '../../api/api'
+import {AsyncThunkType, ResultCodes, UserType} from '../../types/types'
 
 // ACTION STRINGS
 const SET_USERS = 'react-social-network/usersReducer/SET_USERS'
@@ -13,7 +13,7 @@ const initialState = {
 type UsersStateType = typeof initialState
 
 // REDUCER
-export const usersReducer = (state: UsersStateType = initialState, action: any): UsersStateType => {
+export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
     switch (action.type) {
         case SET_USERS: {
             return {
@@ -49,53 +49,55 @@ const setIsFriendAC = (userId: string, isFriend: boolean): SetIsFriendActionType
 type SetIsSubscriptionActionType = {type: typeof SET_IS_SUBSCRIPTION, userId: string, isSubscription: boolean}
 const setIsSubscriptionAC = (userId: string, isSubscription: boolean): SetIsSubscriptionActionType => ({type: SET_IS_SUBSCRIPTION, userId, isSubscription})
 
+export type UsersActionType = SetUsersActionType | SetIsFriendActionType | SetIsSubscriptionActionType
+
 // THUNK CREATORS // todo: add proper types to dispatch
-export const getUsers = () => async (dispatch: any) => {
+export const getUsers = (): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.getUsers()
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setUsersAC(res.users))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const addFriend = (userId: string) => async (dispatch: any) => {
+export const addFriend = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.addFriend(userId)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setIsFriendAC(userId, true))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const deleteFriend = (userId: string) => async (dispatch: any) => {
+export const deleteFriend = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.deleteFriend(userId)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setIsFriendAC(userId, false))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const follow = (userId: string) => async (dispatch: any) => {
+export const follow = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.addSubscription(userId)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setIsSubscriptionAC(userId, true))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
 
-export const unfollow = (userId: string) => async (dispatch: any) => {
+export const unfollow = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.deleteSubscription(userId)
-    if (res.resultCode === 0) {
+    if (res.resultCode === ResultCodes.success) {
         dispatch(setIsSubscriptionAC(userId, false))
     }
-    if (res.resultCode === 1) {
+    if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
