@@ -6,6 +6,8 @@ import {ProfileActionType} from '../redux/reducers/profile.reducer'
 import {Dispatch} from 'react'
 import {UsersActionType} from '../redux/reducers/users.reducer'
 
+
+
 // don't know if it is right to do so, but it works ;)
 const formData = new FormData()
 export type FormDataType = typeof formData
@@ -37,6 +39,7 @@ export type LoginDataType = {
     password: string
     rememberMe: boolean
 }
+export type LoginFieldNamesType = keyof LoginDataType
 
 // type for user-items shown on users page
 export type UserType = {
@@ -48,6 +51,11 @@ export type UserType = {
     isFriend: boolean
     isSubscription: boolean
 }
+export type UsersResponseDataType = {
+    users: Array<UserType>
+}
+
+export type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
 
 // REDUX
 //

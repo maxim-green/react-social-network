@@ -1,33 +1,28 @@
 import {usersApi} from '../../api/api'
-import {AsyncThunkType, ResultCodes, UserType} from '../../types/types'
-
-// ACTION STRINGS
-const SET_USERS = 'react-social-network/usersReducer/SET_USERS'
-const SET_IS_FRIEND = 'react-social-network/usersReducer/SET_IS_FRIEND'
-const SET_IS_SUBSCRIPTION = 'react-social-network/usersReducer/SET_IS_SUBSCRIPTION'
+import {AsyncThunkType, InferValueTypes, ResultCodes, UserType} from '../../types/types'
 
 // INITIAL STATE
 const initialState = {
     users: [] as Array<UserType>
 }
-type UsersStateType = typeof initialState
+export type UsersStateType = typeof initialState
 
 // REDUCER
 export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
     switch (action.type) {
-        case SET_USERS: {
+        case 'SET_USERS': {
             return {
                 ...state,
                 users: action.users
             }
         }
-        case SET_IS_FRIEND: {
+        case 'SET_IS_FRIEND': {
             return {
                 ...state,
                 users: state.users.map(user => (user.userId === action.userId) ? {...user, isFriend: action.isFriend} : user)
             }
         }
-        case SET_IS_SUBSCRIPTION: {
+        case 'SET_IS_SUBSCRIPTION': {
             return {
                 ...state,
                 users: state.users.map(user => (user.userId === action.userId) ? {...user, isSubscription: action.isSubscription} : user)
@@ -39,23 +34,20 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
     }
 }
 
-// ACTION CREATORS
-type SetUsersActionType = {type: typeof SET_USERS, users: Array<UserType>}
-const setUsersAC = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
+//region ACTION CREATORS
+export const usersActions = {
+    setUsers: (users: Array<UserType>) => ({type: 'SET_USERS', users} as const),
+    setIsFriend: (userId: string, isFriend: boolean) => ({type: 'SET_IS_FRIEND', userId, isFriend} as const),
+    setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
+}
+export type UsersActionType = ReturnType<InferValueTypes<typeof usersActions>>
+//endregion
 
-type SetIsFriendActionType = {type: typeof SET_IS_FRIEND, userId: string, isFriend: boolean}
-const setIsFriendAC = (userId: string, isFriend: boolean): SetIsFriendActionType => ({type: SET_IS_FRIEND, userId, isFriend})
-
-type SetIsSubscriptionActionType = {type: typeof SET_IS_SUBSCRIPTION, userId: string, isSubscription: boolean}
-const setIsSubscriptionAC = (userId: string, isSubscription: boolean): SetIsSubscriptionActionType => ({type: SET_IS_SUBSCRIPTION, userId, isSubscription})
-
-export type UsersActionType = SetUsersActionType | SetIsFriendActionType | SetIsSubscriptionActionType
-
-// THUNK CREATORS // todo: add proper types to dispatch
+//region THUNK CREATORS // todo: add proper types to dispatch
 export const getUsers = (): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.getUsers()
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setUsersAC(res.users))
+        dispatch(usersActions.setUsers(res.data.users))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -65,7 +57,7 @@ export const getUsers = (): AsyncThunkType => async (dispatch) => {
 export const addFriend = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.addFriend(userId)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setIsFriendAC(userId, true))
+        dispatch(usersActions.setIsFriend(userId, true))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -75,7 +67,7 @@ export const addFriend = (userId: string): AsyncThunkType => async (dispatch) =>
 export const deleteFriend = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.deleteFriend(userId)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setIsFriendAC(userId, false))
+        dispatch(usersActions.setIsFriend(userId, false))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -85,7 +77,7 @@ export const deleteFriend = (userId: string): AsyncThunkType => async (dispatch)
 export const follow = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.addSubscription(userId)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setIsSubscriptionAC(userId, true))
+        dispatch(usersActions.setIsSubscription(userId, true))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -95,9 +87,10 @@ export const follow = (userId: string): AsyncThunkType => async (dispatch) => {
 export const unfollow = (userId: string): AsyncThunkType => async (dispatch) => {
     const res = await usersApi.deleteSubscription(userId)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setIsSubscriptionAC(userId, false))
+        dispatch(usersActions.setIsSubscription(userId, false))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
+//endregion

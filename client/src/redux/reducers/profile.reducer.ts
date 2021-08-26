@@ -1,10 +1,14 @@
 import {profileApi} from '../../api/api'
 import {stopSubmit} from 'redux-form'
-import {AsyncThunkType, AvatarType, ContactsType, FormDataType, LocationType, ResultCodes} from '../../types/types'
-
-// ACTION STRINGS
-const SET_PROFILE = 'react-social-network/profile/SET_PROFILE'
-const SET_AVATAR = 'react-social-network/profile/SET_AVATAR'
+import {
+    AsyncThunkType,
+    AvatarType,
+    ContactsType,
+    FormDataType,
+    InferValueTypes,
+    LocationType,
+    ResultCodes
+} from '../../types/types'
 
 // INITIAL STATE
 const initialState = {
@@ -38,7 +42,7 @@ export type ProfileStateType = typeof initialState
 // REDUCER
 const reducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
     switch (action.type) {
-        case SET_PROFILE: {
+        case 'SET_PROFILE': {
             return {
                 ...state,
                 ...action.profileData,
@@ -47,7 +51,7 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 avatar: {...state.avatar, ...action.profileData.avatar}
             }
         }
-        case SET_AVATAR: {
+        case 'SET_AVATAR': {
             return {
                 ...state,
                 avatar: {...state.avatar, ...action.avatar}
@@ -60,20 +64,19 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
 }
 export default reducer
 
-// ACTION CREATORS
-type SetProfileActionType = { type: typeof SET_PROFILE, profileData: ProfileStateType }
-export const setProfileAC = (profileData: ProfileStateType): SetProfileActionType => ({type: SET_PROFILE, profileData})
+//regions ACTION CREATORS
+export const profileActions = {
+    setProfile: (profileData: ProfileStateType) => ({type: 'SET_PROFILE', profileData} as const),
+    setAvatar: (avatar: AvatarType) => ({type: 'SET_AVATAR', avatar} as const)
+}
+export type ProfileActionType = ReturnType<InferValueTypes<typeof profileActions>>
+//endregion
 
-type SetAvatarActionType = { type: typeof SET_AVATAR, avatar: AvatarType }
-export const setAvatarAC = (avatar: AvatarType): SetAvatarActionType => ({type: SET_AVATAR, avatar})
-
-export type ProfileActionType = SetProfileActionType | SetAvatarActionType
-
-// THUNK CREATORS
+//region THUNK CREATORS
 export const getUserData = (username: string): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.getProfile(username)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setProfileAC(res.data))
+        dispatch(profileActions.setProfile(res.data))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -94,9 +97,10 @@ export const updateProfile = (profileData: ProfileStateType): AsyncThunkType => 
 export const updateAvatar = (formData: FormDataType): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.updateAvatar(formData)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(setAvatarAC(res.data))
+        dispatch(profileActions.setAvatar(res.data))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
     }
 }
+//endregion

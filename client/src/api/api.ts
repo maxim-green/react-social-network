@@ -7,6 +7,7 @@ import {
     ResponseDataType, ResultCodes, UserType
 } from '../types/types'
 import {ProfileStateType} from '../redux/reducers/profile.reducer'
+import {UsersStateType} from '../redux/reducers/users.reducer'
 
 const api = axios.create({
     baseURL: 'http://localhost:5000/api/',
@@ -65,7 +66,7 @@ export const profileApi = {
 export const usersApi = {
     getUsers: () => api
         .get('/users')
-        .then(handleResponse< Array<UserType> >())
+        .then(handleResponse<UsersStateType>())
         .catch(handleError()),
 
     addFriend: (userId: string) => api

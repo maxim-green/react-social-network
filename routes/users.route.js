@@ -45,7 +45,7 @@ router.get('/', auth, async (req, res) => {
             }))
         }
 
-        return res.status(200).json({resultCode: 0, message: "Success", users: responseUsers})
+        return res.status(200).json({resultCode: 0, message: "Success", data: {users: responseUsers}})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})

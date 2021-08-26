@@ -5,7 +5,7 @@ import Card from '../../common/Card/Card'
 import RegistrationForm from './RegistrationForm/RegistrationForm'
 import classes from './RegistrationPage.module.scss'
 import {connect} from 'react-redux'
-import {register, setRegistrationSuccessfulAC} from '../../../redux/reducers/auth.reducer'
+import {register, authActions} from '../../../redux/reducers/auth.reducer'
 import {StateType} from '../../../redux/store'
 import {RegistrationDataType} from '../../../types/types'
 
@@ -15,7 +15,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     register: (registrationData: RegistrationDataType) => void
-    setRegistrationSuccessfulAC: (registrationSuccessful: boolean) => void
+    setRegistrationSuccessful: (registrationSuccessful: boolean) => void
 }
 
 type NativePropsType = {
@@ -39,10 +39,10 @@ const RegistrationPage: React.FC<PropsType & {onSubmit: any}> = ({onSubmit, regi
 }
 
 const RegistrationPageContainer: React.FC<PropsType> = (props) => {
-    const {setRegistrationSuccessfulAC, register} = props
+    const {setRegistrationSuccessful, register} = props
     useEffect(() => {
-        setRegistrationSuccessfulAC(false)
-    }, [setRegistrationSuccessfulAC])
+        setRegistrationSuccessful(false)
+    }, [setRegistrationSuccessful])
 
     const onSubmit = async (registrationFormData: RegistrationDataType) => {
         register(registrationFormData)
@@ -59,7 +59,8 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
     }
 }
 
+const {setRegistrationSuccessful} = authActions
 export default connect<MapStatePropsType, MapDispatchPropsType, NativePropsType, StateType>(
     mapStateToProps,
-    {register, setRegistrationSuccessfulAC}
+    {register, setRegistrationSuccessful}
     )(RegistrationPageContainer)
