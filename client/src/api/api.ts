@@ -2,9 +2,9 @@ import axios, {AxiosError, AxiosResponse} from 'axios'
 import {
     AuthorizedUserDataType, AuthResultCodes, AvatarType,
     FormDataType,
-    LoginDataType,
+    LoginDataType, ProfileDataType,
     RegistrationDataType,
-    ResponseDataType, ResultCodes, UserType
+    ResponseType, ResultCodes
 } from '../types/types'
 import {ProfileStateType} from '../redux/reducers/profile.reducer'
 import {UsersStateType} from '../redux/reducers/users.reducer'
@@ -14,7 +14,7 @@ const api = axios.create({
     withCredentials: true
 })
 
-const handleResponse = <DataType = any, ResultCodesType = ResultCodes>() => (res: AxiosResponse<ResponseDataType<DataType, ResultCodesType>>) => {
+const handleResponse = <DataType = any, ResultCodesType = ResultCodes>() => (res: AxiosResponse<ResponseType<DataType, ResultCodesType>>) => {
     console.log('Success: ' + res.data.message)
     return res.data
 }
@@ -49,10 +49,10 @@ export const authApi = {
 export const profileApi = {
     getProfile: (username: string) => api
         .get(`/profile/${username}`)
-        .then(handleResponse<ProfileStateType>())
+        .then(handleResponse<ProfileDataType>())
         .catch(handleError()),
 
-    updateProfile: (profileData: ProfileStateType) => api
+    updateProfile: (profileData: ProfileDataType) => api
         .put('/profile', {...profileData})
         .then(handleResponse())
         .catch(handleError()),

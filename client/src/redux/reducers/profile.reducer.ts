@@ -6,36 +6,13 @@ import {
     ContactsType,
     FormDataType,
     InferValueTypes,
-    LocationType,
+    LocationType, ProfileDataType,
     ResultCodes
 } from '../../types/types'
 
 // INITIAL STATE
 const initialState = {
-    userId: null as string | null,
-    firstName: null as string | null,
-    lastName: null as string | null,
-    birthDate: null as string | null,
-    status: null as string | null,
-    bio: null as string | null,
-    interests: null as string | null,
-    location: {
-        country: null,
-        city: null,
-    } as LocationType,
-    contacts: {
-        website: null,
-        phone: null,
-        email: null,
-        vkontakte: null,
-        facebook: null,
-        github: null,
-        telegram: null,
-    } as ContactsType,
-    avatar: {
-        large: null,
-        small: null,
-    } as AvatarType
+    data: {} as ProfileDataType
 }
 export type ProfileStateType = typeof initialState
 
@@ -45,16 +22,22 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
         case 'SET_PROFILE': {
             return {
                 ...state,
-                ...action.profileData,
-                location: {...state.location, ...action.profileData.location},
-                contacts: {...state.contacts, ...action.profileData.contacts},
-                avatar: {...state.avatar, ...action.profileData.avatar}
+                data: {
+                    ...state.data,
+                    ...action.profileData,
+                    location: {...state.data.location, ...action.profileData.location},
+                    contacts: {...state.data.contacts, ...action.profileData.contacts},
+                    avatar: {...state.data.avatar, ...action.profileData.avatar}
+                },
             }
         }
         case 'SET_AVATAR': {
             return {
                 ...state,
-                avatar: {...state.avatar, ...action.avatar}
+                data: {
+                    ...state.data,
+                    avatar: {...state.data.avatar, ...action.avatar}
+                },
             }
         }
         default: {
@@ -66,7 +49,7 @@ export default reducer
 
 //regions ACTION CREATORS
 export const profileActions = {
-    setProfile: (profileData: ProfileStateType) => ({type: 'SET_PROFILE', profileData} as const),
+    setProfile: (profileData: ProfileDataType) => ({type: 'SET_PROFILE', profileData} as const),
     setAvatar: (avatar: AvatarType) => ({type: 'SET_AVATAR', avatar} as const)
 }
 export type ProfileActionType = ReturnType<InferValueTypes<typeof profileActions>>
@@ -83,7 +66,7 @@ export const getUserData = (username: string): AsyncThunkType => async (dispatch
     }
 }
 
-export const updateProfile = (profileData: ProfileStateType): AsyncThunkType => async (dispatch) => {
+export const updateProfile = (profileData: ProfileDataType): AsyncThunkType => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
     if (res.resultCode === ResultCodes.success) {
         console.log(res)

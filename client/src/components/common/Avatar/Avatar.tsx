@@ -7,7 +7,7 @@ import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
 import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
 
 type PropsType = {
-    img: string | null
+    img?: string
     size?: 'sm' | 'md' | 'lg'
     contextBgColor?: string
     owner?: boolean

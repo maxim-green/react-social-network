@@ -7,10 +7,11 @@ import {required} from '../../../../utils/validators'
 import {useHistory} from 'react-router-dom'
 import {ProfileStateType} from '../../../../redux/reducers/profile.reducer'
 import {capitalize} from '../../../../utils/functions'
+import {ProfileDataType} from '../../../../types/types'
 
 type NativePropsType = {}
 
-type PropsType = InjectedFormProps<ProfileStateType, NativePropsType> & NativePropsType
+type PropsType = InjectedFormProps<ProfileDataType, NativePropsType> & NativePropsType
 
 const EditProfileForm: React.FC<PropsType> = (props) => {
     const {contacts = {}} = props.initialValues
@@ -86,6 +87,6 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
     )
 }
 
-export default reduxForm<ProfileStateType, NativePropsType>({
+export default reduxForm<ProfileDataType, NativePropsType>({
     form: 'editProfile'
 })(EditProfileForm)

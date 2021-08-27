@@ -6,7 +6,7 @@ import Post from '../../../Post/Post'
 type PropsType = {
     authorized: boolean
     authorizedUserId: string | null
-    userId: string | null
+    userId?: string | null
 }
 
 const ProfilePosts: React.FC<PropsType> = ({

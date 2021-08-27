@@ -7,11 +7,12 @@ import ProfileInfo from './ProfileInfo/ProfileInfo'
 import ProfilePosts from './ProfilePosts/ProfilePosts'
 import {checkAuthorized} from '../../../redux/reducers/auth.reducer'
 import {StateType} from '../../../redux/store'
+import {ProfileDataType} from '../../../types/types'
 
 type MapStatePropsType = {
     authorized: boolean
     authorizedUserId: string | null
-    profileData: ProfileStateType
+    profileData: ProfileDataType
 }
 
 type MapDispatchPropsType = {
@@ -67,7 +68,7 @@ const mapStateToProps = (state: StateType) => {
     return {
         authorized: state.auth.authorized,
         authorizedUserId: state.auth.userId,
-        profileData: state.profile
+        profileData: state.profile.data
     }
 }
 

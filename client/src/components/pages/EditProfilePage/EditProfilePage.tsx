@@ -4,13 +4,14 @@ import EditProfileForm from './EditProfileForm/EditProfileForm'
 import {connect} from 'react-redux'
 import {ProfileStateType, updateProfile} from '../../../redux/reducers/profile.reducer'
 import {StateType} from '../../../redux/store'
+import {ProfileDataType} from '../../../types/types'
 
 type MapStatePropsType = {
-    profileData: ProfileStateType
+    profileData: ProfileDataType
 }
 
 type MapDispatchPropsType = {
-    updateProfile: (profileData: ProfileStateType) => void
+    updateProfile: (profileData: ProfileDataType) => void
 }
 
 type NativePropsType = {}
@@ -30,7 +31,7 @@ const EditProfilePage: React.FC<PropsType & { onSubmit: any }> = (props) => {
 
 const EditProfilePageContainer: React.FC<PropsType> = (props) => {
 
-    const onSubmit = (profileData: ProfileStateType) => {
+    const onSubmit = (profileData: ProfileDataType) => {
         props.updateProfile(profileData)
     }
 
@@ -41,7 +42,7 @@ const EditProfilePageContainer: React.FC<PropsType> = (props) => {
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {
-        profileData: state.profile
+        profileData: state.profile.data
     }
 }
 

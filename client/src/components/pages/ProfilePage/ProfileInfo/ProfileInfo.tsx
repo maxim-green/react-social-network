@@ -11,11 +11,12 @@ import {NavLink} from 'react-router-dom'
 import Moment from 'react-moment'
 import {capitalize} from '../../../../utils/functions'
 import {ProfileStateType} from '../../../../redux/reducers/profile.reducer'
+import {ProfileDataType} from '../../../../types/types'
 
 type PropsType = {
     authorized: boolean,
     authorizedUserId: string | null
-    profileData: ProfileStateType
+    profileData: ProfileDataType
     onAvatarSubmit: ({avatar}: { avatar: File }) => void
 }
 
@@ -37,7 +38,7 @@ const ProfileInfo: React.FC<PropsType> = ({
             </div>
             <div className={classes.profileHeader}>
                 <div className={classes.avatar}>
-                    <Avatar img={profileData.avatar.small} online size='lg' owner={owner} onSubmit={onAvatarSubmit}/>
+                    <Avatar img={profileData.avatar?.small} online size='lg' owner={owner} onSubmit={onAvatarSubmit}/>
                 </div>
                 <div className={classes.profileHeaderInfo}>
                     <div className={classes.name}>{profileData.firstName} {profileData.lastName}</div>
@@ -56,12 +57,12 @@ const ProfileInfo: React.FC<PropsType> = ({
                         <Moment format="DD.MM.YYYY" date={profileData.birthDate}/>
                     </ProfileInfoItem>}
 
-                    {profileData.location.country && profileData.location.city && <ProfileInfoItem title="Location:">
-                        {profileData.location.country}, {profileData.location.city}
+                    {profileData.location?.country && profileData.location?.city && <ProfileInfoItem title="Location:">
+                        {profileData.location?.country}, {profileData.location?.city}
                     </ProfileInfoItem>}
 
-                    {Object.keys(profileData.contacts).map(key => {
-                        if (profileData.contacts[key]) return <ProfileInfoItem
+                    {profileData.contacts && Object.keys(profileData.contacts).map(key => {
+                        if (profileData.contacts && profileData.contacts[key]) return <ProfileInfoItem
                             title={capitalize(key) + ':'}>{profileData.contacts[key]}</ProfileInfoItem>
                         return null
                     })}
