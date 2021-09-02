@@ -5,9 +5,8 @@ import Form from '../../../common/Form/Form'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import {required} from '../../../../utils/validators'
 import {useHistory} from 'react-router-dom'
-import {ProfileStateType} from '../../../../redux/reducers/profile.reducer'
 import {capitalize} from '../../../../utils/functions'
-import {ProfileDataType} from '../../../../types/types'
+import {ProfileDataType} from '../../../../api/profile.api'
 
 type NativePropsType = {}
 

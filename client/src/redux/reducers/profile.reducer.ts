@@ -1,14 +1,8 @@
-import {profileApi} from '../../api/api'
-import {stopSubmit} from 'redux-form'
-import {
-    AsyncThunkType,
-    AvatarType,
-    ContactsType,
-    FormDataType,
-    InferValueTypes,
-    LocationType, ProfileDataType,
-    ResultCodes
-} from '../../types/types'
+import {FormAction, stopSubmit} from 'redux-form'
+import {AvatarType, FormDataType} from '../../types/types'
+import {profileApi, ProfileDataType} from '../../api/profile.api'
+import {ResultCodes} from '../../api/core.api'
+import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
@@ -19,7 +13,7 @@ export type ProfileStateType = typeof initialState
 // REDUCER
 const reducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
     switch (action.type) {
-        case 'SET_PROFILE': {
+        case 'rsn/profile/SET_PROFILE': {
             return {
                 ...state,
                 data: {
@@ -31,7 +25,7 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 },
             }
         }
-        case 'SET_AVATAR': {
+        case 'rsn/profile/SET_AVATAR': {
             return {
                 ...state,
                 data: {
@@ -49,14 +43,14 @@ export default reducer
 
 //regions ACTION CREATORS
 export const profileActions = {
-    setProfile: (profileData: ProfileDataType) => ({type: 'SET_PROFILE', profileData} as const),
-    setAvatar: (avatar: AvatarType) => ({type: 'SET_AVATAR', avatar} as const)
+    setProfile: (profileData: ProfileDataType) => ({type: 'rsn/profile/SET_PROFILE', profileData} as const),
+    setAvatar: (avatar: AvatarType) => ({type: 'rsn/profile/SET_AVATAR', avatar} as const)
 }
-export type ProfileActionType = ReturnType<InferValueTypes<typeof profileActions>>
+export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActions>>
 //endregion
 
 //region THUNK CREATORS
-export const getUserData = (username: string): AsyncThunkType => async (dispatch) => {
+export const getUserData = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.getProfile(username)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setProfile(res.data))
@@ -66,7 +60,7 @@ export const getUserData = (username: string): AsyncThunkType => async (dispatch
     }
 }
 
-export const updateProfile = (profileData: ProfileDataType): AsyncThunkType => async (dispatch) => {
+export const updateProfile = (profileData: ProfileDataType): ThunkType<ProfileActionType | FormAction> => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
     if (res.resultCode === ResultCodes.success) {
         console.log(res)
@@ -77,7 +71,7 @@ export const updateProfile = (profileData: ProfileDataType): AsyncThunkType => a
     }
 }
 
-export const updateAvatar = (formData: FormDataType): AsyncThunkType => async (dispatch) => {
+export const updateAvatar = (formData: FormDataType): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateAvatar(formData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setAvatar(res.data))

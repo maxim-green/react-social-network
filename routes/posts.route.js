@@ -13,7 +13,7 @@ const sharp = require('sharp')
 const auth = require('../middleware/auth.middleware')
 
 
-// /api/posts/
+// /coreApi/posts/
 // router.get('/', async (req, res) => {
 //     try {
 //
@@ -23,7 +23,7 @@ const auth = require('../middleware/auth.middleware')
 //     }
 // })
 
-// /api/posts/
+// /coreApi/posts/
 router.get('/', async (req, res) => {
     try {
         const posts = await Post.find()
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-// /api/posts/:userId
+// /coreApi/posts/:userId
 router.get('/:userId', async (req, res) => {
     try {
         const posts = await Post.find({'author.id': req.params.userId})
@@ -43,7 +43,7 @@ router.get('/:userId', async (req, res) => {
     }
 })
 
-// /api/posts/add
+// /coreApi/posts/add
 router.post('/add', auth, async (req, res) => {
     try {
         if (!req.userId) {

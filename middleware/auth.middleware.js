@@ -9,14 +9,14 @@ module.exports = (req, res, next) => {
     try {
         const {accessToken} = req.cookies
         if (!accessToken) {
-            next()
+            return next()
         }
 
         const {userId} = jwt.verify(accessToken, config.get('jwtSecret'))
         req.userId = userId
-        next()
-
+        return next()
     } catch(e) {
-        next()
+        console.log(e)
+        return next()
     }
 }

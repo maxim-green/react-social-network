@@ -7,7 +7,7 @@ import classes from './RegistrationPage.module.scss'
 import {connect} from 'react-redux'
 import {register, authActions} from '../../../redux/reducers/auth.reducer'
 import {StateType} from '../../../redux/store'
-import {RegistrationDataType} from '../../../types/types'
+import {RegistrationDataType} from '../../../api/auth.api'
 
 type MapStatePropsType = {
     registrationSuccessful: boolean

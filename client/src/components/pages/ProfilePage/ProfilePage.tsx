@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {getUserData, ProfileStateType, updateAvatar} from '../../../redux/reducers/profile.reducer'
+import {getUserData, updateAvatar} from '../../../redux/reducers/profile.reducer'
 import {connect} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import {compose} from 'redux'
@@ -7,7 +7,7 @@ import ProfileInfo from './ProfileInfo/ProfileInfo'
 import ProfilePosts from './ProfilePosts/ProfilePosts'
 import {checkAuthorized} from '../../../redux/reducers/auth.reducer'
 import {StateType} from '../../../redux/store'
-import {ProfileDataType} from '../../../types/types'
+import {ProfileDataType} from '../../../api/profile.api'
 
 type MapStatePropsType = {
     authorized: boolean

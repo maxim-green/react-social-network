@@ -10,8 +10,7 @@ import 'reactjs-popup/dist/index.css'
 import {NavLink} from 'react-router-dom'
 import Moment from 'react-moment'
 import {capitalize} from '../../../../utils/functions'
-import {ProfileStateType} from '../../../../redux/reducers/profile.reducer'
-import {ProfileDataType} from '../../../../types/types'
+import {ProfileDataType} from '../../../../api/profile.api'
 
 type PropsType = {
     authorized: boolean,

@@ -1,13 +1,7 @@
-import {authApi} from '../../api/api'
 import {stopSubmit} from 'redux-form'
-import {
-    AsyncThunkType,
-    AuthResultCodes,
-    InferValueTypes,
-    LoginDataType,
-    RegistrationDataType,
-    ResultCodes
-} from '../../types/types'
+import {authApi, AuthResultCodes, LoginDataType, RegistrationDataType} from '../../api/auth.api'
+import {ResultCodes} from '../../api/core.api'
+import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
@@ -22,7 +16,7 @@ type AuthStateType = typeof initialState
 // REDUCER
 export const authReducer = (state: AuthStateType = initialState, action: AuthActionType): AuthStateType => {
     switch (action.type) {
-        case 'SET_USER': {
+        case 'rsn/auth/SET_USER': {
             return {
                 ...state,
                 authorized: true,
@@ -31,7 +25,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 username: action.username,
             }
         }
-        case 'CLEAR_USER': {
+        case 'rsn/auth/CLEAR_USER': {
             return {
                 ...state,
                 authorized: false,
@@ -40,7 +34,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 username: null
             }
         }
-        case 'SET_REGISTRATION_SUCCESSFUL': {
+        case 'rsn/auth/SET_REGISTRATION_SUCCESSFUL': {
             return {
                 ...state,
                 registrationSuccessful: action.registrationSuccessful
@@ -54,15 +48,15 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
 
 //region ACTION CREATORS
 export const authActions = {
-    setUser: (userId: string, email: string, username: string) => ({type: 'SET_USER', userId, email, username} as const),
-    clearUser: () => ({type: 'CLEAR_USER'} as const),
-    setRegistrationSuccessful: (registrationSuccessful: boolean) => ({type: 'SET_REGISTRATION_SUCCESSFUL', registrationSuccessful} as const)
+    setUser: (userId: string, email: string, username: string) => ({type: 'rsn/auth/SET_USER', userId, email, username} as const),
+    clearUser: () => ({type: 'rsn/auth/CLEAR_USER'} as const),
+    setRegistrationSuccessful: (registrationSuccessful: boolean) => ({type: 'rsn/auth/SET_REGISTRATION_SUCCESSFUL', registrationSuccessful} as const)
 }
-export type AuthActionType = ReturnType<InferValueTypes<typeof authActions>>
+export type AuthActionType = ReturnType<InferActionsTypes<typeof authActions>>
 //endregion
 
 //region THUNK CREATORS
-export const login = (loginFormData: LoginDataType): AsyncThunkType => async (dispatch) => {
+export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.login(loginFormData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(checkAuthorized())
@@ -72,8 +66,7 @@ export const login = (loginFormData: LoginDataType): AsyncThunkType => async (di
     }
 }
 
-// todo needs refactoring
-export const checkAuthorized = (): AsyncThunkType => async (dispatch) => {
+export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.me()
     if (res.resultCode === ResultCodes.success) {
         const {userId, email, username} = res.data
@@ -89,7 +82,7 @@ export const checkAuthorized = (): AsyncThunkType => async (dispatch) => {
     }
 }
 
-export const logout = (): AsyncThunkType => async (dispatch) => {
+export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.logout()
     if (res.resultCode === ResultCodes.success) {
         dispatch(authActions.clearUser())
@@ -99,7 +92,7 @@ export const logout = (): AsyncThunkType => async (dispatch) => {
     }
 }
 
-export const register = (registrationData: RegistrationDataType): AsyncThunkType => async (dispatch) => {
+export const register = (registrationData: RegistrationDataType): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.register(registrationData)
     if (res.resultCode === ResultCodes.success) {
         console.log(res)

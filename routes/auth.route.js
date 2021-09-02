@@ -6,7 +6,7 @@ const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
-// /api/auth/register
+// /coreApi/auth/register
 router.post('/register',
     [
         check('email', 'Invalid email').isEmail(),
@@ -79,7 +79,7 @@ router.post('/register',
     }
 )
 
-// /api/auth/refresh-tokens
+// /coreApi/auth/refresh-tokens
 router.post('/refresh-tokens',
     async (req, res) => {
         try {
@@ -123,7 +123,7 @@ router.post('/refresh-tokens',
     }
 )
 
-// /api/auth/login
+// /coreApi/auth/login
 router.post('/login',
     [
         check('email', 'Invalid email').isEmail(),
@@ -180,7 +180,7 @@ router.post('/login',
     }
 )
 
-// /api/auth/logout
+// /coreApi/auth/logout
 router.delete('/logout', async (req, res) => {
     try {
         const {accessToken} = req.cookies
@@ -202,7 +202,7 @@ router.delete('/logout', async (req, res) => {
     }
 })
 
-// /api/auth/me
+// /coreApi/auth/me
 router.get('/me', async (req, res) => {
     try {
         const {accessToken} = req.cookies

@@ -7,7 +7,7 @@ import classes from './LoginPage.module.scss'
 import {login} from '../../../redux/reducers/auth.reducer'
 import {connect} from 'react-redux'
 import {StateType} from '../../../redux/store'
-import {LoginDataType} from '../../../types/types'
+import {LoginDataType} from '../../../api/auth.api'
 
 type MapStatePropsType = {}
 

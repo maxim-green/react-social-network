@@ -1,6 +1,5 @@
-import {authActions} from './auth.reducer'
-import {authApi} from "../../api/api";
-import {AsyncThunkType, InferValueTypes} from '../../types/types'
+import {checkAuthorized} from './auth.reducer'
+import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
@@ -11,7 +10,7 @@ type AppStateType = typeof initialState
 // REDUCER
 export const appReducer = (state: AppStateType = initialState, action: AppActionType): AppStateType => {
     switch (action.type) {
-        case 'INITIALIZE_APP': {
+        case 'rsn/app/INITIALIZE_APP': {
             return {
                 ...state,
                 initialized: action.initialized
@@ -25,25 +24,16 @@ export const appReducer = (state: AppStateType = initialState, action: AppAction
 
 //region ACTION CREATORS
 export const appActions = {
-    setInitialized: (initialized: boolean) => ({type: 'INITIALIZE_APP', initialized} as const)
+    setInitialized: (initialized: boolean) => ({type: 'rsn/app/INITIALIZE_APP', initialized} as const)
 }
-export type AppActionType = ReturnType<InferValueTypes<typeof appActions>>
+export type AppActionType = ReturnType<InferActionsTypes<typeof appActions>>
 //endregion
 
 //region THUNK CREATORS
-// todo refactor repeating code!!!
-export const initializeApp = (): AsyncThunkType => async (dispatch) => {
-    const res = await authApi.me()
-    if (res.resultCode === 0) {
-        const {userId, email, username} = res.data
-        dispatch(authActions.setUser(userId, email, username))
-    }
-    if (res.resultCode === 1) {
-        console.log(res)
-    }
-    if (res.resultCode === 10) {
-        console.log(res)
-    }
+export const initializeApp = (): ThunkType<AppActionType> => async (dispatch) => {
+    await Promise.all([ // put all that needed to be checked to init app inside this array
+        dispatch(checkAuthorized())
+    ])
     dispatch(appActions.setInitialized(true))
 }
 //endregion

@@ -11,7 +11,7 @@ const path = require('path')
 const sharp = require('sharp')
 
 
-// /api/profile/:username
+// /coreApi/profile/:username
 router.get('/:username', async (req, res) => {
     try {
         const {username} = req.params
@@ -26,7 +26,7 @@ router.get('/:username', async (req, res) => {
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
-// /api/profile/avatar
+// /coreApi/profile/avatar
 router.put(
     '/avatar',
     upload.single('avatar'),
@@ -66,7 +66,7 @@ router.put(
     }
 )
 
-// /api/profile
+// /coreApi/profile
 router.put('/', async (req, res) => {
     try {
         const {accessToken} = req.cookies

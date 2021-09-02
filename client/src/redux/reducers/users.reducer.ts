@@ -1,5 +1,7 @@
-import {usersApi} from '../../api/api'
-import {AsyncThunkType, InferValueTypes, ResultCodes, UserType} from '../../types/types'
+import {UserType} from '../../types/types'
+import {usersApi} from '../../api/users.api'
+import {ResultCodes} from '../../api/core.api'
+import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
@@ -10,19 +12,19 @@ export type UsersStateType = typeof initialState
 // REDUCER
 export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
     switch (action.type) {
-        case 'SET_USERS': {
+        case 'rsn/users/SET_USERS': {
             return {
                 ...state,
                 users: action.users
             }
         }
-        case 'SET_IS_FRIEND': {
+        case 'rsn/users/SET_IS_FRIEND': {
             return {
                 ...state,
                 users: state.users.map(user => (user.userId === action.userId) ? {...user, isFriend: action.isFriend} : user)
             }
         }
-        case 'SET_IS_SUBSCRIPTION': {
+        case 'rsn/users/SET_IS_SUBSCRIPTION': {
             return {
                 ...state,
                 users: state.users.map(user => (user.userId === action.userId) ? {...user, isSubscription: action.isSubscription} : user)
@@ -36,15 +38,15 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 
 //region ACTION CREATORS
 export const usersActions = {
-    setUsers: (users: Array<UserType>) => ({type: 'SET_USERS', users} as const),
-    setIsFriend: (userId: string, isFriend: boolean) => ({type: 'SET_IS_FRIEND', userId, isFriend} as const),
-    setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
+    setUsers: (users: Array<UserType>) => ({type: 'rsn/users/SET_USERS', users} as const),
+    setIsFriend: (userId: string, isFriend: boolean) => ({type: 'rsn/users/SET_IS_FRIEND', userId, isFriend} as const),
+    setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'rsn/users/SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
 }
-export type UsersActionType = ReturnType<InferValueTypes<typeof usersActions>>
+export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 //endregion
 
 //region THUNK CREATORS // todo: add proper types to dispatch
-export const getUsers = (): AsyncThunkType => async (dispatch) => {
+export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.getUsers()
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setUsers(res.data.users))
@@ -54,7 +56,7 @@ export const getUsers = (): AsyncThunkType => async (dispatch) => {
     }
 }
 
-export const addFriend = (userId: string): AsyncThunkType => async (dispatch) => {
+export const addFriend = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.addFriend(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsFriend(userId, true))
@@ -64,7 +66,7 @@ export const addFriend = (userId: string): AsyncThunkType => async (dispatch) =>
     }
 }
 
-export const deleteFriend = (userId: string): AsyncThunkType => async (dispatch) => {
+export const deleteFriend = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.deleteFriend(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsFriend(userId, false))
@@ -74,7 +76,7 @@ export const deleteFriend = (userId: string): AsyncThunkType => async (dispatch)
     }
 }
 
-export const follow = (userId: string): AsyncThunkType => async (dispatch) => {
+export const follow = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.addSubscription(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, true))
@@ -84,7 +86,7 @@ export const follow = (userId: string): AsyncThunkType => async (dispatch) => {
     }
 }
 
-export const unfollow = (userId: string): AsyncThunkType => async (dispatch) => {
+export const unfollow = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.deleteSubscription(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, false))

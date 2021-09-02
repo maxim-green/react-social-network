@@ -4,7 +4,7 @@ import Button from "../../../common/Button/Button";
 import Form from "../../../common/Form/Form";
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import {email, minLength6, required} from "../../../../utils/validators";
-import {RegistrationDataType} from '../../../../types/types'
+import {RegistrationDataType} from '../../../../api/auth.api'
 
 type NativePropsType = {
     registrationSuccessful: boolean

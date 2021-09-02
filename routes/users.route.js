@@ -13,7 +13,7 @@ const mongoose = require('mongoose')
 const auth = require('../middleware/auth.middleware')
 
 
-// /api/users
+// /coreApi/users
 router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find().lean()
@@ -52,7 +52,7 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
-// /api/users/friend/:targetUserId
+// /coreApi/users/friend/:targetUserId
 router.post('/friend/:targetUserId', auth, async (req, res) => {
     try {
         if (!req.userId) {
@@ -70,7 +70,7 @@ router.post('/friend/:targetUserId', auth, async (req, res) => {
     }
 })
 
-// /api/users/friend/:targetUserId
+// /coreApi/users/friend/:targetUserId
 router.delete('/friend/:targetUserId', auth, async (req, res) => {
     try {
         if (!req.userId) {
@@ -88,7 +88,7 @@ router.delete('/friend/:targetUserId', auth, async (req, res) => {
     }
 })
 
-// /api/users/subscription/:targetUserId
+// /coreApi/users/subscription/:targetUserId
 router.post('/subscription/:targetUserId', auth, async (req, res) => {
     try {
         if (!req.userId) {
@@ -106,7 +106,7 @@ router.post('/subscription/:targetUserId', auth, async (req, res) => {
     }
 })
 
-// /api/users/subscription/:targetUserId
+// /coreApi/users/subscription/:targetUserId
 router.delete('/subscription/:targetUserId', auth, async (req, res) => {
     try {
         if (!req.userId) {

@@ -2,9 +2,9 @@ import React from 'react'
 import Card from '../../common/Card/Card'
 import EditProfileForm from './EditProfileForm/EditProfileForm'
 import {connect} from 'react-redux'
-import {ProfileStateType, updateProfile} from '../../../redux/reducers/profile.reducer'
+import {updateProfile} from '../../../redux/reducers/profile.reducer'
 import {StateType} from '../../../redux/store'
-import {ProfileDataType} from '../../../types/types'
+import {ProfileDataType} from '../../../api/profile.api'
 
 type MapStatePropsType = {
     profileData: ProfileDataType
