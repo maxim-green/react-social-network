@@ -1,12 +1,14 @@
 import {FormAction, stopSubmit} from 'redux-form'
-import {AvatarType, FormDataType} from '../../types/types'
+import {AvatarType, FormDataType, PostType} from '../../types/types'
 import {profileApi, ProfileDataType} from '../../api/profile.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
+import {postsApi, PostsDataType} from '../../api/posts.api'
 
 // INITIAL STATE
 const initialState = {
-    data: {} as ProfileDataType
+    data: {} as ProfileDataType,
+    posts: [] as Array<PostType>
 }
 export type ProfileStateType = typeof initialState
 
@@ -34,6 +36,12 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 },
             }
         }
+        case 'rsn/profile/SET_POSTS': {
+            return {
+                ...state,
+                posts: action.posts
+            }
+        }
         default: {
             return state
         }
@@ -44,7 +52,8 @@ export default reducer
 //regions ACTION CREATORS
 export const profileActions = {
     setProfile: (profileData: ProfileDataType) => ({type: 'rsn/profile/SET_PROFILE', profileData} as const),
-    setAvatar: (avatar: AvatarType) => ({type: 'rsn/profile/SET_AVATAR', avatar} as const)
+    setAvatar: (avatar: AvatarType) => ({type: 'rsn/profile/SET_AVATAR', avatar} as const),
+    setPosts: (posts: Array<PostType>) => ({type: 'rsn/profile/SET_POSTS', posts} as const)
 }
 export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActions>>
 //endregion
@@ -75,6 +84,16 @@ export const updateAvatar = (formData: FormDataType): ThunkType<ProfileActionTyp
     const res = await profileApi.updateAvatar(formData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setAvatar(res.data))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const getPosts = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
+    const res = await postsApi.getUserPosts(username)
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(profileActions.setPosts(res.data.posts))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

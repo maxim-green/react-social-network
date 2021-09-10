@@ -13,7 +13,7 @@ const sharp = require('sharp')
 const auth = require('../middleware/auth.middleware')
 
 
-// /coreApi/posts/
+// /api/posts/
 // router.get('/', async (req, res) => {
 //     try {
 //
@@ -23,27 +23,27 @@ const auth = require('../middleware/auth.middleware')
 //     }
 // })
 
-// /coreApi/posts/
+// /api/posts/
 router.get('/', async (req, res) => {
     try {
         const posts = await Post.find()
-        res.status(200).json({resultCode: 0, message: "Success", posts})
+        res.status(200).json({resultCode: 0, message: "Success", data: { posts }})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
-// /coreApi/posts/:userId
-router.get('/:userId', async (req, res) => {
+// /api/posts/:userId
+router.get('/:username', async (req, res) => {
     try {
-        const posts = await Post.find({'author.id': req.params.userId})
-        res.status(200).json({resultCode: 0, message: "Success", posts})
+        const posts = await Post.find({'author.username': req.params.username})
+        res.status(200).json({resultCode: 0, message: "Success", data: { posts } })
     } catch (e) {
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
-// /coreApi/posts/add
+// /api/posts/add
 router.post('/add', auth, async (req, res) => {
     try {
         if (!req.userId) {

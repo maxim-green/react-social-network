@@ -13,7 +13,14 @@ export type UserType = {
     firstName: string
     lastName: string
     avatar: AvatarType
-    isFriend: boolean
-    isSubscription: boolean
+    isFriend?: boolean
+    isSubscription?: boolean
+}
+
+// type for post-items
+export type PostType = {
+    creationDate: string,
+    author: UserType,
+    text: string
 }
 

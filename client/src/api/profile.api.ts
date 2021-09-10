@@ -3,7 +3,7 @@ import {coreApi, handleError, handleResponse} from './core.api'
 
 // used for getting and updating user profile
 export type ProfileDataType = {
-    userId?: string,
+    userId: string,
     firstName?: string,
     lastName?: string,
     birthDate?: string,

@@ -2,17 +2,21 @@ import React from 'react'
 import classes from './ProfilePosts.module.scss'
 import NewPostInput from '../../../NewPostInput/NewPostInput'
 import Post from '../../../Post/Post'
+import {PostType} from '../../../../types/types'
+import moment from 'moment'
 
 type PropsType = {
     authorized: boolean
     authorizedUserId: string | null
     userId?: string | null
+    posts: Array<PostType>
 }
 
 const ProfilePosts: React.FC<PropsType> = ({
                                                authorized,
                                                authorizedUserId,
-                                               userId
+                                               userId,
+                                               posts
                                            }) => {
     const isAuthorizedUserProfile = authorized && (authorizedUserId === userId)
     const lorem = `
@@ -27,9 +31,14 @@ const ProfilePosts: React.FC<PropsType> = ({
         <>
             {isAuthorizedUserProfile && <NewPostInput/>}
             <div className={classes.posts}>
-                <Post text={lorem} username="Max Georgievsky" date="10.12.2014" liked/>
-                <Post text={lorem} username="Max Georgievsky" date="10.12.2015"/>
-                <Post text={lorem} username="Max Georgievsky" date="10.12.2016" liked/>
+                {
+                    posts.slice().reverse().map(post => <Post
+                        text={post.text}
+                        username={post.author.firstName + ' ' + post.author.lastName}
+                        date={moment(post.creationDate).format('DD.MM.YYYY')}
+                        liked
+                    />)
+                }
             </div>
         </>
     )
