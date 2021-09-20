@@ -1,77 +1,8 @@
-@import "../../../../variables";
 
-.coverImage {
-  padding: 15px 18px;
-  min-height: 200px;
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
 
-.profileHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 15px 0 54px 0;
-  padding: 0 18px 0 40px;
-}
 
-.avatar {
-  margin-top: -60px;
-}
 
-.profileHeaderInfo {
-  margin-left: 24px;
-  max-width: 345px;
-  width: 100%;
-}
 
-.name {
-  font-size: 24px;
-  line-height: 24px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
 
-.status {
-  font-size: 14px;
-  color: $mid-grey;
-}
 
-.editProfile {
-  margin-left: auto;
-}
-
-.profileInfo {
-  display: flex;
-  justify-content: flex-start;
-  padding: 0 30px;
-  margin-bottom: 20px;
-}
-
-.profileInfoColumn {
-  position: relative;
-  width: 33%;
-  padding: 0 20px;
-  &:first-child {
-    padding-left: 0;
-  }
-  &:last-child {
-    padding-right: 0;
-  }
-
-  & + & {
-    &::after {
-      position: absolute;
-      content: "";
-      width: 1px;
-      height: 88px;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: $light-grey-2;
-    }
-  }
-}
 

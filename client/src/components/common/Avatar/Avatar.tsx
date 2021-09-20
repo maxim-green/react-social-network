@@ -5,6 +5,7 @@ import editIconWhite from '../../../assets/images/edit-icon-white.svg'
 import Popup from 'reactjs-popup'
 import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
 import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
+import {FormSubmitHandler, SubmitHandler} from 'redux-form'
 
 type PropsType = {
     img?: string
@@ -12,7 +13,7 @@ type PropsType = {
     contextBgColor?: string
     owner?: boolean
     online?: boolean
-    onSubmit?: any // todo it seems like redux-form types needs to be used
+    onSubmit?: FormSubmitHandler<{ avatar: File }> // todo it seems like redux-form types needs to be used
 }
 
 const Avatar: React.FC<PropsType> = ({
