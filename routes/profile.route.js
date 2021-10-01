@@ -9,6 +9,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
+const auth = require('../middleware/auth.middleware')
 
 
 // /coreApi/profile/:username
@@ -30,13 +31,12 @@ const upload = multer({storage})
 router.put(
     '/avatar',
     upload.single('avatar'),
+    auth,
     async (req, res) => {
+        console.log(req.file)
         try {
-            const {accessToken} = req.cookies
-            if (!accessToken) {
-                return res.status(403).json({resultCode: 1, message: "Not authorized"})
-            }
-            const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
+            const {user} = req
+            if (!user) return res.status(403).json({resultCode: 1, message: "Not authorized"})
 
             const lgPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-lg${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
@@ -47,17 +47,16 @@ router.put(
                 .resize(120, 120, {fit: 'cover'})
                 .toFile(path.join(__dirname, '..', smPath))
 
-            const avatar = {
+            user.profileData.avatar = {
                     small: `http://localhost:${config.get('port')}${smPath}`,
                     large: `http://localhost:${config.get('port')}${lgPath}`
             }
-
-            await User.findByIdAndUpdate(userId, {$set: {'profileData.avatar': avatar}})
+            await user.save()
 
             res.status(200).json({
                 resultCode: 0,
                 message: "File uploaded",
-                data: avatar
+                data: user.profileData.avatar
             })
         } catch (e) {
             console.log(e)
@@ -67,16 +66,13 @@ router.put(
 )
 
 // /coreApi/profile
-router.put('/', async (req, res) => {
+router.put('/', auth, async (req, res) => {
     try {
-        const {accessToken} = req.cookies
-        if (!accessToken) {
-            return res.status(403).json({resultCode: 1, message: "Not authorized"})
-        }
-        const {username} = await jwt.verify(accessToken, config.get('jwtSecret'))
+        const {user} = req
+        if (!user) return res.status(403).json({resultCode: 1, message: "Not authorized"})
 
-        const profileData = req.body
-        await User.updateOne({username}, {$set: {profileData}})
+        user.profileData = req.body
+        await user.save()
 
         res.status(200).json({resultCode: 0, message: "ProfileInfo updated"})
     } catch (e) {

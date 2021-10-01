@@ -18,10 +18,10 @@ router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find().lean()
 
+        const {user} = req
         let responseUsers
-        if (req.userId) {
-            const {friends, subscriptions} = await User.findById(req.userId)
-
+        if (user) {
+            const {friends, subscriptions} = user
             responseUsers = users.map(user => ({
                 userId: user._id,
                 username: user.username,
@@ -33,7 +33,7 @@ router.get('/', auth, async (req, res) => {
             }))
         }
 
-        if (!req.userId) {
+        if (!user) {
             responseUsers = users.map(user => ({
                 userId: user._id,
                 username: user.username,
@@ -55,13 +55,15 @@ router.get('/', auth, async (req, res) => {
 // /coreApi/users/friend/:targetUserId
 router.post('/friend/:targetUserId', auth, async (req, res) => {
     try {
-        if (!req.userId) {
+        const {user} = req
+        if (!user) {
             return res.status(403).json({resultCode: 1, message: "Not authorized"})
         }
 
         const {targetUserId} = req.params
 
-        await User.findByIdAndUpdate(req.userId, {$addToSet: { friends: targetUserId }})
+        user.friends.push(targetUserId)
+        await user.save()
 
         res.status(200).json({resultCode: 0, message: "Friend successfully added"})
     } catch (e) {
@@ -73,13 +75,18 @@ router.post('/friend/:targetUserId', auth, async (req, res) => {
 // /coreApi/users/friend/:targetUserId
 router.delete('/friend/:targetUserId', auth, async (req, res) => {
     try {
-        if (!req.userId) {
+        const {user} = req
+        if (!user) {
             return res.status(403).json({resultCode: 1, message: "Not authorized"})
         }
 
         const {targetUserId} = req.params
+        if (!user.friends.includes(targetUserId)) return res.status(400).json({resultCode: 1, message: "Not a friend"})
 
-        await User.findByIdAndUpdate(req.userId, {$pull: { friends: targetUserId }})
+        const index = user.friends.indexOf(targetUserId)
+        user.friends.splice(index, 1)
+        user.save()
+        // await User.findByIdAndUpdate(req.userId, {$pull: { friends: targetUserId }})
 
         res.status(200).json({resultCode: 0, message: "Friend successfully removed"})
     } catch (e) {

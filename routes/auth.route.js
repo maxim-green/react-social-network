@@ -4,9 +4,11 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
-const config = require('config')
+const defineUserByRefreshToken = require('../middleware/defineUserByRefreshToken.middleware')
+const auth = require('../middleware/auth.middleware')
+const generateTokens = require('../utils/functions')
 
-// /coreApi/auth/register
+// /api/auth/register
 router.post('/register',
     [
         check('email', 'Invalid email').isEmail(),
@@ -79,43 +81,23 @@ router.post('/register',
     }
 )
 
-// /coreApi/auth/refresh-tokens
-router.post('/refresh-tokens',
+
+
+// /api/auth/refresh-tokens
+router.post('/refresh-tokens', defineUserByRefreshToken,
     async (req, res) => {
         try {
-            const {refreshToken} = req.cookies
-            const {userId} = await jwt.verify(refreshToken, config.get('jwtSecret'))
-            const user = await User.findById(userId)
+            const {user} = req
+            if (!user) return res.status(400).json({resultCode: 1, message: "Invalid refresh token"})
 
-            const isEqual = refreshToken === user.refreshToken
-            if (!isEqual) {
-                user.refreshToken = ""
-                await user.save()
-                return res.status(400).json({resultCode: 1, message: "Refresh tokens not equal"})
-            }
-
-            // todo refactor to a separate function
-            const access_token = jwt.sign(
-                {userId: user.id, username: user.username},
-                config.get('jwtSecret'),
-                {expiresIn: '1m'}
-            )
-
-            const refresh_token = jwt.sign(
-                {userId: user.id, username: user.username},
-                config.get('jwtSecret'),
-                {expiresIn: '60d'}
-            )
-            user.refreshToken = refresh_token
-            await user.save()
-            // todo refactor to a separate function
-
+            const {accessToken, refreshToken} = await generateTokens(user)
             res
-                .cookie("accessToken", access_token, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
-                .cookie("refreshToken", refresh_token, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
+                .cookie("accessToken", accessToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
+                .cookie("refreshToken", refreshToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
                 .status(200)
                 .json({resultCode: 0, message: "Tokens succesfully refreshed"})
         } catch (e) {
+            console.log(e)
             if (e instanceof jwt.JsonWebTokenError) return res.status(403).json({resultCode: 1, message: "Token invalid"})
             if (e instanceof jwt.TokenExpiredError) return res.status(403).json({resultCode: 1, message: "Token expired"})
             res.status(500).json({resultCode: 1, message: "Something went wrong :("})
@@ -152,25 +134,11 @@ router.post('/login',
                 return res.status(400).json({resultCode: 1, message: "Wrong e-mail or password."})
             }
 
-            // todo refactor to a separate function
-            const access_token = jwt.sign(
-                {userId: user.id, username: user.username},
-                config.get('jwtSecret'),
-                {expiresIn: '1m'}
-            )
-
-            const refresh_token = jwt.sign(
-                {userId: user.id, username: user.username},
-                config.get('jwtSecret'),
-                {expiresIn: '60d'}
-            )
-            user.refreshToken = refresh_token
-            await user.save()
-            // todo refactor to a separate function
+            const {accessToken, refreshToken} = await generateTokens(user)
 
             res
-                .cookie("accessToken", access_token, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
-                .cookie("refreshToken", refresh_token, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
+                .cookie("accessToken", accessToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
+                .cookie("refreshToken", refreshToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
                 .status(200)
                 .json({resultCode: 0, message: "Succesfully logged in"})
         } catch (e) {
@@ -181,42 +149,37 @@ router.post('/login',
 )
 
 // /coreApi/auth/logout
-router.delete('/logout', async (req, res) => {
+router.delete('/logout', auth, async (req, res) => {
     try {
-        const {accessToken} = req.cookies
-        if (!accessToken) {
+        const { user } = req
+        if (!user) {
             return res.status(403).json({resultCode: 1, message: "Not authorized"})
         }
 
-        const user = await jwt.verify(accessToken, config.get('jwtSecret'))
         user.refreshToken = ""
-
         res
             .clearCookie('accessToken')
+            .clearCookie('refreshToken')
             .status(200)
             .json({resultCode: 0, message: "Successfully logged out"})
     } catch (e) {
-        if (e instanceof jwt.JsonWebTokenError) return res.status(403).json({resultCode: 1, message: "Token invalid"})
-        if (e instanceof jwt.TokenExpiredError) return res.status(403).json({resultCode: 1, message: "Token expired"})
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
 // /coreApi/auth/me
-router.get('/me', async (req, res) => {
+router.get('/me', auth, async (req, res) => {
     try {
-        const {accessToken} = req.cookies
-        if (!accessToken) {
+        const { user } = req
+        if (!user) {
             return res.status(403).json({resultCode: 1, message: "Not authorized"})
         }
 
-        const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
-        const {email, username} = await User.findById(userId)
+        const {email, username} = await User.findById(user.id)
 
-        res.status(200).json({resultCode: 0, message: "Authorized", data: {userId, email, username}})
+        res.status(200).json({resultCode: 0, message: "Authorized", data: {userId: user.id, email, username}})
     } catch (e) {
-        if (e instanceof jwt.TokenExpiredError) return res.status(403).json({resultCode: 10, message: "Token expired"})
-        if (e instanceof jwt.JsonWebTokenError) return res.status(403).json({resultCode: 1, message: "Token invalid"})
+        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
