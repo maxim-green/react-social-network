@@ -1,10 +1,14 @@
-import React from 'react'
-import Input from "../../../common/Input/Input";
-import Button from "../../../common/Button/Button";
-import Form from "../../../common/Form/Form";
+import React, {useEffect} from 'react'
+import Input from "../common/Input/Input";
+import Button from "../common/Button/Button";
+import Form from "../common/Form/Form";
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
-import {email, minLength6, required} from "../../../../utils/validators";
-import {RegistrationDataType} from '../../../../api/auth.api'
+import {email, minLength6, required} from "../../utils/validators";
+import {RegistrationDataType} from '../../api/auth.api'
+import {useDispatch, useSelector} from 'react-redux'
+import {StateType} from '../../redux/store'
+import {ThunkDispatch} from 'redux-thunk'
+import {authActions, AuthActionType, register} from '../../redux/reducers/auth.reducer'
 
 type NativePropsType = {
     registrationSuccessful: boolean
@@ -38,6 +42,28 @@ const RegistrationForm: React.FC<PropsType> = (props) => {
     )
 }
 
-export default reduxForm<RegistrationDataType, NativePropsType>({
+const RegistrationReduxForm = reduxForm<RegistrationDataType, NativePropsType>({
     form: 'registration'
 })(RegistrationForm)
+
+
+const {setRegistrationSuccessful} = authActions
+const RegistrationFormContainer: React.FC = () => {
+    const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
+    const dispatch: ThunkDispatch<StateType, any, AuthActionType> = useDispatch()
+
+    const onSubmit = async (registrationFormData: RegistrationDataType) => {
+        dispatch(register(registrationFormData))
+    }
+
+    useEffect(() => {
+        dispatch(setRegistrationSuccessful(false))
+    }, [setRegistrationSuccessful])
+
+    return <RegistrationReduxForm
+        onSubmit={onSubmit}
+        registrationSuccessful={registrationSuccessful}
+    />
+}
+
+export default RegistrationFormContainer

@@ -1,6 +1,6 @@
 import classes from "./SideBar.module.scss";
 import Card from "../common/Card/Card";
-import LoginForm from "../pages/LoginPage/LoginForm/LoginForm";
+import LoginForm from "../forms/LoginForm";
 import Navigation from "./Navigation/Navigation";
 import MyFriends from "./MyFriends/MyFriends";
 import React from "react";

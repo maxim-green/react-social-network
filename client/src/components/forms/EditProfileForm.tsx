@@ -1,13 +1,18 @@
 import React from 'react'
-import Input from '../../../common/Input/Input'
-import Button from '../../../common/Button/Button'
-import Form from '../../../common/Form/Form'
+import Input from '../common/Input/Input'
+import Button from '../common/Button/Button'
+import Form from '../common/Form/Form'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
-import {required} from '../../../../utils/validators'
+import {required} from '../../utils/validators'
 import {useHistory} from 'react-router-dom'
-import {capitalize} from '../../../../utils/functions'
-import {ProfileDataType} from '../../../../api/profile.api'
-import arrowBackIcon from '../../../../assets/images/arrow_back_black_24dp.svg'
+import {capitalize} from '../../utils/functions'
+import {ProfileDataType} from '../../api/profile.api'
+import arrowBackIcon from '../../assets/images/arrow_back_black_24dp.svg'
+import {useDispatch, useSelector} from 'react-redux'
+import {StateType} from '../../redux/store'
+import {useAuthCheck} from '../../utils/hooks'
+import {ThunkDispatch} from 'redux-thunk'
+import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
 
 type NativePropsType = {}
 
@@ -87,6 +92,24 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
     )
 }
 
-export default reduxForm<ProfileDataType, NativePropsType>({
+const EditProfileReduxForm = reduxForm<ProfileDataType, NativePropsType>({
     form: 'editProfile'
 })(EditProfileForm)
+
+const EditProfileFormContainer: React.FC = () => {
+    const profileData = useSelector((state: StateType) => state.profile.data)
+    const dispatch: ThunkDispatch<StateType, any, ProfileActionType> = useDispatch()
+
+    useAuthCheck()
+
+    const onSubmit = (profileData: ProfileDataType) => {
+        dispatch(updateProfile(profileData))
+    }
+
+    return <EditProfileReduxForm
+        initialValues={profileData}
+        onSubmit={onSubmit}
+    />
+}
+
+export default EditProfileFormContainer

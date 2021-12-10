@@ -1,12 +1,17 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import Input from '../../../common/Input/Input'
-import Checkbox from '../../../common/Checkbox/Checkbox'
-import Button from '../../../common/Button/Button'
-import Form from '../../../common/Form/Form'
+import Input from '../common/Input/Input'
+import Checkbox from '../common/Checkbox/Checkbox'
+import Button from '../common/Button/Button'
+import Form from '../common/Form/Form'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
-import {email, minLength6, required} from '../../../../utils/validators'
-import {LoginDataType} from '../../../../api/auth.api'
+import {email, minLength6, required} from '../../utils/validators'
+import {login} from '../../redux/reducers/auth.reducer'
+import {LoginDataType} from '../../api/auth.api'
+import {useDispatch} from 'react-redux'
+import {ThunkDispatch} from 'redux-thunk'
+import {StateType} from '../../redux/store'
+import {AuthActionType} from '../../redux/reducers/auth.reducer'
 
 type NativePropsType = {}
 
@@ -41,6 +46,18 @@ const LoginForm: React.FC<PropsType> = (props) => {
     )
 }
 
-export default reduxForm<LoginDataType, NativePropsType>({
+const LoginReduxForm = reduxForm<LoginDataType, NativePropsType>({
     form: 'login'
 })(LoginForm)
+
+const LoginFormContainer: React.FC = () => {
+    const dispatch: ThunkDispatch<StateType, any, AuthActionType> = useDispatch()
+    
+    const onSubmit = (loginFormData: LoginDataType) => {
+        dispatch(login(loginFormData))
+    }
+
+    return <LoginReduxForm onSubmit={onSubmit}/>
+}
+
+export default LoginFormContainer
