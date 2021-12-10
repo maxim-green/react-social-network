@@ -6,11 +6,11 @@ import React from 'react'
 import {ContactsType, LocationType} from '../../../../../types/types'
 
 type PropsTypes = {
-    birthDate?: string
-    location?: LocationType
-    contacts?: ContactsType
-    bio?: string
-    interests?: string
+    birthDate: string | null
+    location: LocationType
+    contacts: ContactsType
+    bio: string | null
+    interests: string | null
 }
 
 const ProfileInfoData: React.FC<PropsTypes> = ({
@@ -31,17 +31,15 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
                     {location?.country}, {location?.city}
                 </ProfileInfoItem>}
 
-                {contacts && Object.keys(contacts).map(key => {
-                    if (contacts && contacts[key]) return <ProfileInfoItem
-                        title={capitalize(key) + ':'}>{contacts[key]}</ProfileInfoItem>
+                {contacts && Object.keys(contacts).map((key) => {
+                    const href: string | undefined = contacts[key as keyof ContactsType] || undefined
+                    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem
+                        title={capitalize(key) + ':'}>
+                        <a href={href}>{contacts[key as keyof ContactsType]}</a>
+                    </ProfileInfoItem>
                     return null
                 })}
             </div>
-            {bio && <div className={classes.profileInfoColumn}>
-                <ProfileInfoItem title="Bio:" orientation="vertical">
-                    {bio}
-                </ProfileInfoItem>
-            </div>}
             {interests && <div className={classes.profileInfoColumn}>
                 <ProfileInfoItem title="Interests:" orientation="vertical">
                     {interests}

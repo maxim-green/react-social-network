@@ -45,7 +45,7 @@ export const usersActions = {
 export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 //endregion
 
-//region THUNK CREATORS // todo: add proper types to dispatch
+//region THUNK CREATORS
 export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.getUsers()
     if (res.resultCode === ResultCodes.success) {

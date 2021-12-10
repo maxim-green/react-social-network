@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {getPosts, getUserData, updateAvatar} from '../../../redux/reducers/profile.reducer'
+import {addPost, deletePost, getPosts, getUserData, updateAvatar} from '../../../redux/reducers/profile.reducer'
 import {connect} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import {compose} from 'redux'
@@ -8,13 +8,17 @@ import ProfilePosts from './ProfilePosts/ProfilePosts'
 import {checkAuthorized} from '../../../redux/reducers/auth.reducer'
 import {StateType} from '../../../redux/store'
 import {ProfileDataType} from '../../../api/profile.api'
-import {PostType} from '../../../types/types'
+import {NewPostType, PostType} from '../../../types/types'
+import {Crop} from 'react-image-crop'
+import {Point} from 'react-easy-crop/types'
+
 
 type MapStatePropsType = {
     authorized: boolean
     authorizedUserId: string | null
     profileData: ProfileDataType
     posts: Array<PostType>
+    isAddPostPending: boolean
 }
 
 type MapDispatchPropsType = {
@@ -22,13 +26,19 @@ type MapDispatchPropsType = {
     getUserData: (userId: string) => void
     updateAvatar: (avatarFormData: FormData) => void
     getPosts: (userId: string) => void
+    addPost: (text: string) => void
+    deletePost: (id: string) => void
 }
 
 type NativePropsType = {}
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
 
-const ProfilePage: React.FC<PropsType & { onAvatarSubmit: ({avatar}: { avatar: File }) => void }> = (props) => {
+const ProfilePage: React.FC<PropsType & {
+    onAvatarSubmit: (e: Event, image: File, crop: Point) => void
+    onNewPostSubmit: (newPostData: NewPostType) => void
+    onPostDelete: (id: string) => void
+}> = (props) => {
     return (
         <>
             <ProfileInfo
@@ -42,6 +52,9 @@ const ProfilePage: React.FC<PropsType & { onAvatarSubmit: ({avatar}: { avatar: F
                 authorizedUserId={props.authorizedUserId}
                 userId={props.profileData.userId}
                 posts={props.posts}
+                isAddPostPending={props.isAddPostPending}
+                onNewPostSubmit={props.onNewPostSubmit}
+                onPostDelete={props.onPostDelete}
             />
         </>
     )
@@ -50,21 +63,31 @@ const ProfilePage: React.FC<PropsType & { onAvatarSubmit: ({avatar}: { avatar: F
 const ProfilePageContainer: React.FC<PropsType> = (props) => {
     const {username}: { username: string } = useParams()
 
-    const {checkAuthorized, getUserData, updateAvatar, getPosts} = props
+    const {getUserData, updateAvatar, getPosts, addPost, deletePost} = props
     useEffect(() => {
         getUserData(username)
         getPosts(username)
-    }, [checkAuthorized, getUserData, username])
+    }, [getUserData, username, getPosts])
 
-    const onAvatarSubmit = ({avatar}: { avatar: File }) => {
+    const onAvatarSubmit = (e: Event, image: File, crop: Point) => {
         const formData = new FormData()
-        formData.append('avatar', avatar)
-        console.log(formData.entries())
+        formData.append('avatar', image)
+        formData.append('crop', JSON.stringify(crop))
         updateAvatar(formData)
     }
 
+    const onNewPostSubmit = (newPostData: NewPostType) => {
+
+        const {newPostText} = newPostData
+        addPost(newPostText)
+    }
+
+    const onPostDelete = (id: string) => {
+        deletePost(id)
+    }
+
     return (
-        <ProfilePage {...props} onAvatarSubmit={onAvatarSubmit}/>
+        <ProfilePage {...props} onAvatarSubmit={onAvatarSubmit} onNewPostSubmit={onNewPostSubmit} onPostDelete={onPostDelete}/>
     )
 }
 
@@ -73,13 +96,14 @@ const mapStateToProps = (state: StateType) => {
         authorized: state.auth.authorized,
         authorizedUserId: state.auth.userId,
         profileData: state.profile.data,
-        posts: state.profile.posts
+        posts: state.profile.posts,
+        isAddPostPending: state.profile.isAddPostPending
     }
 }
 
 export default compose(
     connect<MapStatePropsType, MapDispatchPropsType, NativePropsType, StateType>(
         mapStateToProps,
-        {checkAuthorized, getUserData, updateAvatar, getPosts}
+        {checkAuthorized, getUserData, updateAvatar, getPosts, addPost, deletePost}
     )
 )(ProfilePageContainer)

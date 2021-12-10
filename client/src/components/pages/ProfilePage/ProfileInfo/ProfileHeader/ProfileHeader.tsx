@@ -5,15 +5,16 @@ import Button from '../../../../common/Button/Button'
 import editIcon from '../../../../../assets/images/edit-icon.svg'
 import React from 'react'
 import {AvatarType} from '../../../../../types/types'
-import {FormSubmitHandler} from 'redux-form'
+import {Crop} from 'react-image-crop'
+import {Point} from 'react-easy-crop/types'
 
 type PropsType = {
     owner?: boolean
     firstName: string,
     lastName: string,
-    status?: string,
-    avatar?: AvatarType
-    onAvatarSubmit?: FormSubmitHandler<{ avatar: File }>
+    status: string | null,
+    avatar: AvatarType
+    onAvatarSubmit?: (e: Event, image: File, crop: Point) => void
 }
 
 const ProfileHeader: React.FC<PropsType> = ({

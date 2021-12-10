@@ -6,6 +6,7 @@ import Button from "../../common/Button/Button";
 
 type PropsType = {
     username: string | null
+    avatar: string | null
     logout: () => void
 }
 
@@ -18,7 +19,7 @@ const UserControl: React.FC<PropsType> = (props) => {
 
     return (
         <div className={classes.userControl}>
-            <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" contextBgColor="#373C42" online size='sm'/></NavLink>
+            <NavLink to="/profile/1"><Avatar img={props.avatar} contextBgColor="#373C42" online size='sm'/></NavLink>
             <div className={classes.userControlDropdown}>
                 <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
                 {isOpened && <div className={classes.userControlList}>

@@ -1,13 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Card from '../../common/Card/Card'
 import EditProfileForm from './EditProfileForm/EditProfileForm'
-import {connect} from 'react-redux'
+import {connect, useDispatch} from 'react-redux'
 import {updateProfile} from '../../../redux/reducers/profile.reducer'
 import {StateType} from '../../../redux/store'
 import {ProfileDataType} from '../../../api/profile.api'
+import {Redirect} from 'react-router'
+import {checkAuthorized} from '../../../redux/reducers/auth.reducer'
+import {useAuthCheck} from '../../../utils/hooks'
 
 type MapStatePropsType = {
     profileData: ProfileDataType
+    authorized: boolean
 }
 
 type MapDispatchPropsType = {
@@ -21,15 +25,17 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
 const EditProfilePage: React.FC<PropsType & { onSubmit: any }> = (props) => {
     return (
         <Card>
-            <EditProfileForm
+            {props.authorized && <EditProfileForm
                 onSubmit={props.onSubmit}
                 initialValues={props.profileData}
-            />
+            />}
+            {!props.authorized && <Redirect to={'/login'}/>}
         </Card>
     )
 }
 
 const EditProfilePageContainer: React.FC<PropsType> = (props) => {
+    useAuthCheck()
 
     const onSubmit = (profileData: ProfileDataType) => {
         props.updateProfile(profileData)
@@ -42,7 +48,8 @@ const EditProfilePageContainer: React.FC<PropsType> = (props) => {
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {
-        profileData: state.profile.data
+        profileData: state.profile.data,
+        authorized: state.auth.authorized
     }
 }
 
