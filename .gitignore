@@ -2,6 +2,7 @@
 /.idea
 /config
 /node_modules
+/uploads
 
 # client (create-react-app)
 # dependencies
