@@ -5,15 +5,15 @@ import editIconWhite from '../../../assets/images/edit-icon-white.svg'
 import Popup from 'reactjs-popup'
 import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
 import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
-import {FormSubmitHandler, SubmitHandler} from 'redux-form'
+import {Point} from 'react-easy-crop/types'
 
 type PropsType = {
-    img?: string
+    img?: string | null
     size?: 'sm' | 'md' | 'lg'
     contextBgColor?: string
     owner?: boolean
     online?: boolean
-    onSubmit?: FormSubmitHandler<{ avatar: File }> // todo it seems like redux-form types needs to be used
+    onSubmit?: (e: Event, image: File, crop: Point) => void
 }
 
 const Avatar: React.FC<PropsType> = ({
@@ -47,7 +47,7 @@ const Avatar: React.FC<PropsType> = ({
             {onSubmit && owner && <div>
                 <button className={classes.editButton} onClick={openModal}><img src={editIconWhite} alt=""/></button>
                 <Popup open={open} modal nested onClose={closeModal}>
-                    <EditAvatarForm onSubmit={onSubmit}/>
+                        <EditAvatarForm onSubmit={onSubmit}/>
                 </Popup>
             </div>}
 

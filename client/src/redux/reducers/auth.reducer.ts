@@ -1,5 +1,5 @@
 import {stopSubmit} from 'redux-form'
-import {authApi, AuthResultCodes, LoginDataType, RegistrationDataType} from '../../api/auth.api'
+import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 
@@ -76,7 +76,7 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
         dispatch(authActions.clearUser())
         console.log(res)
     }
-    if (res.resultCode === AuthResultCodes.expiredToken) {
+    if (res.resultCode === ResultCodes.expiredToken) {
         dispatch(authActions.clearUser())
         console.log(res)
     }

@@ -1,7 +1,8 @@
 import React from 'react'
 import classes from './Form.module.scss'
+import classnames from 'classnames'
 
-type PropsType = {}
+type PropsType = {padding?: boolean}
 
 const Form: React.FC<PropsType & { onSubmit: any }> & {
     Row: React.FC
@@ -9,9 +10,12 @@ const Form: React.FC<PropsType & { onSubmit: any }> & {
     Error: React.FC
     Success: React.FC
     Title: React.FC
-} = ({children, onSubmit}) => {
+} = ({children, onSubmit, padding= true}) => {
     return (
-        <form className={classes.form} onSubmit={onSubmit}>
+        <form className={classnames(
+            classes.form,
+            {[classes.padding]: padding}
+        )} onSubmit={onSubmit}>
             {children}
         </form>
     )

@@ -4,14 +4,15 @@ import 'reactjs-popup/dist/index.css'
 import {ProfileDataType} from '../../../../api/profile.api'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'
 import ProfileInfoHeader from './ProfileHeader/ProfileHeader'
-import {FormSubmitHandler} from 'redux-form'
 import ProfileInfoData from './ProfileInfoData/ProfileInfoData'
+import {Crop} from 'react-image-crop'
+import {Point} from 'react-easy-crop/types'
 
 type PropsType = {
     authorized: boolean,
     authorizedUserId: string | null
     profileData: ProfileDataType
-    onAvatarSubmit: FormSubmitHandler<{ avatar: File }>
+    onAvatarSubmit: (e: Event, image: File, crop: Point) => void
 }
 
 const ProfileInfo: React.FC<PropsType> = ({

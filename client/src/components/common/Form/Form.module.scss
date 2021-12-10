@@ -1,7 +1,9 @@
 @import "../../../variables";
 
 .form {
-  padding: 28px;
+  &.padding {
+    padding: 28px;
+  }
 }
 
 .row {

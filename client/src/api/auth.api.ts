@@ -1,11 +1,5 @@
 import {coreApi, handleError, handleResponse, ResultCodes} from './core.api'
 
-// result codes used for authentication responses
-// such as expired jwt
-export enum AuthResultCodes {
-    expiredToken = 10
-}
-
 //region DATA TYPES
 // GET /auth/me/ response
 // contains userId, email and username of currently logged in user
@@ -42,7 +36,7 @@ export const authApi = {
 
     me: () => coreApi
         .get('/auth/me')
-        .then(handleResponse<AuthorizedUserDataType, ResultCodes | AuthResultCodes>())
+        .then(handleResponse<AuthorizedUserDataType>())
         .catch(handleError()),
 
     logout: () => coreApi

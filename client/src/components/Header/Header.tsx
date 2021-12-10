@@ -17,6 +17,7 @@ import {StateType} from "../../redux/store";
 type MapStatePropsType = {
     authorized: boolean
     username: string | null
+    avatar: string | null
 }
 
 type MapDispatchPropsType = {
@@ -36,7 +37,7 @@ const Header: React.FC<PropsType> = (props) => {
                     <SearchInput icon={searchIcon}/>
                 </div>
                 {props.authorized && <div className={classes.userControl}>
-                    <UserControl username={props.username} logout={props.logout}/>
+                    <UserControl username={props.username} avatar={props.avatar} logout={props.logout}/>
                 </div>}
                 {props.authorized && <div className={classes.notificationArea}>
                     <NavLink to='/friends'><IconWithCounter src={newFriendsIcon} count={5}/></NavLink>
@@ -53,7 +54,8 @@ const HeaderContainer: React.FC<PropsType> = (props) => <Header {...props} />
 const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {
         authorized: state.auth.authorized,
-        username: state.auth.username
+        username: state.auth.username,
+        avatar: state.profile.data.avatar?.small
     }
 }
 

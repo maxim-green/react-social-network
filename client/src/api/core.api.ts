@@ -10,6 +10,8 @@ export const coreApi = axios.create({
 export enum ResultCodes {
     success = 0,
     error = 1,
+    authError = 10,
+    expiredToken = 11,
 }
 
 // all server responses have this type
@@ -27,4 +29,3 @@ export const handleError = () => (err: AxiosError) => {
     console.log('Error: ' + err.response?.data.message)
     return err.response?.data
 }
-

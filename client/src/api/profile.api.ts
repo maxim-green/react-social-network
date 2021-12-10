@@ -6,13 +6,13 @@ export type ProfileDataType = {
     userId: string,
     firstName: string,
     lastName: string,
-    birthDate?: string,
-    status?: string,
-    bio?: string,
-    interests?: string,
-    location?: LocationType,
-    contacts?: ContactsType,
-    avatar?: AvatarType
+    birthDate: string | null,
+    status: string | null,
+    bio: string | null,
+    interests: string | null,
+    location: LocationType,
+    contacts: ContactsType,
+    avatar: AvatarType
 }
 
 export const profileApi = {

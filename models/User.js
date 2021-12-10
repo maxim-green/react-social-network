@@ -10,27 +10,27 @@ const schema = new Schema(
         profileData: {
             firstName: {type: String, required: true},
             lastName: {type: String, required: true},
-            birthDate: {type: Date},
-            status: {type: String},
-            bio: {type: String},
-            interests: {type: String},
-            coverImage: {type: String},
+            birthDate: {type: Date, default: null},
+            status: {type: String, default: null},
+            bio: {type: String, default: null},
+            interests: {type: String, default: null},
+            coverImage: {type: String, default: null},
             avatar: {
-                small: {type: String},
-                large: {type: String}
+                small: {type: String, default: null},
+                large: {type: String, default: null}
             },
             location: {
-                country: {type: String},
-                city: {type: String}
+                country: {type: String, default: null},
+                city: {type: String, default: null}
             },
             contacts: {
-                website: {type: String},
-                phone: {type: String},
-                email: {type: String},
-                vkontakte: {type: String},
-                facebook: {type: String},
-                github: {type: String},
-                telegram: {type: String},
+                website: {type: String, default: null},
+                phone: {type: String, default: null},
+                email: {type: String, default: null},
+                vkontakte: {type: String, default: null},
+                facebook: {type: String, default: null},
+                github: {type: String, default: null},
+                telegram: {type: String, default: null},
             }
         },
         friends: [{ type: Types.ObjectId, ref: 'User' }],

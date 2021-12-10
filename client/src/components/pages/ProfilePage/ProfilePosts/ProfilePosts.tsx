@@ -2,7 +2,7 @@ import React from 'react'
 import classes from './ProfilePosts.module.scss'
 import NewPostInput from '../../../NewPostInput/NewPostInput'
 import Post from '../../../Post/Post'
-import {PostType} from '../../../../types/types'
+import {NewPostType, PostType} from '../../../../types/types'
 import moment from 'moment'
 
 type PropsType = {
@@ -10,33 +10,36 @@ type PropsType = {
     authorizedUserId: string | null
     userId?: string | null
     posts: Array<PostType>
+    isAddPostPending: boolean
+    onNewPostSubmit: (newPostData: NewPostType) => void
+    onPostDelete: (id: string) => void
 }
 
 const ProfilePosts: React.FC<PropsType> = ({
                                                authorized,
                                                authorizedUserId,
                                                userId,
-                                               posts
+                                               posts,
+                                               onNewPostSubmit,
+                                               isAddPostPending,
+                                               onPostDelete
                                            }) => {
     const isAuthorizedUserProfile = authorized && (authorizedUserId === userId)
-    const lorem = `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-    `
 
     return (
         <>
-            {isAuthorizedUserProfile && <NewPostInput/>}
+            {isAuthorizedUserProfile && <NewPostInput isAddPostPending={isAddPostPending} onSubmit={onNewPostSubmit}/>}
             <div className={classes.posts}>
                 {
                     posts.slice().reverse().map(post => <Post
+                        id={post._id}
                         text={post.text}
                         username={post.author.firstName + ' ' + post.author.lastName}
+                        avatar={post.author.avatar.small}
                         date={moment(post.creationDate).format('DD.MM.YYYY')}
                         liked
+                        onPostDelete={onPostDelete}
+                        isAuthorizedUserProfile={isAuthorizedUserProfile}
                     />)
                 }
             </div>

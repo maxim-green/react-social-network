@@ -46,32 +46,7 @@ router.post('/register',
                 email,
                 password: hashedPassword,
                 username,
-                profileData: {
-                    firstName,
-                    lastName,
-                    birthDate: null,
-                    status: null,
-                    bio: null,
-                    interests: null,
-                    coverImage: null,
-                    avatar: {
-                        small: null,
-                        large: null
-                    },
-                    location: {
-                        country: null,
-                        city: null
-                    },
-                    contacts: {
-                        website: null,
-                        phone: null,
-                        email: null,
-                        vkontakte: null,
-                        facebook: null,
-                        github: null,
-                        telegram: null,
-                    }
-                }
+                profileData: { firstName, lastName }
             })
             await newUser.save()
             res.status(200).json({resultCode: 0, message: "Registration successful"})

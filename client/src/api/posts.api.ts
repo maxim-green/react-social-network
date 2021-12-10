@@ -5,6 +5,10 @@ export type PostsDataType = {
     posts: Array<PostType>
 }
 
+export type NewPostDataType = {
+    post: PostType
+}
+
 export const postsApi = {
     getPosts: () => coreApi
         .get(`/posts`)
@@ -16,6 +20,10 @@ export const postsApi = {
         .catch(handleError()),
     addPost: (text: string) => coreApi
         .post(`/posts/add`, { text })
-        .then(handleResponse())
+        .then(handleResponse<NewPostDataType>())
         .catch(handleError()),
+    deletePost: (id: string) => coreApi
+        .delete(`/posts/delete/${id}`)
+        .then(handleResponse())
+        .catch(handleError())
 }

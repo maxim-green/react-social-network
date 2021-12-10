@@ -7,6 +7,7 @@ import {required} from '../../../../utils/validators'
 import {useHistory} from 'react-router-dom'
 import {capitalize} from '../../../../utils/functions'
 import {ProfileDataType} from '../../../../api/profile.api'
+import arrowBackIcon from '../../../../assets/images/arrow_back_black_24dp.svg'
 
 type NativePropsType = {}
 
@@ -29,6 +30,14 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
 
     return (
         <Form onSubmit={submitHandler}>
+            <Form.Row>
+                <Form.Item>
+                    <Button onClick={backButtonClickHandler} size="md" icon={arrowBackIcon} variant='text'/>
+                </Form.Item>
+                <Form.Item>
+                    <Button caption="Save" size="md"/>
+                </Form.Item>
+            </Form.Row>
             <Form.Title>
                 General
             </Form.Title>
@@ -73,14 +82,6 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
             </Form.Row>
             <Form.Row>
                 <Field name="contacts.phone" type="text" component={Input} label="Phone" placeholder="Phone" block/>
-            </Form.Row>
-            <Form.Row>
-                <Form.Item>
-                    <Button caption="Save" size="lg"/>
-                </Form.Item>
-                <Form.Item>
-                    <Button onClick={backButtonClickHandler} caption="Back" size="lg"/>
-                </Form.Item>
             </Form.Row>
         </Form>
     )
