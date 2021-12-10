@@ -6,8 +6,11 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon add.js",
+    "server": "nodemon app.js",
     "client": "yarn --cwd client start",
+    "server:install": "yarn install",
+    "client:install": "yarn --cwd client install",
+    "i": "yarn server:install && yarn client:install",
     "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "dependencies": {
