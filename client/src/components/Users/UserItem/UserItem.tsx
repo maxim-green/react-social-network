@@ -11,8 +11,13 @@ type PropsType = {
     authorized: boolean
     authorizedUserId: string | null
     user: UserType
+    isIncomingFriendshipRequest: boolean
+    isOutgoingFriendshipRequest: boolean
     addFriend: (userId: string) => void
     deleteFriend: (userId: string) => void
+    cancelFriendshipRequest: (userId: string) => void
+    acceptFriendshipRequest: (userId: string) => void
+    declineFriendshipRequest: (userId: string) => void
     follow: (userId: string) => void
     unfollow: (userId: string) => void
     mutualFriendsCount: number
@@ -24,19 +29,33 @@ const UserItem: React.FC<PropsType> = ({
                                            user,
                                            addFriend,
                                            deleteFriend,
+                                           cancelFriendshipRequest,
+                                           acceptFriendshipRequest,
+                                           declineFriendshipRequest,
                                            follow,
                                            unfollow,
-                                           mutualFriendsCount
+                                           mutualFriendsCount,
+                                           isIncomingFriendshipRequest,
+                                           isOutgoingFriendshipRequest
                                        }) => {
 
     const isAuthorizedUserItem = authorized && (authorizedUserId === user.userId)
 
-    const friendButtonClickHandler = () => {
+    const addFriendButtonClickHandler = () => {
         if (!user.isFriend) {
             addFriend(user.userId)
         } else {
             deleteFriend(user.userId)
         }
+    }
+    const acceptFriendshipRequestButtonClickHandler = () => {
+        acceptFriendshipRequest(user.userId)
+    }
+    const declineFriendshipRequestButtonClickHandler = () => {
+        declineFriendshipRequest(user.userId)
+    }
+    const cancelFriendshipRequestButtonClickHandler = () => {
+        cancelFriendshipRequest(user.userId)
     }
 
     const followButtonClickHandler = () => {
@@ -72,11 +91,26 @@ const UserItem: React.FC<PropsType> = ({
                 </div>}
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
-                        <Button
+                        {!isIncomingFriendshipRequest && !isOutgoingFriendshipRequest && <Button
                             caption={!user.isFriend ? 'Add to friends' : 'Remove from friends'}
                             variant="neutral"
-                            onClick={friendButtonClickHandler}
-                        />
+                            onClick={addFriendButtonClickHandler}
+                        />}
+                        {isIncomingFriendshipRequest && <Button
+                            caption={'Accept'}
+                            variant="neutral"
+                            onClick={acceptFriendshipRequestButtonClickHandler}
+                        />}
+                        {isIncomingFriendshipRequest && <Button
+                            caption={'Decline'}
+                            variant="neutral"
+                            onClick={declineFriendshipRequestButtonClickHandler}
+                        />}
+                        {isOutgoingFriendshipRequest && <Button
+                            caption={'Cancel'}
+                            variant="neutral"
+                            onClick={cancelFriendshipRequestButtonClickHandler}
+                        />}
                     </div>
                     <div className={classes.button}>
                         <Button

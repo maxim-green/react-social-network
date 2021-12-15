@@ -5,6 +5,8 @@ import {UserType} from '../types/types'
 // used for getting users list on users page
 export type UsersDataType = {
     users: Array<UserType>
+    incomingFriendshipRequests: Array<string>
+    outgoingFriendshipRequests: Array<string>
 }
 
 export const usersApi = {
@@ -15,6 +17,18 @@ export const usersApi = {
 
     addFriend: (userId: string) => coreApi
         .post(`/users/friend/${userId}`)
+        .then(handleResponse())
+        .catch(handleError()),
+    cancelFriendshipRequest: (userId: string) => coreApi
+        .post(`/users/friend/${userId}/cancel`)
+        .then(handleResponse())
+        .catch(handleError()),
+    acceptFriendshipRequest: (userId: string) => coreApi
+        .post(`/users/friend/${userId}/accept`)
+        .then(handleResponse())
+        .catch(handleError()),
+    declineFriendshipRequest: (userId: string) => coreApi
+        .post(`/users/friend/${userId}/decline`)
         .then(handleResponse())
         .catch(handleError()),
 

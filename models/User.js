@@ -34,7 +34,9 @@ const schema = new Schema(
             }
         },
         friends: [{ type: Types.ObjectId, ref: 'User' }],
-        subscriptions: [{ type: Types.ObjectId, ref: 'User' }]
+        subscriptions: [{ type: Types.ObjectId, ref: 'User' }],
+        incomingFriendshipRequests: [{ type: Types.ObjectId, ref: 'User' }],
+        outgoingFriendshipRequests: [{ type: Types.ObjectId, ref: 'User' }],
     },
     {
         collection: 'users'

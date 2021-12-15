@@ -3,7 +3,6 @@ import attachFileIcon from "../../assets/images/attach-file-icon.svg";
 import React from "react";
 import classes from "./NewPostInput.module.scss"
 import Form from '../common/Form/Form'
-import {ProfileDataType} from '../../api/profile.api'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import Card from '../common/Card/Card'
 import {NewPostType} from '../../types/types'
