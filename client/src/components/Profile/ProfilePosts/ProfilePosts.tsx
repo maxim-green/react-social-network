@@ -1,8 +1,8 @@
 import React from 'react'
 import classes from './ProfilePosts.module.scss'
-import NewPostInput from '../../../NewPostInput/NewPostInput'
-import Post from '../../../Post/Post'
-import {NewPostType, PostType} from '../../../../types/types'
+import NewPostInput from '../../NewPostInput/NewPostInput'
+import Post from '../../Post/Post'
+import {NewPostType, PostType} from '../../../types/types'
 import moment from 'moment'
 
 type PropsType = {

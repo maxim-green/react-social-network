@@ -1,7 +1,7 @@
 import classes from './ProfileCoverImage.module.scss'
-import Button from '../../../../common/Button/Button'
-import editCoverImageIcon from '../../../../../assets/images/edit-cover-image-icon.svg'
-import defaultCoverImage from '../../../../../assets/images/default-cover-image.jpg'
+import Button from '../../../common/Button/Button'
+import editCoverImageIcon from '../../../../assets/images/edit-cover-image-icon.svg'
+import defaultCoverImage from '../../../../assets/images/default-cover-image.jpg'
 import React from 'react'
 
 type PropsTypes = {
