@@ -8,6 +8,7 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "client": "yarn --cwd client start",
+    "client:test": "yarn --cwd client test",
     "server:install": "yarn install",
     "client:install": "yarn --cwd client install",
     "i": "yarn server:install && yarn client:install",
