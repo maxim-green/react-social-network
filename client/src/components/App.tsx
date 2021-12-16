@@ -1,17 +1,14 @@
-import classes from './App.module.scss'
 import React, {useEffect} from 'react'
-import Header from './Header/Header'
-import Container from './common/Container/Container'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import LoginPageContainer from './pages/LoginPage'
 import RegistrationPageContainer from './pages/RegistrationPage'
 import {connect} from 'react-redux'
-import SideBar from './SideBar/SideBar'
 import ProfilePage from './pages/ProfilePage'
 import UsersPage from './pages/UsersPage'
 import EditProfilePage from './pages/EditProfilePage'
 import {initializeApp} from '../redux/reducers/app.reducer'
 import {StateType} from '../redux/store'
+import Layout from './Layout/Layout'
 
 type MapStatePropsType = {
     initialized: boolean,
@@ -32,16 +29,7 @@ const App: React.FC<PropsType> = ({
                                       username
                                   }) => {
     return (
-        <div className={classes.app}>
-
-            <AppBar>
-                <Header/>
-            </AppBar>
-
-            <Main>
-                <SideBar authorized={authorized}/>
-
-                <Content>
+        <>
                     <Switch>
                         {!authorized && <Route path="/login" component={LoginPageContainer}/>}
                         {authorized &&
@@ -56,50 +44,19 @@ const App: React.FC<PropsType> = ({
                         <Route exact path="/profile/:username" component={ProfilePage}/>
 
                         <Route path="/users" component={UsersPage}/>
-                        <Route path="/dialogs" render={() => <>Dialogs Page</>}/>
-                        <Route path="/photos" render={() => <>Photos Page</>}/>
-                        <Route path="/music" render={() => <>Music Page</>}/>
-                        <Route path="/settings" render={() => <>Settings Page</>}/>
-                        <Route path="/friends" render={() => <>Friends Page</>}/>
+                        <Route path="/dialogs" render={() => <Layout>Dialogs Page</Layout>}/>
+                        <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
+                        <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
+                        <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
+                        <Route path="/friends" render={() => <Layout>Friends Page</Layout>}/>
 
                         {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}
                         {authorized &&
                         <Route path="/" render={() => <Redirect to={`/profile/${username}`}/>}/>}
                     </Switch>
-                </Content>
-            </Main>
-
-        </div>
+        </>
     )
 }
-
-//region Layout components
-const Main: React.FC = ({children}) => {
-    return (
-        <Container>
-            <div className={classes.main}>
-                {children}
-            </div>
-        </Container>
-    )
-}
-const AppBar: React.FC = ({children}) => {
-    return (
-        <div className={classes.appBar}>
-            <Container>
-                {children}
-            </Container>
-        </div>
-    )
-}
-const Content: React.FC = ({children}) => {
-    return (
-        <div className={classes.content}>
-            {children}
-        </div>
-    )
-}
-//endregion
 
 // Container
 const AppContainer: React.FC<PropsType> = (props) => {

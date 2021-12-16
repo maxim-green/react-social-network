@@ -5,7 +5,6 @@ import Button from '../../../common/Button/Button'
 import editIcon from '../../../../assets/images/edit-icon.svg'
 import React from 'react'
 import {AvatarType} from '../../../../types/types'
-import {Crop} from 'react-image-crop'
 import {Point} from 'react-easy-crop/types'
 
 type PropsType = {

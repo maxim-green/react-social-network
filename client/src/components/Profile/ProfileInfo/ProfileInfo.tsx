@@ -5,7 +5,6 @@ import {ProfileDataType} from '../../../api/profile.api'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'
 import ProfileInfoHeader from './ProfileHeader/ProfileHeader'
 import ProfileInfoData from './ProfileInfoData/ProfileInfoData'
-import {Crop} from 'react-image-crop'
 import {Point} from 'react-easy-crop/types'
 
 type PropsType = {

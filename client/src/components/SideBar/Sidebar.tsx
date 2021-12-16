@@ -1,8 +1,8 @@
-import classes from "./SideBar.module.scss";
+import classes from "./Sidebar.module.scss";
 import Card from "../common/Card/Card";
 import LoginForm from "../forms/LoginForm";
-import Navigation from "./Navigation/Navigation";
-import MyFriends from "./MyFriends/MyFriends";
+import SidebarNavigation from "./SidebarNavigation/SidebarNavigation";
+import SidebarFriends from "./SidebarFriends/SidebarFriends";
 import React from "react";
 import {useLocation} from "react-router-dom";
 import classNames from "classnames";
@@ -11,7 +11,7 @@ type PropsType = {
     authorized: boolean
 }
 
-const SideBar: React.FC<PropsType> = ({
+const Sidebar: React.FC<PropsType> = ({
     authorized
                                       }) => {
     const location = useLocation()
@@ -23,10 +23,10 @@ const SideBar: React.FC<PropsType> = ({
         )
         }>
             {!authorized && <Card><LoginForm/></Card>}
-            {authorized && <Navigation/>}
-            {authorized && <MyFriends friendsCount={45}/>}
+            {authorized && <SidebarNavigation/>}
+            {authorized && <SidebarFriends friendsCount={45}/>}
         </div>
     )
 }
 
-export default SideBar
+export default Sidebar

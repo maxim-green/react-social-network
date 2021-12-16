@@ -55,7 +55,7 @@ const ProfileContainer: React.FC = () => {
     useEffect(() => {
         dispatch(getUserData(username))
         dispatch(getPosts(username))
-    }, [getUserData, username, getPosts])
+    }, [username, dispatch])
 
     const onAvatarSubmit = (e: React.FormEvent, image: File, crop: Point) => {
         const formData = new FormData()
@@ -74,16 +74,16 @@ const ProfileContainer: React.FC = () => {
     }
 
     return (
-        <Profile
-            authorized={authorized}
-            authorizedUserId={authorizedUserId}
-            profileData={profileData}
-            posts={posts}
-            isAddPostPending={isAddPostPending}
-            onAvatarSubmit={onAvatarSubmit}
-            onNewPostSubmit={onNewPostSubmit}
-            onPostDelete={onPostDelete}
-        />
+            <Profile
+                authorized={authorized}
+                authorizedUserId={authorizedUserId}
+                profileData={profileData}
+                posts={posts}
+                isAddPostPending={isAddPostPending}
+                onAvatarSubmit={onAvatarSubmit}
+                onNewPostSubmit={onNewPostSubmit}
+                onPostDelete={onPostDelete}
+            />
     )
 }
 

@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Card from '../common/Card/Card'
 import classes from './Users.module.scss'
 import UserItem from './UserItem/UserItem'
 import NavTab from '../common/NavTabs/NavTab/NavTab'
 import NavTabs from '../common/NavTabs/NavTabs'
 import {UserType} from '../../types/types'
-import {declineFriendshipRequest} from '../../redux/reducers/users.reducer'
+import {useDispatch, useSelector} from 'react-redux'
+import {StateType} from '../../redux/store'
+import {
+    acceptFriendshipRequest,
+    addFriend,
+    cancelFriendshipRequest,
+    declineFriendshipRequest, deleteFriend, follow,
+    getUsers, unfollow
+} from '../../redux/reducers/users.reducer'
 
 type PropsType = {
     authorized: boolean
@@ -70,4 +78,30 @@ const Users: React.FC<PropsType> = ({
     )
 }
 
-export default Users
+const UsersContainer: React.FC = () => {
+    const dispatch = useDispatch()
+
+    const props: PropsType = {
+        authorized: useSelector((state: StateType) => state.auth.authorized),
+        authorizedUserId: useSelector((state: StateType) => state.auth.userId),
+        users: useSelector((state: StateType) => state.users.users),
+        incomingFriendshipRequests: useSelector((state: StateType) => state.users.incomingFriendshipRequests),
+        outgoingFriendshipRequests: useSelector((state: StateType) => state.users.outgoingFriendshipRequests),
+        addFriend: (userId: string) => dispatch(addFriend(userId)),
+        cancelFriendshipRequest: (userId: string) => dispatch(cancelFriendshipRequest(userId)),
+        acceptFriendshipRequest: (userId: string) => dispatch(acceptFriendshipRequest(userId)),
+        declineFriendshipRequest: (userId:string) => dispatch(declineFriendshipRequest(userId)),
+        deleteFriend: (userId: string) => dispatch(deleteFriend(userId)),
+        follow: (userId: string) => dispatch(follow(userId)),
+        unfollow: (userId: string) => dispatch(unfollow(userId))
+    }
+
+    useEffect(() => {
+        dispatch(getUsers())
+    }, [dispatch, props.authorized])
+
+
+    return (<Users {...props} />)
+}
+
+export default UsersContainer

@@ -1,12 +1,13 @@
 import React from 'react'
 import Profile from '../Profile/Profile'
+import Layout from '../Layout/Layout'
 
 
 const ProfilePage: React.FC = (props) => {
     return (
-        <>
-            <Profile></Profile>
-        </>
+        <Layout sidebar={true}>
+            <Profile/>
+        </Layout>
     )
 }
 

@@ -1,4 +1,4 @@
-import {coreApi, handleError, handleResponse, ResultCodes} from './core.api'
+import {coreApi, handleError, handleResponse} from './core.api'
 
 //region DATA TYPES
 // GET /auth/me/ response

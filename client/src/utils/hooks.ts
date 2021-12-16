@@ -6,5 +6,5 @@ export const useAuthCheck = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(checkAuthorized())
-    }, [])
+    }, [dispatch])
 }

@@ -58,7 +58,7 @@ const RegistrationFormContainer: React.FC = () => {
 
     useEffect(() => {
         dispatch(setRegistrationSuccessful(false))
-    }, [setRegistrationSuccessful])
+    }, [dispatch])
 
     return <RegistrationReduxForm
         onSubmit={onSubmit}

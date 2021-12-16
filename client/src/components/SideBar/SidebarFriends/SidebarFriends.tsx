@@ -1,6 +1,6 @@
 import Card from '../../common/Card/Card'
 import React from 'react'
-import classes from './MyFriends.module.scss'
+import classes from './SidebarFriends.module.scss'
 import Avatar from '../../common/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
 
@@ -8,7 +8,7 @@ type PropsType = {
     friendsCount: number
 }
 
-const MyFriends: React.FC<PropsType> = ({friendsCount}) => {
+const SidebarFriends: React.FC<PropsType> = ({friendsCount}) => {
     return (
         <Card>
             <div className={classes.Title}>My Friends</div>
@@ -28,4 +28,4 @@ const MyFriends: React.FC<PropsType> = ({friendsCount}) => {
     )
 }
 
-export default MyFriends
+export default SidebarFriends
