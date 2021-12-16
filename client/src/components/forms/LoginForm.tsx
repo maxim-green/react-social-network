@@ -51,7 +51,7 @@ const LoginReduxForm = reduxForm<LoginDataType, NativePropsType>({
 })(LoginForm)
 
 const LoginFormContainer: React.FC = () => {
-    const dispatch: ThunkDispatch<StateType, any, AuthActionType> = useDispatch()
+    const dispatch: ThunkDispatch<StateType, LoginDataType, AuthActionType> = useDispatch()
     
     const onSubmit = (loginFormData: LoginDataType) => {
         dispatch(login(loginFormData))

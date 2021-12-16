@@ -8,7 +8,7 @@ import {Point} from 'react-easy-crop/types'
 import classes from './EditAvatarForm.module.scss'
 
 type PropsType = {
-    onSubmit: (e: Event, image: File, crop: Point) => void
+    onSubmit: (e: React.FormEvent, image: File, crop: Point) => void
 }
 
 const EditAvatarForm: React.FC<PropsType> = (props) => {
@@ -33,7 +33,7 @@ const EditAvatarForm: React.FC<PropsType> = (props) => {
         console.log(resizedImage)
     }
 
-    const handleSubmit = (e: Event) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (srcFile && crop) props.onSubmit(e, srcFile, croppedAreaPixels)
     }

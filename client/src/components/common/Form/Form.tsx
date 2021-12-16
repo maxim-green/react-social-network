@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 type PropsType = {padding?: boolean}
 
-const Form: React.FC<PropsType & { onSubmit: any }> & {
+const Form: React.FC<PropsType & { onSubmit: (e: React.FormEvent) => void }> & {
     Row: React.FC
     Item: React.FC
     Error: React.FC

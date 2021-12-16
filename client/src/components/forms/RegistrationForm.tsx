@@ -50,7 +50,7 @@ const RegistrationReduxForm = reduxForm<RegistrationDataType, NativePropsType>({
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
     const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
-    const dispatch: ThunkDispatch<StateType, any, AuthActionType> = useDispatch()
+    const dispatch: ThunkDispatch<StateType, RegistrationDataType | boolean, AuthActionType> = useDispatch()
 
     const onSubmit = async (registrationFormData: RegistrationDataType) => {
         dispatch(register(registrationFormData))

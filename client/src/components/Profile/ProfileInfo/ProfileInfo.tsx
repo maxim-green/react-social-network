@@ -12,7 +12,7 @@ type PropsType = {
     authorized: boolean,
     authorizedUserId: string | null
     profileData: ProfileDataType
-    onAvatarSubmit: (e: Event, image: File, crop: Point) => void
+    onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
 }
 
 const ProfileInfo: React.FC<PropsType> = ({

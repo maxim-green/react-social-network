@@ -13,7 +13,7 @@ type PropsType = {
     contextBgColor?: string
     owner?: boolean
     online?: boolean
-    onSubmit?: (e: Event, image: File, crop: Point) => void
+    onSubmit?: (e: React.FormEvent, image: File, crop: Point) => void
 }
 
 const Avatar: React.FC<PropsType> = ({

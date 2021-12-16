@@ -23,12 +23,12 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
 
     const history = useHistory()
 
-    const submitHandler = (e: any) => {
+    const submitHandler = (e: React.FormEvent) => {
         props.handleSubmit(e)
         history.goBack()
     }
 
-    const backButtonClickHandler = (e: any) => {
+    const backButtonClickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
         history.goBack()
     }
@@ -98,7 +98,7 @@ const EditProfileReduxForm = reduxForm<ProfileDataType, NativePropsType>({
 
 const EditProfileFormContainer: React.FC = () => {
     const profileData = useSelector((state: StateType) => state.profile.data)
-    const dispatch: ThunkDispatch<StateType, any, ProfileActionType> = useDispatch()
+    const dispatch: ThunkDispatch<StateType, ProfileDataType, ProfileActionType> = useDispatch()
 
     useAuthCheck()
 

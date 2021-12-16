@@ -20,7 +20,7 @@ export type APIResponseType<D = undefined, R = ResultCodes> = {
     message: string
     data: D
 }
-export const handleResponse = <DataType = any, ResultCodesType = ResultCodes>() => (res: AxiosResponse<APIResponseType<DataType, ResultCodesType>>) => {
+export const handleResponse = <DataType = undefined, ResultCodesType = ResultCodes>() => (res: AxiosResponse<APIResponseType<DataType, ResultCodesType>>) => {
     console.log('Success: ' + res.data.message)
     return res.data
 }

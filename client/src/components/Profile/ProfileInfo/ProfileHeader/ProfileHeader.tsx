@@ -14,7 +14,8 @@ type PropsType = {
     lastName: string,
     status: string | null,
     avatar: AvatarType
-    onAvatarSubmit?: (e: Event, image: File, crop: Point) => void
+    onAvatarSubmit?: (e: React.FormEvent, image: File, crop: Point) => void
+
 }
 
 const ProfileHeader: React.FC<PropsType> = ({
