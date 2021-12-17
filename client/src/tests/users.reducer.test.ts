@@ -1,22 +1,15 @@
-import {follow, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
+import {follow, unfollow, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
 
-import {usersApi} from '../api/users.api'
 import {APIResponseType, ResultCodes} from '../api/core.api'
 
 jest.mock('../api/users.api')
-const usersApiMock = usersApi
+import {usersApi} from '../api/users.api'
+const mockUsersApi = usersApi as jest.Mocked<typeof usersApi>
 
-const result: APIResponseType<{}> = {
-    resultCode: ResultCodes.success,
-    message: 'Success',
-    data: {}
-}
-
-// @ts-ignore
-usersApiMock.addSubscription.mockReturnValue(result)
+const dispatchMock = jest.fn()  // фейковый dispatch
+const getStateMock = jest.fn() // фейковая функция getState
 
 let dummyState: UsersStateType
-
 // Т.к. тесты могут менять стейт инициализируем стейт заново перед каждым тестом
 beforeEach(() => {
     dummyState = {
@@ -57,30 +50,61 @@ beforeEach(() => {
         outgoingFriendshipRequests: [],
         incomingFriendshipRequests: []
     }
+
+    dispatchMock.mockClear()
+    getStateMock.mockClear()
+    mockUsersApi.addSubscription.mockClear()
+    mockUsersApi.deleteSubscription.mockClear()
+
 })
 
 
-test('Follow action success', () => {
-    const newState = usersReducer(dummyState, usersActions.setIsSubscription('2', true))
+describe('Users reducer is OK', () => {
 
-    expect(newState.users[0].isSubscription).toBeFalsy()
-    expect(newState.users[1].isSubscription).toBeTruthy()
-})
+    test('Follow action success', () => {
+        const newState = usersReducer(dummyState, usersActions.setIsSubscription('2', true))
 
-test('Unfollow action success', () => {
-    const newState = usersReducer(dummyState, usersActions.setIsSubscription('3', false))
+        expect(newState.users[0].isSubscription).toBeFalsy()
+        expect(newState.users[1].isSubscription).toBeTruthy()
+    })
 
-    expect(newState.users[2].isSubscription).toBeFalsy()
-    expect(newState.users[3].isSubscription).toBeTruthy()
-})
+    test('Unfollow action success', () => {
+        const newState = usersReducer(dummyState, usersActions.setIsSubscription('3', false))
 
-// todo: https://youtu.be/asJetd53pYw?list=PLcvhF2Wqh7DM3z1XqMw0kPuxpbyMo3HvN&t=2639
-test('Follow thunk success', async () => {
-    const thunk = follow('1')
-    const dispatchMock = jest.fn()  // фейковый dispatch
+        expect(newState.users[2].isSubscription).toBeFalsy()
+        expect(newState.users[3].isSubscription).toBeTruthy()
+    })
 
-    // @ts-ignore
-    await thunk(dispatchMock)
+    test('Follow thunk success', async () => {
+        const ApiResponse: APIResponseType<{}> = {
+            resultCode: ResultCodes.success,
+            message: 'Success',
+            data: {}
+        }
 
-    expect(dispatchMock).toBeCalledTimes(3)
+        mockUsersApi.addSubscription.mockResolvedValue(ApiResponse)
+
+        const thunk = follow('1')
+        await thunk(dispatchMock, getStateMock, {})
+
+        expect(dispatchMock).toBeCalledTimes(1)
+        expect(dispatchMock).toBeCalledWith(usersActions.setIsSubscription('1', true))
+    })
+
+    test('Unfollow thunk success', async () => {
+        const ApiResponse: APIResponseType<{}> = {
+            resultCode: ResultCodes.success,
+            message: 'Success',
+            data: {}
+        }
+
+        mockUsersApi.deleteSubscription.mockResolvedValue(ApiResponse)
+
+        const thunk = unfollow('1')
+        await thunk(dispatchMock, getStateMock, {})
+
+        expect(dispatchMock).toBeCalledTimes(1)
+        expect(dispatchMock).toBeCalledWith(usersActions.setIsSubscription('1', false))
+    })
+
 })
