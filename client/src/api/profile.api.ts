@@ -29,5 +29,10 @@ export const profileApi = {
     updateAvatar: (formData: FormDataType) => coreApi
         .put('/profile/avatar', formData)
         .then(handleResponse<AvatarType>())
+        .catch(handleError()),
+
+    updateStatus: (status: string) => coreApi
+        .put('/profile/status', { status })
+        .then(handleResponse())
         .catch(handleError())
 }

@@ -33,7 +33,7 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
 
                 {contacts && Object.keys(contacts).map((key) => {
                     const href: string | undefined = contacts[key as keyof ContactsType] || undefined
-                    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem
+                    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem key={key}
                         title={capitalize(key) + ':'}>
                         <a href={href}>{contacts[key as keyof ContactsType]}</a>
                     </ProfileInfoItem>

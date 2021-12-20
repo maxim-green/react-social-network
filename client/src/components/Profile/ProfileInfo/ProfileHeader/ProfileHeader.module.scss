@@ -26,8 +26,19 @@
 }
 
 .status {
+  position: relative;
+}
+
+.statusText {
   font-size: 14px;
   color: $mid-grey;
+}
+
+.editStatus {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .editProfile {

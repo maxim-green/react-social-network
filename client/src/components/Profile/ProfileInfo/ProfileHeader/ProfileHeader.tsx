@@ -3,9 +3,10 @@ import Avatar from '../../../common/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
 import Button from '../../../common/Button/Button'
 import editIcon from '../../../../assets/images/edit-icon.svg'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {AvatarType} from '../../../../types/types'
 import {Point} from 'react-easy-crop/types'
+import EditStatusForm from '../../../forms/EditStatusForm'
 
 type PropsType = {
     owner?: boolean
@@ -14,7 +15,7 @@ type PropsType = {
     status: string | null,
     avatar: AvatarType
     onAvatarSubmit?: (e: React.FormEvent, image: File, crop: Point) => void
-
+    onStatusUpdate: (status: string) => void
 }
 
 const ProfileHeader: React.FC<PropsType> = ({
@@ -23,8 +24,32 @@ const ProfileHeader: React.FC<PropsType> = ({
                                                 lastName,
                                                 status,
                                                 avatar,
-                                                onAvatarSubmit
+                                                onAvatarSubmit,
+                                                onStatusUpdate
                                             }) => {
+    const [statusEditMode, setStatusEditMode] = useState<boolean>(false)
+    const [statusValue, setStatusValue] = useState<string>(status || 'What is your status?')
+    useEffect(() => {
+        setStatusValue(status || 'What is your status?')
+    }, [status])
+
+    const statusClickHandler = () => {
+        setStatusEditMode(true)
+    }
+    const statusBlurHandler = () => {
+        setStatusEditMode(false)
+        onStatusUpdate(statusValue)
+    }
+    const statusEnterHandler = (e: React.KeyboardEvent) => {
+        if (e.code === 'Enter') {
+            setStatusEditMode(false)
+            onStatusUpdate(statusValue)
+        }
+    }
+    const onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStatusValue(e.target.value || '')
+    }
+
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
@@ -32,7 +57,12 @@ const ProfileHeader: React.FC<PropsType> = ({
             </div>
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>{firstName} {lastName}</div>
-                {owner && <div className={classes.status}>{status || 'What is your status?'}</div>}
+                {owner && <div className={classes.status}>
+                    {!statusEditMode && <div className={classes.statusText} onDoubleClick={statusClickHandler}>{statusValue}</div>}
+                    {statusEditMode && <div className={classes.editStatus}>
+                        <EditStatusForm value={statusValue} onChange={onStatusChangeHandler} onBlur={statusBlurHandler} onEnter={statusEnterHandler}/>
+                    </div>}
+                </div>}
                 {!owner && <div className={classes.status}>{status}</div>}
             </div>
             <div className={classes.editProfile}>

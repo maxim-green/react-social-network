@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react'
-import {addPost, deletePost, getPosts, getUserData, updateAvatar} from '../../redux/reducers/profile.reducer'
+import {
+    addPost,
+    deletePost,
+    getPosts,
+    getUserData,
+    updateAvatar,
+    updateStatus
+} from '../../redux/reducers/profile.reducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
@@ -18,6 +25,7 @@ type PropsType = {
     onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
     onNewPostSubmit: (newPostData: NewPostType) => void
     onPostDelete: (id: string) => void
+    onStatusUpdate: (string: string) => void
 }
 
 const Profile: React.FC<PropsType> = (props) => {
@@ -28,6 +36,7 @@ const Profile: React.FC<PropsType> = (props) => {
                 authorized={props.authorized}
                 authorizedUserId={props.authorizedUserId}
                 onAvatarSubmit={props.onAvatarSubmit}
+                onStatusUpdate={props.onStatusUpdate}
             />
             <ProfilePosts
                 authorized={props.authorized}
@@ -73,6 +82,10 @@ const ProfileContainer: React.FC = () => {
         dispatch(deletePost(id))
     }
 
+    const onStatusUpdate = (status: string) => {
+        dispatch(updateStatus(status))
+    }
+
     return (
             <Profile
                 authorized={authorized}
@@ -83,6 +96,7 @@ const ProfileContainer: React.FC = () => {
                 onAvatarSubmit={onAvatarSubmit}
                 onNewPostSubmit={onNewPostSubmit}
                 onPostDelete={onPostDelete}
+                onStatusUpdate={onStatusUpdate}
             />
     )
 }

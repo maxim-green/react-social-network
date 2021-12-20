@@ -3,7 +3,9 @@ import React from 'react'
 import classNames from 'classnames'
 import {WrappedFieldsProps} from 'redux-form'
 
-type NativePropsType = {}
+type NativePropsType = {
+    block: boolean
+}
 
 type PropsType = NativePropsType & WrappedFieldsProps
 

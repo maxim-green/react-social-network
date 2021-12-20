@@ -5,7 +5,7 @@ module.exports = generateTokens = async (user) => {
     const accessToken = jwt.sign(
         {userId: user.id, username: user.username},
         config.get('jwtSecret'),
-        {expiresIn: '1m'}
+        {expiresIn: '10m'}
     )
 
     const refreshToken = jwt.sign(

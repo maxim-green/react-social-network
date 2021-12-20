@@ -32,6 +32,7 @@ const ProfilePosts: React.FC<PropsType> = ({
             <div className={classes.posts}>
                 {
                     posts.slice().reverse().map(post => <Post
+                        key={post._id}
                         id={post._id}
                         text={post.text}
                         username={post.author.firstName + ' ' + post.author.lastName}

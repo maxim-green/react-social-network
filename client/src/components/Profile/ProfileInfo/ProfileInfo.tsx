@@ -12,13 +12,15 @@ type PropsType = {
     authorizedUserId: string | null
     profileData: ProfileDataType
     onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
+    onStatusUpdate: (status: string) => void
 }
 
 const ProfileInfo: React.FC<PropsType> = ({
                                               authorized,
                                               authorizedUserId,
                                               profileData,
-                                              onAvatarSubmit
+                                              onAvatarSubmit,
+    onStatusUpdate
                                           }) => {
     const owner = authorized && (authorizedUserId === profileData.userId)
 
@@ -35,6 +37,7 @@ const ProfileInfo: React.FC<PropsType> = ({
                 status={profileData.status}
                 avatar={profileData.avatar}
                 onAvatarSubmit={onAvatarSubmit}
+                onStatusUpdate={onStatusUpdate}
             />
             <ProfileInfoData
                 birthDate={profileData.birthDate}

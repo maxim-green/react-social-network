@@ -62,6 +62,15 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 posts: state.posts.filter(post => post._id !== action.id)
             }
         }
+        case 'rsn/profile/SET_STATUS': {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    status: action.status
+                }
+            }
+        }
         default: {
             return state
         }
@@ -76,7 +85,8 @@ export const profileActions = {
     setPosts: (posts: Array<PostType>) => ({type: 'rsn/profile/SET_POSTS', posts} as const),
     addPost: (post: PostType) => ({type: 'rsn/profile/ADD_POST', post} as const),
     deletePost: (id: string) => ({type: 'rsn/profile/DELETE_POST', id} as const),
-    setAddPostPending: (isPending: boolean) => ({type: 'rsn/profile/SET_ADD_POST_PENDING', isPending} as const)
+    setAddPostPending: (isPending: boolean) => ({type: 'rsn/profile/SET_ADD_POST_PENDING', isPending} as const),
+    setStatus: (status: string) => ({type: 'rsn/profile/SET_STATUS', status} as const)
 }
 export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActions>>
 //endregion
@@ -87,6 +97,16 @@ export const getUserData = (username: string): ThunkType<ProfileActionType> => a
     console.log(res)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setProfile(res.data))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const updateStatus = (status: string): ThunkType<ProfileActionType> => async (dispatch) => {
+    const res = await profileApi.updateStatus(status)
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(profileActions.setStatus(status))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

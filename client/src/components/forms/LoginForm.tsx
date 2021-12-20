@@ -23,11 +23,11 @@ const LoginForm: React.FC<PropsType> = (props) => {
             {props.error && <Form.Error>{props.error}</Form.Error>}
             <Form.Row>
                 <Field name="email" type="text" label="E-mail" placeholder="example@email.ru"
-                       validate={[required, email]} component={Input} block/>
+                       validate={[required, email]} component={Input} block={"true"}/>
             </Form.Row>
             <Form.Row>
                 <Field name="password" type="password" label="Password" placeholder="4h*J7NQTr1"
-                       validate={[required, minLength6]} component={Input} block/>
+                       validate={[required, minLength6]} component={Input} block={"true"}/>
             </Form.Row>
             <Form.Row>
                 <Form.Item>

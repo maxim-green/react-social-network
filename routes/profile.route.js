@@ -76,13 +76,30 @@ router.put(
     }
 )
 
+router.put('/status', auth, async (req, res) => {
+    try {
+        const {user} = req
+        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
+
+        const { status } = req.body
+
+        user.profileData.status = status
+        await user.save()
+
+        res.status(200).json({resultCode: 0, message: 'Status updated'})
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({resultCode: 1, message: 'Something went wrong2'})
+    }
+})
+
 // /api/profile
 router.put('/', auth, async (req, res) => {
     try {
         const {user} = req
         if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
-        //update avatar in all user posts
+        //update name in all user posts
         if (user.profileData.firstName !== req.body.firstName || user.profileData.lastName !== req.body.lastName) {
             await Post.updateMany({'author.username': user.username}, {
                 $set: {
