@@ -67,12 +67,6 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
             <Form.Row>
                 <Field name="bio" type="text" component={Input} label="Bio" placeholder="Bio" block/>
             </Form.Row>
-            <Form.Row>
-                <Field name="interests" type="text" component={Input} label="Interests" placeholder="Interests" block/>
-            </Form.Row>
-            <Form.Title>
-                Contacts
-            </Form.Title>
             {
                 Object.keys(contacts).map(key => {
                     return <Form.Row>
@@ -81,13 +75,6 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
                     </Form.Row>
                 })
             }
-            <Form.Row>
-                <Field name="contacts.website" type="text" component={Input} label="Website" placeholder="Website"
-                       block/>
-            </Form.Row>
-            <Form.Row>
-                <Field name="contacts.phone" type="text" component={Input} label="Phone" placeholder="Phone" block/>
-            </Form.Row>
         </Form>
     )
 }

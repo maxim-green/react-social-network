@@ -25,12 +25,8 @@ const schema = new Schema(
             },
             contacts: {
                 website: {type: String, default: null},
-                phone: {type: String, default: null},
-                email: {type: String, default: null},
                 vkontakte: {type: String, default: null},
-                facebook: {type: String, default: null},
                 github: {type: String, default: null},
-                telegram: {type: String, default: null},
             }
         },
         friends: [{ type: Types.ObjectId, ref: 'User' }],

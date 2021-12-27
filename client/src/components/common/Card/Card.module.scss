@@ -4,11 +4,11 @@
   position: relative;
   background: #FFFFFF;
   box-sizing: border-box;
-  margin: 28px 0;
+  margin: $components-gap 0;
   border-radius: 5px;
   overflow: hidden;
   z-index: 1;
-  box-shadow: $card-shadow;
+  //box-shadow: $card-shadow;
   &::before {
     content: "";
     position: absolute;

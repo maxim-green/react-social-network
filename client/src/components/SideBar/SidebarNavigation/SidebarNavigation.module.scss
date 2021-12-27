@@ -1,7 +1,7 @@
 @import '../../../variables';
 
 .Navigation {
-  padding: 20px 70px;
+  padding: 30px 40px;
 }
 
 .NavigationTitle {
@@ -19,7 +19,9 @@
 }
 
 .NavigationItem {
-  margin-bottom: 20px;
+  & + & {
+    margin-top: 20px;
+  }
   a {
     display: flex;
     align-items: center;

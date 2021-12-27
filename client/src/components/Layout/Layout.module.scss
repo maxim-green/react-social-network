@@ -1,24 +1,38 @@
 @import "../../variables";
 
+.layout {
+  padding-top: $appbar-height;
+}
+
+.container {
+  max-width: $container-width;
+  padding: 0 $container-padding;
+  margin: 0 auto;
+}
+
 .appBar {
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   z-index: 100;
+  height: $appbar-height;
   background-color: $dark-grey;
   color: $white;
   box-shadow: $bar-shadow;
 }
 
 .main {
-  padding-top: 60px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
 .content {
-  max-width: 1007px;
-  width: 100%;
   flex-grow: 1;
+}
+
+.sidebar {
+  width: $sidebar-width;
+  margin-right: $components-gap;
 }

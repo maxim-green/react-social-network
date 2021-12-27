@@ -1,23 +1,20 @@
 @import "../../../../variables";
 
-.profileInfoItem {
+.wrapper {
+  margin-top: 15px;
   display: flex;
-
-  &.vertical {
-    flex-direction: column;
-  }
-  & + & {
-    margin-top: 12px;
-  }
+  align-items: center;
+  height: 20px;
 }
 
-.itemTitle {
-  white-space: nowrap;
-  color: $mid-grey;
-  min-width: 80px;
+.icon {
+  display: flex;
+  align-items: center;
+  margin-right: 2px;
 }
 
-.itemValue {
+.value {
   white-space: normal;
+  line-height: 20px;
   width: 100%;
 }

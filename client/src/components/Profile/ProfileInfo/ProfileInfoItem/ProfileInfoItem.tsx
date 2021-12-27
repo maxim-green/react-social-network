@@ -1,25 +1,21 @@
-import classes from "./ProfileInfoItem.module.scss";
-import React from "react";
-import classnames from "classnames";
+import classes from './ProfileInfoItem.module.scss'
+import React from 'react'
+import {Icon} from 'react-bootstrap-icons'
 
 type PropsType = {
-    title: string
-    orientation?: 'vertical' | 'horizontal'
+    Icon?: Icon
+    value: string
 }
 
 const ProfileInfoItem: React.FC<PropsType> = ({
-                                                  title,
-                                                  orientation,
-                                                  children
+                                                  value,
+                                                  children,
+                                                  Icon
                                               }) => {
     return (
-        <div className={
-                 classnames(
-                     classes.profileInfoItem,
-                     {[classes.vertical]: orientation === 'vertical'},
-                 )
-             }>
-            <div className={classes.itemTitle}>{title}</div><div className={classes.itemValue}>{children}</div>
+        <div className={classes.wrapper}>
+            {Icon && <div className={classes.icon}><Icon size={18}/></div>}
+            <div className={classes.value}>{value}</div>
         </div>
     )
 }

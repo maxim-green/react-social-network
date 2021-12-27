@@ -5,12 +5,8 @@ export type FormDataType = typeof formData
 export type LocationType = { country: string | null, city: string | null }
 export type ContactsType = {
     website: string | null,
-    phone: string | null,
-    email: string | null,
     vkontakte: string | null,
-    facebook: string | null,
     github: string | null,
-    telegram: string | null,
 }
 export type AvatarType = { large: string | null, small: string | null }
 

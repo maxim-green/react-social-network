@@ -4,13 +4,14 @@ import Moment from 'react-moment'
 import {capitalize} from '../../../../utils/functions'
 import React from 'react'
 import {ContactsType, LocationType} from '../../../../types/types'
+import {GeoAlt, Link45deg} from 'react-bootstrap-icons'
+import moment from 'moment'
 
 type PropsTypes = {
     birthDate: string | null
     location: LocationType
     contacts: ContactsType
     bio: string | null
-    interests: string | null
 }
 
 const ProfileInfoData: React.FC<PropsTypes> = ({
@@ -18,35 +19,47 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
                                                    location,
                                                    contacts,
                                                    bio,
-                                                   interests
                                                }) => {
     return (
         <div className={classes.profileInfo}>
-            <div className={classes.profileInfoColumn}>
-                {birthDate && <ProfileInfoItem title="Birth date:">
-                    <Moment format="DD.MM.YYYY" date={birthDate}/>
-                </ProfileInfoItem>}
+            {bio && <Bio bio={bio}/>}
+            <div className={classes.profileInfoItems}>
+                {location?.country && location?.city && <Location city={location.city} country={location.country}/>}
+                {contacts?.website && <Website website={contacts.website}/>}
 
-                {location?.country && location?.city && <ProfileInfoItem title="Location:">
-                    {location?.country}, {location?.city}
-                </ProfileInfoItem>}
-
-                {contacts && Object.keys(contacts).map((key) => {
-                    const href: string | undefined = contacts[key as keyof ContactsType] || undefined
-                    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem key={key}
-                        title={capitalize(key) + ':'}>
-                        <a href={href}>{contacts[key as keyof ContactsType]}</a>
-                    </ProfileInfoItem>
-                    return null
-                })}
+                {/*{birthDate && <ProfileInfoItem value={moment(birthDate).format("DD.MM.YYYY")} />}*/}
+                {/*{contacts && Object.keys(contacts).map((key) => {*/}
+                {/*    const href: string | undefined = contacts[key as keyof ContactsType] || undefined*/}
+                {/*    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem key={key}*/}
+                {/*                                                                                 title={capitalize(key) + ':'}>*/}
+                {/*        <a href={href}>{contacts[key as keyof ContactsType]}</a>*/}
+                {/*    </ProfileInfoItem>*/}
+                {/*    return null*/}
+                {/*})}*/}
             </div>
-            {interests && <div className={classes.profileInfoColumn}>
-                <ProfileInfoItem title="Interests:" orientation="vertical">
-                    {interests}
-                </ProfileInfoItem>
-            </div>}
+
         </div>
     )
 }
+
+type BioPropsType = { bio: string }
+const Bio: React.FC<BioPropsType> = ({bio}) => <div className={classes.bio}>
+    {bio}
+</div>
+
+type LocationProps = { country: string, city: string}
+const Location: React.FC<LocationProps> = ({country, city}) => <div className={classes.location + ' ' + classes.item}>
+    <GeoAlt size={20}/><span>{country}, {city}</span>
+</div>
+
+type WebsitePropsType = {website: string}
+const Website: React.FC<WebsitePropsType> = ({website}) => <a href={'http://' + website} className={classes.website + ' ' + classes.item}>
+    <Link45deg size={24}/><span>{website}</span>
+</a>
+
+// @ts-ignore
+// const ProfileInfoSocialItem: React.FC<ProfileInfoSocialItemType> = ({Icon, href}) => <div className={classes.contactItem}>
+//     <a href={href}><Icon size={18}/></a>
+// </div>
 
 export default ProfileInfoData
