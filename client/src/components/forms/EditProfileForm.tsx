@@ -43,9 +43,6 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
                     <Button caption="Save" size="md"/>
                 </Form.Item>
             </Form.Row>
-            <Form.Title>
-                General
-            </Form.Title>
             <Form.Row>
                 <Field name="firstName" type="text" component={Input} label="First name" placeholder="First name"
                        validate={required} block/>

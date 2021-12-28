@@ -28,7 +28,7 @@ const ProfileInfo: React.FC<PropsType> = ({
         <Card>
             <ProfileCoverImage
                 owner={owner}
-                img='https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1140&q=80'
+                img={profileData.coverImage}
             />
             <div style={{padding: '20px'}}>
                 <ProfileInfoHeader

@@ -6,6 +6,7 @@ import {InferActionsTypes, ThunkType} from '../store'
 // INITIAL STATE
 const initialState = {
     users: [] as Array<UserType>,
+    friends: [] as Array<UserType>,
     outgoingFriendshipRequests: [] as Array<string>,
     incomingFriendshipRequests: [] as Array<string>
 }
@@ -62,6 +63,12 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
                 incomingFriendshipRequests: state.incomingFriendshipRequests.filter(userId => userId !== action.userId)
             }
         }
+        case 'rsn/users/SET_FRIENDS': {
+            return {
+                ...state,
+                friends: action.friends
+            }
+        }
         default: {
             return state
         }
@@ -71,6 +78,7 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 //region ACTION CREATORS
 export const usersActions = {
     setUsers: (users: Array<UserType>) => ({type: 'rsn/users/SET_USERS', users} as const),
+    setFriends: (friends: Array<UserType>) => ({type: 'rsn/users/SET_FRIENDS', friends} as const),
     setIsFriend: (userId: string, isFriend: boolean) => ({type: 'rsn/users/SET_IS_FRIEND', userId, isFriend} as const),
     setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'rsn/users/SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
     setOutgoingFriendshipRequests: (outgoingFriendshipRequests: Array<string>) => ({type: 'rsn/users/SET_OUTGOING_FRIENDSHIP_REQUESTS', outgoingFriendshipRequests} as const),
@@ -85,11 +93,20 @@ export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 //region THUNK CREATORS
 export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.getUsers()
-    console.log(res)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setUsers(res.data.users))
         dispatch(usersActions.setIncomingFriendshipRequests(res.data.incomingFriendshipRequests))
         dispatch(usersActions.setOutgoingFriendshipRequests(res.data.outgoingFriendshipRequests))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const getFriends = (): ThunkType<UsersActionType> => async (dispatch) => {
+    const res = await usersApi.getFriends()
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(usersActions.setFriends(res.data.friends))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

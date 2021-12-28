@@ -14,6 +14,10 @@ export const usersApi = {
         .get('/users')
         .then(handleResponse<UsersDataType>())
         .catch(handleError()),
+    getFriends: () => coreApi
+        .get('/users/friends')
+        .then(handleResponse<{ friends: Array<UserType> }>())
+        .catch(handleError()),
 
     addFriend: (userId: string) => coreApi
         .post(`/users/friend/${userId}`)

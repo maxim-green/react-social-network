@@ -12,7 +12,8 @@ export type ProfileDataType = {
     bio: string | null,
     contacts: ContactsType,
     location: LocationType,
-    avatar: AvatarType
+    avatar: AvatarType,
+    coverImage: string | null
 }
 
 export const profileApi = {

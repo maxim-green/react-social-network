@@ -14,7 +14,6 @@ type PropsType = {
 const EditAvatarForm: React.FC<PropsType> = (props) => {
     const [srcFile, setSrcFile] = useState<File | null>(null)
     const [srcFileUrl, setSrcFileUrl] = useState<string | undefined>(undefined)
-    // const [srcFileUrl, setSrcFileUrl] = useState<string | null>(null) // same as above but for react-crop-image
     const [zoom, setZoom] = useState<number>(1)
     const [crop, setCrop] = useState<Point>({
         x: 0,

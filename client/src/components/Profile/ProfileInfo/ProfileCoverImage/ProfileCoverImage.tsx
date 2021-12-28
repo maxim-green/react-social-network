@@ -1,11 +1,13 @@
 import classes from './ProfileCoverImage.module.scss'
 import Button from '../../../common/Button/Button'
 import editCoverImageIcon from '../../../../assets/images/edit-cover-image-icon.svg'
-import defaultCoverImage from '../../../../assets/images/default-cover-image.jpg'
-import React from 'react'
+import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
+import React, {useEffect, useState} from 'react'
+import Popup from 'reactjs-popup'
+import ImageUploader from '../../../ImageUploader/ImageUploader'
 
 type PropsTypes = {
-    img?: string
+    img: string | null
     owner?: boolean
 }
 
@@ -13,12 +15,23 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
                                                      img = defaultCoverImage,
                                                      owner = false
                                                  }) => {
+    const [open, setOpen] = useState<boolean>(false)
+
+    useEffect(() => {
+        setOpen(false)
+    }, [img])
+    const openModal = () => setOpen(true)
+    const closeModal = () => setOpen(false)
+
     return (
-        <div className={classes.coverImage}
-             style={{backgroundImage: `url(${img})`}}>
+        <div className={classes.coverImage}>
             <div className={classes.editCoverImageButton}>
-                {owner && <Button icon={editCoverImageIcon} caption="Edit Cover Image" variant="neutral"/>}
+                {owner && <Button icon={editCoverImageIcon} caption="Edit Cover Image" variant="neutral" onClick={openModal}/>}
             </div>
+            <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5}}>
+                <ImageUploader />
+            </Popup>
+            <img className={classes.image} src={img ? img : defaultCoverImage}/>
         </div>
     )
 }

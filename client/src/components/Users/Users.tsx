@@ -14,6 +14,7 @@ import {
     declineFriendshipRequest, deleteFriend, follow,
     getUsers, unfollow
 } from '../../redux/reducers/users.reducer'
+import {useParams} from 'react-router'
 
 type PropsType = {
     authorized: boolean
@@ -45,19 +46,27 @@ const Users: React.FC<PropsType> = ({
                                         unfollow
                                     }) => {
 
+    const { filter } = useParams<{ filter?: 'friends' | 'blocked' }>()
+    let shownUsers: Array<UserType> | null = null
+    if (!filter) {shownUsers = users}
+    if (filter === 'friends') {shownUsers = users.filter(user => user.isFriend)}
+    if (filter === 'blocked') {shownUsers = users}
+
     return (
         <Card>
-            <NavTabs>
-                <NavTab to="/users">All</NavTab>
-                <NavTab to="/users/blocked">Blocked</NavTab>
-            </NavTabs>
 
-            <div className={classes.searchForm}>
-                Search form will be here.
-            </div>
+            {authorized && <NavTabs>
+                <NavTab to="/users">All</NavTab>
+                <NavTab to="/users/friends">Friends</NavTab>
+                {/*<NavTab to="/users/blocked">Blocked</NavTab>*/}
+            </NavTabs>}
+
+            {/*<div className={classes.searchForm}>*/}
+            {/*    Search form will be here.*/}
+            {/*</div>*/}
 
             <div className={classes.usersItems}>
-                {users.map(user => <UserItem
+                {shownUsers && shownUsers.map(user => <UserItem
                     key={user.userId}
                     authorized={authorized}
                     authorizedUserId={authorizedUserId}

@@ -9,6 +9,7 @@ import EditProfilePage from './pages/EditProfilePage'
 import {initializeApp} from '../redux/reducers/app.reducer'
 import {StateType} from '../redux/store'
 import Layout from './Layout/Layout'
+import TestPage from './TestPage'
 
 type MapStatePropsType = {
     initialized: boolean,
@@ -43,12 +44,13 @@ const App: React.FC<PropsType> = ({
                         <Route path="/profile/edit" component={EditProfilePage}/>
                         <Route exact path="/profile/:username" component={ProfilePage}/>
 
-                        <Route path="/users" component={UsersPage}/>
+                        <Route path="/users/:filter?" component={UsersPage}/>
                         <Route path="/dialogs" render={() => <Layout>Dialogs Page</Layout>}/>
                         <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                         <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
                         <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
                         <Route path="/friends" render={() => <Layout>Friends Page</Layout>}/>
+                        <Route path={'/testpage'} component={TestPage}/>
 
                         {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}
                         {authorized &&

@@ -3,27 +3,23 @@ import React from 'react'
 import classes from './SidebarFriends.module.scss'
 import Avatar from '../../common/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
+import {UserType} from '../../../types/types'
 
 type PropsType = {
-    friendsCount: number
+    friends: Array<UserType>
 }
 
-const SidebarFriends: React.FC<PropsType> = ({friendsCount}) => {
+const SidebarFriends: React.FC<PropsType> = ({friends}) => {
     return (
         <Card>
             <div className={classes.Title}>My Friends</div>
             <div className={classes.Avatars}>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
-                <NavLink to="/profile/1"><Avatar img="https://randomuser.me/api/portraits/men/32.jpg" online/></NavLink>
+                {friends.length !== 0 && friends.map(friend => <NavLink to={`/profile/${friend.username}`}
+                                                                        key={friend.userId}><Avatar
+                    img={friend.avatar.small} online size={'sm'}/></NavLink>
+                )}
             </div>
-            <div className={classes.Link}><NavLink to='/friends'>View All ({friendsCount})</NavLink></div>
+            <div className={classes.Link}><NavLink to='/users/friends'>View All ({friends.length})</NavLink></div>
         </Card>
     )
 }

@@ -76,6 +76,35 @@ router.put(
     }
 )
 
+router.put(
+    '/cover',
+    upload.single('cover'),
+    auth,
+    async (req, res) => {
+        try {
+            const {user} = req
+            if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
+
+            const uploadPath = `/uploads/cover/${req.file.fieldname}${Date.now()}${path.extname(req.file.originalname)}`
+            await sharp(req.file.buffer)
+                .resize({fit: sharp.fit.contain, width: 720})
+                .toFile(path.join(__dirname, '..', uploadPath))
+
+            user.profileData.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
+            await user.save()
+
+            res.status(200).json({
+                resultCode: 0,
+                message: 'File uploaded',
+                data: user.profileData.coverImage
+            })
+        } catch(e) {
+            console.log(e)
+            res.status(500).json({resultCode: 1, message: 'Something went wrong2'})
+        }
+    }
+)
+
 router.put('/status', auth, async (req, res) => {
     try {
         const {user} = req

@@ -1,0 +1,12 @@
+.cropperContainer {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+}
+
+.imageCrop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
