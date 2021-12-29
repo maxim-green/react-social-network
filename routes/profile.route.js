@@ -78,15 +78,22 @@ router.put(
 
 router.put(
     '/cover',
-    upload.single('cover'),
+    upload.single('coverImage'),
     auth,
     async (req, res) => {
         try {
             const {user} = req
             if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
+            const cropArea = JSON.parse(req.body.cropArea)
             const uploadPath = `/uploads/cover/${req.file.fieldname}${Date.now()}${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
+                .extract({
+                    left: Math.round(cropArea.x),
+                    top: Math.round(cropArea.y),
+                    width: Math.round(cropArea.width),
+                    height: Math.round(cropArea.height)
+                })
                 .resize({fit: sharp.fit.contain, width: 720})
                 .toFile(path.join(__dirname, '..', uploadPath))
 
@@ -96,7 +103,7 @@ router.put(
             res.status(200).json({
                 resultCode: 0,
                 message: 'File uploaded',
-                data: user.profileData.coverImage
+                data: { coverImage: user.profileData.coverImage }
             })
         } catch(e) {
             console.log(e)

@@ -4,16 +4,19 @@ import editCoverImageIcon from '../../../../assets/images/edit-cover-image-icon.
 import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup'
-import ImageUploader from '../../../ImageUploader/ImageUploader'
+import ImageUploadForm from '../../../ImageUploadForm/ImageUploadForm'
+import {Area, Point} from 'react-easy-crop/types'
 
 type PropsTypes = {
     img: string | null
     owner?: boolean
+    onCoverImageSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
 }
 
 const ProfileCoverImage: React.FC<PropsTypes> = ({
                                                      img = defaultCoverImage,
-                                                     owner = false
+                                                     owner = false,
+                                                     onCoverImageSubmit
                                                  }) => {
     const [open, setOpen] = useState<boolean>(false)
 
@@ -28,8 +31,8 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
             <div className={classes.editCoverImageButton}>
                 {owner && <Button icon={editCoverImageIcon} caption="Edit Cover Image" variant="neutral" onClick={openModal}/>}
             </div>
-            <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5}}>
-                <ImageUploader />
+            <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5}} closeOnDocumentClick={false}>
+                <ImageUploadForm aspect={7 / 2} onSubmit={onCoverImageSubmit} closeModal={closeModal} />
             </Popup>
             <img className={classes.image} src={img ? img : defaultCoverImage}/>
         </div>

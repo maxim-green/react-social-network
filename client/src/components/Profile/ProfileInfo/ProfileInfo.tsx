@@ -5,13 +5,14 @@ import {ProfileDataType} from '../../../api/profile.api'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'
 import ProfileInfoHeader from './ProfileHeader/ProfileHeader'
 import ProfileInfoData from './ProfileInfoData/ProfileInfoData'
-import {Point} from 'react-easy-crop/types'
+import {Area, Point} from 'react-easy-crop/types'
 
 type PropsType = {
     authorized: boolean,
     authorizedUserId: string | null
     profileData: ProfileDataType
     onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
+    onCoverImageSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
     onStatusUpdate: (status: string) => void
 }
 
@@ -20,6 +21,7 @@ const ProfileInfo: React.FC<PropsType> = ({
                                               authorizedUserId,
                                               profileData,
                                               onAvatarSubmit,
+                                              onCoverImageSubmit,
     onStatusUpdate
                                           }) => {
     const owner = authorized && (authorizedUserId === profileData.userId)
@@ -29,6 +31,7 @@ const ProfileInfo: React.FC<PropsType> = ({
             <ProfileCoverImage
                 owner={owner}
                 img={profileData.coverImage}
+                onCoverImageSubmit={onCoverImageSubmit}
             />
             <div style={{padding: '20px'}}>
                 <ProfileInfoHeader

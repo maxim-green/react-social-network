@@ -7,13 +7,16 @@ $accent: #2086C4;
 $light-blue: #7ECEFB;
 $light-blue-2: #BEE7FD;
 $light-grey-2: #E8E9E8;
+$light-grey-1: #F5F7F6;
 $accent: #2086C4;
 $error: #F2280C;
 $green-success: #4EE83E;
 $success: #4EE83E;
 
+$background: $light-grey-1;
+
 // shadows
-$card-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$card-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
 $bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
 
 // global sizes

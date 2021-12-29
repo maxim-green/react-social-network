@@ -2,16 +2,21 @@ import Form from '../common/Form/Form'
 import FilePicker from '../common/FilePicker/FilePicker'
 import Button from '../common/Button/Button'
 import React, {useCallback, useState} from 'react'
-import {Point} from 'react-easy-crop/types'
-import {resizeImage} from '../../utils/functions'
+import {Area, Point} from 'react-easy-crop/types'
 import {Slider} from 'antd'
-import classes from './ImageUploader.module.scss'
+import classes from './ImageUploadForm.module.scss'
 import Cropper from 'react-easy-crop'
 
-const ImageUploader: React.FC = () => {
+type PropsType = {
+    aspect: number
+    onSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
+    closeModal?: () => void
+}
+
+const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) => {
     const [srcFile, setSrcFile] = useState<File | null>(null)
     const [srcFileUrl, setSrcFileUrl] = useState<string | undefined>(undefined)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState({x: 0, y: 0, width: 100, height: 100})
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({x: 0, y: 0, width: 100, height: 100})
 
     const setPickedFile = async (file: File) => {
         setSrcFile(file)
@@ -20,10 +25,8 @@ const ImageUploader: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log(srcFile, croppedAreaPixels)
+        if (srcFile) onSubmit(e, srcFile, croppedAreaPixels)
     }
-
-
 
     return (
         <div>
@@ -33,12 +36,14 @@ const ImageUploader: React.FC = () => {
                 </Form.Row>
                 {srcFileUrl && <Form.Row>
                     <ImageCrop
+                        aspect={aspect}
                         srcFileUrl={srcFileUrl}
                         setCroppedAreaPixels={setCroppedAreaPixels}
                     />
                 </Form.Row>}
                 <Form.Row>
                     <Button caption="Save" size="lg"/>
+                    {closeModal && <Button caption='Cancel' size='lg' onClick={closeModal}/>}
                 </Form.Row>
             </Form>
         </div>
@@ -46,10 +51,11 @@ const ImageUploader: React.FC = () => {
 }
 
 type ImageCropPropsType = {
+    aspect: number
     srcFileUrl?: string
     setCroppedAreaPixels: any
 }
-const ImageCrop: React.FC<ImageCropPropsType> = ({srcFileUrl, setCroppedAreaPixels}) => {
+const ImageCrop: React.FC<ImageCropPropsType> = ({aspect, srcFileUrl, setCroppedAreaPixels}) => {
     const [zoom, setZoom] = useState<number>(1)
     const [crop, setCrop] = useState<Point>({
         x: 0,
@@ -71,7 +77,7 @@ const ImageCrop: React.FC<ImageCropPropsType> = ({srcFileUrl, setCroppedAreaPixe
                         crop={crop}
                         zoom={zoom}
                         showGrid={false}
-                        aspect={7 / 2}
+                        aspect={aspect}
                         onCropComplete={onCropComplete}
                         onCropChange={setCrop}
                         onZoomChange={setZoom}
@@ -80,7 +86,7 @@ const ImageCrop: React.FC<ImageCropPropsType> = ({srcFileUrl, setCroppedAreaPixe
                 <div style={{width: '100%'}}>
                     <Slider
                         min={1}
-                        max={10}
+                        max={3}
                         step={0.01}
                         value={zoom}
                         onChange={sliderChangeHandler}
@@ -90,4 +96,4 @@ const ImageCrop: React.FC<ImageCropPropsType> = ({srcFileUrl, setCroppedAreaPixe
     )
 }
 
-export default ImageUploader
+export default ImageUploadForm

@@ -36,6 +36,16 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                     ...state.data,
                     avatar: {...state.data.avatar, ...action.avatar}
                 },
+                posts: state.posts.map(post => ({...post, author: {...post.author, avatar: action.avatar}}))
+            }
+        }
+        case 'rsn/profile/SET_COVER_IMAGE': {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    coverImage: action.coverImage
+                }
             }
         }
         case 'rsn/profile/SET_POSTS': {
@@ -82,6 +92,7 @@ export default reducer
 export const profileActions = {
     setProfile: (profileData: ProfileDataType) => ({type: 'rsn/profile/SET_PROFILE', profileData} as const),
     setAvatar: (avatar: AvatarType) => ({type: 'rsn/profile/SET_AVATAR', avatar} as const),
+    setCoverImage: (coverImage: string) => ({type: 'rsn/profile/SET_COVER_IMAGE', coverImage} as const),
     setPosts: (posts: Array<PostType>) => ({type: 'rsn/profile/SET_POSTS', posts} as const),
     addPost: (post: PostType) => ({type: 'rsn/profile/ADD_POST', post} as const),
     deletePost: (id: string) => ({type: 'rsn/profile/DELETE_POST', id} as const),
@@ -128,6 +139,16 @@ export const updateAvatar = (formData: FormDataType): ThunkType<ProfileActionTyp
     const res = await profileApi.updateAvatar(formData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setAvatar(res.data))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const updateCoverImage = (formData: FormDataType): ThunkType<ProfileActionType> => async (dispatch) => {
+    const res = await profileApi.updateCoverImage(formData)
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(profileActions.setCoverImage(res.data.coverImage))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

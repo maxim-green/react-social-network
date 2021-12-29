@@ -4,8 +4,8 @@ import classnames from 'classnames'
 import editIconWhite from '../../../assets/images/edit-icon-white.svg'
 import Popup from 'reactjs-popup'
 import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
-import EditAvatarForm from './EditAvatarForm/EditAvatarForm'
 import {Point} from 'react-easy-crop/types'
+import ImageUploadForm from '../../ImageUploadForm/ImageUploadForm'
 
 type PropsType = {
     img?: string | null
@@ -47,7 +47,7 @@ const Avatar: React.FC<PropsType> = ({
             {onSubmit && owner && <div>
                 <button className={classes.editButton} onClick={openModal}><img src={editIconWhite} alt=""/></button>
                 <Popup open={open} modal nested onClose={closeModal}>
-                        <EditAvatarForm onSubmit={onSubmit}/>
+                    <ImageUploadForm aspect={1 / 1} onSubmit={onSubmit} closeModal={closeModal}  />
                 </Popup>
             </div>}
 

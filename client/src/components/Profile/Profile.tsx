@@ -4,7 +4,7 @@ import {
     deletePost,
     getPosts,
     getUserData,
-    updateAvatar,
+    updateAvatar, updateCoverImage,
     updateStatus
 } from '../../redux/reducers/profile.reducer'
 import {useDispatch, useSelector} from 'react-redux'
@@ -14,7 +14,7 @@ import ProfilePosts from './ProfilePosts/ProfilePosts'
 import {StateType} from '../../redux/store'
 import {ProfileDataType} from '../../api/profile.api'
 import {NewPostType, PostType} from '../../types/types'
-import {Point} from 'react-easy-crop/types'
+import {Area, Point} from 'react-easy-crop/types'
 
 type PropsType = {
     authorized: boolean
@@ -23,6 +23,7 @@ type PropsType = {
     posts: Array<PostType>
     isAddPostPending: boolean
     onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
+    onCoverImageSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
     onNewPostSubmit: (newPostData: NewPostType) => void
     onPostDelete: (id: string) => void
     onStatusUpdate: (string: string) => void
@@ -36,6 +37,7 @@ const Profile: React.FC<PropsType> = (props) => {
                 authorized={props.authorized}
                 authorizedUserId={props.authorizedUserId}
                 onAvatarSubmit={props.onAvatarSubmit}
+                onCoverImageSubmit={props.onCoverImageSubmit}
                 onStatusUpdate={props.onStatusUpdate}
             />
             <ProfilePosts
@@ -73,6 +75,13 @@ const ProfileContainer: React.FC = () => {
         dispatch(updateAvatar(formData))
     }
 
+    const onCoverImageSubmit = (e: React.FormEvent, image: File, cropArea: Area) => {
+        const formData = new FormData()
+        formData.append('coverImage', image)
+        formData.append('cropArea', JSON.stringify(cropArea))
+        dispatch(updateCoverImage(formData))
+    }
+
     const onNewPostSubmit = (newPostData: NewPostType) => {
         const {newPostText} = newPostData
         dispatch(addPost(newPostText))
@@ -94,6 +103,7 @@ const ProfileContainer: React.FC = () => {
                 posts={posts}
                 isAddPostPending={isAddPostPending}
                 onAvatarSubmit={onAvatarSubmit}
+                onCoverImageSubmit={onCoverImageSubmit}
                 onNewPostSubmit={onNewPostSubmit}
                 onPostDelete={onPostDelete}
                 onStatusUpdate={onStatusUpdate}

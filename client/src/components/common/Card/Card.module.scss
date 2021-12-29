@@ -8,7 +8,7 @@
   border-radius: 5px;
   overflow: hidden;
   z-index: 1;
-  //box-shadow: $card-shadow;
+  box-shadow: $card-shadow;
   &::before {
     content: "";
     position: absolute;
