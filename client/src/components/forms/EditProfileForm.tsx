@@ -13,6 +13,7 @@ import {StateType} from '../../redux/store'
 import {useAuthCheck} from '../../utils/hooks'
 import {ThunkDispatch} from 'redux-thunk'
 import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
+import {DatePicker} from 'antd'
 
 type NativePropsType = {}
 
@@ -52,7 +53,7 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
                        validate={required} block/>
             </Form.Row>
             <Form.Row>
-                <Field name="birthDate" type="text" component={Input} label="Birth date" placeholder="Birth date"
+                <Field name="birthDate" type="text" component={DatePicker} label="Birth date" placeholder="Birth date"
                        block/>
             </Form.Row>
             <Form.Row>
@@ -87,6 +88,7 @@ const EditProfileFormContainer: React.FC = () => {
     useAuthCheck()
 
     const onSubmit = (profileData: ProfileDataType) => {
+        console.log(profileData)
         dispatch(updateProfile(profileData))
     }
 
