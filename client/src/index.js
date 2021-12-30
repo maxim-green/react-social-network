@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset'
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 import './index.scss';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
@@ -16,8 +16,8 @@ ReactDOM.render(
                 <App />
             </BrowserRouter>
         </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
+    </React.StrictMode>
+    ,document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
