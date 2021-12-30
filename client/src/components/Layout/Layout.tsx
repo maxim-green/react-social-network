@@ -23,7 +23,7 @@ const Layout: React.FC<PropsType & {friends: Array<UserType>}> = ({children, sid
             </AppBar>
             <Main>
                 {sidebar && <Sidebar>
-                    {!authorized && <Card><LoginForm/></Card>}
+                    {!authorized && <Card><LoginForm compact={true}/></Card>}
                     {authorized && <SidebarNavigation/>}
                     {authorized && <SidebarFriends friends={friends}/>}
                 </Sidebar>}

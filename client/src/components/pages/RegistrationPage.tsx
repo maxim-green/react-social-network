@@ -8,7 +8,7 @@ import Layout from '../Layout/Layout'
 const RegistrationPage: React.FC = () => {
     return (
         <Layout>
-            <div style={{ margin: '0 auto', maxWidth: '650px', width: '100%' }}>
+            <div style={{ margin: '120px auto 0 auto', maxWidth: '650px', width: '100%' }}>
                 <Card>
                     <NavTabs>
                         <NavTab to="/login">Log In</NavTab>
