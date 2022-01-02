@@ -1,0 +1,33 @@
+.file-drop, .file-drop-target  {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.file-drop-target {
+    box-shadow: 0 0 0 2px rgba(55, 60, 66, 0) inset;
+    background: #FFFFFF;
+    transition: all .2s;
+    border: 2px solid #E8E9E8;
+    border-radius: 5px;
+}
+
+.file-drop-target:hover {
+    box-shadow: 0 0 0 2px rgba(55, 60, 66, 0) inset;
+    background-color: #BEE7FD;
+    border-color: #BEE7FD;
+}
+
+.file-drop-target.file-drop-dragging-over-frame {
+    /* overlay a black mask when dragging over the frame */
+    border-color: rgba(32, 134, 196, 1);
+    z-index: 50;
+}
+
+.file-drop-target.file-drop-dragging-over-target {
+    /* turn stuff orange when we are dragging over the target */
+    background-color: #BEE7FD;
+    border-color: rgba(32, 134, 196, 1);
+}

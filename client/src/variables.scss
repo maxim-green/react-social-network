@@ -34,6 +34,11 @@ $clr-neutral-border: darken($clr-neutral, 5%);
 $clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
 $clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
 
+$clr-text: #FFFFFF;
+$clr-text-border: darken($clr-neutral, 5%);
+$clr-text-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
+$clr-text-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
+
 
 
 // ui

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useCallback, useRef, useState} from 'react'
 import classes from './Form.module.scss'
 import classnames from 'classnames'
 import button from "../../common/Button/Button";
+import {FileDrop} from "react-file-drop";
+import './FileDrop.css'
+import {useDropzone} from "react-dropzone";
 
 type PropsType = { onSubmit: (e: React.FormEvent) => void }
 
@@ -45,7 +48,14 @@ Form.Item = React.forwardRef(({
                     {(typeof error === 'string') && <span className={classes.formItemError}>{error}</span>}
                     {(typeof error === 'object') && <span className={classes.formItemError}>{error.message}</span>}
                 </div>
-                {React.createElement(component, {name, required: forwardedRequiredProp, disabled, onChange, onBlur, ref}, children)}
+                {React.createElement(component, {
+                    name,
+                    required: forwardedRequiredProp,
+                    disabled,
+                    onChange,
+                    onBlur,
+                    ref
+                }, children)}
             </label>
         </div>
     )
@@ -103,11 +113,67 @@ export const Checkbox: React.FC<InputPropsType> = React.forwardRef<HTMLInputElem
                                                                                                       }, ref) => {
     return <label className={classes.checkbox}>
         {children}
-        <input type="checkbox" name={name} disabled={disabled} required={required} onChange={onChange} onBlur={onBlur} ref={ref}/>
+        <input type="checkbox" name={name} disabled={disabled} required={required} onChange={onChange} onBlur={onBlur}
+               ref={ref}/>
         <span className={classes.box}></span>
     </label>
 })
 Checkbox.displayName = 'Checkbox'
+
+export const InputRange: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
+                                                                                                            name,
+                                                                                                            required = false,
+                                                                                                            disabled = false,
+                                                                                                            onChange,
+                                                                                                            onBlur
+                                                                                                        }, ref) => {
+    return (
+        <input type="range" name={name}/>
+    )
+})
+
+export const InputDate: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
+                                                                                                           name,
+                                                                                                           required = false,
+                                                                                                           disabled = false,
+                                                                                                           onChange,
+                                                                                                           onBlur
+                                                                                                       }) => {
+    return (
+        <input type="date"/>
+    )
+})
+
+export const InputFile: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
+                                                                                                           name,
+                                                                                                           required = false,
+                                                                                                           disabled = false,
+                                                                                                           onChange,
+                                                                                                           onBlur
+                                                                                                       }) => {
+    const [fileDataURL, setFileDataURL] = useState<string | null>(null)
+    const onDrop = useCallback(acceptedFiles => {
+
+        const reader = new FileReader();
+        reader.onloadend = (event: ProgressEvent) => {
+            if (typeof reader.result === 'string') setFileDataURL(reader.result)
+        }
+        reader.readAsDataURL(acceptedFiles[0]);
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+
+    return (
+                <div className={classes.inputFile + (isDragActive ? ' ' + classes.dragActive : '')} {...getRootProps()}>
+                    <input {...getInputProps()}/>
+                    {
+                        isDragActive ?
+                        <span className={classes.inputFileBox}>Drop your files here...</span>:
+                        <span className={classes.inputFileBox}>Drop your files here or click to select files</span>
+                    }
+                </div>
+    )
+})
 
 export const Button: React.FC<{
     onClick?: (e: React.MouseEvent) => void
