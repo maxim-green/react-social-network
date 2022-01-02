@@ -1,0 +1,179 @@
+@import "../../../variables";
+
+.form {
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  & + & {
+    margin-top: 14px;
+  }
+}
+
+
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.error {
+  color: $error;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.success {
+  color: $success;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.formItem {
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  &.disabled {
+    .formItemInfo {
+      opacity: .5;
+    }
+  }
+  &.formItemCheckbox {
+    label {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: left;
+    }
+  }
+  .formItemInfo {
+    display: flex;
+    justify-content: left;
+    flex-grow: 1;
+    padding: 0 4px;
+    @include ui-form-item-label-font
+  }
+  .formItemRequiredMark {
+    margin-right: 2px;
+    color: $error;
+  }
+  .formItemLabel {
+    color: $dark-grey-2;
+  }
+  .formItemError {
+    margin-left: auto;
+    color: $error;
+  }
+}
+
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 22px;
+  padding-left: 25px;
+  cursor: pointer;
+
+  .box {
+    border: 1px solid $light-grey-2;
+    border-radius: $ui-border-radius;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: $ui-transition;
+  }
+
+  input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    &:checked + .box {
+      background-image: url("../../../assets/images/check.svg");
+      background-size: 20px 20px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($dark-grey, 0) inset;
+    &:focus + .box{
+      box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+    }
+  }
+}
+
+.input {
+  height: 44px;
+  padding: 14px 18px;
+  font-size: 16px;
+  line-height: 16px;
+  background: $white;
+  border: 1px solid $light-grey-2;
+  border-radius: $ui-border-radius;
+  width: 100%;
+  -webkit-box-shadow: inset 0 0 0 50px $white;
+  color: $dark-grey-2;
+  transition: $ui-transition;
+  @include form-focus;
+  &:disabled {
+    background-color: $light-grey-1;
+  }
+  &::-webkit-input-placeholder {
+    color: $light-grey-2;
+  }
+  &::-moz-placeholder {
+    color: $light-grey-2;
+  }
+  &::-ms-placeholder {
+    color: $light-grey-2;
+  }
+  &::placeholder {
+    color: $light-grey-2;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: $ui-border-radius;
+  cursor: pointer;
+  transition: $ui-transition;
+  @include ui-button-font;
+  @include form-focus;
+  &.primary {
+    @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
+  }
+  &.secondary {
+    @include ui-button-colors($clr-secondary, $clr-secondary-hover, $clr-secondary-active, $clr-font-dark);
+  }
+  &.neutral {
+    @include ui-button-colors($clr-neutral, $clr-neutral-hover, $clr-neutral-active, $clr-font-dark);
+    color: $clr-font-dark;
+    background-color: $clr-neutral;
+  }
+  &.text {
+    color: $accent;
+    background: none;
+  }
+  &.small {
+    padding: 0 10px;
+    height: 30px;
+  }
+  &.medium {
+    padding: 0 15px;
+    height: 35px;
+  }
+  &.large {
+    padding: 0 20px;
+    height: 40px;
+  }
+}

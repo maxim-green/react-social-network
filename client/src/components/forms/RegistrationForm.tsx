@@ -1,51 +1,39 @@
 import React, {useEffect} from 'react'
-import Input from "../common/Input/Input";
-import Button from "../common/Button/Button";
-import Form from "../common/Form/Form";
-import {Field, InjectedFormProps, reduxForm} from 'redux-form'
-import {email, minLength6, required} from "../../utils/validators";
+import Form, {Button, Input, InputPassword} from "./Form/Form";
 import {RegistrationDataType} from '../../api/auth.api'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
 import {ThunkDispatch} from 'redux-thunk'
 import {authActions, AuthActionType, register} from '../../redux/reducers/auth.reducer'
+import {useForm} from "react-hook-form";
 
-type NativePropsType = {
+type PropsType = {
     registrationSuccessful: boolean
+    onSubmit: (formData: RegistrationDataType) => void
 }
-type PropsType = InjectedFormProps<RegistrationDataType, NativePropsType> & NativePropsType
 
-const RegistrationForm: React.FC<PropsType> = (props) => {
+const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit}) => {
+    const {register, handleSubmit, formState: { errors }} = useForm()
+    const submit = (formData: RegistrationDataType) => {
+        onSubmit(formData)
+    }
     return (
-        <Form onSubmit={props.handleSubmit}>
-            {props.error && <Form.Error>{props.error}</Form.Error>}
-            {props.registrationSuccessful && <Form.Success>Registration successful.</Form.Success>}
-            <Form.Row>
-                <Field name="firstName" type="text" component={Input} label="First name" placeholder="First name" validate={required} block/>
-            </Form.Row>
-            <Form.Row>
-                <Field name="lastName" type="text" component={Input} label="Last name" placeholder="Last name" validate={required} block/>
-            </Form.Row>
-            <Form.Row>
-                <Field name="username" type="text" component={Input} label="User name" placeholder="User name" validate={[required, minLength6]} block/>
-            </Form.Row>
-            <Form.Row>
-                <Field name="email" type="text" component={Input} label="E-mail" placeholder="E-mail" validate={[required, email]} block/>
-            </Form.Row>
-            <Form.Row>
-                <Field name="password" type="password" component={Input} label="Password" placeholder="Password" validate={[required, minLength6]} block/>
-            </Form.Row>
-            <Form.Row>
-                <Button caption="Register" size="lg"/>
-            </Form.Row>
+        <Form onSubmit={handleSubmit(submit)}>
+            {registrationSuccessful && <div>Registration successful.</div>}
+            <Form.Item component={Input} label='First name' {...register('firstName', {required: true})}
+                       error={errors.firstName && {type: errors.firstName.type, message: 'This field is required'}} required/>
+            <Form.Item component={Input} label='Last name' {...register('lastName', {required: true})}
+                       error={errors.lastName && {type: errors.lastName.type, message: 'This field is required'}} required/>
+            <Form.Item component={Input} label='User name' {...register('username', {required: true})}
+                       error={errors.username && {type: errors.username.type, message: 'This field is required'}} required/>
+            <Form.Item component={Input} label='E-mail' {...register('email', {required: true})}
+                       error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/>
+            <Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
+                       error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/>
+            <Button size="large">Register</Button>
         </Form>
     )
 }
-
-const RegistrationReduxForm = reduxForm<RegistrationDataType, NativePropsType>({
-    form: 'registration'
-})(RegistrationForm)
-
 
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
@@ -60,7 +48,7 @@ const RegistrationFormContainer: React.FC = () => {
         dispatch(setRegistrationSuccessful(false))
     }, [dispatch])
 
-    return <RegistrationReduxForm
+    return <RegistrationForm
         onSubmit={onSubmit}
         registrationSuccessful={registrationSuccessful}
     />

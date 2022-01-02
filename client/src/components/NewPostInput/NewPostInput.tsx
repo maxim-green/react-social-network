@@ -2,7 +2,7 @@ import Button from "../common/Button/Button";
 import attachFileIcon from "../../assets/images/attach-file-icon.svg";
 import React from "react";
 import classes from "./NewPostInput.module.scss"
-import Form from '../common/Form/Form'
+import Form from '../forms/Form/Form'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import Card from '../common/Card/Card'
 import {NewPostType} from '../../types/types'
@@ -19,7 +19,7 @@ const NewPostInput: React.FC<PropsType> = (props) => {
     }
     return (
         <Card>
-            <Form onSubmit={props.handleSubmit} padding={false}>
+            <Form onSubmit={props.handleSubmit}>
                 <div className={classes.input}>
                     <Field name={'newPostText'} cols={30} rows={2} placeholder="Say what is on your mind..." component='textarea'/>
                 </div>

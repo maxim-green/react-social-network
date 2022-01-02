@@ -14,7 +14,9 @@ const LoginPage: React.FC = () => {
                         <NavTab to="/login">Log In</NavTab>
                         <NavTab to="/register">Sign Up</NavTab>
                     </NavTabs>
-                    <LoginForm />
+                    <div style={{padding: '28px'}}>
+                        <LoginForm />
+                    </div>
                 </Card>
             </div>
         </Layout>

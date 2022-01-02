@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import {WrappedFieldsProps} from 'redux-form'
 
 type NativePropsType = {
-    block: boolean
+    block?: boolean
 }
 
 type PropsType = NativePropsType & WrappedFieldsProps

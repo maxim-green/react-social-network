@@ -1,51 +1,38 @@
 import React from 'react'
-import {Form, Input, Checkbox, Button, } from 'antd'
 import {login} from '../../redux/reducers/auth.reducer'
 import {LoginDataType} from '../../api/auth.api'
 import {useDispatch} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {StateType} from '../../redux/store'
 import {AuthActionType} from '../../redux/reducers/auth.reducer'
+import Form, {Checkbox, InputPassword} from "./Form/Form";
+import {Input, Button} from "./Form/Form";
+import {useForm} from "react-hook-form";
 
 type PropsType = {
     compact?: boolean
     onSubmit: (loginFormData: LoginDataType) => void
 }
 
-type LoginFormFieldsType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-
-const LoginForm: React.FC<PropsType> = ({onSubmit, compact= false}) => {
-    const submitHandler = (formData: LoginFormFieldsType) => {
+const LoginForm: React.FC<PropsType> = ({onSubmit, compact = false}) => {
+    const {register, handleSubmit, formState: {errors}} = useForm()
+    const submit = (formData: LoginDataType) => {
         onSubmit(formData)
     }
-
     return (
-        <Form onFinish={submitHandler} layout={'vertical'} style={{padding: '28px'}}>
-            <Form.Item label='E-mail' name='email' rules={[
-                {required: true, message: 'Please input email!'},
-                {pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/iu, message: 'Please input correct e-mail!'}
-            ]}>
-                <Input name={'email'} size={compact ? 'middle' : 'large'}/>
-            </Form.Item>
-            <Form.Item label='Password' name='password' rules={[
-                {required: true, message: 'Please input password!'},
-            ]}>
-                <Input.Password size={compact ? 'middle' : 'large'}/>
-            </Form.Item>
-            <Form.Item name='rememberMe' valuePropName="checked">
-                <Checkbox name={'rememberMe'}>Remember me</Checkbox>
-            </Form.Item>
-                <Button type="primary" htmlType='submit' size={compact ? 'middle' : 'large'} style={{borderRadius: '5px'}}>Log in</Button>
+        <Form onSubmit={handleSubmit(submit)}>
+            <Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
+                       error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/>
+            <Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
+                       error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/>
+            <Form.Item component={Checkbox} {...register('rememberMe')} label='Remember me'/>
+            <Button type='primary' size='large'>Log in</Button>
         </Form>
     )
 }
 
 
-const LoginFormContainer: React.FC<{compact?: boolean}> = ({compact}) => {
+const LoginFormContainer: React.FC<{ compact?: boolean }> = ({compact}) => {
     const dispatch: ThunkDispatch<StateType, LoginDataType, AuthActionType> = useDispatch()
 
     const onSubmit = (loginFormData: LoginDataType) => {

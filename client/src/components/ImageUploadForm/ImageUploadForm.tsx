@@ -1,4 +1,4 @@
-import Form from '../common/Form/Form'
+import Form from '../forms/Form/Form'
 import FilePicker from '../common/FilePicker/FilePicker'
 import Button from '../common/Button/Button'
 import React, {useCallback, useState} from 'react'
@@ -30,22 +30,23 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
-                <Form.Row>
-                    <FilePicker label="Pick file" setPickedFile={setPickedFile}/>
-                </Form.Row>
-                {srcFileUrl && <Form.Row>
-                    <ImageCrop
-                        aspect={aspect}
-                        srcFileUrl={srcFileUrl}
-                        setCroppedAreaPixels={setCroppedAreaPixels}
-                    />
-                </Form.Row>}
-                <Form.Row>
-                    <Button caption="Save" size="lg"/>
-                    {closeModal && <Button caption='Cancel' size='lg' onClick={closeModal}/>}
-                </Form.Row>
-            </Form>
+            // todo uncomment
+            {/*<Form onSubmit={handleSubmit}>*/}
+            {/*    <Form.Row>*/}
+            {/*        <FilePicker label="Pick file" setPickedFile={setPickedFile}/>*/}
+            {/*    </Form.Row>*/}
+            {/*    {srcFileUrl && <Form.Row>*/}
+            {/*        <ImageCrop*/}
+            {/*            aspect={aspect}*/}
+            {/*            srcFileUrl={srcFileUrl}*/}
+            {/*            setCroppedAreaPixels={setCroppedAreaPixels}*/}
+            {/*        />*/}
+            {/*    </Form.Row>}*/}
+            {/*    <Form.Row>*/}
+            {/*        <Button caption="Save" size="lg"/>*/}
+            {/*        {closeModal && <Button caption='Cancel' size='lg' onClick={closeModal}/>}*/}
+            {/*    </Form.Row>*/}
+            {/*</Form>*/}
         </div>
     )
 }

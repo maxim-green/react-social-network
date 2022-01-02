@@ -15,6 +15,61 @@ $success: #4EE83E;
 
 $background: $light-grey-1;
 
+// colors
+$clr-font-dark: #373C42;
+$clr-font-light: #FFFFFF;
+
+$clr-primary: #2086C4;
+$clr-primary-border: darken($clr-primary, 5%);
+$clr-primary-hover: adjust-hue(desaturate(lighten($clr-primary, 10%), 20%), 5%);
+$clr-primary-active: adjust-hue(saturate(darken($clr-primary, 10%), 20%), -5%);
+
+$clr-secondary: #BEE7FD;
+$clr-secondary-border: darken($clr-secondary, 5%);
+$clr-secondary-hover: adjust-hue(desaturate(lighten($clr-secondary, 3%), 5%), 2%);
+$clr-secondary-active: adjust-hue(saturate(darken($clr-secondary, 3%), 5%), -2%);
+
+$clr-neutral: #E8E9E8;
+$clr-neutral-border: darken($clr-neutral, 5%);
+$clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
+$clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
+
+
+
+// ui
+$ui-transition: .2s;
+$ui-border-radius: 5px;
+
+@mixin ui-form-item-label-font {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+@mixin ui-button-font {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+@mixin form-focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba($dark-grey, 0) inset;
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+  }
+}
+@mixin ui-button-colors($bg-color, $hover-bg-color, $active-bg-color, $color: black, $hover-color: $color,  $active-color: $color) {
+  color: $color;
+  background-color: $bg-color;
+  &:hover {
+    color: $hover-color;
+    background-color: $hover-bg-color;
+  }
+  &:active {
+    color: $active-color;
+    background-color: $active-bg-color;
+  }
+}
+
 // shadows
 $card-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
 $bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
