@@ -21,28 +21,28 @@ $clr-font-light: #FFFFFF;
 
 $clr-primary: #2086C4;
 $clr-primary-border: darken($clr-primary, 5%);
-$clr-primary-hover: adjust-hue(desaturate(lighten($clr-primary, 10%), 20%), 5%);
-$clr-primary-active: adjust-hue(saturate(darken($clr-primary, 10%), 20%), -5%);
+$clr-primary-hover: adjust-hue(desaturate(lighten($clr-primary, 10%), 10%), 5deg);
+$clr-primary-active: adjust-hue(saturate(darken($clr-primary, 5%), 10%), 5deg);
 
 $clr-secondary: #BEE7FD;
 $clr-secondary-border: darken($clr-secondary, 5%);
-$clr-secondary-hover: adjust-hue(desaturate(lighten($clr-secondary, 3%), 5%), 2%);
-$clr-secondary-active: adjust-hue(saturate(darken($clr-secondary, 3%), 5%), -2%);
+$clr-secondary-hover: adjust-hue(lighten($clr-secondary, 3%), 7deg);
+$clr-secondary-active: adjust-hue(darken($clr-secondary, 3%), -7deg);
 
 $clr-neutral: #E8E9E8;
 $clr-neutral-border: darken($clr-neutral, 5%);
-$clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
-$clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
+$clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
+$clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
 
 $clr-text: #FFFFFF;
 $clr-text-border: darken($clr-neutral, 5%);
-$clr-text-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
-$clr-text-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
+$clr-text-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
+$clr-text-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
 
 $clr-cancel: #F2280C;
 $clr-cancel-border: darken($clr-cancel, 5%);
 $clr-cancel-hover: lighten($clr-cancel, 5%);
-$clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -5%);
+$clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
 
 
@@ -64,6 +64,9 @@ $ui-border-radius: 5px;
   outline: none;
   box-shadow: 0 0 0 2px rgba($dark-grey, 0) inset;
   &:focus {
+    box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+  }
+  &:focus-visible {
     box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
   }
 }

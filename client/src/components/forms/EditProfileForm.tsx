@@ -1,30 +1,27 @@
 import React from 'react'
 import Form, {Button, Input} from './Form/Form'
-import {required} from '../../utils/validators'
 import {useHistory} from 'react-router-dom'
-import {capitalize} from '../../utils/functions'
 import {ProfileDataType} from '../../api/profile.api'
-import arrowBackIcon from '../../assets/images/arrow_back_black_24dp.svg'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
 import {useAuthCheck} from '../../utils/hooks'
 import {ThunkDispatch} from 'redux-thunk'
 import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
 import {useForm} from "react-hook-form";
-import {ContactsType} from "../../types/types";
 
 type PropsType = {
     initialValues: ProfileDataType
     onSubmit: (profileData: ProfileDataType) => void
 }
 
-const EditProfileForm: React.FC<PropsType> = (props) => {
-    const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: props.initialValues})
+const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit}) => {
+    const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialValues})
 
     const history = useHistory()
 
     const submit = (data: ProfileDataType) => {
-        console.log(data)
+        onSubmit(data)
+        history.goBack()
     }
 
     const backButtonClickHandler = (e: React.MouseEvent) => {

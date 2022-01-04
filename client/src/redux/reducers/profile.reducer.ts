@@ -1,4 +1,3 @@
-import {FormAction, stopSubmit} from 'redux-form'
 import {AvatarType, FormDataType, PostType} from '../../types/types'
 import {profileApi, ProfileDataType} from '../../api/profile.api'
 import {ResultCodes} from '../../api/core.api'
@@ -124,14 +123,13 @@ export const updateStatus = (status: string): ThunkType<ProfileActionType> => as
     }
 }
 
-export const updateProfile = (profileData: ProfileDataType): ThunkType<ProfileActionType | FormAction> => async (dispatch) => {
+export const updateProfile = (profileData: ProfileDataType): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setProfile(profileData))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
-        dispatch(stopSubmit('editProfile', {_error: res.message}))
     }
 }
 

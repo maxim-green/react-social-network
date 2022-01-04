@@ -25,6 +25,7 @@ const TestPage: React.FC = () => {
                             <Button type={'neutral'}>neutral</Button>
                             <Button type={'text'}>text</Button>
                             <Button type={'cancel'}>text</Button>
+                            <Button type={'primary'} disabled>Disabled</Button>
                         </div>
 
                         <div>Button sizes</div>
@@ -34,9 +35,9 @@ const TestPage: React.FC = () => {
                             <Button type={'primary'} size={'large'}>large</Button>
                         </div>
                             <Form.Item name={'zoom'} component={InputRange}/>
-                        <div style={{display: 'flex', justifyContent: 'space-between', width: '300px'}}>
-                            <InputDate name={'date'}/>
-                        </div>
+                        <Form.Row>
+                            <Form.Item name={'date'} component={InputDate} value={new Date()}/>
+                        </Form.Row>
                         <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
                             <InputFile name={'date'}/>
                         </div>

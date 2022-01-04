@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, createStore, Action} from 'redux'
-import {reducer as formReducer} from 'redux-form'
 import {AuthActionType, authReducer} from './reducers/auth.reducer'
 
 import profileReducer, {ProfileActionType} from './reducers/profile.reducer'
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     users: usersReducer,
-    form: formReducer,
 })
 
 type RootReducerType = typeof rootReducer   // get root reducer type that returns app state

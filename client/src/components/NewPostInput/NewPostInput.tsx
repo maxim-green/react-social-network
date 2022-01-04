@@ -1,40 +1,44 @@
-import Button from "../common/Button/Button";
-import attachFileIcon from "../../assets/images/attach-file-icon.svg";
+import {Image} from 'react-bootstrap-icons'
 import React from "react";
 import classes from "./NewPostInput.module.scss"
-import Form from '../forms/Form/Form'
-import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import Form, {Button} from '../forms/Form/Form'
 import Card from '../common/Card/Card'
 import {NewPostType} from '../../types/types'
 import Spinner from '../common/Spinner/Spinner'
+import {useForm} from "react-hook-form";
 
-type NativePropsType = {isAddPostPending: boolean}
+type PropsType = {
+    isAddPostPending: boolean
+    onSubmit: (newPostData: NewPostType) => void
+}
 
-type PropsType = InjectedFormProps<NewPostType, NativePropsType> & NativePropsType
+// todo implement react-hook-form in this component
+const NewPostInput: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
+    const {register, handleSubmit} = useForm()
 
+    const submit = (data: NewPostType) => {
+        onSubmit(data)
+    }
 
-const NewPostInput: React.FC<PropsType> = (props) => {
     const onAttachFileButtonClick = (e: React.MouseEvent) => {
         e.preventDefault()
     }
     return (
         <Card>
-            <Form onSubmit={props.handleSubmit}>
+            <Form onSubmit={handleSubmit(submit)}>
                 <div className={classes.input}>
-                    <Field name={'newPostText'} cols={30} rows={2} placeholder="Say what is on your mind..." component='textarea'/>
+                    <textarea {...register('newPostText')} cols={30} rows={2} placeholder={'Write your post here'}/>
                 </div>
                 <div className={classes.controls}>
-                    <Button onClick={onAttachFileButtonClick} icon={attachFileIcon} variant="text" size="sm"/>
-                    <button className={classes.button} disabled={props.isAddPostPending}>
-                        {!props.isAddPostPending && 'Send'}
-                        {props.isAddPostPending && <Spinner/>}
-                    </button>
+                    <Button onClick={onAttachFileButtonClick} type="text" size="small"><Image color={'#909BA4'} size={18}/></Button>
+                    {!isAddPostPending && <Button type="text" size="small" disabled={isAddPostPending}>
+                        Post
+                    </Button>}
+                    {isAddPostPending && <Spinner/>}
                 </div>
             </Form>
         </Card>
     )
 }
 
-export default reduxForm<NewPostType, NativePropsType>({
-    form: 'newPostForm'
-})(NewPostInput)
+export default NewPostInput

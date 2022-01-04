@@ -5,6 +5,9 @@ import button from "../../common/Button/Button";
 import {useDropzone} from "react-dropzone";
 import Slider from "rc-slider";
 import 'rc-slider/assets/index.css';
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
+import './DatePicker.scss'
 
 type FormPropsType = { onSubmit: (e: React.FormEvent) => void }
 
@@ -14,10 +17,11 @@ type FormItemPropsType = {
     error?: { message: string, type: string } | string,
 } & InputPropsType
 
-type InputPropsType = {
+type InputPropsType<V = any> = {
     name: string,
     required?: boolean,
     disabled?: boolean,
+    value?: V,
     onChange?: (e: React.ChangeEvent) => void,
     onBlur?: (e: React.ChangeEvent) => void,
     ref?: React.ForwardedRef<any>
@@ -44,6 +48,7 @@ Form.Item = React.forwardRef(({
                                   disabled = false,
                                   onChange,
                                   onBlur,
+                                  value
                               }, ref) => {
     const checkbox = component?.displayName === 'InputCheckbox'
     const forwardRequired = !ref
@@ -62,6 +67,7 @@ Form.Item = React.forwardRef(({
                     name,
                     required: forwardedRequiredProp,
                     disabled,
+                    value,
                     onChange,
                     onBlur,
                     ref
@@ -96,13 +102,13 @@ export const InputPassword: React.FC<InputPropsType> = React.forwardRef<HTMLInpu
 })
 
 export const InputCheckbox: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
-                                                                                                          children,
-                                                                                                          name,
-                                                                                                          required = false,
-                                                                                                          disabled = false,
-                                                                                                          onChange,
-                                                                                                          onBlur
-                                                                                                      }, ref) => {
+                                                                                                               children,
+                                                                                                               name,
+                                                                                                               required = false,
+                                                                                                               disabled = false,
+                                                                                                               onChange,
+                                                                                                               onBlur
+                                                                                                           }, ref) => {
     return <label className={classes.checkbox}>
         {children}
         <input type="checkbox" name={name} disabled={disabled} required={required} onChange={onChange} onBlur={onBlur}
@@ -126,15 +132,21 @@ export const InputRange: React.FC<InputPropsType> = React.forwardRef<HTMLInputEl
     )
 })
 
-export const InputDate: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
-                                                                                                           name,
-                                                                                                           required = false,
-                                                                                                           disabled = false,
-                                                                                                           onChange,
-                                                                                                           onBlur
-                                                                                                       }) => {
+export const InputDate: React.FC<InputPropsType<Date>> = React.forwardRef<HTMLInputElement, InputPropsType<Date>>(({
+                                                                                                                       name,
+                                                                                                                       value,
+                                                                                                                       required = false,
+                                                                                                                       disabled = false,
+                                                                                                                       onChange,
+                                                                                                                       onBlur,
+                                                                                                                       ref
+                                                                                                                   }) => {
+    const [date, setDate] = useState<Date>(value || new Date())
+
     return (
-        <input type="date"/>
+        <div className={classes.input}>
+                <DatePicker calendarStartDay={1} selected={date} onChange={(date) => date && setDate(date)}/>
+        </div>
     )
 })
 
@@ -152,14 +164,14 @@ export const InputFile: React.FC<InputPropsType> = React.forwardRef<HTMLInputEle
 
 
     return (
-                <div className={classes.inputFile + (isDragActive ? ' ' + classes.dragActive : '')} {...getRootProps()}>
-                    <input {...getInputProps()}/>
-                    {
-                        isDragActive ?
-                        <span className={classes.inputFileBox}>Drop your files here...</span>:
-                        <span className={classes.inputFileBox}>Drop your files here or click to select files</span>
-                    }
-                </div>
+        <div className={classes.inputFile + (isDragActive ? ' ' + classes.dragActive : '')} {...getRootProps()}>
+            <input {...getInputProps()}/>
+            {
+                isDragActive ?
+                    <span className={classes.inputFileBox}>Drop your files here...</span> :
+                    <span className={classes.inputFileBox}>Drop your files here or click to select files</span>
+            }
+        </div>
     )
 })
 
@@ -167,14 +179,16 @@ export const Button: React.FC<{
     onClick?: (e: React.MouseEvent) => void
     type?: 'primary' | 'secondary' | 'neutral' | 'text' | 'cancel'
     size?: 'small' | 'medium' | 'large'
+    disabled?: boolean
 }> = ({
           children,
           onClick,
           type = 'primary',
-          size = 'medium'
+          size = 'medium',
+          disabled = false
       }) => {
     return (
-        <button onClick={onClick}
+        <button onClick={onClick} disabled={disabled}
                 className={classnames(
                     classes.button,
                     {[classes.primary]: !type || type === 'primary'},

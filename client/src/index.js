@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset'
-import "antd/dist/antd.less";
 import './index.scss';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';

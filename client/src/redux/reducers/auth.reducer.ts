@@ -1,4 +1,3 @@
-import {stopSubmit} from 'redux-form'
 import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
@@ -62,7 +61,7 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
         dispatch(checkAuthorized())
     }
     if (res.resultCode === ResultCodes.error) {
-        dispatch(stopSubmit('login', {_error: res.message}))
+        console.log(res)
     }
 }
 
@@ -99,7 +98,7 @@ export const register = (registrationData: RegistrationDataType): ThunkType<Auth
         dispatch(authActions.setRegistrationSuccessful(true))
     }
     if (res.resultCode === ResultCodes.error) {
-        dispatch(stopSubmit('registration', {_error: res.message}))
+        console.log(res)
     }
 }
 //endregion
