@@ -22,8 +22,8 @@ type PropsType = {
     profileData: ProfileDataType
     posts: Array<PostType>
     isAddPostPending: boolean
-    onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
-    onCoverImageSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
+    onAvatarSubmit: (image: File, cropArea: Area) => void
+    onCoverImageSubmit: (image: File, cropArea: Area) => void
     onNewPostSubmit: (newPostData: NewPostType) => void
     onPostDelete: (id: string) => void
     onStatusUpdate: (string: string) => void
@@ -68,14 +68,14 @@ const ProfileContainer: React.FC = () => {
         dispatch(getPosts(username))
     }, [username, dispatch])
 
-    const onAvatarSubmit = (e: React.FormEvent, image: File, crop: Point) => {
+    const onAvatarSubmit = (image: File, crop: Point) => {
         const formData = new FormData()
         formData.append('avatar', image)
         formData.append('crop', JSON.stringify(crop))
         dispatch(updateAvatar(formData))
     }
 
-    const onCoverImageSubmit = (e: React.FormEvent, image: File, cropArea: Area) => {
+    const onCoverImageSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()
         formData.append('coverImage', image)
         formData.append('cropArea', JSON.stringify(cropArea))

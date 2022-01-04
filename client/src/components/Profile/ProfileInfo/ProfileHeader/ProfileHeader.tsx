@@ -5,7 +5,7 @@ import Button from '../../../common/Button/Button'
 import editIcon from '../../../../assets/images/edit-icon.svg'
 import React, {useEffect, useState} from 'react'
 import {AvatarType} from '../../../../types/types'
-import {Point} from 'react-easy-crop/types'
+import {Area, Point} from 'react-easy-crop/types'
 import EditStatusForm from '../../../forms/EditStatusForm'
 
 type PropsType = {
@@ -14,7 +14,7 @@ type PropsType = {
     lastName: string,
     status: string | null,
     avatar: AvatarType
-    onAvatarSubmit?: (e: React.FormEvent, image: File, crop: Point) => void
+    onAvatarSubmit?: (image: File, cropArea: Area) => void
     onStatusUpdate: (status: string) => void
 }
 

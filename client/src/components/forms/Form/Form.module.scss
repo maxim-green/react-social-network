@@ -3,11 +3,12 @@
 .form {
 }
 
-.row {
+.formRow {
   display: flex;
-  justify-content: space-between;
-  & + & {
-    margin-top: 14px;
+  justify-content: left;
+  margin-bottom: 15px;
+  &:last-child {
+    margin: 0;
   }
 }
 
@@ -35,7 +36,7 @@
 
 .formItem {
   flex-shrink: 0;
-  margin-bottom: 10px;
+  flex-grow: 1;
   &.disabled {
     .formItemInfo {
       opacity: .5;
@@ -162,6 +163,10 @@
   }
 }
 
+.inputRange {
+  width: 100%;
+}
+
 
 .button {
   display: flex;
@@ -184,6 +189,9 @@
   &.text {
     @include ui-button-colors($clr-text, $clr-text-hover, $clr-text-active, $clr-font-dark);
   }
+  &.cancel {
+    @include ui-button-colors($clr-cancel, $clr-cancel-hover, $clr-cancel-active, $clr-font-light);
+  }
   &.small {
     padding: 0 10px;
     height: 30px;
@@ -195,5 +203,11 @@
   &.large {
     padding: 0 20px;
     height: 40px;
+  }
+}
+
+.button, .input, .formItem {
+  & + & {
+    margin-left: 10px;
   }
 }

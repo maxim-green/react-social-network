@@ -39,6 +39,11 @@ $clr-text-border: darken($clr-neutral, 5%);
 $clr-text-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 1%);
 $clr-text-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -1%);
 
+$clr-cancel: #F2280C;
+$clr-cancel-border: darken($clr-cancel, 5%);
+$clr-cancel-hover: lighten($clr-cancel, 5%);
+$clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -5%);
+
 
 
 // ui

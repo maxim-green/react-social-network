@@ -11,8 +11,8 @@ type PropsType = {
     authorized: boolean,
     authorizedUserId: string | null
     profileData: ProfileDataType
-    onAvatarSubmit: (e: React.FormEvent, image: File, crop: Point) => void
-    onCoverImageSubmit: (e: React.FormEvent, image: File, cropArea: Area) => void
+    onAvatarSubmit: (image: File, cropArea: Area) => void
+    onCoverImageSubmit: (image: File, cropArea: Area) => void
     onStatusUpdate: (status: string) => void
 }
 

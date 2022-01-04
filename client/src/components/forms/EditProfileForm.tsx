@@ -1,8 +1,5 @@
 import React from 'react'
-import Input from './Input/Input'
-import Button from '../common/Button/Button'
-import Form from './Form/Form'
-import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import Form, {Button, Input} from './Form/Form'
 import {required} from '../../utils/validators'
 import {useHistory} from 'react-router-dom'
 import {capitalize} from '../../utils/functions'
@@ -13,20 +10,21 @@ import {StateType} from '../../redux/store'
 import {useAuthCheck} from '../../utils/hooks'
 import {ThunkDispatch} from 'redux-thunk'
 import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
-import {DatePicker} from 'antd'
+import {useForm} from "react-hook-form";
+import {ContactsType} from "../../types/types";
 
-type NativePropsType = {}
-
-type PropsType = InjectedFormProps<ProfileDataType, NativePropsType> & NativePropsType
+type PropsType = {
+    initialValues: ProfileDataType
+    onSubmit: (profileData: ProfileDataType) => void
+}
 
 const EditProfileForm: React.FC<PropsType> = (props) => {
-    const {contacts = {}} = props.initialValues
+    const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: props.initialValues})
 
     const history = useHistory()
 
-    const submitHandler = (e: React.FormEvent) => {
-        props.handleSubmit(e)
-        history.goBack()
+    const submit = (data: ProfileDataType) => {
+        console.log(data)
     }
 
     const backButtonClickHandler = (e: React.MouseEvent) => {
@@ -35,51 +33,62 @@ const EditProfileForm: React.FC<PropsType> = (props) => {
     }
 
     return (
-        <Form onSubmit={submitHandler}>
-            {/*<Form.Row>*/}
-            {/*    <Form.Item>*/}
-            {/*        <Button onClick={backButtonClickHandler} size="md" icon={arrowBackIcon} variant='text'/>*/}
-            {/*    </Form.Item>*/}
-            {/*    <Form.Item>*/}
-            {/*        <Button caption="Save" size="md"/>*/}
-            {/*    </Form.Item>*/}
-            {/*</Form.Row>*/}
-            {/*<Form.Row>*/}
-            {/*    <Field name="firstName" type="text" component={Input} label="First name" placeholder="First name"*/}
-            {/*           validate={required} block/>*/}
-            {/*</Form.Row>*/}
-            {/*<Form.Row>*/}
-            {/*    <Field name="lastName" type="text" component={Input} label="Last name" placeholder="Last name"*/}
-            {/*           validate={required} block/>*/}
-            {/*</Form.Row>*/}
-            {/*<Form.Row>*/}
-            {/*    <Field name="birthDate" type="text" component={DatePicker} label="Birth date" placeholder="Birth date"*/}
-            {/*           block/>*/}
-            {/*</Form.Row>*/}
-            {/*<Form.Row>*/}
-            {/*    <Form.Item><Field name="location.country" type="text" component={Input} label="Country"*/}
-            {/*                      placeholder="Country" block/></Form.Item>*/}
-            {/*    <Form.Item><Field name="location.city" type="text" component={Input} label="City" placeholder="City"*/}
-            {/*                      block/></Form.Item>*/}
-            {/*</Form.Row>*/}
-            {/*<Form.Row>*/}
-            {/*    <Field name="bio" type="text" component={Input} label="Bio" placeholder="Bio" block/>*/}
-            {/*</Form.Row>*/}
-            {/*{*/}
-            {/*    Object.keys(contacts).map(key => {*/}
-            {/*        return <Form.Row>*/}
-            {/*            <Field name={'contacts.' + key} type="text" component={Input} label={capitalize(key)}*/}
-            {/*                   placeholder={capitalize(key)} block/>*/}
-            {/*        </Form.Row>*/}
-            {/*    })*/}
-            {/*}*/}
+        <Form onSubmit={handleSubmit(submit)}>
+            <Form.Row>
+                <Button size="medium">Save</Button>
+                <div style={{marginLeft: 'auto'}}>
+                    <Button onClick={backButtonClickHandler} size="medium" type='cancel'>Cancel</Button>
+                </div>
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'First name'} required
+                           {...register('firstName', {required: true})}
+                           error={errors.firstName && {type: errors.firstName.type, message: 'This field is required'}}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Last name'} required
+                           {...register('lastName', {required: true})}
+                           error={errors.firstName && {type: errors.firstName.type, message: 'This field is required'}}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Birth date'}
+                           {...register('birthDate')}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Country'}
+                           {...register('location.country')}
+                />
+                <Form.Item component={Input} label={'City'}
+                           {...register('location.city')}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Bio'}
+                           {...register('bio')}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Website'}
+                           {...register('contacts.website')}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Vkontakte'}
+                           {...register('contacts.vkontakte')}
+                />
+            </Form.Row>
+            <Form.Row>
+                <Form.Item component={Input} label={'Github'}
+                           {...register('contacts.github')}
+                />
+            </Form.Row>
+
         </Form>
     )
 }
-
-const EditProfileReduxForm = reduxForm<ProfileDataType, NativePropsType>({
-    form: 'editProfile'
-})(EditProfileForm)
 
 const EditProfileFormContainer: React.FC = () => {
     const profileData = useSelector((state: StateType) => state.profile.data)
@@ -92,7 +101,7 @@ const EditProfileFormContainer: React.FC = () => {
         dispatch(updateProfile(profileData))
     }
 
-    return <EditProfileReduxForm
+    return <EditProfileForm
         initialValues={profileData}
         onSubmit={onSubmit}
     />

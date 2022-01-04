@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import editIconWhite from '../../../assets/images/edit-icon-white.svg'
 import Popup from 'reactjs-popup'
 import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
-import {Point} from 'react-easy-crop/types'
+import {Area, Point} from 'react-easy-crop/types'
 import ImageUploadForm from '../../ImageUploadForm/ImageUploadForm'
 
 type PropsType = {
@@ -13,7 +13,7 @@ type PropsType = {
     contextBgColor?: string
     owner?: boolean
     online?: boolean
-    onSubmit?: (e: React.FormEvent, image: File, crop: Point) => void
+    onSubmit?: (image: File, cropArea: Area) => void
 }
 
 const Avatar: React.FC<PropsType> = ({
@@ -46,7 +46,7 @@ const Avatar: React.FC<PropsType> = ({
 
             {onSubmit && owner && <div>
                 <button className={classes.editButton} onClick={openModal}><img src={editIconWhite} alt=""/></button>
-                <Popup open={open} modal nested onClose={closeModal}>
+                <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                     <ImageUploadForm aspect={1 / 1} onSubmit={onSubmit} closeModal={closeModal}  />
                 </Popup>
             </div>}

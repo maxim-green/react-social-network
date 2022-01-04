@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {StateType} from '../../redux/store'
 import {AuthActionType} from '../../redux/reducers/auth.reducer'
-import Form, {Checkbox, InputPassword} from "./Form/Form";
+import Form, {InputCheckbox, InputPassword} from "./Form/Form";
 import {Input, Button} from "./Form/Form";
 import {useForm} from "react-hook-form";
 
@@ -21,12 +21,12 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, compact = false}) => {
     }
     return (
         <Form onSubmit={handleSubmit(submit)}>
-            <Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
-                       error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/>
-            <Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
-                       error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/>
-            <Form.Item component={Checkbox} {...register('rememberMe')} label='Remember me'/>
-            <Button type='primary' size='large'>Log in</Button>
+            <Form.Row><Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
+                                 error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/></Form.Row>
+            <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
+                                 error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/></Form.Row>
+            <Form.Row><Form.Item component={InputCheckbox} {...register('rememberMe')} label='Remember me'/></Form.Row>
+            <Form.Row><Button type='primary' size='large'>Log in</Button></Form.Row>
         </Form>
     )
 }
