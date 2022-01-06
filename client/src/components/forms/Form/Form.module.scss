@@ -1,4 +1,4 @@
-@import "../../../variables";
+@import "../../../variables.module";
 
 .form {
 }
@@ -170,14 +170,19 @@
 
 
 .button {
-  display: flex;
-  align-items: center;
+  position: relative;
   border: none;
   border-radius: $ui-border-radius;
   cursor: pointer;
   transition: $ui-transition;
   @include ui-button-font;
   @include form-focus;
+  &.spinner {
+    box-shadow: none;
+    &:disabled {
+      opacity: 1;
+    }
+  }
   &.primary {
     @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
   }
@@ -194,19 +199,40 @@
     @include ui-button-colors($clr-cancel, $clr-cancel-hover, $clr-cancel-active, $clr-font-light);
   }
   &.small {
-    padding: 0 10px;
-    height: 30px;
+    padding: 5px 10px;
+    .buttonContent {
+      height: 20px;
+    }
   }
   &.medium {
-    padding: 0 15px;
-    height: 35px;
+    padding: 6px 14px;
+    .buttonContent {
+      height: 25px;
+    }
   }
   &.large {
-    padding: 0 20px;
-    height: 40px;
+    padding: 8px 20px;
+    .buttonContent {
+      height: 30px;
+    }
   }
   &:disabled {
     opacity: 50%;
+  }
+  .buttonSpinner {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

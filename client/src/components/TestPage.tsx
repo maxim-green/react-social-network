@@ -28,12 +28,29 @@ const TestPage: React.FC = () => {
                             <Button type={'primary'} disabled>Disabled</Button>
                         </div>
 
+                        <div>Button types with spinners</div>
+                        <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
+                            <Button type={'primary'} spinner>primary</Button>
+                            <Button type={'secondary'} spinner>secondary</Button>
+                            <Button type={'neutral'} spinner>neutral</Button>
+                            <Button type={'text'} spinner>text</Button>
+                            <Button type={'cancel'} spinner>text</Button>
+                        </div>
+
                         <div>Button sizes</div>
-                        <div style={{display: 'flex', justifyContent: 'space-between', width: '300px'}}>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
                             <Button type={'primary'} size={'small'}>small</Button>
                             <Button type={'primary'} size={'medium'}>medium</Button>
                             <Button type={'primary'} size={'large'}>large</Button>
                         </div>
+
+                        <div>Button sizes with spinners</div>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
+                            <Button type={'primary'} size={'small'} spinner>small</Button>
+                            <Button type={'primary'} size={'medium'} spinner>medium</Button>
+                            <Button type={'primary'} size={'large'} spinner>large</Button>
+                        </div>
+
                             <Form.Item name={'zoom'} component={InputRange}/>
                         <Form.Row>
                             <Form.Item name={'date'} component={InputDate} value={new Date()}/>

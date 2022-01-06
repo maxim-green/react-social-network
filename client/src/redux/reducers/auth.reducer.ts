@@ -1,6 +1,7 @@
 import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
+import {ProfileDataType} from "../../api/profile.api";
 
 // INITIAL STATE
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
     userId: null as string | null,
     email: null as string | null,
     username: null as string | null,
+    profile: null as ProfileDataType | null,
     registrationSuccessful: false
 }
 type AuthStateType = typeof initialState
@@ -22,6 +24,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 userId: action.userId,
                 email: action.email,
                 username: action.username,
+                profile: action.profile
             }
         }
         case 'rsn/auth/CLEAR_USER': {
@@ -47,7 +50,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
 
 //region ACTION CREATORS
 export const authActions = {
-    setUser: (userId: string, email: string, username: string) => ({type: 'rsn/auth/SET_USER', userId, email, username} as const),
+    setUser: (userId: string, email: string, username: string, profile: ProfileDataType) => ({type: 'rsn/auth/SET_USER', userId, email, username, profile} as const),
     clearUser: () => ({type: 'rsn/auth/CLEAR_USER'} as const),
     setRegistrationSuccessful: (registrationSuccessful: boolean) => ({type: 'rsn/auth/SET_REGISTRATION_SUCCESSFUL', registrationSuccessful} as const)
 }
@@ -68,8 +71,9 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
 export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.me()
     if (res.resultCode === ResultCodes.success) {
-        const {userId, email, username} = res.data
-        dispatch(authActions.setUser(userId, email, username))
+        const {userId, email, username, profile} = res.data
+        console.log(profile)
+        dispatch(authActions.setUser(userId, email, username, profile))
     }
     if (res.resultCode === ResultCodes.error) {
         dispatch(authActions.clearUser())

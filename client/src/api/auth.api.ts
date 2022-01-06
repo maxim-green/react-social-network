@@ -1,4 +1,5 @@
 import {coreApi, handleError, handleResponse} from './core.api'
+import {ProfileDataType} from "./profile.api";
 
 //region DATA TYPES
 // GET /auth/me/ response
@@ -7,6 +8,7 @@ export type AuthorizedUserDataType = {
     userId: string
     email: string
     username: string
+    profile: ProfileDataType
 }
 
 // POST /auth/login/

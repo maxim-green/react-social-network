@@ -31,10 +31,9 @@ const NewPostInput: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
                 </div>
                 <div className={classes.controls}>
                     <Button onClick={onAttachFileButtonClick} type="text" size="small"><Image color={'#909BA4'} size={18}/></Button>
-                    {!isAddPostPending && <Button type="text" size="small" disabled={isAddPostPending}>
+                    <Button type="primary" size="small" spinner={isAddPostPending}>
                         Post
-                    </Button>}
-                    {isAddPostPending && <Spinner/>}
+                    </Button>
                 </div>
             </Form>
         </Card>

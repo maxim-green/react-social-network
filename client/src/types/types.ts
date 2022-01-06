@@ -32,3 +32,6 @@ export type PostType = {
 export type NewPostType = {
     newPostText: string
 }
+
+
+

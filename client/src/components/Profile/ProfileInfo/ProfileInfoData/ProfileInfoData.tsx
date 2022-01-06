@@ -4,7 +4,7 @@ import Moment from 'react-moment'
 import {capitalize} from '../../../../utils/functions'
 import React from 'react'
 import {ContactsType, LocationType} from '../../../../types/types'
-import {GeoAlt, Link45deg} from 'react-bootstrap-icons'
+import {GeoAlt, Link45deg, CalendarEvent} from 'react-bootstrap-icons'
 import moment from 'moment'
 
 type PropsTypes = {
@@ -24,20 +24,12 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
         <div className={classes.profileInfo}>
             {bio && <Bio bio={bio}/>}
             <div className={classes.profileInfoItems}>
+                {birthDate && <BirthDate birthDate={birthDate}/>}
                 {location?.country && location?.city && <Location city={location.city} country={location.country}/>}
                 {contacts?.website && <Website website={contacts.website}/>}
 
-                {/*{birthDate && <ProfileInfoItem value={moment(birthDate).format("DD.MM.YYYY")} />}*/}
-                {/*{contacts && Object.keys(contacts).map((key) => {*/}
-                {/*    const href: string | undefined = contacts[key as keyof ContactsType] || undefined*/}
-                {/*    if (contacts && contacts[key as keyof ContactsType]) return <ProfileInfoItem key={key}*/}
-                {/*                                                                                 title={capitalize(key) + ':'}>*/}
-                {/*        <a href={href}>{contacts[key as keyof ContactsType]}</a>*/}
-                {/*    </ProfileInfoItem>*/}
-                {/*    return null*/}
-                {/*})}*/}
-            </div>
 
+            </div>
         </div>
     )
 }
@@ -45,6 +37,11 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
 type BioPropsType = { bio: string }
 const Bio: React.FC<BioPropsType> = ({bio}) => <div className={classes.bio}>
     {bio}
+</div>
+
+type BirthDatePropsType = { birthDate: string }
+const BirthDate: React.FC<BirthDatePropsType> = ({ birthDate }) => <div className={classes.birthDate + ' ' + classes.item}>
+    <span>Birthday: {moment(birthDate).format("MMMM, D")}</span>
 </div>
 
 type LocationProps = { country: string, city: string}

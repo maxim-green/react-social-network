@@ -7,6 +7,9 @@ import React, {useEffect, useState} from 'react'
 import {AvatarType} from '../../../../types/types'
 import {Area, Point} from 'react-easy-crop/types'
 import EditStatusForm from '../../../forms/EditStatusForm'
+import ImageUploadForm from "../../../ImageUploadForm/ImageUploadForm";
+import Popup from "reactjs-popup";
+import EditProfileForm from "../../../forms/EditProfileForm";
 
 type PropsType = {
     owner?: boolean
@@ -50,6 +53,13 @@ const ProfileHeader: React.FC<PropsType> = ({
         setStatusValue(e.target.value || '')
     }
 
+    const [open, setOpen] = useState(false)
+    // useEffect(() => {
+    //     setOpen(false)
+    // }, [img])
+    const openModal = () => setOpen(true)
+    const closeModal = () => setOpen(false)
+
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
@@ -66,10 +76,15 @@ const ProfileHeader: React.FC<PropsType> = ({
                 {!owner && <div className={classes.status}>{status}</div>}
             </div>
             <div className={classes.editProfile}>
-                {owner && <NavLink to="/profile/edit">
-                    <Button icon={editIcon} caption="Edit profile" variant="secondary"/>
-                </NavLink>}
+                {owner && <div>
+                    <Button icon={editIcon} caption="Edit profile" variant="secondary" onClick={openModal}/>
+                    <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
+                        <EditProfileForm closeModal={closeModal}/>
+                    </Popup>
+                </div>
+                }
             </div>
+
         </div>
     )
 }

@@ -5,7 +5,6 @@ import RegistrationPageContainer from './pages/RegistrationPage'
 import {connect} from 'react-redux'
 import ProfilePage from './pages/ProfilePage'
 import UsersPage from './pages/UsersPage'
-import EditProfilePage from './pages/EditProfilePage'
 import {initializeApp} from '../redux/reducers/app.reducer'
 import {StateType} from '../redux/store'
 import Layout from './Layout/Layout'
@@ -41,7 +40,7 @@ const App: React.FC<PropsType> = ({
                         <Route path="/register" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
                         {!authorized && <Route path="/profile/edit" render={() => <Redirect to="/login"/>}/>}
-                        <Route path="/profile/edit" component={EditProfilePage}/>
+                        <Route path="/profile/edit" component={ProfilePage}/>
                         <Route exact path="/profile/:username" component={ProfilePage}/>
 
                         <Route path="/users/:filter?" component={UsersPage}/>

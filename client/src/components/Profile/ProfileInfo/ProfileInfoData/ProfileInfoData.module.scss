@@ -1,4 +1,4 @@
-@import "../../../../variables";
+@import "../../../../variables.module";
 
 .profileInfoItems {
   display: flex;
@@ -11,13 +11,25 @@
 
 .item {
   & + & {
-    margin-left: 8px;
+    margin-left: 20px;
+  }
+}
+
+.birthDate {
+  display: flex;
+  align-items: center;
+  span {
+    margin-top: 2px;
   }
 }
 
 .location {
   display: flex;
   align-items: center;
+  span {
+    margin-left: 1px;
+    margin-top: 2px;
+  }
 }
 
 .website {

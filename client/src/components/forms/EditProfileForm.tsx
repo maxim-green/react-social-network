@@ -1,32 +1,35 @@
 import React from 'react'
-import Form, {Button, Input} from './Form/Form'
-import {useHistory} from 'react-router-dom'
+import Form, {Button, Input, InputDate} from './Form/Form'
 import {ProfileDataType} from '../../api/profile.api'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
 import {useAuthCheck} from '../../utils/hooks'
 import {ThunkDispatch} from 'redux-thunk'
 import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
+import Spinner from "../common/Spinner/Spinner";
 
 type PropsType = {
     initialValues: ProfileDataType
     onSubmit: (profileData: ProfileDataType) => void
+    closeModal?: () => void
 }
 
-const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit}) => {
-    const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialValues})
-
-    const history = useHistory()
+const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeModal}) => {
+    console.log(initialValues.birthDate)
+    const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues: {
+        ...initialValues,
+            birthDate: initialValues.birthDate
+        }})
 
     const submit = (data: ProfileDataType) => {
         onSubmit(data)
-        history.goBack()
+        closeModal && closeModal()
     }
 
     const backButtonClickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
-        history.goBack()
+        closeModal && closeModal()
     }
 
     return (
@@ -50,8 +53,16 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit}) => {
                 />
             </Form.Row>
             <Form.Row>
-                <Form.Item component={Input} label={'Birth date'}
-                           {...register('birthDate')}
+                <Controller
+                    control={control}
+                    name={'birthDate'}
+                    render={({field}) => <Form.Item
+                        component={InputDate}
+                        name={field.name}
+                        label={'Birth date'}
+                        value={field.value}
+                        onChange={field.onChange}
+                    />}
                 />
             </Form.Row>
             <Form.Row>
@@ -87,8 +98,8 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit}) => {
     )
 }
 
-const EditProfileFormContainer: React.FC = () => {
-    const profileData = useSelector((state: StateType) => state.profile.data)
+const EditProfileFormContainer: React.FC<{closeModal?: () => void}> = ({closeModal}) => {
+    const profileData = useSelector((state: StateType) => state.auth.profile)
     const dispatch: ThunkDispatch<StateType, ProfileDataType, ProfileActionType> = useDispatch()
 
     useAuthCheck()
@@ -98,7 +109,10 @@ const EditProfileFormContainer: React.FC = () => {
         dispatch(updateProfile(profileData))
     }
 
+    if (!profileData) return <Spinner />
+
     return <EditProfileForm
+        closeModal={closeModal}
         initialValues={profileData}
         onSubmit={onSubmit}
     />

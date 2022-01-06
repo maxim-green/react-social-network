@@ -8,6 +8,8 @@ import 'rc-slider/assets/index.css';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePicker.scss'
+import Spinner from "../../common/Spinner/Spinner";
+import {sizes} from "../../../config";
 
 type FormPropsType = { onSubmit: (e: React.FormEvent) => void }
 
@@ -22,7 +24,7 @@ type InputPropsType<V = any> = {
     required?: boolean,
     disabled?: boolean,
     value?: V,
-    onChange?: (e: React.ChangeEvent) => void,
+    onChange?: ((e: React.ChangeEvent | V) => void),
     onBlur?: (e: React.ChangeEvent) => void,
     ref?: React.ForwardedRef<any>
 }
@@ -141,11 +143,14 @@ export const InputDate: React.FC<InputPropsType<Date>> = React.forwardRef<HTMLIn
                                                                                                                        onBlur,
                                                                                                                        ref
                                                                                                                    }) => {
-    const [date, setDate] = useState<Date>(value || new Date())
-
+    const [date, setDate] = useState<Date>(value ? new Date(value) : new Date())
+    const changeHandler = (date: Date) => {
+        onChange && onChange(date)
+        setDate(date)
+    }
     return (
         <div className={classes.input}>
-                <DatePicker calendarStartDay={1} selected={date} onChange={(date) => date && setDate(date)}/>
+            <DatePicker calendarStartDay={1} selected={date} onChange={changeHandler}/>
         </div>
     )
 })
@@ -180,15 +185,18 @@ export const Button: React.FC<{
     type?: 'primary' | 'secondary' | 'neutral' | 'text' | 'cancel'
     size?: 'small' | 'medium' | 'large'
     disabled?: boolean
+    spinner?: boolean
 }> = ({
           children,
           onClick,
           type = 'primary',
           size = 'medium',
-          disabled = false
+          disabled = false,
+          spinner = false
       }) => {
+    const spinnerColor = (type === 'primary' || type === 'cancel') ? '#FFFFFF' : undefined
     return (
-        <button onClick={onClick} disabled={disabled}
+        <button onClick={onClick} disabled={disabled || spinner}
                 className={classnames(
                     classes.button,
                     {[classes.primary]: !type || type === 'primary'},
@@ -196,10 +204,22 @@ export const Button: React.FC<{
                     {[classes.neutral]: type === 'neutral'},
                     {[classes.text]: type === 'text'},
                     {[classes.cancel]: type === 'cancel'},
+                    {[classes.spinner]: spinner},
                     {[classes.small]: size === 'small'},
                     {[classes.medium]: size === 'medium'},
-                    {[classes.large]: size === 'large'}
-                )}>{children}</button>
+                    {[classes.large]: size === 'large'},
+                )}>
+            {/*<div className={classes.buttonChildren}>*/}
+            {spinner && <div className={classes.buttonSpinner}>
+                <Spinner color={spinnerColor} width={sizes[size] - 12} height={sizes[size] - 12}/>
+            </div>}
+            <div className={classes.buttonContent} style={{opacity: spinner ? 0 : 1}}>
+                <div>{children}</div>
+            </div>
+
+
+            {/*</div>*/}
+        </button>
     )
 }
 
