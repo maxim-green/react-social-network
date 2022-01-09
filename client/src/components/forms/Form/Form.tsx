@@ -103,6 +103,17 @@ export const InputPassword: React.FC<InputPropsType> = React.forwardRef<HTMLInpu
                   onChange={onChange} onBlur={onBlur} ref={ref} autoComplete={'off'}/>
 })
 
+export const InputTextarea: React.FC<InputPropsType> = React.forwardRef<HTMLTextAreaElement, InputPropsType>(({
+                                                                                                       name,
+                                                                                                       required = false,
+                                                                                                       disabled = false,
+                                                                                                       onChange,
+                                                                                                       onBlur
+                                                                                                   }, ref) => {
+    return <textarea className={classes.textarea} name={name} disabled={disabled} onChange={onChange}
+                  onBlur={onBlur} ref={ref} cols={30} rows={2}/>
+})
+
 export const InputCheckbox: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
                                                                                                                children,
                                                                                                                name,

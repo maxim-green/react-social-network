@@ -1,0 +1,11 @@
+@import "../../variables.module";
+
+.newMessageForm {
+  padding: 10px;
+}
+
+.messages {
+  height: 75vh;
+  padding: 10px;
+  border-bottom: 1px solid $light-grey-2;
+}

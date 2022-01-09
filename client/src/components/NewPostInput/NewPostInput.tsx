@@ -1,7 +1,7 @@
 import {Image} from 'react-bootstrap-icons'
 import React from "react";
 import classes from "./NewPostInput.module.scss"
-import Form, {Button} from '../forms/Form/Form'
+import Form, {Button, InputTextarea} from '../forms/Form/Form'
 import Card from '../common/Card/Card'
 import {NewPostType} from '../../types/types'
 import Spinner from '../common/Spinner/Spinner'
@@ -26,8 +26,8 @@ const NewPostInput: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
     return (
         <Card>
             <Form onSubmit={handleSubmit(submit)}>
-                <div className={classes.input}>
-                    <textarea {...register('newPostText')} cols={30} rows={2} placeholder={'Write your post here'}/>
+                <div style={{padding: '2px'}}>
+                    <InputTextarea {...register('newPostText')} />
                 </div>
                 <div className={classes.controls}>
                     <Button onClick={onAttachFileButtonClick} type="text" size="small"><Image color={'#909BA4'} size={18}/></Button>
