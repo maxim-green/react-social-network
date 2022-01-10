@@ -40,7 +40,7 @@ const Header: React.FC<PropsType> = (props) => {
                     <UserControl username={props.username} avatar={props.avatar} logout={props.logout}/>
                 </div>}
                 {props.authorized && <div className={classes.notificationArea}>
-                    <NavLink to='/friends'><IconWithCounter src={newFriendsIcon} count={5}/></NavLink>
+                    <NavLink to='/users/friends'><IconWithCounter src={newFriendsIcon} count={5}/></NavLink>
                     <NavLink to='/dialogs'><IconWithCounter src={newMessagesIcon} count={3}/></NavLink>
                     <NavLink to='/notifications'><IconWithCounter src={notificationsIcon} count={15}/></NavLink>
                 </div>}

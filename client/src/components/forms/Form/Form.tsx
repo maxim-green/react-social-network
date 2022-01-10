@@ -65,15 +65,15 @@ Form.Item = React.forwardRef(({
                     {(typeof error === 'string') && <span className={classes.formItemError}>{error}</span>}
                     {(typeof error === 'object') && <span className={classes.formItemError}>{error.message}</span>}
                 </div>
-                {React.createElement(component, {
-                    name,
-                    required: forwardedRequiredProp,
-                    disabled,
-                    value,
-                    onChange,
-                    onBlur,
-                    ref
-                }, children)}
+                    {React.createElement(component, {
+                        name,
+                        required: forwardedRequiredProp,
+                        disabled,
+                        value,
+                        onChange,
+                        onBlur,
+                        ref
+                    }, children)}
             </label>
         </div>
     )
