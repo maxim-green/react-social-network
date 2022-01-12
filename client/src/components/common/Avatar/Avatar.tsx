@@ -9,7 +9,7 @@ import ImageUploadForm from '../../ImageUploadForm/ImageUploadForm'
 
 type PropsType = {
     img?: string | null
-    size?: 'sm' | 'md' | 'lg'
+    size?: 'sm' | 'md' | 'lg' | 'xs'
     contextBgColor?: string
     owner?: boolean
     online?: boolean
@@ -40,6 +40,7 @@ const Avatar: React.FC<PropsType> = ({
                 {[classes.sm]: size === 'sm'},
                 {[classes.md]: size === 'md'},
                 {[classes.lg]: size === 'lg'},
+                {[classes.xs]: size === 'xs'},
                 {[classes.editable]: onSubmit}
             )
         }>

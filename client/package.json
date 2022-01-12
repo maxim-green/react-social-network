@@ -32,6 +32,7 @@
     "redux": "^4.1.0",
     "redux-thunk": "2.3.0",
     "sass": "^1.35.1",
+    "socket.io-client": "^4.4.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

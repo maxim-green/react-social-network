@@ -9,3 +9,34 @@
   padding: 10px;
   border-bottom: 1px solid $light-grey-2;
 }
+
+.messageOther, .messageSelf {
+  display: flex;
+  align-items: start;
+  padding: 10px;
+  border: 1px solid $light-grey-2;
+  & + & {
+    margin-top: 10px;
+  }
+  .messageAvatar {
+    margin-right: 10px;
+  }
+  .messageAuthorName {
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .messageText {
+
+  }
+  &.self {
+
+  }
+}
+
+.messageOther {
+  border-radius: 5px 5px 0 5px;
+}
+
+.messageSelf {
+  border-radius: 5px 5px 5px 0;
+}

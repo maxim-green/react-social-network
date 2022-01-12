@@ -2,9 +2,14 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-// const {Server} = require('socket.io')
-// const io = new Server(server)
-require('./socket/socket')(server)
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+})
+require('./socket/socket')(io)
 
 const config = require('config')
 const mongoose = require('mongoose')

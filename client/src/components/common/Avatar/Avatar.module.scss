@@ -38,6 +38,18 @@
     }
   }
 
+  &.xs {
+    height: 32px;
+    width: 32px;
+    .onLineIndicator {
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-width: 2px;
+    }
+  }
+
   &.sm {
     height: 50px;
     width: 50px;
