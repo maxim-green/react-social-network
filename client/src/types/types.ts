@@ -21,6 +21,12 @@ export type UserType = {
     isSubscription?: boolean
 }
 
+// type for dialogs messages
+export type MessageType = {
+    author: UserType,
+    text: string
+}
+
 // type for post-items
 export type PostType = {
     _id: string,

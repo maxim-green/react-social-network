@@ -37,9 +37,9 @@ app.use(cookieParser())
 app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
 app.use('/api/auth/', require('./routes/auth.route'))
 app.use('/api/profile/', require('./routes/profile.route'))
+app.use('/api/dialogs/', require('./routes/dialogs.route'))
 app.use('/api/users/', require('./routes/users.route'))
 app.use('/api/posts/', require('./routes/posts.route'))
-app.get('/testsocket', (req, res) => res.sendFile(__dirname + '/index.html'))
 
 const start = async () => {
     try {
