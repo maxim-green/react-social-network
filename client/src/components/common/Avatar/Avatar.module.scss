@@ -2,8 +2,10 @@
 
 .avatar {
   position: relative;
-  overflow: hidden;
-
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &.editable {
     &:hover {
 
@@ -39,7 +41,6 @@
   }
 
   &.xs {
-    height: 32px;
     width: 32px;
     .onLineIndicator {
       bottom: -1px;
@@ -51,7 +52,6 @@
   }
 
   &.sm {
-    height: 50px;
     width: 50px;
     .onLineIndicator {
       bottom: 3px;
@@ -62,7 +62,6 @@
   }
 
   &.md {
-    height: 76px;
     width: 76px;
     .onLineIndicator {
       bottom: 0;
@@ -73,7 +72,6 @@
   }
 
   &.lg {
-    height: 128px;
     width: 128px;
     .onLineIndicator {
       bottom: 10px;
@@ -100,4 +98,12 @@
   background-color: $green-success;
   border: 3px solid white;
   z-index: 3;
+}
+
+.name {
+  //color: $dark-grey-2;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: .5px;
+  margin-top: 2px;
 }

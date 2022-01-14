@@ -1,13 +1,53 @@
 @import "../../variables.module";
 
+.dialogs {
+  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
+  display: grid;
+  grid-template-areas: "a b" "c c";
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: 1fr 100px;
+}
+
+.dialogsList {
+  grid-area: a;
+  border-right: 1px solid $light-grey-2;
+  border-bottom: 1px solid $light-grey-2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: auto;
+  padding: 5px;
+}
+
+.dialogButton {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-radius: $ui-border-radius;
+  &.active {
+    background-color: $accent;
+    color: $white;
+    a {
+      color: $white;
+    }
+  }
+}
+a.dialogButton {
+  outline: none;
+}
+
 .newMessageForm {
   padding: 10px;
+  grid-area: c;
 }
 
 .messages {
-  height: 75vh;
   padding: 10px;
+  grid-area: b;
   border-bottom: 1px solid $light-grey-2;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .messageOther, .messageSelf {
@@ -15,19 +55,24 @@
   align-items: start;
   padding: 10px;
   border: 1px solid $light-grey-2;
+
   & + & {
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
+
   .messageAvatar {
     margin-right: 10px;
   }
+
   .messageAuthorName {
     font-size: 12px;
     font-weight: 700;
   }
+
   .messageText {
 
   }
+
   &.self {
 
   }

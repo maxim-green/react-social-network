@@ -38,10 +38,19 @@ const messageHandlerCreator = (dispatch: Dispatch<ChatActionType>) => {
     return (message: MessageType) => dispatch(chatActions.addMessage(message))
 }
 
+export const startSocketListening = (): ThunkType<ChatActionType> => async (dispatch) => {
+    chatApi.startListening()
+}
+export const stopSocketListening = (): ThunkType<ChatActionType> => async (dispatch) => {
+    chatApi.stopListening()
+}
+
 export const startMessagesListening = (): ThunkType<ChatActionType> => async (dispatch) => {
+    console.log('start')
     chatApi.subscribe(messageHandlerCreator(dispatch))
 }
 export const stopMessagesListening = (): ThunkType<ChatActionType> => async (dispatch) => {
+    console.log('stop')
     chatApi.unsubscribe(messageHandlerCreator(dispatch))
 }
 export const sendMessage = (message: string): ThunkType<ChatActionType> => async (dispatch) => {

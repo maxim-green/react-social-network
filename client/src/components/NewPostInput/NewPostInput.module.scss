@@ -4,22 +4,14 @@
   border-bottom: 1px solid $light-grey-2;
 
   textarea {
-    width: 100%;
     font-size: 18px;
     color: $mid-grey;
-    padding: 25px 30px;
-    display: block;
-    border: none;
-    resize: none;
+    padding: 10px;
     background-color: transparent;
     outline: none;
 
     &::placeholder {
       color: rgba($mid-grey, .5);
-    }
-
-    &:focus::placeholder {
-      opacity: 0;
     }
   }
 }

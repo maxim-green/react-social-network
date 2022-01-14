@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {CSSProperties, useCallback, useState} from 'react'
 import classes from './Form.module.scss'
 import classnames from 'classnames'
 import button from "../../common/Button/Button";
@@ -27,6 +27,7 @@ type InputPropsType<V = any> = {
     onChange?: ((e: React.ChangeEvent | V) => void),
     onBlur?: (e: React.ChangeEvent) => void,
     ref?: React.ForwardedRef<any>
+    style?: CSSProperties
 }
 
 const Form: React.FC<FormPropsType> & {
@@ -50,7 +51,8 @@ Form.Item = React.forwardRef(({
                                   disabled = false,
                                   onChange,
                                   onBlur,
-                                  value
+                                  value,
+    style
                               }, ref) => {
     const checkbox = component?.displayName === 'InputCheckbox'
     const forwardRequired = !ref
@@ -72,7 +74,8 @@ Form.Item = React.forwardRef(({
                         value,
                         onChange,
                         onBlur,
-                        ref
+                        ref,
+                        style
                     }, children)}
             </label>
         </div>
@@ -108,10 +111,10 @@ export const InputTextarea: React.FC<InputPropsType> = React.forwardRef<HTMLText
                                                                                                        required = false,
                                                                                                        disabled = false,
                                                                                                        onChange,
-                                                                                                       onBlur
+                                                                                                       onBlur, style
                                                                                                    }, ref) => {
     return <textarea className={classes.textarea} name={name} disabled={disabled} onChange={onChange}
-                  onBlur={onBlur} ref={ref} cols={30} rows={2}/>
+                  onBlur={onBlur} ref={ref} cols={30} rows={2} style={style}/>
 })
 
 export const InputCheckbox: React.FC<InputPropsType> = React.forwardRef<HTMLInputElement, InputPropsType>(({
@@ -197,17 +200,19 @@ export const Button: React.FC<{
     size?: 'small' | 'medium' | 'large'
     disabled?: boolean
     spinner?: boolean
+    style?: CSSProperties
 }> = ({
           children,
           onClick,
           type = 'primary',
           size = 'medium',
           disabled = false,
-          spinner = false
+          spinner = false,
+    style
       }) => {
     const spinnerColor = (type === 'primary' || type === 'cancel') ? '#FFFFFF' : undefined
     return (
-        <button onClick={onClick} disabled={disabled || spinner}
+        <button onClick={onClick} disabled={disabled || spinner} style={style}
                 className={classnames(
                     classes.button,
                     {[classes.primary]: !type || type === 'primary'},
@@ -225,7 +230,7 @@ export const Button: React.FC<{
                 <Spinner color={spinnerColor} width={sizes[size] - 12} height={sizes[size] - 12}/>
             </div>}
             <div className={classes.buttonContent} style={{opacity: spinner ? 0 : 1}}>
-                <div>{children}</div>
+                {children}
             </div>
 
 

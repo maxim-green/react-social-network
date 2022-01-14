@@ -26,11 +26,11 @@ const NewPostInput: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
     return (
         <Card>
             <Form onSubmit={handleSubmit(submit)}>
-                <div style={{padding: '2px'}}>
-                    <InputTextarea {...register('newPostText')} />
+                <div className={classes.input}>
+                    <InputTextarea {...register('newPostText')} style={{border: 'none', borderRadius: '5px 5px 0 0'}}/>
                 </div>
                 <div className={classes.controls}>
-                    <Button onClick={onAttachFileButtonClick} type="text" size="small"><Image color={'#909BA4'} size={18}/></Button>
+                    <Button onClick={onAttachFileButtonClick} type="text" size="small" style={{padding: 5}}><Image color={'#909BA4'} size={18}/></Button>
                     <Button type="primary" size="small" spinner={isAddPostPending}>
                         Post
                     </Button>

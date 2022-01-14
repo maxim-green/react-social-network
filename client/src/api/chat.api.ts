@@ -3,17 +3,23 @@ import {io} from 'socket.io-client'
 
 let subscribers = [] as Array<(message: MessageType) => void>
 
-const socket = io('http://localhost:5000', {withCredentials: true})
+let socket = io('http://localhost:5000', {withCredentials: true, autoConnect: false})
 
 const handleServerMessage = (message: MessageType) => {
     console.log('Message from server ' + message)
     subscribers.forEach(s => s(message))
 }
 
-socket.on('server-message', handleServerMessage)
-
 export const chatApi = {
+    startListening() {
+        socket.open()
+    },
+    stopListening() {
+        socket.close()
+    },
     subscribe(callback: (message: MessageType) => void) {
+        socket.on('server-message', handleServerMessage)
+
         subscribers.push(callback)
         console.log('From subscribe', callback)
         return () => {

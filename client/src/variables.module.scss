@@ -17,6 +17,7 @@ $background: $light-grey-1;
 
 // colors
   $clr-font-dark: #373C42;
+$clr-font-link: $accent;
   $clr-font-light: #FFFFFF;
 
   $clr-primary: #2086C4;
@@ -95,6 +96,6 @@ $bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
 $appbar-height: 60px;
 $container-width: 980px;
 $container-padding: 10px;
-$components-gap: 20px;
-$sidebar-width: 240px;
+$components-gap: 10px;
+$sidebar-width: 220px;
 $card-padding: 20px;

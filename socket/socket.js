@@ -34,20 +34,8 @@ const socket = (io) => {
 
     io.sockets.on('connection', (socket) => {
         console.log(`${socket.user.username} connected`)
-        const payload = {
-            author: {
-                userId: '123',
-                username: 'frodo',
-                firstName: 'Frodo',
-                lastName: 'Baggins',
-                avatar: {
-                    small: null,
-                    large: null
-                },
-            },
-            text: 'Hello, max!'
-        }
-        io.emit('server-message', payload)
+        
+
         socket.on('disconnect', () => console.log(`${socket.user.username} disconnected`))
 
         socket.on('client-message', (message) => {

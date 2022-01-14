@@ -12,14 +12,17 @@ type PropsType = {
 const SidebarFriends: React.FC<PropsType> = ({friends}) => {
     return (
         <Card>
-            <div className={classes.Title}>My Friends</div>
-            <div className={classes.Avatars}>
-                {friends.length !== 0 && friends.map(friend => <NavLink to={`/profile/${friend.username}`}
-                                                                        key={friend.userId}><Avatar
-                    img={friend.avatar.small} online size={'sm'}/></NavLink>
-                )}
+            <div className={classes.sidebarFriends}>
+                <div className={classes.Title}>Friends</div>
+                <div className={classes.Avatars}>
+                    {friends.length !== 0 && friends.map(friend => <NavLink to={`/profile/${friend.username}`}
+                                                                            key={friend.userId}>
+                            <Avatar img={friend.avatar.small} online size={'sm'} name={friend.firstName}/>
+                        </NavLink>
+                    )}
+                </div>
+                <div className={classes.Link}><NavLink to='/users/friends'>View All ({friends.length})</NavLink></div>
             </div>
-            <div className={classes.Link}><NavLink to='/users/friends'>View All ({friends.length})</NavLink></div>
         </Card>
     )
 }

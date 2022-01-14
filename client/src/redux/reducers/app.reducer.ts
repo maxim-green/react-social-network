@@ -1,5 +1,6 @@
 import {checkAuthorized} from './auth.reducer'
 import {InferActionsTypes, ThunkType} from '../store'
+import {startMessagesListening, startSocketListening} from './chat.reducer'
 
 // INITIAL STATE
 const initialState = {
@@ -34,6 +35,8 @@ export const initializeApp = (): ThunkType<AppActionType> => async (dispatch) =>
     await Promise.all([ // put all that needed to be checked to init app inside this array
         dispatch(checkAuthorized())
     ])
+    dispatch(startSocketListening())
+    dispatch(startMessagesListening())
     dispatch(appActions.setInitialized(true))
 }
 //endregion

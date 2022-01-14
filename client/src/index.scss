@@ -9,6 +9,22 @@ html {
   font-family: 'Roboto', sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: $clr-font-link;
+  outline: none;
+  &:hover {
+    text-decoration: none;
+    color: $clr-font-link;
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 body {
   background-color: $background;
   font-family: 'Roboto', sans-serif;

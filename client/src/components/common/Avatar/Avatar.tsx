@@ -10,6 +10,7 @@ import ImageUploadForm from '../../ImageUploadForm/ImageUploadForm'
 type PropsType = {
     img?: string | null
     size?: 'sm' | 'md' | 'lg' | 'xs'
+    name?: string
     contextBgColor?: string
     owner?: boolean
     online?: boolean
@@ -19,6 +20,7 @@ type PropsType = {
 const Avatar: React.FC<PropsType> = ({
                                          img,
                                          size = 'md',
+                                         name,
                                          contextBgColor = 'white',
                                          owner,
                                          online,
@@ -34,6 +36,7 @@ const Avatar: React.FC<PropsType> = ({
     const closeModal = () => setOpen(false)
 
     return (
+
         <div className={
             classnames(
                 classes.avatar,
@@ -47,8 +50,9 @@ const Avatar: React.FC<PropsType> = ({
 
             {onSubmit && owner && <div>
                 <button className={classes.editButton} onClick={openModal}><img src={editIconWhite} alt=""/></button>
-                <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
-                    <ImageUploadForm aspect={1 / 1} onSubmit={onSubmit} closeModal={closeModal}  />
+                <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}}
+                       closeOnDocumentClick={false}>
+                    <ImageUploadForm aspect={1 / 1} onSubmit={onSubmit} closeModal={closeModal}/>
                 </Popup>
             </div>}
 
@@ -58,7 +62,10 @@ const Avatar: React.FC<PropsType> = ({
             {online &&
             <div className={classes.onLineIndicator} style={{borderColor: contextBgColor || 'white'}}/>}
 
+            {name && <div className={classes.name}>{name}</div>}
         </div>
+
+
     )
 }
 

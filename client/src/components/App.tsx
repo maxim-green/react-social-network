@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import LoginPageContainer from './pages/LoginPage'
 import RegistrationPageContainer from './pages/RegistrationPage'
-import {connect} from 'react-redux'
+import {connect, useDispatch, useSelector} from 'react-redux'
 import ProfilePage from './pages/ProfilePage'
 import UsersPage from './pages/UsersPage'
 import {initializeApp} from '../redux/reducers/app.reducer'
@@ -10,6 +10,12 @@ import {StateType} from '../redux/store'
 import Layout from './Layout/Layout'
 import TestPage from './TestPage'
 import DialogsPage from "./pages/DialogsPage";
+import {
+    startMessagesListening,
+    startSocketListening,
+    stopMessagesListening,
+    stopSocketListening
+} from '../redux/reducers/chat.reducer'
 
 type MapStatePropsType = {
     initialized: boolean,
@@ -62,10 +68,22 @@ const App: React.FC<PropsType> = ({
 
 // Container
 const AppContainer: React.FC<PropsType> = (props) => {
+    const dispatch = useDispatch()
+    const authorized = useSelector((state: StateType) => state.auth.authorized)
     const {initialized, initializeApp} = props
+
     useEffect(() => {
+        console.log('App mounted')
         initializeApp()
-    }, [initialized, initializeApp])
+    }, [])
+
+    // todo Maybe it would be better to dispatch it somewhere else? (in thunk or in check auth hook)
+    useEffect(() => {
+        if(!authorized) {
+            dispatch(stopSocketListening())
+            dispatch(stopMessagesListening())
+        }
+    }, [authorized])
 
     if (!initialized) return <div>Initializing...</div>
 
