@@ -6,7 +6,7 @@ import {MessageType} from '../../types/types'
 import Avatar from '../common/Avatar/Avatar'
 import {StateType} from '../../redux/store'
 import {useDispatch, useSelector} from 'react-redux'
-import {sendMessage, startMessagesListening, stopMessagesListening} from '../../redux/reducers/chat.reducer'
+import {sendMessage} from '../../redux/reducers/chat.reducer'
 import {NavLink} from 'react-router-dom'
 
 type PropsType = {
@@ -16,8 +16,6 @@ type PropsType = {
 }
 
 const Dialogs: React.FC<PropsType> = ({messages, authUser, onNewMessageSubmit}) => {
-    console.log(messages)
-    console.log(messages.reverse())
     return (
         <Card>
             <div className={classes.dialogs}>
@@ -27,7 +25,7 @@ const Dialogs: React.FC<PropsType> = ({messages, authUser, onNewMessageSubmit}) 
                     <DialogButton username={'gandalf'} firstName={'Gandalf'}/>
                 </div>
                 <div className={classes.messages}>
-                    {messages.slice().reverse().map(message => <Message message={message} authUser={authUser}/>)}
+                    {messages.slice().reverse().map((message, index) => <Message key={index} message={message} authUser={authUser}/>)}
                 </div>
                 <div className={classes.newMessageForm}>
                     <NewMessageForm onSubmit={onNewMessageSubmit}/>

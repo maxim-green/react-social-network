@@ -154,9 +154,8 @@ export const InputDate: React.FC<InputPropsType<Date>> = React.forwardRef<HTMLIn
                                                                                                                        required = false,
                                                                                                                        disabled = false,
                                                                                                                        onChange,
-                                                                                                                       onBlur,
-                                                                                                                       ref
-                                                                                                                   }) => {
+                                                                                                                       onBlur
+                                                                                                                   }, ref) => {
     const [date, setDate] = useState<Date>(value ? new Date(value) : new Date())
     const changeHandler = (date: Date) => {
         onChange && onChange(date)
@@ -175,7 +174,7 @@ export const InputFile: React.FC<InputPropsType> = React.forwardRef<HTMLInputEle
                                                                                                            disabled = false,
                                                                                                            onChange,
                                                                                                            onBlur
-                                                                                                       }) => {
+                                                                                                       }, ref) => {
     const onDrop = useCallback(acceptedFiles => {
         onChange && onChange(acceptedFiles[0])
     }, [])

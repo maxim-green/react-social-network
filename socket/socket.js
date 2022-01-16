@@ -8,7 +8,7 @@ const socket = (io) => {
     io.use(async (socket, next) => {
         if (!socket.request.headers['cookie']) {
             console.log('Not authorized.')
-            return next(new Error('not authorized'))
+            return next(new Error('Socket connection error. Not authorized'))
         }
 
         const cookies = cookie.parse(socket.request.headers['cookie'])
@@ -16,7 +16,7 @@ const socket = (io) => {
 
         if (!accessToken) {
             console.log('Not authorized.')
-            return next(new Error('not authorized'))
+            return next(new Error('Socket connection error. Not authorized'))
         }
 
         try {
@@ -26,20 +26,25 @@ const socket = (io) => {
         } catch (e) {
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
             if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
-            return next(new Error('not authorized'))
+            return next(new Error('Socket connection error. Not authorized'))
         }
 
         return next()
     })
 
-    io.sockets.on('connection', (socket) => {
-        console.log(`${socket.user.username} connected`)
-        
+    io.sockets.on('connection', async (socket) => {
+        const { user } = socket
+        console.log(`${user.username} connected`)
+        user.isOnline = true
+        await user.save()
 
-        socket.on('disconnect', () => console.log(`${socket.user.username} disconnected`))
+        socket.on('disconnect', async () => {
+            console.log(`${user.username} disconnected`)
+            user.isOnline = false
+            await user.save()
+        })
 
         socket.on('client-message', (message) => {
-            const {user} = socket
             const payload = {
                 author: {
                     userId: user._id,
@@ -50,7 +55,7 @@ const socket = (io) => {
                 },
                 text: message
             }
-            console.log(`Message from ${socket.user.username}: ${message}`)
+            console.log(`Message from ${user.username}: ${message}`)
             io.emit('server-message', payload)
         })
     })

@@ -2,7 +2,7 @@ import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 import {ProfileDataType} from '../../api/profile.api'
-import {startMessagesListening, startSocketListening, stopMessagesListening, stopSocketListening} from './chat.reducer'
+import {startMessagesListening, stopMessagesListening} from './chat.reducer'
 
 // INITIAL STATE
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
     email: null as string | null,
     username: null as string | null,
     profile: null as ProfileDataType | null,
+    isOnline: false,
     registrationSuccessful: false
 }
 type AuthStateType = typeof initialState
@@ -25,6 +26,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 userId: action.userId,
                 email: action.email,
                 username: action.username,
+                isOnline: true,
                 profile: action.profile
             }
         }
@@ -34,7 +36,8 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 authorized: false,
                 userId: null,
                 email: null,
-                username: null
+                username: null,
+                isOnline: false
             }
         }
         case 'rsn/auth/SET_REGISTRATION_SUCCESSFUL': {
@@ -72,27 +75,8 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
     const res = await authApi.login(loginFormData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(checkAuthorized())
-        dispatch(startSocketListening())
-        dispatch(startMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
-        console.log(res)
-    }
-}
-
-export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
-    const res = await authApi.me()
-    if (res.resultCode === ResultCodes.success) {
-        const {userId, email, username, profile} = res.data
-        console.log('Check Auth', profile)
-        dispatch(authActions.setUser(userId, email, username, profile))
-    }
-    if (res.resultCode === ResultCodes.error) {
-        dispatch(authActions.clearUser())
-        console.log(res)
-    }
-    if (res.resultCode === ResultCodes.expiredToken) {
-        dispatch(authActions.clearUser())
         console.log(res)
     }
 }
@@ -100,11 +84,29 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
 export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.logout()
     if (res.resultCode === ResultCodes.success) {
-        dispatch(authActions.clearUser())
-        dispatch(stopMessagesListening())
-        dispatch(stopSocketListening())
+        dispatch(checkAuthorized())
     }
     if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+// Checking if user is authorized. If true - setting authorized user data in state. If false - clearing it.
+export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
+    const res = await authApi.me()
+    if (res.resultCode === ResultCodes.success) {
+        const {userId, email, username, profile} = res.data
+        dispatch(authActions.setUser(userId, email, username, profile))
+        dispatch(startMessagesListening())
+    } else {
+        dispatch(authActions.clearUser())
+        dispatch(stopMessagesListening())
+    }
+
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+    if (res.resultCode === ResultCodes.expiredToken) {
         console.log(res)
     }
 }
