@@ -83,7 +83,7 @@ const UserItem: React.FC<PropsType> = ({
             <div className={classes.controls}>
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
-                        <Button icon={sendMessageIcon} variant="neutral"/>
+                        <NavLink to={`/dialogs/${user.username}`}><Button icon={sendMessageIcon} variant="neutral"/></NavLink>
                     </div>
                     <div className={classes.button}>
                         <Button icon={gearIcon} variant="neutral"/>

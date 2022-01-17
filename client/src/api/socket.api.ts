@@ -15,7 +15,7 @@ socket.on('server-message', handleServerMessage)
 // todo need to debug: after logout and then login again several messages show up on UI (on message sent)
 // unsubscribe isnt working (but its called). Subscribers array not changing after logout.
 // looks like it works when reseting subscribers array on disconnect
-export const chatApi = {
+export const socketApi = {
     connect() {
         if (!socket.connected) socket.connect()
         console.log('Socket connection opened')
@@ -35,8 +35,10 @@ export const chatApi = {
     unsubscribe(callback: (message: MessageType) => void) {
             subscribers = subscribers.filter(s => s != callback)
     },
-
     sendMessage(message: string) {
         socket.emit('client-message', message)
+    },
+    joinDialogs() {
+        socket.emit('client-join-dialogs')
     }
 }

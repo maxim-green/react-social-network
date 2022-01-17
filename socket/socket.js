@@ -1,6 +1,7 @@
 const cookie = require('cookie')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const Dialog = require('../models/Dialog')
 const config = require('config')
 
 
@@ -37,6 +38,9 @@ const socket = (io) => {
         console.log(`${user.username} connected`)
         user.isOnline = true
         await user.save()
+
+        const dialogs = await Dialog.find({users: user.id})
+        socket.join(dialogs)
 
         socket.on('disconnect', async () => {
             console.log(`${user.username} disconnected`)

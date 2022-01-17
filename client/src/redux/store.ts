@@ -5,7 +5,7 @@ import profileReducer, {ProfileActionType} from './reducers/profile.reducer'
 import {AppActionType, appReducer} from './reducers/app.reducer'
 import {UsersActionType, usersReducer} from './reducers/users.reducer'
 import thunkMiddleware, {ThunkAction} from 'redux-thunk'
-import {chatReducer} from './reducers/chat.reducer'
+import {dialogsReducer} from './reducers/dialogs.reducer'
 
 // generic for extracting action types from actions object
 export type InferActionsTypes<T> = T extends { [key: string]: infer U } ? U : never
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     users: usersReducer,
-    chat: chatReducer
+    dialogs: dialogsReducer
 })
 
 type RootReducerType = typeof rootReducer   // get root reducer type that returns app state

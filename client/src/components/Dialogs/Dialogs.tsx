@@ -6,8 +6,8 @@ import {MessageType} from '../../types/types'
 import Avatar from '../common/Avatar/Avatar'
 import {StateType} from '../../redux/store'
 import {useDispatch, useSelector} from 'react-redux'
-import {sendMessage} from '../../redux/reducers/chat.reducer'
-import {NavLink} from 'react-router-dom'
+import {openDialog, sendMessage} from '../../redux/reducers/dialogs.reducer'
+import {NavLink, useParams} from 'react-router-dom'
 
 type PropsType = {
     messages: Array<MessageType>
@@ -60,14 +60,20 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
 
 
 const DialogsContainer: React.FC = () => {
+    const {username}: { username: string } = useParams()
+    console.log(username)
+
     const authUser = useSelector((state: StateType) => state.auth.username)
-    const messages = useSelector((state: StateType) => state.chat.messages)
+    const messages = useSelector((state: StateType) => state.dialogs.messages)
     const dispatch = useDispatch()
 
     const onNewMessageSubmit = (message: string) => {
         dispatch(sendMessage(message))
     }
 
+    useEffect(() => {
+        dispatch(openDialog(username))
+    }, [username])
 
     return (
         <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} authUser={authUser || ''}/>

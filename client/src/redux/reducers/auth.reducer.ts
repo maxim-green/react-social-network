@@ -2,7 +2,7 @@ import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 import {ProfileDataType} from '../../api/profile.api'
-import {startMessagesListening, stopMessagesListening} from './chat.reducer'
+import {startMessagesListening, stopMessagesListening} from './dialogs.reducer'
 
 // INITIAL STATE
 const initialState = {

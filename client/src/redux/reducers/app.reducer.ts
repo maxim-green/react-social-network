@@ -1,6 +1,6 @@
 import {checkAuthorized} from './auth.reducer'
 import {InferActionsTypes, ThunkType} from '../store'
-import {startMessagesListening, stopMessagesListening} from './chat.reducer'
+import {startMessagesListening, stopMessagesListening} from './dialogs.reducer'
 
 // INITIAL STATE
 const initialState = {

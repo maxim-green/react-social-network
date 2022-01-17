@@ -12,6 +12,28 @@ const path = require('path')
 const sharp = require('sharp')
 const auth = require('../middleware/auth.middleware')
 
+// /api/dialogs/
+router.get('/', auth, async (req, res) => {
+    try {
+        const {user} = req
+        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
+
+        const dialogs = await Dialog.find({users: user.id}).populate("users", ["id", "username", "profileData.firstName", "profileData.avatar"]).lean()
+        // console.log(dialogs)
+
+        const resultDialogs = dialogs.map(dialog => ({
+            ...dialog,
+            users: undefined,
+            companionUser: dialog.users.find(u => u.username !== user.username)
+        }))
+
+        res.status(200).json({resultCode: 0, message: 'Success', data: {dialogs: resultDialogs}})
+    } catch(e) {
+        console.log(e)
+        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+    }
+})
+
 // /api/dialogs/:username
 router.get('/:username', auth, async (req, res) => {
     try {
@@ -38,9 +60,9 @@ router.get('/:username', auth, async (req, res) => {
             await dialog.save()
         }
 
-        console.log(dialog)
+        // console.log(dialog)
 
-        res.status(200).json({resultCode: 0, message: 'Success', data: {messages: dialog.messages}})
+        res.status(200).json({resultCode: 0, message: 'Success', data: {dialogId: dialog.id, messages: dialog.messages}})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
