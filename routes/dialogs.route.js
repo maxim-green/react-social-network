@@ -18,13 +18,17 @@ router.get('/', auth, async (req, res) => {
         const {user} = req
         if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
-        const dialogs = await Dialog.find({users: user.id}).populate("users", ["id", "username", "profileData.firstName", "profileData.avatar"]).lean()
-        // console.log(dialogs)
+        const dialogs = await Dialog
+            .find({users: user.id})
+            .populate("users", ["id", "username", "profileData.firstName", "profileData.lastName", "profileData.avatar"])
+            .lean()
+        console.log(dialogs)
 
         const resultDialogs = dialogs.map(dialog => ({
-            ...dialog,
-            users: undefined,
-            companionUser: dialog.users.find(u => u.username !== user.username)
+            id: dialog._id,
+            creationDate: dialog.creationDate,
+            companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, ...u.profileData}))
+                .find(u => u.username !== user.username),
         }))
 
         res.status(200).json({resultCode: 0, message: 'Success', data: {dialogs: resultDialogs}})
@@ -48,21 +52,31 @@ router.get('/:username', auth, async (req, res) => {
                 {users: {$all: [user.id, targetUser.id]}},
                 {users: {$size: 2}}
             ]
-        })
+        }).populate('messages.author', ['id', 'username', 'profileData.avatar', 'profileData.firstName', 'profileData.lastName']).lean()
+
+        let resultDialog
+        if (dialog) {
+            resultDialog = {
+                ...dialog,
+                id: dialog._id,
+                messages: dialog.messages.map(m => ({
+                    ...m,
+                    author: {...m.author, ...m.author.profileData, profileData: undefined}
+                }))
+            }
+        }
 
         if (!dialog) {
             console.log('new')
-            dialog = new Dialog({
+            resultDialog = new Dialog({
                 date: new Date(),
                 users: [user.id, targetUser.id],
                 messages: []
             })
-            await dialog.save()
+            await resultDialog.save()
         }
 
-        // console.log(dialog)
-
-        res.status(200).json({resultCode: 0, message: 'Success', data: {dialogId: dialog.id, messages: dialog.messages}})
+        res.status(200).json({resultCode: 0, message: 'Success', data: {currentDialogId: resultDialog.id, date: resultDialog.creationDate, messages: resultDialog.messages}})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})

@@ -39,8 +39,8 @@ const socket = (io) => {
         user.isOnline = true
         await user.save()
 
-        const dialogs = await Dialog.find({users: user.id})
-        socket.join(dialogs)
+        const dialogs = await Dialog.find({users: user.id}) // get all dialogs of connected user
+        socket.join(dialogs.map(d => d.id))    // room id is dialog id
 
         socket.on('disconnect', async () => {
             console.log(`${user.username} disconnected`)
@@ -48,19 +48,17 @@ const socket = (io) => {
             await user.save()
         })
 
-        socket.on('client-message', (message) => {
-            const payload = {
-                author: {
-                    userId: user._id,
-                    username: user.username,
-                    firstName: user.profileData.firstName,
-                    lastName: user.profileData.lastName,
-                    avatar: user.profileData.avatar,
-                },
+        socket.on('client-message', async(message, dialogId) => {
+            const newMessage = {
+                date: new Date(),
+                author: user,
                 text: message
             }
             console.log(`Message from ${user.username}: ${message}`)
-            io.emit('server-message', payload)
+            console.log(`Dialog: ${dialogId}`)
+            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}})
+
+            // io.emit('server-message', newMessage)
         })
     })
 }

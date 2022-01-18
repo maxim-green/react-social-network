@@ -1,5 +1,5 @@
 import {InferActionsTypes, ThunkType} from '../store'
-import {MessageType} from '../../types/types'
+import {DialogType, MessageType} from '../../types/types'
 import {socketApi} from '../../api/socket.api'
 import {Dispatch} from 'react'
 import {dialogsApi} from '../../api/dialogs.api'
@@ -7,8 +7,9 @@ import {ResultCodes} from '../../api/core.api'
 
 // INITIAL STATE
 const initialState = {
-    dialogId: null as string | null,
-    messages: [] as Array<MessageType>
+    currentDialogId: null as string | null,
+    messages: [] as Array<MessageType>,
+    dialogs: [] as Array<DialogType>
 }
 type DialogsStateType = typeof initialState
 
@@ -24,8 +25,14 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
         case 'rsn/chat/SET_DIALOG': {
             return {
                 ...state,
-                dialogId: action.dialogId,
+                currentDialogId: action.currentDialogId,
                 messages: action.messages
+            }
+        }
+        case 'rsn/chat/SET_DIALOGS': {
+            return {
+                ...state,
+                dialogs: action.dialogs
             }
         }
         default: {
@@ -36,7 +43,8 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
 
 //region ACTION CREATORS
 export const dialogsActions = {
-    setDialog: (dialogId: string, messages: Array<MessageType>) => ({type: 'rsn/chat/SET_DIALOG', dialogId, messages} as const),
+    setDialog: (currentDialogId: string, messages: Array<MessageType>) => ({type: 'rsn/chat/SET_DIALOG', currentDialogId, messages} as const),
+    setDialogs: (dialogs: Array<DialogType>) => ({type: 'rsn/chat/SET_DIALOGS', dialogs} as const),
     addMessage: (message: MessageType) => ({type: 'rsn/chat/ADD_MESSAGE', message} as const),
 }
 export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActions>>
@@ -58,17 +66,27 @@ export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (
     socketApi.unsubscribe(messageHandlerCreator(dispatch))
     socketApi.disconnect()
 }
-export const sendMessage = (message: string): ThunkType<DialogsActionType> => async (dispatch) => {
-    socketApi.sendMessage(message)
+export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
+    socketApi.sendMessage(message, dialogId)
+}
+
+export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) => {
+    const res =  await dialogsApi.getDialogs()
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(dialogsActions.setDialogs(res.data.dialogs))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
 }
 
 export const openDialog = (username: string): ThunkType<DialogsActionType> => async (dispatch) => {
     const res = await dialogsApi.getMessages(username)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(dialogsActions.setDialog(res.data.dialogId, res.data.messages))
+        dispatch(dialogsActions.setDialog(res.data.currentDialogId, res.data.messages))
     }
     if (res.resultCode === ResultCodes.error) {
-
+        console.log(res)
     }
 }
 //endregion

@@ -35,8 +35,8 @@ export const socketApi = {
     unsubscribe(callback: (message: MessageType) => void) {
             subscribers = subscribers.filter(s => s != callback)
     },
-    sendMessage(message: string) {
-        socket.emit('client-message', message)
+    sendMessage(message: string, dialogId: string) {
+        socket.emit('client-message', message, dialogId)
     },
     joinDialogs() {
         socket.emit('client-join-dialogs')

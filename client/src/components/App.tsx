@@ -38,6 +38,7 @@ const App: React.FC<PropsType> = ({
 
                 <Route path="/users/:filter?" component={UsersPage}/>
                 <Route path="/dialogs/:username" component={DialogsPage}/>
+                <Route path="/dialogs/" component={DialogsPage}/>
                 <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                 <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
                 <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
