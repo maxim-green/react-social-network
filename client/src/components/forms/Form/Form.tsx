@@ -177,7 +177,7 @@ export const InputFile: React.FC<InputPropsType> = React.forwardRef<HTMLInputEle
                                                                                                        }, ref) => {
     const onDrop = useCallback(acceptedFiles => {
         onChange && onChange(acceptedFiles[0])
-    }, [])
+    }, [onChange])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
 

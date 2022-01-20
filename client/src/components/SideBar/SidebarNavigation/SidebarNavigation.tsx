@@ -4,8 +4,6 @@ import classes from './SidebarNavigation.module.scss'
 import {NavLink} from 'react-router-dom'
 import feedIcon from '../../../assets/images/feed-icon.svg'
 import dialogsIcon from '../../../assets/images/dialogs-icon.svg'
-import photosIcon from '../../../assets/images/photos-icon.svg'
-import musicIcon from '../../../assets/images/music-icon.svg'
 import settingsIcon from '../../../assets/images/settings-icon.svg'
 import usersIcon from '../../../assets/images/members-icon.svg'
 

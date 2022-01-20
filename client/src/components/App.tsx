@@ -33,7 +33,6 @@ const App: React.FC<PropsType> = ({
                 <Route path="/register" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
                 {!authorized && <Route path="/profile/edit" render={() => <Redirect to="/login"/>}/>}
-                <Route path="/profile/edit" component={ProfilePage}/>
                 <Route exact path="/profile/:username" component={ProfilePage}/>
 
                 <Route path="/users/:filter?" component={UsersPage}/>
@@ -62,12 +61,11 @@ const AppContainer: React.FC<PropsType> = () => {
 
 
     useEffect(() => {
-        console.log('App mounted')
         dispatch(initializeApp())
         return () => {
             dispatch(deinitializeApp())
         }
-    }, [])
+    }, [dispatch])
 
     if (!initialized) return <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Spinner/>

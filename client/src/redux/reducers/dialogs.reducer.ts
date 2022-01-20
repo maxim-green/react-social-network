@@ -19,7 +19,8 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
         case 'rsn/chat/ADD_MESSAGE': {
             return {
                 ...state,
-                messages: [...state.messages, action.message]
+                messages: [...state.messages, action.message],
+                dialogs: state.dialogs.map(dialog => (dialog.id === action.message.dialogId) ? {...dialog, updated: action.message.date} : dialog)
             }
         }
         case 'rsn/chat/SET_DIALOG': {

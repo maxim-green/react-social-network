@@ -75,6 +75,7 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
     const res = await authApi.login(loginFormData)
     if (res.resultCode === ResultCodes.success) {
         dispatch(checkAuthorized())
+        dispatch(startMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -85,6 +86,7 @@ export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.logout()
     if (res.resultCode === ResultCodes.success) {
         dispatch(checkAuthorized())
+        dispatch(stopMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -97,10 +99,8 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
     if (res.resultCode === ResultCodes.success) {
         const {userId, email, username, profile} = res.data
         dispatch(authActions.setUser(userId, email, username, profile))
-        dispatch(startMessagesListening())
     } else {
         dispatch(authActions.clearUser())
-        dispatch(stopMessagesListening())
     }
 
     if (res.resultCode === ResultCodes.error) {
@@ -114,7 +114,6 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
 export const register = (registrationData: RegistrationDataType): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.register(registrationData)
     if (res.resultCode === ResultCodes.success) {
-        console.log(res)
         dispatch(authActions.setRegistrationSuccessful(true))
     }
     if (res.resultCode === ResultCodes.error) {

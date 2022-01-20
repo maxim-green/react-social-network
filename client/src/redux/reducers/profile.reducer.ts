@@ -104,7 +104,6 @@ export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActio
 //region THUNK CREATORS
 export const getUserData = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.getProfile(username)
-    console.log(res)
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setProfile(res.data))
     }

@@ -23,6 +23,7 @@ export type UserType = {
 
 // type for dialogs messages
 export type MessageType = {
+    dialogId: string
     date: Date
     author: UserType,
     text: string
@@ -31,7 +32,8 @@ export type MessageType = {
 // type for items in dialogs list
 export type DialogType = {
     id: string
-    creationDate: Date
+    created: Date
+    updated: Date
     companionUser: UserType
 }
 

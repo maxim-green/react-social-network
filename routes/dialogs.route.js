@@ -22,11 +22,11 @@ router.get('/', auth, async (req, res) => {
             .find({users: user.id})
             .populate("users", ["id", "username", "profileData.firstName", "profileData.lastName", "profileData.avatar"])
             .lean()
-        console.log(dialogs)
 
         const resultDialogs = dialogs.map(dialog => ({
             id: dialog._id,
-            creationDate: dialog.creationDate,
+            created: dialog.created,
+            updated: dialog.updated,
             companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, ...u.profileData}))
                 .find(u => u.username !== user.username),
         }))

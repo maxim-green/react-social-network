@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import editIconWhite from '../../../assets/images/edit-icon-white.svg'
 import Popup from 'reactjs-popup'
 import defaultAvatarImage from '../../../assets/images/avatar-default.jpg'
-import {Area, Point} from 'react-easy-crop/types'
+import {Area} from 'react-easy-crop/types'
 import ImageUploadForm from '../../ImageUploadForm/ImageUploadForm'
 
 type PropsType = {

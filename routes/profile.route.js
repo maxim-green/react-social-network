@@ -19,7 +19,7 @@ router.get('/:username', async (req, res) => {
         const {username} = req.params
         const {_id, profileData} = await User.findOne({username}).lean()
 
-        res.status(200).json({resultCode: 0, message: 'Success', data: {userId: _id, ...profileData}})
+        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: {userId: _id, ...profileData}})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }

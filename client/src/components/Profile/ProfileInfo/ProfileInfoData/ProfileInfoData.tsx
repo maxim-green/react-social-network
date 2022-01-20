@@ -1,10 +1,7 @@
 import classes from './ProfileInfoData.module.scss'
-import ProfileInfoItem from '../ProfileInfoItem/ProfileInfoItem'
-import Moment from 'react-moment'
-import {capitalize} from '../../../../utils/functions'
 import React from 'react'
 import {ContactsType, LocationType} from '../../../../types/types'
-import {GeoAlt, Link45deg, CalendarEvent} from 'react-bootstrap-icons'
+import {GeoAlt, Link45deg} from 'react-bootstrap-icons'
 import moment from 'moment'
 
 type PropsTypes = {

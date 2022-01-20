@@ -33,7 +33,8 @@ export type AppActionType = ReturnType<InferActionsTypes<typeof appActions>>
 //region THUNK CREATORS
 export const initializeApp = (): ThunkType<AppActionType> => async (dispatch) => {
     await Promise.all([ // put all that needed to be checked to init app inside this array
-        dispatch(checkAuthorized())
+        dispatch(checkAuthorized()),
+        dispatch(startMessagesListening())
     ])
     dispatch(appActions.setInitialized(true))
 }

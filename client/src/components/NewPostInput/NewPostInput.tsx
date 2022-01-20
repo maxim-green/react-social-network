@@ -4,7 +4,6 @@ import classes from "./NewPostInput.module.scss"
 import Form, {Button, InputTextarea} from '../forms/Form/Form'
 import Card from '../common/Card/Card'
 import {NewPostType} from '../../types/types'
-import Spinner from '../common/Spinner/Spinner'
 import {useForm} from "react-hook-form";
 
 type PropsType = {

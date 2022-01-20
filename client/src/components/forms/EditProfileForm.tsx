@@ -16,7 +16,6 @@ type PropsType = {
 }
 
 const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeModal}) => {
-    console.log(initialValues.birthDate)
     const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues: {
         ...initialValues,
             birthDate: initialValues.birthDate

@@ -1,15 +1,13 @@
 import classes from './ProfileHeader.module.scss'
 import Avatar from '../../../common/Avatar/Avatar'
-import {NavLink} from 'react-router-dom'
 import Button from '../../../common/Button/Button'
 import editIcon from '../../../../assets/images/edit-icon.svg'
 import React, {useEffect, useState} from 'react'
 import {AvatarType} from '../../../../types/types'
-import {Area, Point} from 'react-easy-crop/types'
+import {Area} from 'react-easy-crop/types'
 import EditStatusForm from '../../../forms/EditStatusForm'
-import ImageUploadForm from "../../../ImageUploadForm/ImageUploadForm";
-import Popup from "reactjs-popup";
-import EditProfileForm from "../../../forms/EditProfileForm";
+import Popup from 'reactjs-popup'
+import EditProfileForm from '../../../forms/EditProfileForm'
 
 type PropsType = {
     owner?: boolean

@@ -55,10 +55,21 @@ const socket = (io) => {
                 text: message
             }
             console.log(`Message from ${user.username}: ${message}`)
-            console.log(`Dialog: ${dialogId}`)
-            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}})
+            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}, updated: new Date()})
 
-            // io.emit('server-message', newMessage)
+            const responseMessage = {
+                ...newMessage,
+                dialogId: dialogId,
+                author: {
+                    userId: newMessage.author.id,
+                    username: newMessage.author.username,
+                    firstName: newMessage.author.profileData.firstName,
+                    lastName: newMessage.author.profileData.lastName,
+                    avatar: newMessage.author.profileData.avatar
+                }
+            }
+
+            io.to(dialogId).emit('server-message', {dialogId, message: responseMessage})
         })
     })
 }

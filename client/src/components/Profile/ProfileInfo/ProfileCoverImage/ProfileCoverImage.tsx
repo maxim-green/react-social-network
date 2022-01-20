@@ -5,7 +5,7 @@ import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup'
 import ImageUploadForm from '../../../ImageUploadForm/ImageUploadForm'
-import {Area, Point} from 'react-easy-crop/types'
+import {Area} from 'react-easy-crop/types'
 
 type PropsTypes = {
     img: string | null
@@ -34,7 +34,7 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
             <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                 <ImageUploadForm aspect={7 / 2} onSubmit={onCoverImageSubmit} closeModal={closeModal} />
             </Popup>
-            <img className={classes.image} src={img ? img : defaultCoverImage}/>
+            <img className={classes.image} src={img ? img : defaultCoverImage} alt={''}/>
         </div>
     )
 }

@@ -8,7 +8,8 @@ const Message = new Schema({
 
 const schema = new Schema(
     {
-        creationDate: {type: Date, required: true, default: new Date()},
+        created: {type: Date, required: true, default: new Date()},
+        updated: {type: Date, required: true, default: new Date()},
         users: {type: [{ type: Types.ObjectId, ref: 'User' }], required: true, default: []},
         messages: {type: [Message], required: true, default: []}
     },

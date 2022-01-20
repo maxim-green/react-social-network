@@ -7,7 +7,8 @@ import Avatar from '../common/Avatar/Avatar'
 import {StateType} from '../../redux/store'
 import {useDispatch, useSelector} from 'react-redux'
 import {getDialogs, openDialog, sendMessage} from '../../redux/reducers/dialogs.reducer'
-import {NavLink, useParams} from 'react-router-dom'
+import {NavLink, Redirect, useParams} from 'react-router-dom'
+import {useAuthCheck} from '../../utils/hooks'
 
 type PropsType = {
     messages: Array<MessageType>
@@ -28,7 +29,8 @@ const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessage
                     />)}
                 </div>
                 <div className={classes.messages}>
-                    {messages.slice().reverse().map((message, index) => <Message key={index} message={message} authUser={authUser}/>)}
+                    {messages.slice().reverse().map((message, index) => <Message key={index} message={message}
+                                                                                 authUser={authUser}/>)}
                 </div>
                 <div className={classes.newMessageForm}>
                     <NewMessageForm onSubmit={onNewMessageSubmit}/>
@@ -41,9 +43,9 @@ const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessage
 type DialogButtonType = { username: string, firstName: string, avatar: AvatarType }
 const DialogButton: React.FC<DialogButtonType> = ({username, firstName, avatar}) => {
     return (
-            <NavLink to={`/dialogs/${username}`} className={classes.dialogButton} activeClassName={classes.active}>
-                    <Avatar size={'xs'} name={firstName} img={avatar.small}/>
-            </NavLink>
+        <NavLink to={`/dialogs/${username}`} className={classes.dialogButton} activeClassName={classes.active}>
+            <Avatar size={'xs'} name={firstName} img={avatar.small}/>
+        </NavLink>
     )
 }
 
@@ -65,10 +67,16 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
 const DialogsContainer: React.FC = () => {
     const {username}: { username: string } = useParams()
 
+    const dialogs = useSelector((state: StateType) => state.dialogs.dialogs.slice().sort((a, b) => {
+        const dateA = new Date(a.updated)
+        const dateB = new Date(b.updated)
+        if (dateA > dateB) return -1
+        if (dateA < dateB) return 1
+        return 0
+    }))
     const currentDialogId = useSelector((state: StateType) => state.dialogs.currentDialogId)
     const authUser = useSelector((state: StateType) => state.auth.username)
     const messages = useSelector((state: StateType) => state.dialogs.messages)
-    const dialogs = useSelector((state: StateType) => state.dialogs.dialogs)
     const dispatch = useDispatch()
 
     const onNewMessageSubmit = (message: string) => {
@@ -77,12 +85,19 @@ const DialogsContainer: React.FC = () => {
 
     useEffect(() => {
         dispatch(openDialog(username))
-        dispatch(getDialogs())
-    }, [username, dialogs])
+    }, [username, dispatch])
 
-    return (
-        <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs} authUser={authUser || ''}/>
-    )
+    useEffect(() => {
+        dispatch(getDialogs())
+    }, [dispatch])
+
+    const authorized = useAuthCheck()
+    if (!authorized) return <Redirect to={'/login'}/>
+
+    // if no username specified in route, then redirect to latest dialog
+    if (!username && dialogs.length !== 0) return <Redirect to={`/dialogs/${dialogs[0].companionUser.username}`}/>
+    return <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs}
+                    authUser={authUser || ''}/>
 }
 
 export default DialogsContainer

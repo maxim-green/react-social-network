@@ -77,12 +77,13 @@ const Sidebar: React.FC = ({children}) => {
 }
 
 const LayoutContainer: React.FC<PropsType> = (props) => {
+    const authorized = useSelector((state: StateType) => state.auth.authorized)
     const dispatch = useDispatch()
     const friends = useSelector((state: StateType) => state.users.friends)
 
     useEffect(() => {
-        dispatch(getFriends())
-    }, [])
+        if (authorized) dispatch(getFriends())
+    }, [dispatch, authorized])
 
     return  <Layout {...props} friends={friends}/>
 }

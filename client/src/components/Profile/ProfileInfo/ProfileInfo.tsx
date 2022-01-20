@@ -5,7 +5,7 @@ import {ProfileDataType} from '../../../api/profile.api'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'
 import ProfileInfoHeader from './ProfileHeader/ProfileHeader'
 import ProfileInfoData from './ProfileInfoData/ProfileInfoData'
-import {Area, Point} from 'react-easy-crop/types'
+import {Area} from 'react-easy-crop/types'
 
 type PropsType = {
     authorized: boolean,
