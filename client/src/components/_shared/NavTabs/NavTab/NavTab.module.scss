@@ -1,0 +1,18 @@
+@import "../../../../assets/styles/variables";
+
+.tab {
+  flex-grow: 1;
+  text-align: center;
+  a {
+    cursor: pointer;
+  }
+  & + & {
+    border-left: 1px solid $light-grey-2;
+  }
+  .active {
+    color: $dark-grey;
+    border-bottom: none;
+    cursor: auto;
+  }
+}
+

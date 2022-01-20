@@ -1,6 +1,12 @@
 import React from 'react'
-import Form, {Button, InputCheckbox, Input, InputPassword, InputRange, InputDate, InputFile} from "./forms/Form/Form";
-import Card from "./common/Card/Card";
+import Form, {Button} from "./_shared/Form/Form";
+import Card from "./_shared/Card/Card";
+import {Input} from './_shared/Input/Input'
+import {InputPassword} from './_shared/Input/InputPassword'
+import {InputCheckbox} from './_shared/Input/InputCheckbox'
+import {InputRange} from './_shared/Input/InputRange'
+import {InputDate} from './_shared/Input/InputDate'
+import {InputFile} from './_shared/Input/InputFile'
 
 const TestPage: React.FC = () => {
     return(

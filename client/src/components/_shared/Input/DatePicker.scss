@@ -1,0 +1,83 @@
+@import '../../../assets/styles/variables';
+
+.react-datepicker-wrapper, .react-datepicker__input-container, .react-datepicker__input-container input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.react-datepicker__input-container {
+
+}
+
+.react-datepicker__input-container input {
+  padding: 14px 18px;
+  border: none;
+  border-radius: $ui-border-radius;
+  font-size: 16px;
+  line-height: 16px;
+  color: $dark-grey-2;
+  transition: $ui-transition;
+  @include form-focus()
+}
+
+
+.react-datepicker {
+  border-radius: 5px;
+  border: 1px solid $light-grey-2;
+  box-shadow: $card-shadow;
+
+  &__triangle {
+    left: -200px !important;
+    &::before, &::after {
+    }
+  }
+
+  &__header {
+    padding: 15px 0;
+  }
+
+  &__navigation {
+    width: 35px;
+    height: 35px;
+  }
+  &__navigation-icon {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__current-month {
+    font-size: 18px;
+    letter-spacing: .5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  &__day-name, &__day {
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    color: $dark-grey-2;
+  }
+
+  &__day {
+    border-radius: $ui-border-radius;
+    transition: $ui-transition;
+    @include ui-button-colors($clr-text, $clr-text-hover, $clr-text-active, $clr-font-dark);
+
+    &--selected {
+      @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
+    }
+  }
+
+  &--today {
+    border: 1px solid $dark-grey-2;
+  }
+}
+
+
+

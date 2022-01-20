@@ -1,4 +1,4 @@
-@import "../../variables.module";
+@import "../../assets/styles/variables";
 
 .dialogs {
   height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});

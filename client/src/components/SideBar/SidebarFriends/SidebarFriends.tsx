@@ -1,7 +1,7 @@
-import Card from '../../common/Card/Card'
+import Card from '../../_shared/Card/Card'
 import React from 'react'
 import classes from './SidebarFriends.module.scss'
-import Avatar from '../../common/Avatar/Avatar'
+import Avatar from '../../_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
 import {UserType} from '../../../types/types'
 

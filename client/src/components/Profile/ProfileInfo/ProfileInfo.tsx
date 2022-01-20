@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '../../common/Card/Card'
+import Card from '../../_shared/Card/Card'
 import 'reactjs-popup/dist/index.css'
 import {ProfileDataType} from '../../../api/profile.api'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'

@@ -1,8 +1,8 @@
 import classes from "./UserControl.module.scss";
-import Avatar from "../../common/Avatar/Avatar";
+import Avatar from "../../_shared/Avatar/Avatar";
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
-import Button from "../../common/Button/Button";
+import Button from "../../_shared/Button/Button";
 
 type PropsType = {
     username: string | null

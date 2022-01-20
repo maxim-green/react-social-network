@@ -1,10 +1,10 @@
 import classes from './UserItem.module.scss'
 import {NavLink} from 'react-router-dom'
-import Avatar from '../../common/Avatar/Avatar'
+import Avatar from '../../_shared/Avatar/Avatar'
 import React from 'react'
 import gearIcon from '../../../assets/images/gear-icon.svg'
 import sendMessageIcon from '../../../assets/images/send-message-icon.svg'
-import Button from '../../common/Button/Button'
+import Button from '../../_shared/Button/Button'
 import {UserType} from '../../../types/types'
 
 type PropsType = {

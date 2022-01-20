@@ -1,10 +1,10 @@
 import classes from './ProfileCoverImage.module.scss'
-import Button from '../../../common/Button/Button'
+import Button from '../../../_shared/Button/Button'
 import editCoverImageIcon from '../../../../assets/images/edit-cover-image-icon.svg'
 import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup'
-import ImageUploadForm from '../../../ImageUploadForm/ImageUploadForm'
+import ImageUploadForm from '../../../_forms/ImageUploadForm/ImageUploadForm'
 import {Area} from 'react-easy-crop/types'
 
 type PropsTypes = {

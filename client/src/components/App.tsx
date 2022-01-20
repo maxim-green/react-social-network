@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import LoginPageContainer from './pages/LoginPage'
-import RegistrationPageContainer from './pages/RegistrationPage'
+import LoginPageContainer from './_pages/LoginPage'
+import RegistrationPageContainer from './_pages/RegistrationPage'
 import {useDispatch, useSelector} from 'react-redux'
-import ProfilePage from './pages/ProfilePage'
-import UsersPage from './pages/UsersPage'
+import ProfilePage from './_pages/ProfilePage'
+import UsersPage from './_pages/UsersPage'
 import {deinitializeApp, initializeApp} from '../redux/reducers/app.reducer'
 import {StateType} from '../redux/store'
 import Layout from './Layout/Layout'
 import TestPage from './TestPage'
-import DialogsPage from "./pages/DialogsPage";
-import Spinner from "./common/Spinner/Spinner";
+import DialogsPage from "./_pages/DialogsPage";
+import Spinner from "./_shared/Spinner/Spinner";
 
 type PropsType = {
     authorized: boolean,

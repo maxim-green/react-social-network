@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './ProfilePosts.module.scss'
-import NewPostInput from '../../NewPostInput/NewPostInput'
+import NewPostInputForm from '../../_forms/NewPostInputForm/NewPostInputForm'
 import Post from '../../Post/Post'
 import {NewPostType, PostType} from '../../../types/types'
 import moment from 'moment'
@@ -28,7 +28,7 @@ const ProfilePosts: React.FC<PropsType> = ({
 
     return (
         <>
-            {isAuthorizedUserProfile && <NewPostInput isAddPostPending={isAddPostPending} onSubmit={onNewPostSubmit}/>}
+            {isAuthorizedUserProfile && <NewPostInputForm isAddPostPending={isAddPostPending} onSubmit={onNewPostSubmit}/>}
             <div className={classes.posts}>
                 {
                     posts.slice().reverse().map(post => <Post

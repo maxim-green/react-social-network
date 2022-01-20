@@ -1,4 +1,4 @@
-import Card from '../../common/Card/Card'
+import Card from '../../_shared/Card/Card'
 import React from 'react'
 import classes from './SidebarNavigation.module.scss'
 import {NavLink} from 'react-router-dom'

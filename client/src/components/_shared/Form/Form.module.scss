@@ -1,0 +1,144 @@
+@import "../../../assets/styles/variables";
+
+.form {
+  width: 100%;
+}
+
+.formRow {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  margin-bottom: 15px;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.error {
+  color: $error;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.success {
+  color: $success;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.formItem {
+  max-width: 100%;
+  flex-shrink: 0;
+  flex-grow: 1;
+  &.disabled {
+    .formItemInfo {
+      opacity: .5;
+    }
+  }
+  &.formItemCheckbox {
+    label {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: left;
+    }
+  }
+  .formItemInfo {
+    display: flex;
+    justify-content: left;
+    flex-grow: 1;
+    padding: 0 4px;
+    @include ui-form-item-label-font
+  }
+  .formItemRequiredMark {
+    margin-right: 2px;
+    color: $error;
+  }
+  .formItemLabel {
+    color: $dark-grey-2;
+  }
+  .formItemError {
+    margin-left: auto;
+    color: $error;
+  }
+}
+
+.button {
+  position: relative;
+  border: none;
+  border-radius: $ui-border-radius;
+  cursor: pointer;
+  transition: $ui-transition;
+  @include ui-button-font;
+  @include form-focus;
+  &.spinner {
+    box-shadow: none;
+    &:disabled {
+      opacity: 1;
+    }
+  }
+  &.primary {
+    @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
+  }
+  &.secondary {
+    @include ui-button-colors($clr-secondary, $clr-secondary-hover, $clr-secondary-active, $clr-font-dark);
+  }
+  &.neutral {
+    @include ui-button-colors($clr-neutral, $clr-neutral-hover, $clr-neutral-active, $clr-font-dark);
+  }
+  &.text {
+    @include ui-button-colors($clr-text, $clr-text-hover, $clr-text-active, $clr-font-dark);
+  }
+  &.cancel {
+    @include ui-button-colors($clr-cancel, $clr-cancel-hover, $clr-cancel-active, $clr-font-light);
+  }
+  &.small {
+    padding: 5px 10px;
+    .buttonContent {
+      height: 20px;
+    }
+  }
+  &.medium {
+    padding: 6px 14px;
+    .buttonContent {
+      height: 25px;
+    }
+  }
+  &.large {
+    padding: 8px 20px;
+    .buttonContent {
+      height: 30px;
+    }
+  }
+  &:disabled {
+    opacity: 50%;
+  }
+  .buttonSpinner {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.button, .input, .formItem {
+  & + & {
+    margin-left: 10px;
+  }
+}
