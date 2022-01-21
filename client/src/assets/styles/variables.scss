@@ -12,8 +12,8 @@ $light-grey-2: #E8E9E8;
 $light-blue-1: #7ECEFB;
 $light-blue-2: #BEE7FD;
 
-
 // colors
+  $clr-appbar: $accent;
   $clr-background: $light-grey-1;
   $clr-font-dark: #373C42;
   $clr-font-link: $accent;
@@ -90,11 +90,12 @@ $ui-border-radius: 5px;
 
 // shadows
 $card-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
-$bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
+$bar-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
+//$bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
 
 // global sizes
-$appbar-height: 60px;
-$container-width: 980px;
+$appbar-height: 40px;
+$container-width: 920px;
 $container-padding: 10px;
 $components-gap: 10px;
 $sidebar-width: 220px;

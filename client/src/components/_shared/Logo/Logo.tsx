@@ -1,5 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import classes from './Logo.module.scss'
 
 type PropsType = {
     src: string
@@ -8,9 +9,11 @@ type PropsType = {
 
 const Logo: React.FC<PropsType> = ({src}) => {
     return (
-        <NavLink to='/'>
-            <img src={src} alt="Bind"/>
-        </NavLink>
+        <div className={classes.logo}>
+            <NavLink to='/'>
+                <img src={src} alt="Bind"/>
+            </NavLink>
+        </div>
     )
 }
 

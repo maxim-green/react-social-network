@@ -8,18 +8,23 @@ import LoginForm from '../_forms/LoginForm'
 import SidebarNavigation from '../SideBar/SidebarNavigation/SidebarNavigation'
 import SidebarFriends from '../SideBar/SidebarFriends/SidebarFriends'
 import {getFriends} from '../../redux/reducers/users.reducer'
-import {UserType} from '../../types/types'
+import {AvatarType, UserType} from '../../types/types'
+import {logout} from '../../redux/reducers/auth.reducer'
 
 type PropsType = {
     sidebar?: boolean
+    authUserName: string | null
+    authUserAvatar?: AvatarType | null
+    friends: Array<UserType>
+    onLogout: () => void
 }
 
-const Layout: React.FC<PropsType & {friends: Array<UserType>}> = ({children, sidebar= false, friends}) => {
+const Layout: React.FC<PropsType> = ({children, sidebar= false, friends, authUserName, authUserAvatar, onLogout}) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     return (
         <div className={classes.layout}>
             <AppBar>
-                <Header/>
+                <Header authorized={authorized} username={authUserName} avatar={authUserAvatar?.small} logout={onLogout}/>
             </AppBar>
             <Main>
                 {sidebar && <Sidebar>
@@ -76,16 +81,22 @@ const Sidebar: React.FC = ({children}) => {
     )
 }
 
-const LayoutContainer: React.FC<PropsType> = (props) => {
+const LayoutContainer: React.FC<{ sidebar?: boolean }> = (props) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const dispatch = useDispatch()
     const friends = useSelector((state: StateType) => state.users.friends)
+    const authUserName = useSelector((state: StateType) => state.auth.username)
+    const authUserAvatar = useSelector((state: StateType) => state.auth.profile?.avatar)
 
     useEffect(() => {
         if (authorized) dispatch(getFriends())
     }, [dispatch, authorized])
 
-    return  <Layout {...props} friends={friends}/>
+    const onLogout = () => {
+        dispatch(logout())
+    }
+
+    return  <Layout {...props} friends={friends} authUserName={authUserName} authUserAvatar={authUserAvatar} onLogout={onLogout}/>
 }
 
 export default LayoutContainer

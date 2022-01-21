@@ -3,11 +3,12 @@ import Avatar from "../../_shared/Avatar/Avatar";
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import Button from '../../_shared/Button/Button'
+import colors from '../../../assets/styles/exports.module.scss'
 
 
 type PropsType = {
     username: string | null
-    avatar: string | null
+    avatar?: string | null
     logout: () => void
 }
 
@@ -20,7 +21,7 @@ const UserControl: React.FC<PropsType> = (props) => {
 
     return (
         <div className={classes.userControl}>
-            <NavLink to="/profile/1"><Avatar img={props.avatar} contextBgColor="#373C42" online size='sm'/></NavLink>
+            <NavLink to={`/profile/${props.username}`}><Avatar img={props.avatar} contextBgColor={colors.accent} online size='xs'/></NavLink>
             <div className={classes.userControlDropdown}>
                 <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
                 {isOpened && <div className={classes.userControlList}>

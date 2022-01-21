@@ -1,4 +1,5 @@
 import classes from "./Header.module.scss";
+import colors from '../../assets/styles/exports.module.scss'
 import logoImg from "../../assets/images/logo.svg";
 import searchIcon from "../../assets/images/search.svg";
 import Logo from "../_shared/Logo/Logo";
@@ -10,23 +11,14 @@ import newFriendsIcon from '../../assets/images/notifications-friends.svg'
 import newMessagesIcon from '../../assets/images/notifications-messages.svg'
 import notificationsIcon from '../../assets/images/notifications-bell.svg'
 import {NavLink} from "react-router-dom";
-import {connect} from "react-redux";
-import {logout} from "../../redux/reducers/auth.reducer";
-import {StateType} from "../../redux/store";
+import {PersonPlusFill, ChatLeftTextFill, BellFill} from 'react-bootstrap-icons'
 
-type MapStatePropsType = {
+type PropsType = {
     authorized: boolean
     username: string | null
-    avatar: string | null
-}
-
-type MapDispatchPropsType = {
+    avatar?: string | null
     logout: () => void
 }
-
-type NativePropsType = {}
-
-type PropsType = MapStatePropsType & MapDispatchPropsType & NativePropsType
 
 const Header: React.FC<PropsType> = (props) => {
     return (
@@ -34,32 +26,19 @@ const Header: React.FC<PropsType> = (props) => {
             <div className={classes.row}>
                 <Logo src={logoImg}/>
                 <div className={classes.searchInput}>
-                    <SearchInput icon={searchIcon}/>
+                    {/*<SearchInput icon={searchIcon}/>*/}
                 </div>
                 {props.authorized && <div className={classes.userControl}>
                     <UserControl username={props.username} avatar={props.avatar} logout={props.logout}/>
                 </div>}
                 {props.authorized && <div className={classes.notificationArea}>
-                    <NavLink to='/users/friends'><IconWithCounter src={newFriendsIcon} count={5}/></NavLink>
-                    <NavLink to='/dialogs'><IconWithCounter src={newMessagesIcon} count={3}/></NavLink>
-                    <NavLink to='/notifications'><IconWithCounter src={notificationsIcon} count={15}/></NavLink>
+                    <NavLink to='/users/friends'><IconWithCounter count={5}><PersonPlusFill color={colors.white} size={18}/></IconWithCounter></NavLink>
+                    <NavLink to='/dialogs'><IconWithCounter count={3}><ChatLeftTextFill color={colors.white} size={18}/></IconWithCounter></NavLink>
+                    <NavLink to='/notifications'><IconWithCounter count={15}><BellFill color={colors.white} size={18}/></IconWithCounter></NavLink>
                 </div>}
             </div>
         </div>
     )
 }
 
-const HeaderContainer: React.FC<PropsType> = (props) => <Header {...props} />
-
-const mapStateToProps = (state: StateType): MapStatePropsType => {
-    return {
-        authorized: state.auth.authorized,
-        username: state.auth.username,
-        avatar: state.profile.data.avatar?.small
-    }
-}
-
-export default connect<MapStatePropsType, MapDispatchPropsType, NativePropsType, StateType>(
-    mapStateToProps,
-    {logout}
-)(HeaderContainer)
+export default Header

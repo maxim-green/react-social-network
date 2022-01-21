@@ -1,20 +1,22 @@
 @import '../../../assets/styles/variables';
 .userControl {
-  margin: 0 50px;
+  position: relative;
+  margin: 0 20px;
+  max-width: 150px;
   display: flex;
   align-items: center;
 }
 
 .userControlDropdown {
-  position: relative;
+  width: 100%;
 }
 
 .userControlUsername {
-  position: relative;
   margin-left: 4px;
   padding-right: 20px;
   color: $white;
-  font-size: 18px;
+  font-size: 14px;
+  letter-spacing: .7px;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -33,9 +35,10 @@
 }
 
 .userControlList {
-  top: 35px;
-  left: 16px;
-  right: 0;
+  width: 150px;
+  top: 45px;
+  right: 50%;
+  transform: translateX(50%);
   border: 1px solid $light-grey-2;
   border-radius: 5px;
   transform-origin: top;
@@ -49,6 +52,6 @@
     margin: 0;
   }
   li {
-    padding: 8px 16px;
+    //padding: 8px 16px;
   }
 }
