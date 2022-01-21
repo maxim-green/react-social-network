@@ -1,5 +1,5 @@
 import React from 'react'
-import Form, {Button} from '../_shared/Form/Form'
+import Form from '../_shared/Form/Form'
 import {ProfileDataType} from '../../api/profile.api'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
@@ -10,6 +10,7 @@ import {Controller, useForm} from "react-hook-form";
 import Spinner from "../_shared/Spinner/Spinner";
 import {Input} from '../_shared/Input/Input'
 import {InputDate} from '../_shared/Input/InputDate'
+import Button from '../_shared/Button/Button'
 
 type PropsType = {
     initialValues: ProfileDataType

@@ -56,11 +56,12 @@ const Avatar: React.FC<PropsType> = ({
                 </Popup>
             </div>}
 
-            <img className={classes.image} src={img || defaultAvatarImage} alt="avatar"
-                 style={{borderColor: contextBgColor || 'white'}}/>
-
-            {online &&
-            <div className={classes.onLineIndicator} style={{borderColor: contextBgColor || 'white'}}/>}
+            <div className={classes.image}>
+                <img  src={img || defaultAvatarImage} alt="avatar"
+                     style={{borderColor: contextBgColor || 'white'}}/>
+                {online &&
+                <div className={classes.onLineIndicator} style={{borderColor: contextBgColor || 'white'}}/>}
+            </div>
 
             {name && <div className={classes.name}>{name}</div>}
         </div>

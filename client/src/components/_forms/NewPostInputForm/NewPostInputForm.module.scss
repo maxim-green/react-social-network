@@ -3,13 +3,13 @@
 
   textarea {
     font-size: 18px;
-    color: $mid-grey;
+    color: $mid-grey-1;
     padding: 10px;
     background-color: transparent;
     outline: none;
 
     &::placeholder {
-      color: rgba($mid-grey, .5);
+      color: rgba($mid-grey-1, .5);
     }
   }
 }
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 8px;
+  padding: 0 8px;
   height: 37px;
 }
 
@@ -26,7 +26,7 @@
   font-size: 16px;
   padding: 8px 18px;
   background: none;
-  color: $mid-grey;
+  color: $mid-grey-1;
   border: none;
   border-left: 1px solid $light-grey-2;
   outline: none;

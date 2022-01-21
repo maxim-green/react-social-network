@@ -1,13 +1,13 @@
 import classes from './ProfileHeader.module.scss'
 import Avatar from '../../../_shared/Avatar/Avatar'
-import Button from '../../../_shared/Button/Button'
-import editIcon from '../../../../assets/images/edit-icon.svg'
 import React, {useEffect, useState} from 'react'
 import {AvatarType} from '../../../../types/types'
 import {Area} from 'react-easy-crop/types'
 import EditStatusForm from '../../../_forms/EditStatusForm'
 import Popup from 'reactjs-popup'
 import EditProfileForm from '../../../_forms/EditProfileForm'
+import {PencilFill} from 'react-bootstrap-icons'
+import Button from '../../../_shared/Button/Button'
 
 type PropsType = {
     owner?: boolean
@@ -52,9 +52,6 @@ const ProfileHeader: React.FC<PropsType> = ({
     }
 
     const [open, setOpen] = useState(false)
-    // useEffect(() => {
-    //     setOpen(false)
-    // }, [img])
     const openModal = () => setOpen(true)
     const closeModal = () => setOpen(false)
 
@@ -75,7 +72,10 @@ const ProfileHeader: React.FC<PropsType> = ({
             </div>
             <div className={classes.editProfile}>
                 {owner && <div>
-                    <Button icon={editIcon} caption="Edit profile" variant="secondary" onClick={openModal}/>
+                    <Button type="secondary" onClick={openModal} size={"small"}>
+                        <Button.Icon><PencilFill width={12} height={12}/></Button.Icon>
+                        <Button.Text>Edit profile</Button.Text>
+                    </Button>
                     <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                         <EditProfileForm closeModal={closeModal}/>
                     </Popup>

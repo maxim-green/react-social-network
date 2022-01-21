@@ -2,7 +2,8 @@ import classes from "./UserControl.module.scss";
 import Avatar from "../../_shared/Avatar/Avatar";
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
-import Button from "../../_shared/Button/Button";
+import Button from '../../_shared/Button/Button'
+
 
 type PropsType = {
     username: string | null
@@ -24,8 +25,8 @@ const UserControl: React.FC<PropsType> = (props) => {
                 <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
                 {isOpened && <div className={classes.userControlList}>
                     <ul>
-                        <li><NavLink to='/settings'><Button variant="text" caption="Settings"/></NavLink></li>
-                        <li><Button variant="text" caption="Logout" onClick={() => props.logout()}/></li>
+                        <li><NavLink to='/settings'><Button type="text">Settings</Button></NavLink></li>
+                        <li><Button type="text" onClick={() => props.logout()}>Logout</Button></li>
                     </ul>
                 </div>}
             </div>

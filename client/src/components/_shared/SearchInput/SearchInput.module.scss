@@ -8,7 +8,7 @@
   background-color: $dark-grey-2;
   border-radius: 20px;
   width: 100%;
-  color: $mid-grey;
+  color: $mid-grey-1;
   font-size: 16px;
 
   button, input {
@@ -28,6 +28,6 @@
 
   }
   &::placeholder {
-    color: $mid-grey;
+    color: $mid-grey-1;
   }
 }

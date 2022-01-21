@@ -54,7 +54,7 @@
   &.sm {
     width: 50px;
     .onLineIndicator {
-      bottom: 3px;
+      bottom: -1px;
       right: 0;
       width: 14px;
       height: 14px;
@@ -64,8 +64,8 @@
   &.md {
     width: 76px;
     .onLineIndicator {
-      bottom: 0;
-      right: 0;
+      bottom: 3px;
+      right: 1px;
       width: 16px;
       height: 16px;
     }
@@ -80,8 +80,14 @@
       height: 18px;
     }
     .image {
-      border: 5px solid white;
+      img {
+        border: 5px solid white;
+      }
     }
+  }
+
+  .image {
+    position: relative;
   }
 
   img {
@@ -95,7 +101,7 @@
 .onLineIndicator {
   position: absolute;
   border-radius: 50%;
-  background-color: $green-success;
+  background-color: $success;
   border: 3px solid white;
   z-index: 3;
 }

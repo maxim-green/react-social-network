@@ -1,5 +1,5 @@
 import React from 'react'
-import Form, {Button} from "./_shared/Form/Form";
+import Form from "./_shared/Form/Form";
 import Card from "./_shared/Card/Card";
 import {Input} from './_shared/Input/Input'
 import {InputPassword} from './_shared/Input/InputPassword'
@@ -7,6 +7,7 @@ import {InputCheckbox} from './_shared/Input/InputCheckbox'
 import {InputRange} from './_shared/Input/InputRange'
 import {InputDate} from './_shared/Input/InputDate'
 import {InputFile} from './_shared/Input/InputFile'
+import Button from './_shared/Button/Button'
 
 const TestPage: React.FC = () => {
     return(

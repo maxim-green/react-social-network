@@ -1,23 +1,22 @@
 $white: #FFFFFF;
 $black: #000000;
-$dark-grey: #373C42;
-$dark-grey-2: #54595D;
-$mid-grey: #909BA4;
-$accent: #2086C4;
-$light-blue: #7ECEFB;
-$light-blue-2: #BEE7FD;
-$light-grey-2: #E8E9E8;
-$light-grey-1: #F5F7F6;
 $accent: #2086C4;
 $error: #F2280C;
-$green-success: #4EE83E;
 $success: #4EE83E;
 
-$background: $light-grey-1;
+$dark-grey-1: #373C42;
+$dark-grey-2: #54595D;
+$mid-grey-1: #909BA4;
+$light-grey-1: #F5F7F6;
+$light-grey-2: #E8E9E8;
+$light-blue-1: #7ECEFB;
+$light-blue-2: #BEE7FD;
+
 
 // colors
+  $clr-background: $light-grey-1;
   $clr-font-dark: #373C42;
-$clr-font-link: $accent;
+  $clr-font-link: $accent;
   $clr-font-light: #FFFFFF;
 
   $clr-primary: #2086C4;
@@ -35,10 +34,10 @@ $clr-font-link: $accent;
   $clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
   $clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
 
-  $clr-text: #FFFFFF;
+  $clr-text: transparent;
   $clr-text-border: darken($clr-neutral, 5%);
-  $clr-text-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
-  $clr-text-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
+  $clr-text-hover: transparent;
+  $clr-text-active: transparent;
 
   $clr-cancel: #F2280C;
   $clr-cancel-border: darken($clr-cancel, 5%);
@@ -46,7 +45,7 @@ $clr-font-link: $accent;
   $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
 // ui
-$ui-transition: .1s;
+$ui-transition: .2s;
 $ui-border-radius: 5px;
 
 @mixin ui-form-item-label-font {
@@ -61,20 +60,21 @@ $ui-border-radius: 5px;
 }
 @mixin form-focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba($dark-grey, 0) inset;
+  box-shadow: 0 0 0 2px rgba($dark-grey-2, 0) inset;
   &:focus {
-    box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
   }
   &:focus-visible {
-    box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
   }
 }
 @mixin ui-button-colors($bg-color, $hover-bg-color, $active-bg-color, $color: black, $hover-color: $color,  $active-color: $color) {
   color: $color;
   background-color: $bg-color;
+  transition: $ui-transition;
   &:hover {
     color: $hover-color;
-    background-color: $bg-color;
+    background-color: $hover-bg-color;
   }
   &:active {
     color: $active-color;

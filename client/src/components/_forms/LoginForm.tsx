@@ -6,11 +6,11 @@ import {ThunkDispatch} from 'redux-thunk'
 import {StateType} from '../../redux/store'
 import {AuthActionType} from '../../redux/reducers/auth.reducer'
 import Form from "../_shared/Form/Form";
-import {Button} from "../_shared/Form/Form";
 import {useForm} from "react-hook-form";
 import {Input} from '../_shared/Input/Input'
 import {InputPassword} from '../_shared/Input/InputPassword'
 import {InputCheckbox} from '../_shared/Input/InputCheckbox'
+import Button from '../_shared/Button/Button'
 
 type PropsType = {
     compact?: boolean

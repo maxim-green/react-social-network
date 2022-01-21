@@ -2,10 +2,10 @@ import classes from './UserItem.module.scss'
 import {NavLink} from 'react-router-dom'
 import Avatar from '../../_shared/Avatar/Avatar'
 import React from 'react'
-import gearIcon from '../../../assets/images/gear-icon.svg'
-import sendMessageIcon from '../../../assets/images/send-message-icon.svg'
-import Button from '../../_shared/Button/Button'
 import {UserType} from '../../../types/types'
+import Button from '../../_shared/Button/Button'
+import {ChatLeftTextFill, GearFill} from 'react-bootstrap-icons'
+import colors from '../../../assets/styles/exports.module.scss'
 
 type PropsType = {
     authorized: boolean
@@ -69,7 +69,7 @@ const UserItem: React.FC<PropsType> = ({
     return (
         <div className={classes.userItem}>
             <div className={classes.avatar}>
-                <NavLink to={`/profile/${user.username}`}><Avatar img={user.avatar && user.avatar.large} online
+                <NavLink to={`/profile/${user.username}`}><Avatar img={user.avatar && user.avatar.small} online
                                                                    size='md'/></NavLink>
             </div>
             <div className={classes.info}>
@@ -83,41 +83,47 @@ const UserItem: React.FC<PropsType> = ({
             <div className={classes.controls}>
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
-                        <NavLink to={`/dialogs/${user.username}`}><Button icon={sendMessageIcon} variant="neutral"/></NavLink>
+                        <NavLink to={`/dialogs/${user.username}`}>
+                            <Button type="text" size="small" style={{padding: '0 4px'}}>
+                                <Button.Icon><ChatLeftTextFill size={16} color={colors.midGrey1}/></Button.Icon>
+                            </Button>
+                        </NavLink>
                     </div>
                     <div className={classes.button}>
-                        <Button icon={gearIcon} variant="neutral"/>
+                        <Button type="text" size="small" style={{padding: '0 4px'}}>
+                            <Button.Icon><GearFill size={16} color={colors.midGrey1}/></Button.Icon>
+                        </Button>
                     </div>
                 </div>}
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
                         {!isIncomingFriendshipRequest && !isOutgoingFriendshipRequest && <Button
-                            caption={!user.isFriend ? 'Add to friends' : 'Remove from friends'}
-                            variant="neutral"
+                            type="neutral"
+                            size="small"
                             onClick={addFriendButtonClickHandler}
-                        />}
+                        ><Button.Text>{!user.isFriend ? 'Add to friends' : 'Remove from friends'}</Button.Text></Button>}
                         {isIncomingFriendshipRequest && <Button
-                            caption={'Accept'}
-                            variant="neutral"
+                            type="neutral"
+                            size="small"
                             onClick={acceptFriendshipRequestButtonClickHandler}
-                        />}
+                        ><Button.Text>Accept</Button.Text></Button>}
                         {isIncomingFriendshipRequest && <Button
-                            caption={'Decline'}
-                            variant="neutral"
+                            type="neutral"
+                            size="small"
                             onClick={declineFriendshipRequestButtonClickHandler}
-                        />}
+                        ><Button.Text>Decline</Button.Text></Button>}
                         {isOutgoingFriendshipRequest && <Button
-                            caption={'Cancel'}
-                            variant="neutral"
+                            type="neutral"
+                            size="small"
                             onClick={cancelFriendshipRequestButtonClickHandler}
-                        />}
+                        ><Button.Text>Cancel</Button.Text></Button>}
                     </div>
                     <div className={classes.button}>
                         <Button
-                            caption={!user.isSubscription ? 'Follow' : 'Unfollow'}
-                            variant="neutral"
+                            type="neutral"
+                            size="small"
                             onClick={followButtonClickHandler}
-                        />
+                        ><Button.Text>{!user.isSubscription ? 'Follow' : 'Unfollow'}</Button.Text></Button>
                     </div>
                 </div>}
             </div>

@@ -1,4 +1,4 @@
-import Form, {Button} from '../../_shared/Form/Form'
+import Form from '../../_shared/Form/Form'
 import React, {useEffect, useState} from 'react'
 import {Area, Point} from 'react-easy-crop/types'
 import Slider from "rc-slider";
@@ -6,6 +6,7 @@ import classes from './ImageUploadForm.module.scss'
 import Cropper from 'react-easy-crop'
 import {Controller, useForm} from "react-hook-form";
 import {InputFile} from '../../_shared/Input/InputFile'
+import Button from '../../_shared/Button/Button'
 
 
 type PropsType = {

@@ -1,11 +1,11 @@
 import classes from './ProfileCoverImage.module.scss'
-import Button from '../../../_shared/Button/Button'
-import editCoverImageIcon from '../../../../assets/images/edit-cover-image-icon.svg'
 import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup'
 import ImageUploadForm from '../../../_forms/ImageUploadForm/ImageUploadForm'
 import {Area} from 'react-easy-crop/types'
+import {CameraFill} from 'react-bootstrap-icons'
+import Button from '../../../_shared/Button/Button'
 
 type PropsTypes = {
     img: string | null
@@ -29,7 +29,10 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
     return (
         <div className={classes.coverImage}>
             <div className={classes.editCoverImageButton}>
-                {owner && <Button icon={editCoverImageIcon} caption="Edit Cover Image" variant="neutral" onClick={openModal}/>}
+                {owner && <Button type="neutral" onClick={openModal} size={"small"}>
+                    <Button.Icon><CameraFill width={15} height={15}/></Button.Icon>
+                    <Button.Text>Edit Cover Image</Button.Text>
+                </Button>}
             </div>
             <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                 <ImageUploadForm aspect={7 / 2} onSubmit={onCoverImageSubmit} closeModal={closeModal} />
