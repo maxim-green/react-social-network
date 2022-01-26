@@ -1,17 +1,12 @@
-import classes from "./Header.module.scss";
+import classes from './Header.module.scss'
 import colors from '../../assets/styles/exports.module.scss'
-import logoImg from "../../assets/images/logo.svg";
-import searchIcon from "../../assets/images/search.svg";
-import Logo from "../_shared/Logo/Logo";
-import SearchInput from "../_shared/SearchInput/SearchInput";
-import UserControl from "./UserControl/UserControl";
-import React from "react";
-import IconWithCounter from "../_shared/IconWithCounter/IconWithCounter";
-import newFriendsIcon from '../../assets/images/notifications-friends.svg'
-import newMessagesIcon from '../../assets/images/notifications-messages.svg'
-import notificationsIcon from '../../assets/images/notifications-bell.svg'
-import {NavLink} from "react-router-dom";
-import {PersonPlusFill, ChatLeftTextFill, BellFill} from 'react-bootstrap-icons'
+import logoImg from '../../assets/images/logo.svg'
+import Logo from '../_shared/Logo/Logo'
+import UserControl from './UserControl/UserControl'
+import React from 'react'
+import IconWithCounter from '../_shared/IconWithCounter/IconWithCounter'
+import {NavLink} from 'react-router-dom'
+import {BellFill, ChatLeftTextFill, PersonPlusFill} from 'react-bootstrap-icons'
 
 type PropsType = {
     authorized: boolean

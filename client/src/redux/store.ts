@@ -2,6 +2,7 @@ import {applyMiddleware, combineReducers, createStore, Action} from 'redux'
 import {AuthActionType, authReducer} from './reducers/auth.reducer'
 
 import profileReducer, {ProfileActionType} from './reducers/profile.reducer'
+import postsReducer, {PostsActionType} from './reducers/posts.reducer'
 import {AppActionType, appReducer} from './reducers/app.reducer'
 import {UsersActionType, usersReducer} from './reducers/users.reducer'
 import thunkMiddleware, {ThunkAction} from 'redux-thunk'
@@ -11,7 +12,7 @@ import {dialogsReducer} from './reducers/dialogs.reducer'
 export type InferActionsTypes<T> = T extends { [key: string]: infer U } ? U : never
 
 // includes all action types from all reducer files
-export type ActionType = AppActionType | AuthActionType | ProfileActionType | UsersActionType
+export type ActionType = AppActionType | AuthActionType | ProfileActionType | UsersActionType | PostsActionType
 export type AsyncThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionType>
 export type ThunkType<A extends Action> = ThunkAction<Promise<void>, StateType, unknown, A>
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     users: usersReducer,
-    dialogs: dialogsReducer
+    posts: postsReducer,
+    dialogs: dialogsReducer,
 })
 
 type RootReducerType = typeof rootReducer   // get root reducer type that returns app state

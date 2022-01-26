@@ -33,6 +33,16 @@ router.get('/', async (req, res) => {
     }
 })
 
+// /api/posts/id/:postId
+router.get('/id/:postId', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId)
+        res.status(200).json({resultCode: 0, message: "Success", data: { post }})
+    } catch (e) {
+        res.status(500).json({resultCode: 1, message: "Something went wrong :("})
+    }
+})
+
 // /api/posts/:userId
 router.get('/:username', async (req, res) => {
     try {

@@ -2,8 +2,6 @@ import {AvatarType, FormDataType, PostType} from '../../types/types'
 import {profileApi, ProfileDataType} from '../../api/profile.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
-import {postsApi} from '../../api/posts.api'
-import {authActions, AuthActionType} from './auth.reducer'
 
 // INITIAL STATE
 const initialState = {
@@ -152,39 +150,6 @@ export const updateCoverImage = (formData: FormDataType): ThunkType<ProfileActio
     }
 }
 
-export const getPosts = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
-    const res = await postsApi.getUserPosts(username)
-    if (res.resultCode === ResultCodes.success) {
-        dispatch(profileActions.setPosts(res.data.posts))
-    }
-    if (res.resultCode === ResultCodes.error) {
-        console.log(res)
-    }
-}
 
-export const addPost = (text: string): ThunkType<ProfileActionType | AuthActionType> => async(dispatch) => {
-    dispatch(profileActions.setAddPostPending(true))
-    const res = await postsApi.addPost(text)
-    dispatch(profileActions.setAddPostPending(false))
-    if (res.resultCode === ResultCodes.success) {
-        console.log(res)
-        dispatch(profileActions.addPost(res.data.post))
-    }
-    if (res.resultCode === ResultCodes.authError) {
-        dispatch(authActions.clearUser())
-    }
-    if (res.resultCode === ResultCodes.error) {
-        console.log(res)
-    }
-}
 
-export const deletePost = (id: string): ThunkType<ProfileActionType> => async(dispatch) => {
-    const res = await postsApi.deletePost(id)
-    if (res.resultCode === ResultCodes.success) {
-        dispatch(profileActions.deletePost(id))
-    }
-    if (res.resultCode === ResultCodes.error) {
-        console.log(res)
-    }
-}
 //endregion

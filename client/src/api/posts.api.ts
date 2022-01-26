@@ -1,9 +1,8 @@
 import {coreApi, handleError, handleResponse} from './core.api'
 import {PostType} from '../types/types'
 
-export type PostsDataType = {
-    posts: Array<PostType>
-}
+export type PostsDataType = { posts: Array<PostType> }
+export type PostDataType = { post: PostType }
 
 export type NewPostDataType = {
     post: PostType
@@ -13,6 +12,10 @@ export const postsApi = {
     getPosts: () => coreApi
         .get(`/posts`)
         .then(handleResponse<PostsDataType>())
+        .catch(handleError()),
+    getPost: (postId: string) => coreApi
+        .get(`/posts/id/${postId}`)
+        .then(handleResponse<PostDataType>())
         .catch(handleError()),
     getUserPosts: (userId: string) => coreApi
         .get(`/posts/${userId}`)

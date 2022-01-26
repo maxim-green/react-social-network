@@ -17,7 +17,7 @@ type PropsType = {
     text: string
     liked?: boolean
     onPostDelete: (id: string) => void
-    isAuthorizedUserProfile: boolean
+    isAuthorizedUserProfile?: boolean
 }
 
 const Post: React.FC<PropsType> = ({
@@ -28,7 +28,7 @@ const Post: React.FC<PropsType> = ({
                                        text,
                                        liked,
                                        onPostDelete,
-                                       isAuthorizedUserProfile
+                                       isAuthorizedUserProfile= false
                                    }) => {
 
     const [open, setOpen] = useState(false)
@@ -51,7 +51,7 @@ const Post: React.FC<PropsType> = ({
                     <NavLink to="/">
                         <div className={classes.userName}>{username}</div>
                     </NavLink>
-                    <div className={classes.date}>posted on {date}</div>
+                    <NavLink to={`/post/id/${id}`}><div className={classes.date}>posted on {date}</div></NavLink>
                 </div>
                 <div className={classes.menu}>
                     {isAuthorizedUserProfile && <div>

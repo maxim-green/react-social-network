@@ -1,8 +1,5 @@
 import React, {useEffect} from 'react'
 import {
-    addPost,
-    deletePost,
-    getPosts,
     getUserData,
     updateAvatar, updateCoverImage,
     updateStatus
@@ -15,6 +12,7 @@ import {StateType} from '../../redux/store'
 import {ProfileDataType} from '../../api/profile.api'
 import {NewPostType, PostType} from '../../types/types'
 import {Area, Point} from 'react-easy-crop/types'
+import {addPost, deletePost, getUserPosts} from '../../redux/reducers/posts.reducer'
 
 type PropsType = {
     authorized: boolean
@@ -60,12 +58,12 @@ const ProfileContainer: React.FC = () => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const authorizedUserId = useSelector((state: StateType) => state.auth.userId)
     const profileData = useSelector((state: StateType) => state.profile.data)
-    const posts = useSelector((state: StateType) => state.profile.posts)
-    const isAddPostPending = useSelector((state: StateType) => state.profile.isAddPostPending)
+    const posts = useSelector((state: StateType) => state.posts.posts)
+    const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
 
     useEffect(() => {
         dispatch(getUserData(username))
-        dispatch(getPosts(username))
+        dispatch(getUserPosts(username))
     }, [username, dispatch])
 
     const onAvatarSubmit = (image: File, crop: Point) => {
