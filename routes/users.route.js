@@ -16,18 +16,14 @@ const auth = require('../middleware/auth.middleware')
 // /api/users
 router.get('/', auth, async (req, res) => {
     try {
-        const users = await User.find().lean()
-
+        const users = await User.find().select('username firstName lastName avatar').lean()
+        console.log(users[0])
         const {user} = req
         let responseUsers
         if (user) {
             const {friends, subscriptions} = user
             responseUsers = users.map(user => ({
-                userId: user._id,
-                username: user.username,
-                firstName: user.profileData.firstName,
-                lastName: user.profileData.lastName,
-                avatar: user.profileData.avatar,
+                ...user,
                 isFriend: friends.includes(user._id),
                 isSubscription: subscriptions.includes(user._id)
             }))
@@ -35,11 +31,7 @@ router.get('/', auth, async (req, res) => {
 
         if (!user) {
             responseUsers = users.map(user => ({
-                userId: user._id,
-                username: user.username,
-                firstName: user.profileData.firstName,
-                lastName: user.profileData.lastName,
-                avatar: user.profileData.avatar,
+                ...user,
                 isFriend: false,
                 isSubscription: false
             }))
@@ -71,21 +63,19 @@ router.get('/friends/', auth, async (req, res) => {
             return res.status(403).json({resultCode: 1, message: 'Not authorized'})
         }
 
-        const friends = await User.find({_id: {$in: user.friends}})
+        const friends = await User.find({_id: {$in: user.friends}}).select('username firstName lastName avatar').lean()
 
         const responseFriends = friends.map(friend => ({
-            userId: friend._id,
-            username: friend.username,
-            firstName: friend.profileData.firstName,
-            lastName: friend.profileData.lastName,
-            avatar: friend.profileData.avatar,
-            mutualFriends: user.friends.filter(userFriend => friend.friends.includes(userFriend)),
-            mutualSubscriptions: user.subscriptions.filter(userSubscription => friend.subscriptions.includes(userSubscription))
+            ...friend,
+            // todo
+            // mutualFriends: user.friends.filter(userFriend => friend.friends.includes(userFriend)),
+            // mutualSubscriptions: user.subscriptions.filter(userSubscription => friend.subscriptions.includes(userSubscription))
         }))
 
         return res.status(200).json({resultCode: 0, message: 'Success', data: {friends: responseFriends}})
     } catch (e) {
-
+        console.log(e)
+        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }
 })
 

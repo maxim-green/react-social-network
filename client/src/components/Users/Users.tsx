@@ -67,12 +67,12 @@ const Users: React.FC<PropsType> = ({
 
             <div className={classes.usersItems}>
                 {shownUsers && shownUsers.map(user => <UserItem
-                    key={user.userId}
+                    key={user._id}
                     authorized={authorized}
                     authorizedUserId={authorizedUserId}
                     user={user}
-                    isIncomingFriendshipRequest={incomingFriendshipRequests.includes(user.userId)}
-                    isOutgoingFriendshipRequest={outgoingFriendshipRequests.includes(user.userId)}
+                    isIncomingFriendshipRequest={incomingFriendshipRequests.includes(user._id)}
+                    isOutgoingFriendshipRequest={outgoingFriendshipRequests.includes(user._id)}
                     addFriend={addFriend}
                     deleteFriend={deleteFriend}
                     cancelFriendshipRequest={cancelFriendshipRequest}

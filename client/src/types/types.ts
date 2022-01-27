@@ -12,7 +12,7 @@ export type AvatarType = { large: string | null, small: string | null }
 
 // type for user-items shown on users page
 export type UserType = {
-    userId: string
+    _id: string
     username: string
     firstName: string
     lastName: string

@@ -39,30 +39,30 @@ const UserItem: React.FC<PropsType> = ({
                                            isOutgoingFriendshipRequest
                                        }) => {
 
-    const isAuthorizedUserItem = authorized && (authorizedUserId === user.userId)
+    const isAuthorizedUserItem = authorized && (authorizedUserId === user._id)
 
     const addFriendButtonClickHandler = () => {
         if (!user.isFriend) {
-            addFriend(user.userId)
+            addFriend(user._id)
         } else {
-            deleteFriend(user.userId)
+            deleteFriend(user._id)
         }
     }
     const acceptFriendshipRequestButtonClickHandler = () => {
-        acceptFriendshipRequest(user.userId)
+        acceptFriendshipRequest(user._id)
     }
     const declineFriendshipRequestButtonClickHandler = () => {
-        declineFriendshipRequest(user.userId)
+        declineFriendshipRequest(user._id)
     }
     const cancelFriendshipRequestButtonClickHandler = () => {
-        cancelFriendshipRequest(user.userId)
+        cancelFriendshipRequest(user._id)
     }
 
     const followButtonClickHandler = () => {
         if (!user.isSubscription) {
-            follow(user.userId)
+            follow(user._id)
         } else {
-            unfollow(user.userId)
+            unfollow(user._id)
         }
     }
 

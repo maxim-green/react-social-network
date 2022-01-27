@@ -150,9 +150,8 @@ router.get('/me', auth, async (req, res) => {
             return res.status(403).json({resultCode: 1, message: "Not authorized"})
         }
 
-        const {email, username, profileData} = user
-
-        res.status(200).json({resultCode: 0, message: "Authorized", data: {userId: user.id, email, username, profile: profileData}})
+        const {id, email, username} = user
+        res.status(200).json({resultCode: 0, message: "Authorized", data: {id, email, username}})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})

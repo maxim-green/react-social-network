@@ -24,13 +24,13 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
         case 'rsn/users/SET_IS_FRIEND': {
             return {
                 ...state,
-                users: state.users.map(user => (user.userId === action.userId) ? {...user, isFriend: action.isFriend} : user)
+                users: state.users.map(user => (user._id === action.userId) ? {...user, isFriend: action.isFriend} : user)
             }
         }
         case 'rsn/users/SET_IS_SUBSCRIPTION': {
             return {
                 ...state,
-                users: state.users.map(user => (user.userId === action.userId) ? {...user, isSubscription: action.isSubscription} : user)
+                users: state.users.map(user => (user._id === action.userId) ? {...user, isSubscription: action.isSubscription} : user)
             }
         }
         case 'rsn/users/SET_INCOMING_FRIENDSHIP_REQUESTS': {

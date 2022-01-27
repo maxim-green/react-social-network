@@ -12,6 +12,7 @@ import TestPage from './TestPage'
 import DialogsPage from "./_pages/DialogsPage";
 import Spinner from "./_shared/Spinner/Spinner";
 import PostPage from './_pages/PostPage'
+import FeedPage from './_pages/FeedPage'
 
 type PropsType = {
     authorized: boolean,
@@ -37,6 +38,7 @@ const App: React.FC<PropsType> = ({
                 <Route exact path="/profile/:username" component={ProfilePage}/>
 
                 <Route path="/post/id/:id" component={PostPage}/>
+                <Route path="/feed" component={FeedPage}/>
 
                 <Route path="/users/:filter?" component={UsersPage}/>
                 <Route path="/dialogs/:username" component={DialogsPage}/>

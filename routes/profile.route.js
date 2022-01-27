@@ -13,13 +13,32 @@ const sharp = require('sharp')
 const auth = require('../middleware/auth.middleware')
 
 
+// userId: string,
+//     username: string,
+//     firstName: string,
+//     lastName: string,
+//     birthDate: string | null,
+//     status: string | null,
+//     bio: string | null,
+//     contacts: ContactsType,
+//     location: LocationType,
+//     avatar: AvatarType,
+//     coverImage: string | null
+
 // /api/profile/:username
 router.get('/:username', async (req, res) => {
     try {
         const {username} = req.params
-        const {_id, profileData} = await User.findOne({username}).lean()
+        const user = await User
+            .findOne({username})
+            .populate('profileData')
+            .select('username firstName lastName avatar')
+            .lean()
 
-        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: {userId: _id, ...profileData}})
+        const profileData = {...user, ...user.profileData}
+        delete profileData.profileData
+
+        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: profileData})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }

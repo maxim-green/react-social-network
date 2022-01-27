@@ -26,9 +26,11 @@ const {check, validationResult} = require('express-validator')
 // /api/posts/
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find()
+        const posts = await Post.find().populate('author', 'username firstName lastName avatar')
+        console.log(posts)
         res.status(200).json({resultCode: 0, message: "Success", data: { posts }})
     } catch (e) {
+        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
@@ -36,7 +38,7 @@ router.get('/', async (req, res) => {
 // /api/posts/id/:postId
 router.get('/id/:postId', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.postId)
+        const post = await Post.findById(req.params.postId).populate('author', 'username firstName lastName avatar')
         res.status(200).json({resultCode: 0, message: "Success", data: { post }})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
@@ -46,9 +48,11 @@ router.get('/id/:postId', async (req, res) => {
 // /api/posts/:userId
 router.get('/:username', async (req, res) => {
     try {
-        const posts = await Post.find({'author.username': req.params.username})
+        const user = await User.findOne({'username' : req.params.username})
+        const posts = await Post.find({'author': user}).populate('author', 'username firstName lastName avatar')
         res.status(200).json({resultCode: 0, message: "Success", data: { posts } })
     } catch (e) {
+        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
@@ -72,17 +76,9 @@ router.post('/add', [
             })
         }
 
-        const {username, profileData: {firstName, lastName, avatar}} = user
-
         const newPost = new Post({
             creationDate: new Date(),
-            author: {
-                id: req.userId,
-                username,
-                firstName,
-                lastName,
-                avatar
-            },
+            author: user,
             text: req.body.text
         })
         await newPost.save()
@@ -102,7 +98,7 @@ router.delete('/delete/:postId', auth, async (req, res) => {
     }
 
     const {postId} = req.params
-    const post = await Post.findById(postId)
+    const post = await Post.findById(postId).populate('author')
     if (!post) {
         return res.status(404).json({resultCode: 1, message: 'Post does not exist.'})
     }

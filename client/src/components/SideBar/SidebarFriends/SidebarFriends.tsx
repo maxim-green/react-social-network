@@ -16,7 +16,7 @@ const SidebarFriends: React.FC<PropsType> = ({friends}) => {
                 <div className={classes.Title}>Friends</div>
                 <div className={classes.Avatars}>
                     {friends.length !== 0 && friends.map(friend => <NavLink to={`/profile/${friend.username}`}
-                                                                            key={friend.userId}>
+                                                                            key={friend._id}>
                             <Avatar img={friend.avatar.small} online size={'sm'} name={friend.firstName}/>
                         </NavLink>
                     )}

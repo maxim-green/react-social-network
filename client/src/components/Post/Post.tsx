@@ -16,7 +16,7 @@ type PropsType = {
     date: string
     text: string
     liked?: boolean
-    onPostDelete: (id: string) => void
+    onPostDelete?: (id: string) => void
     isAuthorizedUserProfile?: boolean
 }
 
@@ -37,7 +37,7 @@ const Post: React.FC<PropsType> = ({
 
 
     const onDeleteClickHandler = () => {
-        onPostDelete(id)
+        if (onPostDelete) onPostDelete(id)
     }
 
     return (
@@ -54,7 +54,7 @@ const Post: React.FC<PropsType> = ({
                     <NavLink to={`/post/id/${id}`}><div className={classes.date}>posted on {date}</div></NavLink>
                 </div>
                 <div className={classes.menu}>
-                    {isAuthorizedUserProfile && <div>
+                    {isAuthorizedUserProfile && onPostDelete && <div>
                         <Button onClick={openModal} type="text" size="small" style={{padding: '0 4px'}}>
                             <TrashFill color={colors.midGrey1} size={16}/>
                         </Button>

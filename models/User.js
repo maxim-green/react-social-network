@@ -8,18 +8,17 @@ const schema = new Schema(
         password: {type: String, required: true},
         username: {type: String, required: true, unique: true},
         isOnline: {type: Boolean, required: true, default: false},
+        firstName: {type: String, required: true},
+        lastName: {type: String, required: true},
+        avatar: {
+            small: {type: String, default: null},
+            large: {type: String, default: null}
+        },
         profileData: {
-            firstName: {type: String, required: true},
-            lastName: {type: String, required: true},
             birthDate: {type: Date, default: null},
             status: {type: String, default: null},
             bio: {type: String, default: null},
-            interests: {type: String, default: null},
             coverImage: {type: String, default: null},
-            avatar: {
-                small: {type: String, default: null},
-                large: {type: String, default: null}
-            },
             location: {
                 country: {type: String, default: null},
                 city: {type: String, default: null}
