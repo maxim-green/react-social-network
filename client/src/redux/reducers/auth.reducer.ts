@@ -1,17 +1,14 @@
 import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
-import {ProfileDataType} from '../../api/profile.api'
+import {EditProfileDataType} from '../../api/profile.api'
 import {startMessagesListening, stopMessagesListening} from './dialogs.reducer'
+import {AuthUserDataType} from '../../types/types'
 
 // INITIAL STATE
 const initialState = {
     authorized: false,
-    userId: null as string | null,
-    email: null as string | null,
-    username: null as string | null,
-    profile: null as ProfileDataType | null,
-    isOnline: false,
+    user: null as AuthUserDataType | null,
     registrationSuccessful: false
 }
 type AuthStateType = typeof initialState
@@ -23,21 +20,14 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
             return {
                 ...state,
                 authorized: true,
-                userId: action.userId,
-                email: action.email,
-                username: action.username,
-                isOnline: true,
-                profile: action.profile
+                user: action.user
             }
         }
         case 'rsn/auth/CLEAR_USER': {
             return {
                 ...state,
                 authorized: false,
-                userId: null,
-                email: null,
-                username: null,
-                isOnline: false
+                user: null
             }
         }
         case 'rsn/auth/SET_REGISTRATION_SUCCESSFUL': {
@@ -54,12 +44,9 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
 
 //region ACTION CREATORS
 export const authActions = {
-    setUser: (userId: string, email: string, username: string, profile: ProfileDataType) => ({
+    setUser: (user: AuthUserDataType) => ({
         type: 'rsn/auth/SET_USER',
-        userId,
-        email,
-        username,
-        profile
+        user
     } as const),
     clearUser: () => ({type: 'rsn/auth/CLEAR_USER'} as const),
     setRegistrationSuccessful: (registrationSuccessful: boolean) => ({
@@ -97,8 +84,8 @@ export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
 export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.me()
     if (res.resultCode === ResultCodes.success) {
-        const {userId, email, username, profile} = res.data
-        dispatch(authActions.setUser(userId, email, username, profile))
+        const {user} = res.data
+        dispatch(authActions.setUser(user))
     } else {
         dispatch(authActions.clearUser())
     }

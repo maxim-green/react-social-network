@@ -8,14 +8,14 @@ import LoginForm from '../_forms/LoginForm'
 import SidebarNavigation from '../SideBar/SidebarNavigation/SidebarNavigation'
 import SidebarFriends from '../SideBar/SidebarFriends/SidebarFriends'
 import {getFriends} from '../../redux/reducers/users.reducer'
-import {AvatarType, UserType} from '../../types/types'
+import {AvatarType, UserItemDataType} from '../../types/types'
 import {logout} from '../../redux/reducers/auth.reducer'
 
 type PropsType = {
     sidebar?: boolean
-    authUserName: string | null
-    authUserAvatar?: AvatarType | null
-    friends: Array<UserType>
+    authUserName?: string
+    authUserAvatar?: AvatarType
+    friends: Array<UserItemDataType>
     onLogout: () => void
 }
 
@@ -85,8 +85,8 @@ const LayoutContainer: React.FC<{ sidebar?: boolean }> = (props) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const dispatch = useDispatch()
     const friends = useSelector((state: StateType) => state.users.friends)
-    const authUserName = useSelector((state: StateType) => state.auth.username)
-    const authUserAvatar = useSelector((state: StateType) => state.auth.profile?.avatar)
+    const authUserName = useSelector((state: StateType) => state.auth.user?.username)
+    const authUserAvatar = useSelector((state: StateType) => state.auth.user?.avatar)
 
     useEffect(() => {
         if (authorized) dispatch(getFriends())

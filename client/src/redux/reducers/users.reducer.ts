@@ -1,12 +1,12 @@
-import {UserType} from '../../types/types'
+import {UserItemDataType} from '../../types/types'
 import {usersApi} from '../../api/users.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
-    users: [] as Array<UserType>,
-    friends: [] as Array<UserType>,
+    users: [] as Array<UserItemDataType>,
+    friends: [] as Array<UserItemDataType>,
     outgoingFriendshipRequests: [] as Array<string>,
     incomingFriendshipRequests: [] as Array<string>
 }
@@ -77,8 +77,8 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 
 //region ACTION CREATORS
 export const usersActions = {
-    setUsers: (users: Array<UserType>) => ({type: 'rsn/users/SET_USERS', users} as const),
-    setFriends: (friends: Array<UserType>) => ({type: 'rsn/users/SET_FRIENDS', friends} as const),
+    setUsers: (users: Array<UserItemDataType>) => ({type: 'rsn/users/SET_USERS', users} as const),
+    setFriends: (friends: Array<UserItemDataType>) => ({type: 'rsn/users/SET_FRIENDS', friends} as const),
     setIsFriend: (userId: string, isFriend: boolean) => ({type: 'rsn/users/SET_IS_FRIEND', userId, isFriend} as const),
     setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'rsn/users/SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
     setOutgoingFriendshipRequests: (outgoingFriendshipRequests: Array<string>) => ({type: 'rsn/users/SET_OUTGOING_FRIENDSHIP_REQUESTS', outgoingFriendshipRequests} as const),

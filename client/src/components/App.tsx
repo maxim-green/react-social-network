@@ -16,7 +16,7 @@ import FeedPage from './_pages/FeedPage'
 
 type PropsType = {
     authorized: boolean,
-    username: string | null,
+    username?: string,
 }
 
 const App: React.FC<PropsType> = ({
@@ -62,7 +62,7 @@ const AppContainer: React.FC<PropsType> = () => {
     const dispatch = useDispatch()
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const initialized = useSelector((state: StateType) => state.app.initialized)
-    const username = useSelector((state: StateType) => state.auth.username)
+    const username = useSelector((state: StateType) => state.auth.user?.username)
 
 
     useEffect(() => {

@@ -10,7 +10,7 @@ import {BellFill, ChatLeftTextFill, PersonPlusFill} from 'react-bootstrap-icons'
 
 type PropsType = {
     authorized: boolean
-    username: string | null
+    username?: string
     avatar?: string | null
     logout: () => void
 }

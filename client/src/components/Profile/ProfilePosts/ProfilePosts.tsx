@@ -7,7 +7,7 @@ import moment from 'moment'
 
 type PropsType = {
     authorized: boolean
-    authorizedUserId: string | null
+    authorizedUserId?: string
     userId?: string | null
     posts: Array<PostType>
     isAddPostPending: boolean

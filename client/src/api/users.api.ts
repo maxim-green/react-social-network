@@ -1,10 +1,10 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {UserType} from '../types/types'
+import {UserItemDataType} from '../types/types'
 
 // GET /users/
 // used for getting users list on users page
 export type UsersDataType = {
-    users: Array<UserType>
+    users: Array<UserItemDataType>
     incomingFriendshipRequests: Array<string>
     outgoingFriendshipRequests: Array<string>
 }
@@ -16,7 +16,7 @@ export const usersApi = {
         .catch(handleError()),
     getFriends: () => coreApi
         .get('/users/friends')
-        .then(handleResponse<{ friends: Array<UserType> }>())
+        .then(handleResponse<{ friends: Array<UserItemDataType> }>())
         .catch(handleError()),
 
     addFriend: (userId: string) => coreApi

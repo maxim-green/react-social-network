@@ -1,5 +1,6 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {ProfileDataType} from "./profile.api";
+import {EditProfileDataType} from "./profile.api";
+import {AuthUserDataType} from '../types/types'
 
 //region DATA TYPES
 // GET /auth/me/ response
@@ -8,7 +9,7 @@ export type AuthorizedUserDataType = {
     userId: string
     email: string
     username: string
-    profile: ProfileDataType
+    profile: EditProfileDataType
 }
 
 // POST /auth/login/
@@ -38,7 +39,7 @@ export const authApi = {
 
     me: () => coreApi
         .get('/auth/me')
-        .then(handleResponse<AuthorizedUserDataType>())
+        .then(handleResponse<AuthUserDataType>())
         .catch(handleError()),
 
     logout: () => coreApi

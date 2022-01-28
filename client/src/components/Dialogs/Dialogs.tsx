@@ -75,7 +75,7 @@ const DialogsContainer: React.FC = () => {
         return 0
     }))
     const currentDialogId = useSelector((state: StateType) => state.dialogs.currentDialogId)
-    const authUser = useSelector((state: StateType) => state.auth.username)
+    const authUser = useSelector((state: StateType) => state.auth.user?.username)
     const messages = useSelector((state: StateType) => state.dialogs.messages)
     const dispatch = useDispatch()
 

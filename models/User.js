@@ -14,7 +14,7 @@ const schema = new Schema(
             small: {type: String, default: null},
             large: {type: String, default: null}
         },
-        profileData: {
+        profile: {
             birthDate: {type: Date, default: null},
             status: {type: String, default: null},
             bio: {type: String, default: null},
@@ -29,10 +29,10 @@ const schema = new Schema(
                 github: {type: String, default: null},
             }
         },
-        friends: [{ type: Types.ObjectId, ref: 'User' }],
-        subscriptions: [{ type: Types.ObjectId, ref: 'User' }],
-        incomingFriendshipRequests: [{ type: Types.ObjectId, ref: 'User' }],
-        outgoingFriendshipRequests: [{ type: Types.ObjectId, ref: 'User' }],
+        friends: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
+        subscriptions: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
+        incomingFriendshipRequests: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
+        outgoingFriendshipRequests: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
     },
     {
         collection: 'users'

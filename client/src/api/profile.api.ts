@@ -1,28 +1,23 @@
-import {AvatarType, ContactsType, FormDataType, LocationType} from '../types/types'
+import {AvatarType, ContactsType, FormDataType, LocationType, UserDataType} from '../types/types'
 import {coreApi, handleError, handleResponse} from './core.api'
 
 // used for getting and updating user profile
-export type ProfileDataType = {
-    userId: string,
-    username: string,
+export type EditProfileDataType = {
     firstName: string,
     lastName: string,
     birthDate: string | null,
-    status: string | null,
     bio: string | null,
-    contacts: ContactsType,
-    location: LocationType,
-    avatar: AvatarType,
-    coverImage: string | null
+    contacts: ContactsType | null,
+    location: LocationType | null,
 }
 
 export const profileApi = {
     getProfile: (username: string) => coreApi
         .get(`/profile/${username}`)
-        .then(handleResponse<ProfileDataType>())
+        .then(handleResponse<{ user: UserDataType }>())
         .catch(handleError()),
 
-    updateProfile: (profileData: ProfileDataType) => coreApi
+    updateProfile: (profileData: EditProfileDataType) => coreApi
         .put('/profile', {...profileData})
         .then(handleResponse())
         .catch(handleError()),

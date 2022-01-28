@@ -7,7 +7,7 @@ import colors from '../../../assets/styles/exports.module.scss'
 
 
 type PropsType = {
-    username: string | null
+    username?: string
     avatar?: string | null
     logout: () => void
 }

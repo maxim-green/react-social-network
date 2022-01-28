@@ -4,7 +4,7 @@ import classes from './Users.module.scss'
 import UserItem from './UserItem/UserItem'
 import NavTab from '../_shared/NavTabs/NavTab/NavTab'
 import NavTabs from '../_shared/NavTabs/NavTabs'
-import {UserType} from '../../types/types'
+import {UserItemDataType} from '../../types/types'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
 import {
@@ -18,8 +18,8 @@ import {useParams} from 'react-router'
 
 type PropsType = {
     authorized: boolean
-    authorizedUserId: string | null
-    users: Array<UserType>
+    authorizedUserId?: string
+    users: Array<UserItemDataType>
     addFriend: (userId: string) => void
     deleteFriend: (userId: string) => void
     cancelFriendshipRequest: (userId: string) => void
@@ -47,7 +47,7 @@ const Users: React.FC<PropsType> = ({
                                     }) => {
 
     const { filter } = useParams<{ filter?: 'friends' | 'blocked' }>()
-    let shownUsers: Array<UserType> | null = null
+    let shownUsers: Array<UserItemDataType> | null = null
     if (!filter) {shownUsers = users}
     if (filter === 'friends') {shownUsers = users.filter(user => user.isFriend)}
     if (filter === 'blocked') {shownUsers = users}
@@ -92,7 +92,7 @@ const UsersContainer: React.FC = () => {
 
     const props: PropsType = {
         authorized: useSelector((state: StateType) => state.auth.authorized),
-        authorizedUserId: useSelector((state: StateType) => state.auth.userId),
+        authorizedUserId: useSelector((state: StateType) => state.auth.user?._id),
         users: useSelector((state: StateType) => state.users.users),
         incomingFriendshipRequests: useSelector((state: StateType) => state.users.incomingFriendshipRequests),
         outgoingFriendshipRequests: useSelector((state: StateType) => state.users.outgoingFriendshipRequests),

@@ -1,11 +1,11 @@
-import {AvatarType, FormDataType, PostType} from '../../types/types'
-import {profileApi, ProfileDataType} from '../../api/profile.api'
+import {AvatarType, FormDataType, PostType, UserDataType} from '../../types/types'
+import {profileApi, EditProfileDataType} from '../../api/profile.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 
 // INITIAL STATE
 const initialState = {
-    data: {} as ProfileDataType,
+    user: {} as UserDataType,
     posts: [] as Array<PostType>,
     isAddPostPending: false as boolean
 }
@@ -17,64 +17,66 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
         case 'rsn/profile/SET_PROFILE': {
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    ...action.profileData,
-                    location: {...state.data.location, ...action.profileData.location},
-                    contacts: {...state.data.contacts, ...action.profileData.contacts},
-                    avatar: {...state.data.avatar, ...action.profileData.avatar}
+                user: {
+                    ...state.user,
+                    ...action.userProfileData,
                 },
+            }
+        }
+        case 'rsn/profile/UPDATE_PROFILE': {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    firstName: action.userProfileData.firstName,
+                    lastName: action.userProfileData.lastName,
+                    profile: {
+                        ...state.user.profile,
+                        bio: action.userProfileData.bio,
+                        birthDate: action.userProfileData.birthDate,
+                        location: {
+                            ...state.user.profile.location,
+                            ...action.userProfileData.location
+                        },
+                        contacts: {
+                            ...state.user.profile.contacts,
+                            ...action.userProfileData.contacts
+                        }
+                    }
+                }
             }
         }
         case 'rsn/profile/SET_AVATAR': {
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    avatar: {...state.data.avatar, ...action.avatar}
+                user: {
+                    ...state.user,
+                    avatar: {...state.user.avatar, ...action.avatar}
                 },
-                posts: state.posts.map(post => ({...post, author: {...post.author, avatar: action.avatar}}))
+                // posts: state.posts.map(post => ({...post, author: {...post.author, avatar: action.avatar}}))
             }
         }
         case 'rsn/profile/SET_COVER_IMAGE': {
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    coverImage: action.coverImage
+                user: {
+                    ...state.user,
+                    profile: {
+                        ...state.user.profile,
+                        coverImage: action.coverImage
+                    }
                 }
-            }
-        }
-        case 'rsn/profile/SET_POSTS': {
-            return {
-                ...state,
-                posts: action.posts
-            }
-        }
-        case 'rsn/profile/ADD_POST': {
-            return {
-                ...state,
-                posts: [...state.posts, action.post]
-            }
-        }
-        case 'rsn/profile/SET_ADD_POST_PENDING': {
-            return {
-                ...state,
-                isAddPostPending: action.isPending
-            }
-        }
-        case 'rsn/profile/DELETE_POST': {
-            return {
-                ...state,
-                posts: state.posts.filter(post => post._id !== action.id)
             }
         }
         case 'rsn/profile/SET_STATUS': {
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    status: action.status
+                user: {
+                    ...state.user,
+                    profile: {
+                        ...state.user.profile,
+                        status: action.status
+                    }
                 }
             }
         }
@@ -87,13 +89,10 @@ export default reducer
 
 //regions ACTION CREATORS
 export const profileActions = {
-    setProfile: (profileData: ProfileDataType) => ({type: 'rsn/profile/SET_PROFILE', profileData} as const),
+    setProfile: (userProfileData: UserDataType) => ({type: 'rsn/profile/SET_PROFILE', userProfileData} as const),
+    updateProfile: (userProfileData: EditProfileDataType) => ({type: 'rsn/profile/UPDATE_PROFILE', userProfileData} as const),
     setAvatar: (avatar: AvatarType) => ({type: 'rsn/profile/SET_AVATAR', avatar} as const),
     setCoverImage: (coverImage: string) => ({type: 'rsn/profile/SET_COVER_IMAGE', coverImage} as const),
-    setPosts: (posts: Array<PostType>) => ({type: 'rsn/profile/SET_POSTS', posts} as const),
-    addPost: (post: PostType) => ({type: 'rsn/profile/ADD_POST', post} as const),
-    deletePost: (id: string) => ({type: 'rsn/profile/DELETE_POST', id} as const),
-    setAddPostPending: (isPending: boolean) => ({type: 'rsn/profile/SET_ADD_POST_PENDING', isPending} as const),
     setStatus: (status: string) => ({type: 'rsn/profile/SET_STATUS', status} as const)
 }
 export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActions>>
@@ -102,8 +101,9 @@ export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActio
 //region THUNK CREATORS
 export const getUserData = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.getProfile(username)
+
     if (res.resultCode === ResultCodes.success) {
-        dispatch(profileActions.setProfile(res.data))
+        dispatch(profileActions.setProfile(res.data.user))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -112,6 +112,7 @@ export const getUserData = (username: string): ThunkType<ProfileActionType> => a
 
 export const updateStatus = (status: string): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateStatus(status)
+    debugger
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setStatus(status))
     }
@@ -120,10 +121,11 @@ export const updateStatus = (status: string): ThunkType<ProfileActionType> => as
     }
 }
 
-export const updateProfile = (profileData: ProfileDataType): ThunkType<ProfileActionType> => async (dispatch) => {
+export const updateProfile = (profileData: EditProfileDataType): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
+    debugger
     if (res.resultCode === ResultCodes.success) {
-        dispatch(profileActions.setProfile(profileData))
+        dispatch(profileActions.updateProfile(profileData))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

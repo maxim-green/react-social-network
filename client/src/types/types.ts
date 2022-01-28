@@ -1,4 +1,6 @@
 // don't know if it is right to do so, but it works ;)
+import {EditProfileDataType} from '../api/profile.api'
+
 const formData = new FormData()
 export type FormDataType = typeof formData
 
@@ -10,8 +12,38 @@ export type ContactsType = {
 }
 export type AvatarType = { large: string | null, small: string | null }
 
+// type for current user data
+export type AuthUserDataType = UserDataType & {
+    email: string
+    incomingFriendshipRequests: Array<string>
+    outgoingFriendshipRequests: Array<string>
+}
+
+// type for user profile data
+export type UserDataType = {
+    _id: string
+    registrationDate: Date
+    username: string
+    firstName: string
+    lastName: string
+    avatar: AvatarType
+    online: boolean
+    profile: {
+        birthDate: string | null,
+        status: string | null,
+        bio: string | null,
+        contacts: ContactsType,
+        location: LocationType,
+        coverImage: string | null
+    }
+    friends: Array<string>
+    subscriptions: Array<string>
+}
+
+
+
 // type for user-items shown on users page
-export type UserType = {
+export type UserItemDataType = {
     _id: string
     username: string
     firstName: string
@@ -25,7 +57,7 @@ export type UserType = {
 export type MessageType = {
     dialogId: string
     date: Date
-    author: UserType,
+    author: UserItemDataType,
     text: string
 }
 
@@ -34,14 +66,14 @@ export type DialogType = {
     id: string
     created: Date
     updated: Date
-    companionUser: UserType
+    companionUser: UserItemDataType
 }
 
 // type for post-items
 export type PostType = {
     _id: string,
     creationDate: string,
-    author: UserType,
+    author: UserItemDataType,
     text: string
 }
 

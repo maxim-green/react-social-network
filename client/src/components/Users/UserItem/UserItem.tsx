@@ -2,15 +2,15 @@ import classes from './UserItem.module.scss'
 import {NavLink} from 'react-router-dom'
 import Avatar from '../../_shared/Avatar/Avatar'
 import React from 'react'
-import {UserType} from '../../../types/types'
+import {UserItemDataType} from '../../../types/types'
 import Button from '../../_shared/Button/Button'
 import {ChatLeftTextFill, GearFill} from 'react-bootstrap-icons'
 import colors from '../../../assets/styles/exports.module.scss'
 
 type PropsType = {
     authorized: boolean
-    authorizedUserId: string | null
-    user: UserType
+    authorizedUserId?: string
+    user: UserItemDataType
     isIncomingFriendshipRequest: boolean
     isOutgoingFriendshipRequest: boolean
     addFriend: (userId: string) => void

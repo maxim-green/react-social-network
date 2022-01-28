@@ -3,10 +3,10 @@ import React from 'react'
 import classes from './SidebarFriends.module.scss'
 import Avatar from '../../_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
-import {UserType} from '../../../types/types'
+import {UserItemDataType} from '../../../types/types'
 
 type PropsType = {
-    friends: Array<UserType>
+    friends: Array<UserItemDataType>
 }
 
 const SidebarFriends: React.FC<PropsType> = ({friends}) => {

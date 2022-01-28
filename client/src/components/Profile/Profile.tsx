@@ -9,15 +9,15 @@ import {useParams} from 'react-router-dom'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import ProfilePosts from './ProfilePosts/ProfilePosts'
 import {StateType} from '../../redux/store'
-import {ProfileDataType} from '../../api/profile.api'
-import {NewPostType, PostType} from '../../types/types'
+import {NewPostType, PostType, UserDataType} from '../../types/types'
 import {Area, Point} from 'react-easy-crop/types'
 import {addPost, deletePost, getUserPosts} from '../../redux/reducers/posts.reducer'
+import Spinner from '../_shared/Spinner/Spinner'
 
 type PropsType = {
     authorized: boolean
-    authorizedUserId: string | null
-    profileData: ProfileDataType
+    authorizedUserId?: string
+    profileData: UserDataType
     posts: Array<PostType>
     isAddPostPending: boolean
     onAvatarSubmit: (image: File, cropArea: Area) => void
@@ -30,18 +30,18 @@ type PropsType = {
 const Profile: React.FC<PropsType> = (props) => {
     return (
         <>
-            <ProfileInfo
+            {props.profileData && <ProfileInfo
                 profileData={props.profileData}
                 authorized={props.authorized}
                 authorizedUserId={props.authorizedUserId}
                 onAvatarSubmit={props.onAvatarSubmit}
                 onCoverImageSubmit={props.onCoverImageSubmit}
                 onStatusUpdate={props.onStatusUpdate}
-            />
+            />}
             <ProfilePosts
                 authorized={props.authorized}
                 authorizedUserId={props.authorizedUserId}
-                userId={props.profileData.userId}
+                userId={props.profileData._id}
                 posts={props.posts}
                 isAddPostPending={props.isAddPostPending}
                 onNewPostSubmit={props.onNewPostSubmit}
@@ -56,8 +56,8 @@ const ProfileContainer: React.FC = () => {
 
     const {username}: { username: string } = useParams()
     const authorized = useSelector((state: StateType) => state.auth.authorized)
-    const authorizedUserId = useSelector((state: StateType) => state.auth.userId)
-    const profileData = useSelector((state: StateType) => state.profile.data)
+    const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
+    const userProfileData = useSelector((state: StateType) => state.profile.user)
     const posts = useSelector((state: StateType) => state.posts.posts)
     const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
 
@@ -93,11 +93,13 @@ const ProfileContainer: React.FC = () => {
         dispatch(updateStatus(status))
     }
 
+    if (!userProfileData._id) return <Spinner/>
+
     return (
             <Profile
                 authorized={authorized}
                 authorizedUserId={authorizedUserId}
-                profileData={profileData}
+                profileData={userProfileData}
                 posts={posts}
                 isAddPostPending={isAddPostPending}
                 onAvatarSubmit={onAvatarSubmit}

@@ -1,6 +1,6 @@
 import React from 'react'
 import Form from '../_shared/Form/Form'
-import {ProfileDataType} from '../../api/profile.api'
+import {EditProfileDataType} from '../../api/profile.api'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
 import {useAuthCheck} from '../../utils/hooks'
@@ -13,8 +13,8 @@ import {InputDate} from '../_shared/Input/InputDate'
 import Button from '../_shared/Button/Button'
 
 type PropsType = {
-    initialValues: ProfileDataType
-    onSubmit: (profileData: ProfileDataType) => void
+    initialValues: EditProfileDataType
+    onSubmit: (profileData: EditProfileDataType) => void
     closeModal?: () => void
 }
 
@@ -24,7 +24,7 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
             birthDate: initialValues.birthDate
         }})
 
-    const submit = (data: ProfileDataType) => {
+    const submit = (data: EditProfileDataType) => {
         onSubmit(data)
         closeModal && closeModal()
     }
@@ -101,21 +101,28 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
 }
 
 const EditProfileFormContainer: React.FC<{closeModal?: () => void}> = ({closeModal}) => {
-    const profileData = useSelector((state: StateType) => state.auth.profile)
-    const dispatch: ThunkDispatch<StateType, ProfileDataType, ProfileActionType> = useDispatch()
+    const editProfileData: EditProfileDataType = useSelector((state: StateType) => ({
+        firstName: state.profile.user?.firstName,
+        lastName: state.profile.user?.lastName,
+        birthDate: state.profile.user?.profile.birthDate,
+        bio: state.profile.user?.profile.bio,
+        location: state.profile.user?.profile.location,
+        contacts: state.profile.user?.profile.contacts
+    }))
+    const dispatch: ThunkDispatch<StateType, EditProfileDataType, ProfileActionType> = useDispatch()
 
     useAuthCheck()
 
-    const onSubmit = (profileData: ProfileDataType) => {
+    const onSubmit = (profileData: EditProfileDataType) => {
         console.log(profileData)
         dispatch(updateProfile(profileData))
     }
 
-    if (!profileData) return <Spinner />
+    if (!editProfileData) return <Spinner />
 
     return <EditProfileForm
         closeModal={closeModal}
-        initialValues={profileData}
+        initialValues={editProfileData}
         onSubmit={onSubmit}
     />
 }

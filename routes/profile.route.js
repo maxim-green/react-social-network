@@ -12,33 +12,16 @@ const path = require('path')
 const sharp = require('sharp')
 const auth = require('../middleware/auth.middleware')
 
-
-// userId: string,
-//     username: string,
-//     firstName: string,
-//     lastName: string,
-//     birthDate: string | null,
-//     status: string | null,
-//     bio: string | null,
-//     contacts: ContactsType,
-//     location: LocationType,
-//     avatar: AvatarType,
-//     coverImage: string | null
-
 // /api/profile/:username
 router.get('/:username', async (req, res) => {
     try {
         const {username} = req.params
         const user = await User
             .findOne({username})
-            .populate('profileData')
-            .select('username firstName lastName avatar')
-            .lean()
+            .populate('profile')
+            .select('-refreshToken -password -incomingFriendshipRequests -outgoingFriendshipRequests')
 
-        const profileData = {...user, ...user.profileData}
-        delete profileData.profileData
-
-        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: profileData})
+        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: {user: user.toObject()}})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }
@@ -74,19 +57,16 @@ router.put(
                 .resize(120, 120)
                 .toFile(path.join(__dirname, '..', smPath))
 
-            user.profileData.avatar = {
+            user.avatar = {
                 small: `http://localhost:${config.get('port')}${smPath}`,
                 large: `http://localhost:${config.get('port')}${lgPath}`
             }
             await user.save()
 
-            //update avatar in all user posts
-            await Post.updateMany({'author.username': user.username}, {$set: {'author.avatar': user.profileData.avatar}})
-
             res.status(200).json({
                 resultCode: 0,
                 message: 'File uploaded',
-                data: user.profileData.avatar
+                data: user.avatar
             })
         } catch (e) {
             console.log(e)
@@ -116,13 +96,13 @@ router.put(
                 .resize({fit: sharp.fit.contain, width: 720})
                 .toFile(path.join(__dirname, '..', uploadPath))
 
-            user.profileData.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
+            user.profile.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
             await user.save()
 
             res.status(200).json({
                 resultCode: 0,
                 message: 'File uploaded',
-                data: { coverImage: user.profileData.coverImage }
+                data: { coverImage: user.profile.coverImage }
             })
         } catch(e) {
             console.log(e)
@@ -138,7 +118,7 @@ router.put('/status', auth, async (req, res) => {
 
         const { status } = req.body
 
-        user.profileData.status = status
+        user.profile.status = status
         await user.save()
 
         res.status(200).json({resultCode: 0, message: 'Status updated'})
@@ -154,17 +134,10 @@ router.put('/', auth, async (req, res) => {
         const {user} = req
         if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
-        //update name in all user posts
-        if (user.profileData.firstName !== req.body.firstName || user.profileData.lastName !== req.body.lastName) {
-            await Post.updateMany({'author.username': user.username}, {
-                $set: {
-                    'author.firstName': req.body.firstName,
-                    'author.lastName': req.body.lastName
-                }
-            })
-        }
-
-        user.profileData = req.body
+        const {firstName, lastName, ...profile} = req.body
+        user.firstName = firstName
+        user.lastName = lastName
+        user.profile = {...user.profile, ...profile}
         await user.save()
 
         res.status(200).json({resultCode: 0, message: 'ProfileInfo updated'})
