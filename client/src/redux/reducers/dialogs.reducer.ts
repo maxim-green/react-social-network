@@ -73,6 +73,7 @@ export const sendMessage = (message: string, dialogId: string): ThunkType<Dialog
 
 export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) => {
     const res =  await dialogsApi.getDialogs()
+    debugger
     if (res.resultCode === ResultCodes.success) {
         dispatch(dialogsActions.setDialogs(res.data.dialogs))
     }

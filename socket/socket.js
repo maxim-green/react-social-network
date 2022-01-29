@@ -63,9 +63,9 @@ const socket = (io) => {
                 author: {
                     userId: newMessage.author.id,
                     username: newMessage.author.username,
-                    firstName: newMessage.author.profileData.firstName,
-                    lastName: newMessage.author.profileData.lastName,
-                    avatar: newMessage.author.profileData.avatar
+                    firstName: newMessage.author.firstName,
+                    lastName: newMessage.author.lastName,
+                    avatar: newMessage.author.avatar
                 }
             }
 

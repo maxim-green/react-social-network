@@ -20,14 +20,14 @@ router.get('/', auth, async (req, res) => {
 
         const dialogs = await Dialog
             .find({users: user.id})
-            .populate("users", ["id", "username", "profileData.firstName", "profileData.lastName", "profileData.avatar"])
+            .populate("users", ["id", "username", "firstName", "lastName", "avatar"])
             .lean()
 
         const resultDialogs = dialogs.map(dialog => ({
             id: dialog._id,
             created: dialog.created,
             updated: dialog.updated,
-            companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, ...u.profileData}))
+            companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, firstName: u.firstName, avatar: u.avatar}))
                 .find(u => u.username !== user.username),
         }))
 
@@ -52,7 +52,7 @@ router.get('/:username', auth, async (req, res) => {
                 {users: {$all: [user.id, targetUser.id]}},
                 {users: {$size: 2}}
             ]
-        }).populate('messages.author', ['id', 'username', 'profileData.avatar', 'profileData.firstName', 'profileData.lastName']).lean()
+        }).populate('messages.author', ['id', 'username', 'avatar', 'firstName', 'lastName']).lean()
 
         let resultDialog
         if (dialog) {
