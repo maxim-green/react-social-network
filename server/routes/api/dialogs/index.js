@@ -2,21 +2,12 @@ const express = require('express')
 const router = express.Router()
 const User = require('../../../models/User')
 const Dialog = require('../../../models/Dialog')
-const bcrypt = require('bcryptjs')
-const {check, validationResult} = require('express-validator')
-const jwt = require('jsonwebtoken')
-const config = require('config')
-const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
-const sharp = require('sharp')
-const auth = require('../../../middleware/auth.middleware')
+const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 
 // /api/dialogs/
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
         const dialogs = await Dialog
             .find({users: user.id})
@@ -39,10 +30,9 @@ router.get('/', auth, async (req, res) => {
 })
 
 // /api/dialogs/:username
-router.get('/:username', auth, async (req, res) => {
+router.get('/:username', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
         const targetUser = await User.findOne({username: req.params.username})
         if (!targetUser) return res.status(403).json({resultCode: 1, message: `Wrong username :(`})

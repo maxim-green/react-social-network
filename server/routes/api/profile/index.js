@@ -1,16 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../../../models/User')
-const Post = require('../../../models/Post')
-const bcrypt = require('bcryptjs')
-const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const multer = require('multer')
-const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
-const auth = require('../../../middleware/auth.middleware')
+const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 
 // /api/profile/:username
 router.get('/:username', async (req, res) => {
@@ -35,16 +31,16 @@ router.put(
     '/avatar',
     upload.single('avatar'),
     auth,
+    requireAuth,
     async (req, res) => {
-        console.log(req.file)
         try {
             const {user} = req
+
             const crop = JSON.parse(req.body.crop)
-            if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
             const lgPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-lg${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
-                .toFile(path.join(__dirname, '..', lgPath))
+                .toFile(path.join(__dirname, '../../../', lgPath))
 
             const smPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-sm${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
@@ -55,7 +51,7 @@ router.put(
                     height: Math.round(crop.height)
                 })
                 .resize(120, 120)
-                .toFile(path.join(__dirname, '..', smPath))
+                .toFile(path.join(__dirname, '../../../', smPath))
 
             user.avatar = {
                 small: `http://localhost:${config.get('port')}${smPath}`,
@@ -79,10 +75,10 @@ router.put(
     '/cover',
     upload.single('coverImage'),
     auth,
+    requireAuth,
     async (req, res) => {
         try {
             const {user} = req
-            if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
             const cropArea = JSON.parse(req.body.cropArea)
             const uploadPath = `/uploads/cover/${req.file.fieldname}${Date.now()}${path.extname(req.file.originalname)}`
@@ -94,7 +90,7 @@ router.put(
                     height: Math.round(cropArea.height)
                 })
                 .resize({fit: sharp.fit.contain, width: 720})
-                .toFile(path.join(__dirname, '..', uploadPath))
+                .toFile(path.join(__dirname, '../../../', uploadPath))
 
             user.profile.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
             await user.save()
@@ -111,10 +107,9 @@ router.put(
     }
 )
 
-router.put('/status', auth, async (req, res) => {
+router.put('/status', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
         const { status } = req.body
 
@@ -129,10 +124,9 @@ router.put('/status', auth, async (req, res) => {
 })
 
 // /api/profile
-router.put('/', auth, async (req, res) => {
+router.put('/', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) return res.status(403).json({resultCode: 1, message: 'Not authorized'})
 
         const {firstName, lastName, ...profile} = req.body
         user.firstName = firstName

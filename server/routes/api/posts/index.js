@@ -2,26 +2,10 @@ const express = require('express')
 const router = express.Router()
 const User = require('../../../models/User')
 const Post = require('../../../models/Post')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
-const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
-const sharp = require('sharp')
-const auth = require('../../../middleware/auth.middleware')
+const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 const {check, validationResult} = require('express-validator')
 
 
-// /api/posts/
-// router.get('/', async (req, res) => {
-//     try {
-//
-//         res.status(200).json({resultCode: 0, message: "Success"})
-//     } catch (e) {
-//         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
-//     }
-// })
 
 // /api/posts?author=userId
 router.get('/', async (req, res) => {
@@ -53,12 +37,9 @@ router.get('/:postId', async (req, res) => {
 // /api/posts/add
 router.post('/add', [
     check('text', 'New post text cannot be empty.').exists()
-], auth, async (req, res) => {
+], auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) {
-            return res.status(403).json({resultCode: 10, message: "Not authorized"})
-        }
 
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -84,11 +65,8 @@ router.post('/add', [
     }
 })
 
-router.delete('/delete/:postId', auth, async (req, res) => {
+router.delete('/delete/:postId', auth, requireAuth, async (req, res) => {
     const {user} = req
-    if (!user) {
-        return res.status(403).json({resultCode: 10, message: "Not authorized"})
-    }
 
     const {postId} = req.params
     const post = await Post.findById(postId).populate('author')

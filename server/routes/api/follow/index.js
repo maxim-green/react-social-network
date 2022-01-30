@@ -1,13 +1,10 @@
 const router = require('express').Router()
-const auth = require('../../../middleware/auth.middleware')
+const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 
 // /api/follow/:targetUserId
-router.post('/:targetUserId', auth, async (req, res) => {
+router.post('/:targetUserId', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) {
-            return res.status(403).json({resultCode: 1, message: 'Not authorized'})
-        }
 
         const {targetUserId} = req.params
         if (user.subscriptions.includes(targetUserId)) return res.status(400).json({
@@ -26,12 +23,9 @@ router.post('/:targetUserId', auth, async (req, res) => {
 })
 
 // /api/follow/:targetUserId
-router.delete('/:targetUserId', auth, async (req, res) => {
+router.delete('/:targetUserId', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
-        if (!user) {
-            return res.status(403).json({resultCode: 1, message: 'Not authorized'})
-        }
 
         const {targetUserId} = req.params
         if (!user.subscriptions.includes(targetUserId)) return res.status(400).json({

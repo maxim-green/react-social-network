@@ -4,9 +4,8 @@ const User = require('../../../models/User')
 const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
-const defineUserByRefreshToken = require('../../../middleware/defineUserByRefreshToken.middleware')
-const auth = require('../../../middleware/auth.middleware')
-const generateTokens = require('../../../utils/functions')
+const { auth, requireAuth, defineUserByRefreshToken } = require('../../../middleware/auth.middleware')
+const {generateTokens} = require('../../../utils')
 
 // /api/auth/register
 router.post('/register',
@@ -124,12 +123,9 @@ router.post('/login',
 )
 
 // /coreApi/auth/logout
-router.delete('/logout', auth, async (req, res) => {
+router.delete('/logout', auth, requireAuth, async (req, res) => {
     try {
         const { user } = req
-        if (!user) {
-            return res.status(403).json({resultCode: 1, message: "Not authorized"})
-        }
 
         user.refreshToken = ""
         res
@@ -143,12 +139,9 @@ router.delete('/logout', auth, async (req, res) => {
 })
 
 // /coreApi/auth/me
-router.get('/me', auth, async (req, res) => {
+router.get('/me', auth, requireAuth, async (req, res) => {
     try {
         const { user } = req
-        if (!user) {
-            return res.status(403).json({resultCode: 1, message: "Not authorized"})
-        }
 
         const {refreshToken, password, ...responseData} = user.toObject()
         res.status(200).json({resultCode: 0, message: "Authorized", data: {user: responseData}})

@@ -15,31 +15,34 @@ export const usersApi = {
         .then(handleResponse<UsersDataType>())
         .catch(handleError()),
     getFriends: () => coreApi
-        .get('/users/friends')
+        .get('/users?isFriend=true')
         .then(handleResponse<{ friends: Array<UserItemDataType> }>())
         .catch(handleError()),
 
+
+
     addFriend: (userId: string) => coreApi
-        .post(`/users/friend/${userId}`)
+        .post(`/friendship/request/${userId}`)
         .then(handleResponse())
         .catch(handleError()),
     cancelFriendshipRequest: (userId: string) => coreApi
-        .post(`/users/friend/${userId}/cancel`)
+        .delete(`/friendship/cancel/${userId}`)
         .then(handleResponse())
         .catch(handleError()),
     acceptFriendshipRequest: (userId: string) => coreApi
-        .post(`/users/friend/${userId}/accept`)
+        .put(`/friendship/accept/${userId}`)
         .then(handleResponse())
         .catch(handleError()),
     declineFriendshipRequest: (userId: string) => coreApi
-        .post(`/users/friend/${userId}/decline`)
+        .delete(`/friendship/decline/${userId}`)
+        .then(handleResponse())
+        .catch(handleError()),
+    deleteFriend: (userId: string) => coreApi
+        .delete(`/friendship/remove/${userId}`)
         .then(handleResponse())
         .catch(handleError()),
 
-    deleteFriend: (userId: string) => coreApi
-        .delete(`/users/friend/${userId}`)
-        .then(handleResponse())
-        .catch(handleError()),
+
 
     follow: (userId: string) => coreApi
         .post(`/follow/${userId}`)
