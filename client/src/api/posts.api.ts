@@ -13,13 +13,13 @@ export const postsApi = {
         .get(`/posts`)
         .then(handleResponse<PostsDataType>())
         .catch(handleError()),
-    getPost: (postId: string) => coreApi
-        .get(`/posts/id/${postId}`)
-        .then(handleResponse<PostDataType>())
-        .catch(handleError()),
-    getUserPosts: (userId: string) => coreApi
-        .get(`/posts/${userId}`)
+    getUserPosts: (username: string) => coreApi
+        .get(`/posts?author=${username}`)
         .then(handleResponse<PostsDataType>())
+        .catch(handleError()),
+    getPost: (postId: string) => coreApi
+        .get(`/posts/${postId}`)
+        .then(handleResponse<PostDataType>())
         .catch(handleError()),
     addPost: (text: string) => coreApi
         .post(`/posts/add`, { text })

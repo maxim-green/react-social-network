@@ -1,7 +1,10 @@
-# server
 /.idea
-/config
 /node_modules
+
+# server
+/server/.idea
+/server/config
+/server/node_modules
 
 # client (create-react-app)
 # dependencies

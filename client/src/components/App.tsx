@@ -37,7 +37,7 @@ const App: React.FC<PropsType> = ({
                 {!authorized && <Route path="/profile/edit" render={() => <Redirect to="/login"/>}/>}
                 <Route exact path="/profile/:username" component={ProfilePage}/>
 
-                <Route path="/post/id/:id" component={PostPage}/>
+                <Route path="/post/:id" component={PostPage}/>
                 <Route path="/feed" component={FeedPage}/>
 
                 <Route path="/users/:filter?" component={UsersPage}/>

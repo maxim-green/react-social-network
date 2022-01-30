@@ -41,13 +41,13 @@ export const usersApi = {
         .then(handleResponse())
         .catch(handleError()),
 
-    addSubscription: (userId: string) => coreApi
-        .post(`/users/subscription/${userId}`)
+    follow: (userId: string) => coreApi
+        .post(`/follow/${userId}`)
         .then(handleResponse())
         .catch(handleError()),
 
-    deleteSubscription: (userId: string) => coreApi
-        .delete(`/users/subscription/${userId}`)
+    unfollow: (userId: string) => coreApi
+        .delete(`/follow/${userId}`)
         .then(handleResponse())
         .catch(handleError())
 }

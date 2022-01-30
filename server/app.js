@@ -34,11 +34,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
-app.use('/api/auth/', require('./routes/auth.route'))
-app.use('/api/profile/', require('./routes/profile.route'))
-app.use('/api/dialogs/', require('./routes/dialogs.route'))
-app.use('/api/users/', require('./routes/users.route'))
-app.use('/api/posts/', require('./routes/posts.route'))
+app.use('/api', require('./routes/api'))
+
 
 const start = async () => {
     try {

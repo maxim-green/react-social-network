@@ -53,8 +53,8 @@ beforeEach(() => {
 
     dispatchMock.mockClear()
     getStateMock.mockClear()
-    mockUsersApi.addSubscription.mockClear()
-    mockUsersApi.deleteSubscription.mockClear()
+    mockUsersApi.follow.mockClear()
+    mockUsersApi.unfollow.mockClear()
 
 })
 
@@ -82,7 +82,7 @@ describe('Users reducer is OK', () => {
             data: {}
         }
 
-        mockUsersApi.addSubscription.mockResolvedValue(ApiResponse)
+        mockUsersApi.follow.mockResolvedValue(ApiResponse)
 
         const thunk = follow('1')
         await thunk(dispatchMock, getStateMock, {})
@@ -98,7 +98,7 @@ describe('Users reducer is OK', () => {
             data: {}
         }
 
-        mockUsersApi.deleteSubscription.mockResolvedValue(ApiResponse)
+        mockUsersApi.unfollow.mockResolvedValue(ApiResponse)
 
         const thunk = unfollow('1')
         await thunk(dispatchMock, getStateMock, {})

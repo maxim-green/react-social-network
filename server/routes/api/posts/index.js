@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/User')
-const Post = require('../models/Post')
+const User = require('../../../models/User')
+const Post = require('../../../models/Post')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
@@ -9,7 +9,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
-const auth = require('../middleware/auth.middleware')
+const auth = require('../../../middleware/auth.middleware')
 const {check, validationResult} = require('express-validator')
 
 
@@ -23,11 +23,16 @@ const {check, validationResult} = require('express-validator')
 //     }
 // })
 
-// /api/posts/
+// /api/posts?author=userId
 router.get('/', async (req, res) => {
     try {
+        if (req.query.author) {
+            const user = await User.findOne({'username' : req.query.author})
+            const posts = await Post.find({'author': user}).populate('author', 'username firstName lastName avatar')
+            return res.status(200).json({resultCode: 0, message: "Success", data: { posts } })
+        }
+
         const posts = await Post.find().populate('author', 'username firstName lastName avatar')
-        console.log(posts)
         res.status(200).json({resultCode: 0, message: "Success", data: { posts }})
     } catch (e) {
         console.log(e)
@@ -35,24 +40,12 @@ router.get('/', async (req, res) => {
     }
 })
 
-// /api/posts/id/:postId
-router.get('/id/:postId', async (req, res) => {
+// /api/posts/:postId
+router.get('/:postId', async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId).populate('author', 'username firstName lastName avatar')
         res.status(200).json({resultCode: 0, message: "Success", data: { post }})
     } catch (e) {
-        res.status(500).json({resultCode: 1, message: "Something went wrong :("})
-    }
-})
-
-// /api/posts/:userId
-router.get('/:username', async (req, res) => {
-    try {
-        const user = await User.findOne({'username' : req.params.username})
-        const posts = await Post.find({'author': user}).populate('author', 'username firstName lastName avatar')
-        res.status(200).json({resultCode: 0, message: "Success", data: { posts } })
-    } catch (e) {
-        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })

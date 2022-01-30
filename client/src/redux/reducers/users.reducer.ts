@@ -166,7 +166,7 @@ export const declineFriendshipRequest = (userId: string): ThunkType<UsersActionT
 }
 
 export const follow = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
-    const res = await usersApi.addSubscription(userId)
+    const res = await usersApi.follow(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, true))
     }
@@ -176,7 +176,8 @@ export const follow = (userId: string): ThunkType<UsersActionType> => async (dis
 }
 
 export const unfollow = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
-    const res = await usersApi.deleteSubscription(userId)
+    const res = await usersApi.unfollow(userId)
+    debugger
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, false))
     }

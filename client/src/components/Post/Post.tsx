@@ -51,7 +51,7 @@ const Post: React.FC<PropsType> = ({
                     <NavLink to="/">
                         <div className={classes.userName}>{username}</div>
                     </NavLink>
-                    <NavLink to={`/post/id/${id}`}><div className={classes.date}>posted on {date}</div></NavLink>
+                    <NavLink to={`/post/${id}`}><div className={classes.date}>posted on {date}</div></NavLink>
                 </div>
                 <div className={classes.menu}>
                     {isAuthorizedUserProfile && onPostDelete && <div>

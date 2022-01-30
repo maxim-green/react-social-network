@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/User')
+const User = require('../../../models/User')
 const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
-const defineUserByRefreshToken = require('../middleware/defineUserByRefreshToken.middleware')
-const auth = require('../middleware/auth.middleware')
-const generateTokens = require('../utils/functions')
+const defineUserByRefreshToken = require('../../../middleware/defineUserByRefreshToken.middleware')
+const auth = require('../../../middleware/auth.middleware')
+const generateTokens = require('../../../utils/functions')
 
 // /api/auth/register
 router.post('/register',
