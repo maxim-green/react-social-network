@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-
 const io = require('socket.io')(server, {
     cors: {
         origin: 'http://localhost:3000',
@@ -10,19 +9,15 @@ const io = require('socket.io')(server, {
     }
 })
 require('./socket/socket')(io)
-
 const config = require('config')
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-
 const path = require('path')
 const serveStatic = require('serve-static')
 
 
-const PORT = config.get('port') || 5000
-
-mongoose.set('useFindAndModify', false)
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -37,6 +32,8 @@ app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
 app.use('/api', require('./routes/api'))
 
 
+
+const PORT = config.get('port') || 5000
 const start = async () => {
     try {
         await mongoose.connect(
@@ -54,5 +51,4 @@ const start = async () => {
         console.log(e)
     }
 }
-
 start()

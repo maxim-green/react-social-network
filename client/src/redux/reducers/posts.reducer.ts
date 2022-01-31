@@ -75,7 +75,7 @@ export const getPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
 
 export const getUserPosts = (username: string): ThunkType<PostsActionType> => async (dispatch) => {
     const res = await postsApi.getUserPosts(username)
-    debugger
+
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.setPosts(res.data.posts))
     }

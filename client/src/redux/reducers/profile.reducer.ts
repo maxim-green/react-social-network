@@ -112,7 +112,7 @@ export const getUserData = (username: string): ThunkType<ProfileActionType> => a
 
 export const updateStatus = (status: string): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateStatus(status)
-    debugger
+
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.setStatus(status))
     }
@@ -123,7 +123,7 @@ export const updateStatus = (status: string): ThunkType<ProfileActionType> => as
 
 export const updateProfile = (profileData: EditProfileDataType): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateProfile(profileData)
-    debugger
+
     if (res.resultCode === ResultCodes.success) {
         dispatch(profileActions.updateProfile(profileData))
     }

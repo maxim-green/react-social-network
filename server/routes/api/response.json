@@ -1,0 +1,10 @@
+{
+  "response": {
+    "resultCode": {
+      "type": "number"
+    },
+    "message": {
+      "type": "string"
+    }
+  }
+}
