@@ -1,7 +1,5 @@
 const router = require('express').Router()
 
-
-
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDefinition = {
@@ -16,7 +14,7 @@ const swaggerDefinition = {
         },
         contact: {
             name: 'Bind',
-            url: 'https://localhost:3000',
+            url: 'http://localhost:3000',
         },
     },
     servers: [

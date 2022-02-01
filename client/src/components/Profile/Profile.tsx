@@ -66,17 +66,17 @@ const ProfileContainer: React.FC = () => {
         dispatch(getUserPosts(username))
     }, [username, dispatch])
 
-    const onAvatarSubmit = (image: File, crop: Point) => {
+    const onAvatarSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()
-        formData.append('avatar', image)
-        formData.append('crop', JSON.stringify(crop))
+        formData.append('image', image)
+        formData.append('crop', JSON.stringify(cropArea))
         dispatch(updateAvatar(formData))
     }
 
     const onCoverImageSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()
-        formData.append('coverImage', image)
-        formData.append('cropArea', JSON.stringify(cropArea))
+        formData.append('image', image)
+        formData.append('crop', JSON.stringify(cropArea))
         dispatch(updateCoverImage(formData))
     }
 

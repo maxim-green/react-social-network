@@ -8,7 +8,7 @@ router.use('/avatar', require('./avatar'))
 router.use('/cover', require('./cover'))
 router.use('/status', require('./status'))
 
-
+// todo add swagger descriptions to this route
 
 // /api/profile/:username
 router.get('/:username', async (req, res) => {

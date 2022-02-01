@@ -9,10 +9,35 @@ const storage = multer.memoryStorage()
 const upload = multer({storage})
 
 
+/**
+ * @swagger
+ * /profile/avatar:
+ *   put:
+ *     summary: Change avatar
+ *     description: Change authorized user avatar
+ *     tags:
+ *       - profile
+ *     requestBody:
+ *       required: true
+ *       description: |
+ *         Image file and crop object must be provided. \
+ *         Crop object example: `{width: number, height: number, x: number, y: number}`
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/ImageWithCrop'
+ *     responses:
+ *       200:
+ *         $ref: '#/components/responses/Success'
+ *       403:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 
 router.put(
     '/',
-    upload.single('avatar'),
+    upload.single('image'),
     auth,
     requireAuth,
     async (req, res) => {
@@ -44,12 +69,12 @@ router.put(
 
             res.status(200).json({
                 resultCode: 0,
-                message: 'File uploaded',
+                message: 'Success',
                 data: user.avatar
             })
         } catch (e) {
             console.log(e)
-            res.status(500).json({resultCode: 1, message: 'Something went wrong2'})
+            res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
         }
     }
 )

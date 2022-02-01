@@ -21,33 +21,11 @@ const { auth, requireAuth } = require('../../../middleware/auth.middleware')
  *                 type: string
  *     responses:
  *       200:
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 resultCode:
- *                   type: number
- *                   enum:
- *                     - 0
- *                 message:
- *                   type: string
- *                   enum:
- *                     - Status updated
+ *         $ref: '#/components/responses/Success'
+ *       403:
+ *         $ref: '#/components/responses/Unauthorized'
  *       500:
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 resultCode:
- *                   type: number
- *                   enum:
- *                     - 1
- *                 message:
- *                   type: string
- *                   enum:
- *                     - Something went wrong :(
+ *         $ref: '#/components/responses/ServerError'
  *
  */
 
@@ -60,7 +38,7 @@ router.put('/', auth, requireAuth, async (req, res) => {
         user.profile.status = status
         await user.save()
 
-        res.status(200).json({resultCode: 0, message: 'Status updated'})
+        res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})

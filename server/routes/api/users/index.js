@@ -5,35 +5,6 @@ const {auth, requireAuth} = require('../../../middleware/auth.middleware')
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       properties:
- *        _id:
- *          type: string
- *        username:
- *          type: string
- *        firstName:
- *          type: string
- *        lastName:
- *          type: string
- *        avatar:
- *          type: object
- *          properties:
- *            small:
- *              type: string
- *            large:
- *              type: string
- *        isFriend:
- *          type: boolean
- *        isSubscription:
- *          type: boolean
- */
-
-// /api/users
-/**
- * @swagger
  * /users:
  *   get:
  *     summary: Retrieve a list of users
@@ -53,29 +24,31 @@ const {auth, requireAuth} = require('../../../middleware/auth.middleware')
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 resultCode:
- *                   type: number
- *                 message:
- *                   type: string
- *                 data:
- *                   type: object
+ *               allOf:
+ *                 - $ref: '#/components/schemas/SuccessfulResponse'
+ *                 - type: object
  *                   properties:
- *                     users:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/User'
- *                     incomingFriendshipRequests:
- *                       type: array
- *                       description: Array filled with ids
- *                       items:
- *                         type: string
- *                     outgoingFriendshipRequests:
- *                       type: array
- *                       items:
- *                         type: string
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         users:
+ *                           type: array
+ *                           items:
+ *                             $ref: '#/components/schemas/User'
+ *                         incomingFriendshipRequests:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                         outgoingFriendshipRequests:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *       403:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
  */
+
 router.get('/',
     auth,
     async (req, res, next) => {
@@ -126,9 +99,6 @@ router.get('/',
 
             const responseFriends = friends.map(friend => ({
                 ...friend
-                // todo
-                // mutualFriends: user.friends.filter(userFriend => friendship.friends.includes(userFriend)),
-                // mutualSubscriptions: user.subscriptions.filter(userSubscription => friendship.subscriptions.includes(userSubscription))
             }))
 
             return res.status(200).json({resultCode: 0, message: 'Success', data: {friends: responseFriends}})
