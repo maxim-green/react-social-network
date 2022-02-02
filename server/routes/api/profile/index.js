@@ -8,7 +8,39 @@ router.use('/avatar', require('./avatar'))
 router.use('/cover', require('./cover'))
 router.use('/status', require('./status'))
 
-// todo add swagger descriptions to this route
+/**
+ * @swagger
+ * /profile/:username:
+ *   get:
+ *     summary: Get user profile
+ *     description: Get user profile data by passed username
+ *     tags:
+ *       - profile
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         description: Username of user
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User profile data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/SuccessfulResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         user:
+ *                           $ref: '#/components/schemas/UserProfile'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 
 // /api/profile/:username
 router.get('/:username', async (req, res) => {
@@ -19,7 +51,7 @@ router.get('/:username', async (req, res) => {
             .populate('profile')
             .select('-refreshToken -password -incomingFriendshipRequests -outgoingFriendshipRequests')
 
-        res.status(200).json({resultCode: 0, message: 'GET Profile:Success', data: {user: user.toObject()}})
+        res.status(200).json({resultCode: 0, message: 'Success', data: {user: user.toObject()}})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }
@@ -27,7 +59,29 @@ router.get('/:username', async (req, res) => {
 
 
 
-// /api/profile
+/**
+ * @swagger
+ * /profile:
+ *   put:
+ *     summary: Update user profile
+ *     description: Update authorized user profile
+ *     tags:
+ *       - profile
+ *     parameters:
+ *       - in: body
+ *         name: profile
+ *         description: New profile data
+ *         schema:
+ *           $ref: '#/components/schemas/UserProfileUpdatePayload'
+ *     responses:
+ *       200:
+ *         $ref: '#/components/responses/Success'
+ *       400:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
+
 router.put('/', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
@@ -38,11 +92,9 @@ router.put('/', auth, requireAuth, async (req, res) => {
         user.profile = {...user.profile, ...profile}
         await user.save()
 
-        res.status(200).json({resultCode: 0, message: 'ProfileInfo updated'})
+        res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
-        if (e instanceof jwt.TokenExpiredError) return res.status(403).json({resultCode: 10, message: 'Token expired'})
-        if (e instanceof jwt.JsonWebTokenError) return res.status(403).json({resultCode: 1, message: 'Token invalid'})
-        res.status(500).json({resultCode: 1, message: 'Something went wrong2 :('})
+        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }
 })
 

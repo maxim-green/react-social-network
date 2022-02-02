@@ -34,7 +34,14 @@ const {auth, requireAuth} = require('../../../middleware/auth.middleware')
  *                         users:
  *                           type: array
  *                           items:
- *                             $ref: '#/components/schemas/User'
+ *                             allOf:
+ *                               - $ref: '#/components/schemas/User'
+ *                               - type: object
+ *                                 properties:
+ *                                   isFriend:
+ *                                     type: boolean
+ *                                   isSubscription:
+ *                                     type: boolean
  *                         incomingFriendshipRequests:
  *                           type: array
  *                           items:
@@ -62,8 +69,8 @@ router.get('/',
                 const {friends, subscriptions} = user
                 responseUsers = users.map(user => ({
                     ...user,
-                    isFriend: friends.includes(user._id),
-                    isSubscription: subscriptions.includes(user._id)
+                    isFriend: friends.includes(user._id),       // todo: change to send just friends array
+                    isSubscription: subscriptions.includes(user._id)  // todo: change to send just subscriptions array
                 }))
             }
 
