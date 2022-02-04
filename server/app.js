@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
-app.use('/api', require('./routes/api'))
+app.use('/api', require('./routes/api/api.route'))
 
 
 

@@ -1,0 +1,50 @@
+/profile/:username:
+  get:
+    summary: Get user profile
+    description: Get user profile data by passed username
+    tags:
+      - profile
+    parameters:
+      - in: path
+        name: username
+        description: Username of user
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: User profile data
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        user:
+                          $ref: '#/components/schemas/UserProfile'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+/profile:
+  put:
+    summary: Update user profile
+    description: Update authorized user profile
+    tags:
+      - profile
+    parameters:
+      - in: body
+        name: profile
+        description: New profile data
+        schema:
+          $ref: '#/components/schemas/UserProfileUpdatePayload'
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      400:
+        $ref: '#/components/responses/Unauthorized'
+      500:
+        $ref: '#/components/responses/ServerError'

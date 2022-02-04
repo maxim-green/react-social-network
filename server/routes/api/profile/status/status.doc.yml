@@ -1,0 +1,23 @@
+/profile/status:
+  put:
+    summary: Change status
+    description: Change authorized user status.
+    tags:
+      - profile
+    requestBody:
+      required: true
+      description: New status string must be provided.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      403:
+        $ref: '#/components/responses/Unauthorized'
+      500:
+        $ref: '#/components/responses/ServerError'

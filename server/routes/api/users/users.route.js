@@ -3,59 +3,6 @@ const router = express.Router()
 const User = require('../../../models/User')
 const {auth, requireAuth} = require('../../../middleware/auth.middleware')
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Retrieve a list of users
- *     description: Retrieve a list of registered users. Used within users page to retrieve users data.
- *     tags:
- *       - users
- *     parameters:
- *       - in: query
- *         name: isFriend
- *         description: If true return only users which are friends of user who sent request. Must be authorized to use this parameter.
- *         schema:
- *           type: boolean
- *         required: false
- *     responses:
- *       200:
- *         description: A list of users.
- *         content:
- *           application/json:
- *             schema:
- *               allOf:
- *                 - $ref: '#/components/schemas/SuccessfulResponse'
- *                 - type: object
- *                   properties:
- *                     data:
- *                       type: object
- *                       properties:
- *                         users:
- *                           type: array
- *                           items:
- *                             allOf:
- *                               - $ref: '#/components/schemas/User'
- *                               - type: object
- *                                 properties:
- *                                   isFriend:
- *                                     type: boolean
- *                                   isSubscription:
- *                                     type: boolean
- *                         incomingFriendshipRequests:
- *                           type: array
- *                           items:
- *                             type: string
- *                         outgoingFriendshipRequests:
- *                           type: array
- *                           items:
- *                             type: string
- *       403:
- *         $ref: '#/components/responses/Unauthorized'
- *       500:
- *         $ref: '#/components/responses/ServerError'
- */
-
 router.get('/',
     auth,
     async (req, res, next) => {

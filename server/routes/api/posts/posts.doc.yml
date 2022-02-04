@@ -1,0 +1,116 @@
+/posts:
+  get:
+    summary: Get list of posts
+    description: Get list of posts
+    tags:
+      - posts
+    parameters:
+      - in: query
+        name: author
+        description: If this parameter is passed response will be list of posts with specific author
+        required: false
+    responses:
+      200:
+        description: User profile data
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        posts:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Post'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+  post:
+    summary: Add new post
+    description: Adds new post. Request must be authorized.
+    tags:
+      - posts
+    requestBody:
+      required: true
+      description: Post text must be provided by user
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              text:
+                type: string
+    responses:
+      200:
+        description: Created post
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        post:
+                          $ref: '#/components/schemas/Post'
+      403:
+        $ref: '#/components/responses/Unauthorized'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+/posts/:id:
+  get:
+    summary: Get post
+    description: Get post by id
+    tags:
+      - posts
+    parameters:
+      - in: path
+        name: id
+        description: Id of requested post
+    responses:
+      200:
+        description: Post data.
+        content:
+          application/json:
+            schema:
+              allOf:
+                  - $ref: '#/components/schemas/SuccessfulResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          post:
+                            $ref: '#/components/schemas/Post'
+      404:
+        $ref: '#/components/responses/NotFound'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+  delete:
+    summary: Delete post
+    description: Delete post by post id. Request must be authorized. User must be author of the post.
+    tags:
+      - posts
+    parameters:
+      - in: path
+        name: id
+        description: Id of post that will be deleted
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      404:
+        $ref: '#/components/responses/NotFound'
+      500:
+        $ref: '#/components/responses/ServerError'

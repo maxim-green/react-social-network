@@ -22,11 +22,11 @@ export const postsApi = {
         .then(handleResponse<PostDataType>())
         .catch(handleError()),
     addPost: (text: string) => coreApi
-        .post(`/posts/add`, { text })
+        .post(`/posts`, { text })
         .then(handleResponse<NewPostDataType>())
         .catch(handleError()),
     deletePost: (id: string) => coreApi
-        .delete(`/posts/delete/${id}`)
+        .delete(`/posts/${id}`)
         .then(handleResponse())
         .catch(handleError())
 }

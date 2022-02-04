@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { auth, requireAuth } = require('../../../middleware/auth.middleware')
+const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
 const config = require('config')
 const path = require('path')
 const sharp = require('sharp')
@@ -7,32 +7,6 @@ const multer = require('multer')
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
-
-/**
- * @swagger
- * /profile/cover:
- *   put:
- *     summary: Change cover image
- *     description: Change authorized user cover image
- *     tags:
- *       - profile
- *     requestBody:
- *       required: true
- *       description: |
- *         Image file and crop object must be provided. \
- *         Crop object example: `{width: number, height: number, x: number, y: number}`
- *       content:
- *         multipart/form-data:
- *           schema:
- *             $ref: '#/components/schemas/ImageWithCrop'
- *     responses:
- *       200:
- *         $ref: '#/components/responses/Success'
- *       403:
- *         $ref: '#/components/responses/Unauthorized'
- *       500:
- *         $ref: '#/components/responses/ServerError'
- */
 
 router.put(
     '/',

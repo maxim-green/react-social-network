@@ -24,14 +24,13 @@ const swaggerDefinition = {
         }
     ],
 };
+
 const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: ['./routes/**/*.js'],
+    apis: ['./routes/**/*.yml'],
 };
 const swaggerSpec = swaggerJSDoc(options);
-
-
 
 router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

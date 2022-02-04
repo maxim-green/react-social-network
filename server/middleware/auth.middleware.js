@@ -13,7 +13,7 @@ module.exports = {
 
         try {
             const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
-            req.user = await User.findById(userId)
+            req.user = await User.findById(userId).exec()
             return next()
         } catch (e) {
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')

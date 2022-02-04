@@ -5,8 +5,6 @@ const Post = require('../../../models/Post')
 const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 const {check, validationResult} = require('express-validator')
 
-
-
 // /api/posts?author=userId
 router.get('/', async (req, res) => {
     try {
@@ -28,14 +26,18 @@ router.get('/', async (req, res) => {
 router.get('/:postId', async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId).populate('author', 'username firstName lastName avatar')
+        if (!post) {
+            return res.status(404).json({resultCode: 1, message: 'Requested resource not found'})
+        }
+
         res.status(200).json({resultCode: 0, message: "Success", data: { post }})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
-// /api/posts/add
-router.post('/add', [
+// /api/posts/
+router.post('/', [
     check('text', 'New post text cannot be empty.').exists()
 ], auth, requireAuth, async (req, res) => {
     try {
@@ -56,29 +58,35 @@ router.post('/add', [
             text: req.body.text
         })
         await newPost.save()
+        await Post.populate(newPost, {path: 'author', model: 'User', select: 'username firstName lastName avatar'})
 
-        res.status(200).json({resultCode: 0, message: "Success", data: { post: newPost }})
+        const responseData = {
+            post: newPost
+        }
+        res.status(200).json({resultCode: 0, message: "Success", data: responseData})
     } catch (e) {
-        console.log('---')
-        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
-router.delete('/delete/:postId', auth, requireAuth, async (req, res) => {
-    const {user} = req
+router.delete('/:id', auth, requireAuth, async (req, res) => {
+    try {
+        const {user} = req
 
-    const {postId} = req.params
-    const post = await Post.findById(postId).populate('author')
-    if (!post) {
-        return res.status(404).json({resultCode: 1, message: 'Post does not exist.'})
-    }
+        const {id} = req.params
+        const post = await Post.findById(id).populate('author')
+        if (!post) {
+            return res.status(404).json({resultCode: 1, message: 'Requested resource not found'})
+        }
 
-    if (post.author.username === user.username) {
-        await post.delete()
-        return res.status(200).json({resultCode: 0, message: 'Post deleted.'})
-    } else {
-        return res.status(403).json({resultCode: 10, message: 'Access denied.'})
+        if (post.author.username === user.username) {
+            await post.delete()
+            return res.status(200).json({resultCode: 0, message: 'Success'})
+        } else {
+            return res.status(401).json({resultCode: 1, message: 'Forbidden'})
+        }
+    } catch (e) {
+        res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })
 
