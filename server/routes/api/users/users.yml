@@ -43,7 +43,9 @@
                           type: array
                           items:
                             type: string
-      403:
-        $ref: '#/components/responses/Unauthorized'
+      401:
+        allOf:
+        - $ref: '#/components/responses/Unauthorized'
+        - description: Not authorized. Possible when using query parameter `isFriend`
       500:
         $ref: '#/components/responses/ServerError'

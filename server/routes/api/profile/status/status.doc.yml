@@ -17,7 +17,7 @@
     responses:
       200:
         $ref: '#/components/responses/Success'
-      403:
+      401:
         $ref: '#/components/responses/Unauthorized'
       500:
         $ref: '#/components/responses/ServerError'

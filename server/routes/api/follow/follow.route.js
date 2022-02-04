@@ -7,15 +7,15 @@ router.post('/:targetUserId', auth, requireAuth, async (req, res) => {
         const {user} = req
 
         const {targetUserId} = req.params
-        if (user.subscriptions.includes(targetUserId)) return res.status(400).json({
+        if (user.subscriptions.includes(targetUserId)) return res.status(409).json({
             resultCode: 1,
-            message: 'User is already in subscriptions'
+            message: 'Resource conflict'
         })
 
         user.subscriptions.push(targetUserId)
         await user.save()
 
-        res.status(200).json({resultCode: 0, message: 'Subscription successfully added'})
+        res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
@@ -28,16 +28,16 @@ router.delete('/:targetUserId', auth, requireAuth, async (req, res) => {
         const {user} = req
 
         const {targetUserId} = req.params
-        if (!user.subscriptions.includes(targetUserId)) return res.status(400).json({
+        if (!user.subscriptions.includes(targetUserId)) return res.status(404).json({
             resultCode: 1,
-            message: 'Not a subscription'
+            message: 'Requested resource not found'
         })
 
         const index = user.subscriptions.indexOf(targetUserId)
         user.subscriptions.splice(index, 1)
         user.save()
 
-        res.status(200).json({resultCode: 0, message: 'Subscription successfully removed'})
+        res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})

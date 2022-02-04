@@ -26,7 +26,7 @@ module.exports = {
     requireAuth: (req, res, next) => {
         const {user} = req
         if (!user) {
-            return res.status(403).json({resultCode: 1, message: 'Not authorized'})
+            return res.status(401).json({resultCode: 1, message: 'Not authorized'})
         } else {
             return next()
         }

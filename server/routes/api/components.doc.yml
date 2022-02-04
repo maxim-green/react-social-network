@@ -6,6 +6,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessfulResponse'
+    Conflict:
+      description: The request could not be completed due to a conflict with the current state of the resource
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              resultCode:
+                type: number
+                enum:
+                  - 1
+              message:
+                type: string
+                enum:
+                  - Resource conflict
     Unauthorized:
       description: Request from unauthorized user
       content:

@@ -26,6 +26,8 @@
                       properties:
                         user:
                           $ref: '#/components/schemas/UserProfile'
+      404:
+        $ref: '#/components/responses/NotFound'
       500:
         $ref: '#/components/responses/ServerError'
 
@@ -44,7 +46,7 @@
     responses:
       200:
         $ref: '#/components/responses/Success'
-      400:
+      401:
         $ref: '#/components/responses/Unauthorized'
       500:
         $ref: '#/components/responses/ServerError'

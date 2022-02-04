@@ -1,0 +1,34 @@
+/follow/:userId:
+  post:
+    summary: Follow user
+    description: Follow user, specified by id. Request must be authorized.
+    tags:
+      - follow
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      409:
+        allOf:
+        - $ref: '#/components/responses/Conflict'
+        - description: User is already in follows
+      500:
+        $ref: '#/components/responses/ServerError'
+
+  delete:
+    summary: Unfollow user
+    description: Unfollow user, specified by id. Request must be authorized.
+    tags:
+      - follow
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      404:
+        allOf:
+        - $ref: '#/components/responses/NotFound'
+        - description: No user with such id
+      500:
+        $ref: '#/components/responses/ServerError'

@@ -15,6 +15,8 @@ router.get('/:username', async (req, res) => {
             .populate('profile')
             .select('-refreshToken -password -incomingFriendshipRequests -outgoingFriendshipRequests')
 
+        if (!user) return res.status(404).json({ resultCode: 1, message: 'Requested resource not found' })
+
         res.status(200).json({resultCode: 0, message: 'Success', data: {user: user.toObject()}})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
