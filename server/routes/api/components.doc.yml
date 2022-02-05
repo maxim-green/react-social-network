@@ -254,3 +254,30 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+
+    Dialog:
+      type: object
+      properties:
+        _id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        companionUser:
+          $ref: '#/components/schemas/User'
+
+    Message:
+      type: object
+      properties:
+        _id:
+          type: string
+        date:
+          type: string
+          format: date-time
+        author:
+          $ref: '#/components/schemas/User'
+        text:
+          type: string

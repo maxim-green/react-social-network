@@ -15,7 +15,7 @@ router.get('/', auth, requireAuth, async (req, res) => {
             .lean()
 
         const resultDialogs = dialogs.map(dialog => ({
-            id: dialog._id,
+            _id: dialog._id,
             created: dialog.created,
             updated: dialog.updated,
             companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, firstName: u.firstName, avatar: u.avatar}))
@@ -35,7 +35,7 @@ router.get('/:username', auth, requireAuth, async (req, res) => {
         const {user} = req
 
         const targetUser = await User.findOne({username: req.params.username})
-        if (!targetUser) return res.status(403).json({resultCode: 1, message: `Wrong username :(`})
+        if (!targetUser) return res.status(404).json({resultCode: 1, message: `Requested resource not found`})
 
         let dialog = await Dialog.findOne({
             $and: [
@@ -48,7 +48,7 @@ router.get('/:username', auth, requireAuth, async (req, res) => {
         if (dialog) {
             resultDialog = {
                 ...dialog,
-                id: dialog._id,
+                _id: dialog._id,
                 messages: dialog.messages.map(m => ({
                     ...m,
                     author: {...m.author, ...m.author.profileData, profileData: undefined}
@@ -66,7 +66,7 @@ router.get('/:username', auth, requireAuth, async (req, res) => {
             await resultDialog.save()
         }
 
-        res.status(200).json({resultCode: 0, message: 'Success', data: {currentDialogId: resultDialog.id, date: resultDialog.creationDate, messages: resultDialog.messages}})
+        res.status(200).json({resultCode: 0, message: 'Success', data: {_id: resultDialog._id, messages: resultDialog.messages}})
     } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})

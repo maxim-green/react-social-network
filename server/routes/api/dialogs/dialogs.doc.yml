@@ -1,0 +1,65 @@
+/dialogs:
+  get:
+    summary: Get dialogs
+    description: Get dialogs array of authorized user. Each dialog is in simplified form. Use when you need to list all existing user dialogs (f.e. for navigating dialogs). Request must be authorized.
+    tags:
+      - dialogs
+    responses:
+      200:
+        description: Success. Data contains array of dialog objects.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        dialogs:
+                          type: array
+                          items:
+                          $ref: '#/components/schemas/Dialog'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+/dialogs/:username:
+  get:
+    summary: Get dialog
+    description: Get dialog with specified user. Request must be authorized. If dialog does not exist - creates one.
+    tags:
+      - dialogs
+    parameters:
+      - in: path
+        name: username
+        description: Username parameter.
+    responses:
+      200:
+        description: Success. Data contains dialog id and array with dialog messages.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        messages:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Message'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      404:
+        allOf:
+        - $ref: '#/components/responses/NotFound'
+        - description: No user with such username
+      500:
+        $ref: '#/components/responses/ServerError'
