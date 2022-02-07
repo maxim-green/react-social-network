@@ -26,12 +26,12 @@ router.post('/',
 
             const user = await User.findOne({email})
             if (!user) {
-                return res.status(400).json({resultCode: 1, message: "Wrong e-mail or password."})
+                return res.status(401).json({resultCode: 1, message: "Wrong e-mail or password"})
             }
 
             const isEqual = await bcrypt.compare(password, user.password)
             if (!isEqual) {
-                return res.status(400).json({resultCode: 1, message: "Wrong e-mail or password."})
+                return res.status(401).json({resultCode: 1, message: "Wrong e-mail or password"})
             }
 
             const {accessToken, refreshToken} = await generateTokens(user)
@@ -40,7 +40,7 @@ router.post('/',
                 .cookie("accessToken", accessToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
                 .cookie("refreshToken", refreshToken, {httpOnly: true}) // add secure: process.env.NODE_ENV === "production" option
                 .status(200)
-                .json({resultCode: 0, message: "Succesfully logged in"})
+                .json({resultCode: 0, message: "Success"})
         } catch (e) {
             console.log(e)
             res.status(500).json({resultCode: 1, message: "Something went wrong :("})

@@ -1,4 +1,4 @@
-import {follow, unfollow, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
+import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
 
 import {APIResponseType, ResultCodes} from '../api/core.api'
 
@@ -53,8 +53,8 @@ beforeEach(() => {
 
     dispatchMock.mockClear()
     getStateMock.mockClear()
-    mockUsersApi.follow.mockClear()
-    mockUsersApi.unfollow.mockClear()
+    mockUsersApi.subscribe.mockClear()
+    mockUsersApi.unsubscribe.mockClear()
 
 })
 
@@ -82,9 +82,9 @@ describe('Users reducer is OK', () => {
             data: {}
         }
 
-        mockUsersApi.follow.mockResolvedValue(ApiResponse)
+        mockUsersApi.subscribe.mockResolvedValue(ApiResponse)
 
-        const thunk = follow('1')
+        const thunk = subscribe('1')
         await thunk(dispatchMock, getStateMock, {})
 
         expect(dispatchMock).toBeCalledTimes(1)
@@ -98,9 +98,9 @@ describe('Users reducer is OK', () => {
             data: {}
         }
 
-        mockUsersApi.unfollow.mockResolvedValue(ApiResponse)
+        mockUsersApi.unsubscribe.mockResolvedValue(ApiResponse)
 
-        const thunk = unfollow('1')
+        const thunk = unsubscribe('1')
         await thunk(dispatchMock, getStateMock, {})
 
         expect(dispatchMock).toBeCalledTimes(1)

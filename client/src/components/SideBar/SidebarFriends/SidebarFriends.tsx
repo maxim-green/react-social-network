@@ -6,22 +6,22 @@ import {NavLink} from 'react-router-dom'
 import {UserItemDataType} from '../../../types/types'
 
 type PropsType = {
-    friends: Array<UserItemDataType>
+    subscriptions: Array<UserItemDataType>
 }
 
-const SidebarFriends: React.FC<PropsType> = ({friends}) => {
+const SidebarFriends: React.FC<PropsType> = ({subscriptions}) => {
     return (
         <Card>
             <div className={classes.sidebarFriends}>
-                <div className={classes.Title}>Friends</div>
+                <div className={classes.Title}>Subscriptions</div>
                 <div className={classes.Avatars}>
-                    {friends.length !== 0 && friends.map(friend => <NavLink to={`/profile/${friend.username}`}
-                                                                            key={friend._id}>
-                            <Avatar img={friend.avatar.small} online size={'sm'} name={friend.firstName}/>
+                    {subscriptions.length !== 0 && subscriptions.map(sub => <NavLink to={`/profile/${sub.username}`}
+                                                                            key={sub._id}>
+                            <Avatar img={sub.avatar.small} online size={'sm'} name={sub.firstName}/>
                         </NavLink>
                     )}
                 </div>
-                <div className={classes.Link}><NavLink to='/users/friends'>View All ({friends.length})</NavLink></div>
+                <div className={classes.Link}><NavLink to='/users/subscriptions'>View All ({subscriptions.length})</NavLink></div>
             </div>
         </Card>
     )

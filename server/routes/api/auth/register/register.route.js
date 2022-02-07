@@ -27,11 +27,11 @@ router.post('/',
 
             let candidate = await User.findOne({email})
             if (candidate) {
-                return res.status(400).json({resultCode: 1, message: "User with this email already exists"})
+                return res.status(409).json({resultCode: 1, message: "User with this email already exists"})
             }
             candidate = await User.findOne({username})
             if (candidate) {
-                return res.status(400).json({resultCode: 1, message: "User with this user name already exists "})
+                return res.status(409).json({resultCode: 1, message: "User with this user name already exists "})
             }
 
             const hashedPassword = await bcrypt.hash(password, 10)
@@ -41,11 +41,13 @@ router.post('/',
                 email,
                 password: hashedPassword,
                 username,
-                profileData: { firstName, lastName }
+                firstName,
+                lastName
             })
             await newUser.save()
-            res.status(200).json({resultCode: 0, message: "Registration successful"})
+            res.status(200).json({resultCode: 0, message: "Success"})
         } catch (e) {
+            console.log(e)
             res.status(500).json({resultCode: 1, message: "Something went wrong :("})
         }
     }

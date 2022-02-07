@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 
-// /api/follow/:targetUserId
+// /api/subscription/:targetUserId
 router.post('/:targetUserId', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
@@ -22,13 +22,13 @@ router.post('/:targetUserId', auth, requireAuth, async (req, res) => {
     }
 })
 
-// /api/follow/:targetUserId
+// /api/subscription/:targetUserId
 router.delete('/:targetUserId', auth, requireAuth, async (req, res) => {
     try {
         const {user} = req
 
         const {targetUserId} = req.params
-        if (!user.subscriptions.includes(targetUserId)) return res.status(404).json({
+        if (!user.subscriptions.map(sub => sub._id).includes(targetUserId)) return res.status(404).json({
             resultCode: 1,
             message: 'Requested resource not found'
         })

@@ -1,0 +1,29 @@
+/auth/me:
+  get:
+    summary: Authorization check
+    description: Check if user is authorized. If so, response will contain authorized user profile data.
+    tags:
+      - auth
+    responses:
+      200:
+        description: User authorized
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - Authorized
+                    data:
+                      type: object
+                      properties:
+                        user:
+                          $ref: '#/components/schemas/UserProfile'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      500:
+        $ref: '#/components/responses/ServerError'

@@ -11,15 +11,9 @@ type PropsType = {
     authorized: boolean
     authorizedUserId?: string
     user: UserItemDataType
-    isIncomingFriendshipRequest: boolean
-    isOutgoingFriendshipRequest: boolean
-    addFriend: (userId: string) => void
-    deleteFriend: (userId: string) => void
-    cancelFriendshipRequest: (userId: string) => void
-    acceptFriendshipRequest: (userId: string) => void
-    declineFriendshipRequest: (userId: string) => void
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
+    isSubscribed: boolean
+    subscribe: (userId: string) => void
+    unsubscribe: (userId: string) => void
     mutualFriendsCount: number
 }
 
@@ -27,42 +21,21 @@ const UserItem: React.FC<PropsType> = ({
                                            authorized,
                                            authorizedUserId,
                                            user,
-                                           addFriend,
-                                           deleteFriend,
-                                           cancelFriendshipRequest,
-                                           acceptFriendshipRequest,
-                                           declineFriendshipRequest,
-                                           follow,
-                                           unfollow,
+                                           isSubscribed,
+                                           subscribe,
+                                           unsubscribe,
                                            mutualFriendsCount,
-                                           isIncomingFriendshipRequest,
-                                           isOutgoingFriendshipRequest
                                        }) => {
 
     const isAuthorizedUserItem = authorized && (authorizedUserId === user._id)
 
-    const addFriendButtonClickHandler = () => {
-        if (!user.isFriend) {
-            addFriend(user._id)
-        } else {
-            deleteFriend(user._id)
-        }
-    }
-    const acceptFriendshipRequestButtonClickHandler = () => {
-        acceptFriendshipRequest(user._id)
-    }
-    const declineFriendshipRequestButtonClickHandler = () => {
-        declineFriendshipRequest(user._id)
-    }
-    const cancelFriendshipRequestButtonClickHandler = () => {
-        cancelFriendshipRequest(user._id)
-    }
+
 
     const followButtonClickHandler = () => {
-        if (!user.isSubscription) {
-            follow(user._id)
+        if (!isSubscribed) {
+            subscribe(user._id)
         } else {
-            unfollow(user._id)
+            unsubscribe(user._id)
         }
     }
 
@@ -97,33 +70,11 @@ const UserItem: React.FC<PropsType> = ({
                 </div>}
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
-                        {!isIncomingFriendshipRequest && !isOutgoingFriendshipRequest && <Button
-                            type="neutral"
-                            size="small"
-                            onClick={addFriendButtonClickHandler}
-                        ><Button.Text>{!user.isFriend ? 'Add to friends' : 'Remove from friends'}</Button.Text></Button>}
-                        {isIncomingFriendshipRequest && <Button
-                            type="neutral"
-                            size="small"
-                            onClick={acceptFriendshipRequestButtonClickHandler}
-                        ><Button.Text>Accept</Button.Text></Button>}
-                        {isIncomingFriendshipRequest && <Button
-                            type="neutral"
-                            size="small"
-                            onClick={declineFriendshipRequestButtonClickHandler}
-                        ><Button.Text>Decline</Button.Text></Button>}
-                        {isOutgoingFriendshipRequest && <Button
-                            type="neutral"
-                            size="small"
-                            onClick={cancelFriendshipRequestButtonClickHandler}
-                        ><Button.Text>Cancel</Button.Text></Button>}
-                    </div>
-                    <div className={classes.button}>
                         <Button
                             type="neutral"
                             size="small"
                             onClick={followButtonClickHandler}
-                        ><Button.Text>{!user.isSubscription ? 'Follow' : 'Unfollow'}</Button.Text></Button>
+                        ><Button.Text>{!isSubscribed ? 'Follow' : 'Unfollow'}</Button.Text></Button>
                     </div>
                 </div>}
             </div>

@@ -15,8 +15,6 @@ export type AvatarType = { large: string | null, small: string | null }
 // type for current user data
 export type AuthUserDataType = UserDataType & {
     email: string
-    incomingFriendshipRequests: Array<string>
-    outgoingFriendshipRequests: Array<string>
 }
 
 // type for user profile data
@@ -36,10 +34,8 @@ export type UserDataType = {
         location: LocationType,
         coverImage: string | null
     }
-    friends: Array<string>
-    subscriptions: Array<string>
+    subscriptions: Array<UserItemDataType>
 }
-
 
 
 // type for user-items shown on users page
@@ -49,8 +45,7 @@ export type UserItemDataType = {
     firstName: string
     lastName: string
     avatar: AvatarType
-    isFriend?: boolean
-    isSubscription?: boolean
+    subscriptions: Array<string>
 }
 
 // type for dialogs messages

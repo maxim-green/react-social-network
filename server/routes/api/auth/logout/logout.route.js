@@ -12,7 +12,7 @@ router.delete('/', auth, requireAuth, async (req, res) => {
             .clearCookie('accessToken')
             .clearCookie('refreshToken')
             .status(200)
-            .json({resultCode: 0, message: "Successfully logged out"})
+            .json({resultCode: 0, message: "Success"})
     } catch (e) {
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }

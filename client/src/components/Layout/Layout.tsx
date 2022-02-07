@@ -7,7 +7,6 @@ import Card from '../_shared/Card/Card'
 import LoginForm from '../_forms/LoginForm'
 import SidebarNavigation from '../SideBar/SidebarNavigation/SidebarNavigation'
 import SidebarFriends from '../SideBar/SidebarFriends/SidebarFriends'
-import {getFriends} from '../../redux/reducers/users.reducer'
 import {AvatarType, UserItemDataType} from '../../types/types'
 import {logout} from '../../redux/reducers/auth.reducer'
 
@@ -15,11 +14,11 @@ type PropsType = {
     sidebar?: boolean
     authUserName?: string
     authUserAvatar?: AvatarType
-    friends: Array<UserItemDataType>
+    subscriptions: Array<UserItemDataType>
     onLogout: () => void
 }
 
-const Layout: React.FC<PropsType> = ({children, sidebar= false, friends, authUserName, authUserAvatar, onLogout}) => {
+const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, authUserName, authUserAvatar, onLogout}) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     return (
         <div className={classes.layout}>
@@ -30,7 +29,7 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, friends, authUse
                 {sidebar && <Sidebar>
                     {!authorized && <Card><div style={{padding: '10px'}}><LoginForm compact={true}/></div></Card>}
                     {authorized && <SidebarNavigation/>}
-                    {authorized && <SidebarFriends friends={friends}/>}
+                    {authorized && <SidebarFriends subscriptions={subscriptions}/>}
                 </Sidebar>}
 
                 <Content>
@@ -82,21 +81,16 @@ const Sidebar: React.FC = ({children}) => {
 }
 
 const LayoutContainer: React.FC<{ sidebar?: boolean }> = (props) => {
-    const authorized = useSelector((state: StateType) => state.auth.authorized)
     const dispatch = useDispatch()
-    const friends = useSelector((state: StateType) => state.users.friends)
+    const authUserSubscriptions = useSelector((state: StateType) => state.auth.user?.subscriptions || [])
     const authUserName = useSelector((state: StateType) => state.auth.user?.username)
     const authUserAvatar = useSelector((state: StateType) => state.auth.user?.avatar)
-
-    useEffect(() => {
-        if (authorized) dispatch(getFriends())
-    }, [dispatch, authorized])
 
     const onLogout = () => {
         dispatch(logout())
     }
 
-    return  <Layout {...props} friends={friends} authUserName={authUserName} authUserAvatar={authUserAvatar} onLogout={onLogout}/>
+    return  <Layout {...props} subscriptions={authUserSubscriptions} authUserName={authUserName} authUserAvatar={authUserAvatar} onLogout={onLogout}/>
 }
 
 export default LayoutContainer

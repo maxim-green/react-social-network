@@ -29,10 +29,7 @@ const schema = new Schema(
                 github: {type: String, default: null},
             }
         },
-        friends: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
         subscriptions: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
-        incomingFriendshipRequests: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
-        outgoingFriendshipRequests: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
     },
     {
         collection: 'users'

@@ -1,0 +1,24 @@
+/auth/refresh-tokens:
+  post:
+    summary: Refresh tokens
+    description: If refresh token passed in cookie is valid - generate new pair of tokens and write them in cookie.
+    tags:
+      - auth
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      401:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - Invalid token
+
+      500:
+        $ref: '#/components/responses/ServerError'

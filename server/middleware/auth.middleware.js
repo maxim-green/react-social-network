@@ -13,7 +13,12 @@ module.exports = {
 
         try {
             const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
-            req.user = await User.findById(userId).exec()
+
+            req.user = await User.findById(userId)
+                .select('-refreshToken -password')
+                .populate('subscriptions', 'username firstName lastName avatar subscriptions')
+                .exec()
+
             return next()
         } catch (e) {
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
@@ -47,7 +52,7 @@ module.exports = {
         if (!refreshToken === candidate.refreshToken) {
             candidate.refreshToken = ""
             await candidate.save()
-            return res.status(400).json({resultCode: 1, message: "Invalid refresh token"})
+            return res.status(401).json({resultCode: 1, message: "Invalid token"})
         }
 
         req.user = candidate

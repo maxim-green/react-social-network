@@ -1,0 +1,55 @@
+/auth/login:
+  post:
+    summary: User log in
+    description: User log in based on e-mail and password.
+    tags:
+      - auth
+    requestBody:
+      required: true
+      description: Request body should contain valid e-mail and password.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              e-mail:
+                type: string
+                format: email
+              password:
+                type: string
+                format: password
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      400:
+        description: Validation error. Response contains validation errors array.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - Invalid login data
+                    errors:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ValidationError'
+      401:
+        description: Authorization failed.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - Wrong e-mail or password
+      500:
+        $ref: '#/components/responses/ServerError'

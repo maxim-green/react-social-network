@@ -5,82 +5,85 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SuccessfulResponse'
+            allOf:
+              - $ref: '#/components/schemas/SuccessfulResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Success
+
     Conflict:
       description: The request could not be completed due to a conflict with the current state of the resource
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              resultCode:
-                type: number
-                enum:
-                  - 1
-              message:
-                type: string
-                enum:
-                  - Resource conflict
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Conflict
+
     Unauthorized:
       description: Request from unauthorized user
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              resultCode:
-                type: number
-                enum:
-                  - 1
-              message:
-                type: string
-                enum:
-                  - Not authorized
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Not authorized
+
     Forbidden:
       description: User does not have access rights to the content
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              resultCode:
-                type: number
-                enum:
-                  - 1
-              message:
-                type: string
-                enum:
-                  - Forbidden
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Forbidden
+
     NotFound:
       description: The server can not find the requested resource.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              resultCode:
-                type: number
-                enum:
-                  - 1
-              message:
-                type: string
-                enum:
-                  - Requested resource not found
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Not found
+
     ServerError:
       description: Unknown server error
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              resultCode:
-                type: number
-                enum:
-                  - 1
-              message:
-                type: string
-                enum:
-                  - Something went wrong :(
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - Internal server error
+
   requestBodies:
     ImageWithCrop:
       description: "Image file and crop object must be provided. Crop object example: `{ width: number, height: number, x: number, y: number }`"
@@ -95,8 +98,28 @@ components:
             - 0
         message:
           type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        resultCode:
+          type: number
           enum:
-            - Success
+            - 1
+        message:
+          type: string
+
+    ValidationError:
+      type: object
+      properties:
+        value:
+          type: string
+        msg:
+          type: string
+        param:
+          type: string
+        location:
+          type: string
 
     Avatar:
       type: object
@@ -143,6 +166,11 @@ components:
           type: string
         avatar:
           $ref: '#/components/schemas/Avatar'
+        subscriptions:
+          type: array
+          items:
+            type: string
+            format: id
 
     UserProfile:
       allOf:
@@ -159,16 +187,6 @@ components:
               type: boolean
             profile:
               $ref: '#/components/schemas/Profile'
-            friends:
-              type: array
-              items:
-                type: string
-                format: id
-            subscriptions:
-              type: array
-              items:
-                type: string
-                format: id
 
     UserProfileUpdatePayload:
       type: object

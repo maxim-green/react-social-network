@@ -6,7 +6,6 @@ router.use('/profile', require('./profile/profile.route'))
 router.use('/dialogs', require('./dialogs/dialogs.route'))
 router.use('/users', require('./users/users.route'))
 router.use('/posts', require('./posts/posts.route'))
-router.use('/follow', require('./follow/follow.route'))
-router.use('/friendship', require('./friendship'))
+router.use('/subscription', require('./subscription/subscription.route'))
 
 module.exports = router

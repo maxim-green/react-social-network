@@ -46,7 +46,6 @@ const App: React.FC<PropsType> = ({
                 <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                 <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
                 <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
-                <Route path="/friends" render={() => <Layout>Friends Page</Layout>}/>
                 <Route path={'/testpage'} component={TestPage}/>
 
                 {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}

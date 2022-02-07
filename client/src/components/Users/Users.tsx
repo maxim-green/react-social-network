@@ -7,58 +7,45 @@ import NavTabs from '../_shared/NavTabs/NavTabs'
 import {UserItemDataType} from '../../types/types'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from '../../redux/store'
-import {
-    acceptFriendshipRequest,
-    addFriend,
-    cancelFriendshipRequest,
-    declineFriendshipRequest, deleteFriend, follow,
-    getUsers, unfollow
-} from '../../redux/reducers/users.reducer'
+import {subscribe, getUsers, unsubscribe} from '../../redux/reducers/users.reducer'
 import {useParams} from 'react-router'
 
 type PropsType = {
     authorized: boolean
     authorizedUserId?: string
+    authorizedUserSubscriptions: Array<UserItemDataType>
     users: Array<UserItemDataType>
-    addFriend: (userId: string) => void
-    deleteFriend: (userId: string) => void
-    cancelFriendshipRequest: (userId: string) => void
-    acceptFriendshipRequest: (userId: string) => void
-    declineFriendshipRequest: (userId: string) => void
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
-    incomingFriendshipRequests: Array<string>
-    outgoingFriendshipRequests: Array<string>
+    subscribe: (userId: string) => void
+    unsubscribe: (userId: string) => void
 }
 
 const Users: React.FC<PropsType> = ({
                                         authorized,
                                         authorizedUserId,
+                                        authorizedUserSubscriptions,
                                         users,
-                                        incomingFriendshipRequests,
-                                        outgoingFriendshipRequests,
-                                        addFriend,
-                                        deleteFriend,
-                                        cancelFriendshipRequest,
-                                        acceptFriendshipRequest,
-                                        declineFriendshipRequest,
-                                        follow,
-                                        unfollow
+                                        subscribe,
+                                        unsubscribe
                                     }) => {
 
-    const { filter } = useParams<{ filter?: 'friends' | 'blocked' }>()
+    const {filter} = useParams<{ filter?: 'subscriptions' | 'blocked' }>()
     let shownUsers: Array<UserItemDataType> | null = null
-    if (!filter) {shownUsers = users}
-    if (filter === 'friends') {shownUsers = users.filter(user => user.isFriend)}
-    if (filter === 'blocked') {shownUsers = users}
+    if (!filter) {
+        shownUsers = users
+    }
+    if (filter === 'subscriptions') {
+        shownUsers = authorizedUserSubscriptions
+    }
+    if (filter === 'blocked') {
+        shownUsers = users
+    }
 
     return (
         <Card>
 
             {authorized && <NavTabs>
                 <NavTab to="/users">All</NavTab>
-                <NavTab to="/users/friends">Friends</NavTab>
-                {/*<NavTab to="/users/blocked">Blocked</NavTab>*/}
+                <NavTab to="/users/subscriptions">Subscriptions</NavTab>
             </NavTabs>}
 
             {/*<div className={classes.searchForm}>*/}
@@ -71,15 +58,9 @@ const Users: React.FC<PropsType> = ({
                     authorized={authorized}
                     authorizedUserId={authorizedUserId}
                     user={user}
-                    isIncomingFriendshipRequest={incomingFriendshipRequests.includes(user._id)}
-                    isOutgoingFriendshipRequest={outgoingFriendshipRequests.includes(user._id)}
-                    addFriend={addFriend}
-                    deleteFriend={deleteFriend}
-                    cancelFriendshipRequest={cancelFriendshipRequest}
-                    acceptFriendshipRequest={acceptFriendshipRequest}
-                    declineFriendshipRequest={declineFriendshipRequest}
-                    follow={follow}
-                    unfollow={unfollow}
+                    isSubscribed={authorizedUserSubscriptions.map(user => user._id).includes(user._id)}
+                    subscribe={subscribe}
+                    unsubscribe={unsubscribe}
                     mutualFriendsCount={4}
                 />)}
             </div>
@@ -93,16 +74,10 @@ const UsersContainer: React.FC = () => {
     const props: PropsType = {
         authorized: useSelector((state: StateType) => state.auth.authorized),
         authorizedUserId: useSelector((state: StateType) => state.auth.user?._id),
+        authorizedUserSubscriptions: useSelector((state: StateType) => state.auth.user?.subscriptions || []),
         users: useSelector((state: StateType) => state.users.users),
-        incomingFriendshipRequests: useSelector((state: StateType) => state.users.incomingFriendshipRequests),
-        outgoingFriendshipRequests: useSelector((state: StateType) => state.users.outgoingFriendshipRequests),
-        addFriend: (userId: string) => dispatch(addFriend(userId)),
-        cancelFriendshipRequest: (userId: string) => dispatch(cancelFriendshipRequest(userId)),
-        acceptFriendshipRequest: (userId: string) => dispatch(acceptFriendshipRequest(userId)),
-        declineFriendshipRequest: (userId:string) => dispatch(declineFriendshipRequest(userId)),
-        deleteFriend: (userId: string) => dispatch(deleteFriend(userId)),
-        follow: (userId: string) => dispatch(follow(userId)),
-        unfollow: (userId: string) => dispatch(unfollow(userId))
+        subscribe: (userId: string) => dispatch(subscribe(userId)),
+        unsubscribe: (userId: string) => dispatch(unsubscribe(userId))
     }
 
     useEffect(() => {

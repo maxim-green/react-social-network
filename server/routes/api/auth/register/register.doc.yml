@@ -1,0 +1,61 @@
+/auth/register:
+  post:
+    summary: User registration
+    description: User registration
+    tags:
+      - auth
+    requestBody:
+      required: true
+      description: Request body should contain valid e-mail, password, username, first name and last name
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              e-mail:
+                type: string
+                format: email
+              password:
+                type: string
+                format: password
+              username:
+                type: string
+              firstName:
+                type: string
+              lastName:
+                type: string
+    responses:
+      200:
+        $ref: '#/components/responses/Success'
+      400:
+        description: Validation error. Response contains validation errors array.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - Invalid registration data
+                    errors:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ValidationError'
+      409:
+        description: Conflicted username or e-mail.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      enum:
+                        - User with this email already exists
+      500:
+        $ref: '#/components/responses/ServerError'

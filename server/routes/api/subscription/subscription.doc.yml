@@ -1,9 +1,9 @@
-/follow/:userId:
+/subscription/:userId:
   post:
     summary: Follow user
     description: Follow user, specified by id. Request must be authorized.
     tags:
-      - follow
+      - subscription
     responses:
       200:
         $ref: '#/components/responses/Success'
@@ -20,7 +20,7 @@
     summary: Unfollow user
     description: Unfollow user, specified by id. Request must be authorized.
     tags:
-      - follow
+      - subscription
     responses:
       200:
         $ref: '#/components/responses/Success'
