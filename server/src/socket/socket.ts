@@ -1,14 +1,16 @@
-const cookie = require('cookie')
-const jwt = require('jsonwebtoken')
-const User = require('../models/User')
-const Dialog = require('../models/Dialog')
-const config = require('config')
+import {Dialog} from '../models/Dialog'
+import User from '../models/User'
+import cookie from 'cookie'
+import jwt, {JwtPayload} from 'jsonwebtoken'
+import config from 'config'
+import {Server, Socket} from 'socket.io'
 
+type SocketWithUser = Socket & { user: any }
+type JwtPayloadWithUserId = JwtPayload & { userId: string }
 
-const socket = (io) => {
-    io.use(async (socket, next) => {
+export const socket = (io: Server) => {
+    io.use(async (socket: SocketWithUser, next) => {
         if (!socket.request.headers['cookie']) {
-            console.log('Not authorized.')
             return next(new Error('Socket connection error. Not authorized'))
         }
 
@@ -16,15 +18,20 @@ const socket = (io) => {
         const {accessToken} = cookies
 
         if (!accessToken) {
-            console.log('Not authorized.')
             return next(new Error('Socket connection error. Not authorized'))
         }
 
         try {
-            const {userId} = await jwt.verify(accessToken, config.get('jwtSecret'))
-            socket.user = await User.findById(userId)
+            await jwt.verify(
+                accessToken,
+                config.get('jwtSecret'),
+                async (err, payload: JwtPayloadWithUserId) => {
+                    if (err) return next(new Error('Socket connection error. Not authorized'))
+                    socket.user = await User.findById(payload.userId)
+                })
             return next()
         } catch (e) {
+            console.log(e)
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
             if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
             return next(new Error('Socket connection error. Not authorized'))
@@ -33,8 +40,8 @@ const socket = (io) => {
         return next()
     })
 
-    io.sockets.on('connection', async (socket) => {
-        const { user } = socket
+    io.sockets.on('connection', async (socket: SocketWithUser) => {
+        const {user} = socket
         console.log(`${user.username} connected`)
         user.isOnline = true
         await user.save()
@@ -48,7 +55,7 @@ const socket = (io) => {
             await user.save()
         })
 
-        socket.on('client-message', async(message, dialogId) => {
+        socket.on('client-message', async (message, dialogId) => {
             const newMessage = {
                 date: new Date(),
                 author: user,
@@ -73,5 +80,3 @@ const socket = (io) => {
         })
     })
 }
-
-module.exports = socket

@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "client": "yarn --cwd client start",
-    "server": "yarn --cwd server start",
+    "server": "yarn --cwd server dev",
     "client:test": "yarn --cwd client test",
     "server:install": "yarn --cwd server install",
     "client:install": "yarn --cwd client install",

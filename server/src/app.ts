@@ -1,25 +1,27 @@
-const express = require('express')
+import express, { Request, Response, NextFunction} from 'express'
+import http from 'http'
+import { Server } from 'socket.io'
+import { socket } from './socket/socket'
+import config from 'config'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import path from 'path'
+import serveStatic from 'serve-static'
+
+const PORT = config.get('port') || 5000
+
 const app = express()
-const http = require('http')
 const server = http.createServer(app)
-const io = require('socket.io')(server, {
+const io = new Server(server, {
     cors: {
         origin: 'http://localhost:3000',
         credentials: true
     }
 })
-require('./socket/socket')(io)
-const config = require('config')
-const mongoose = require('mongoose')
-mongoose.set('useFindAndModify', false)
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const path = require('path')
-const serveStatic = require('serve-static')
+socket(io)
 
-
-
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'content-type')
@@ -32,8 +34,7 @@ app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
 app.use('/api', require('./routes/api/api.route'))
 
 
-
-const PORT = config.get('port') || 5000
+mongoose.set('useFindAndModify', false)
 const start = async () => {
     try {
         await mongoose.connect(

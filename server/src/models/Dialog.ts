@@ -1,12 +1,25 @@
-const {Schema, model, Types} = require('mongoose')
+import {Schema, model, Types, Model} from 'mongoose'
 
-const Message = new Schema({
+type MessageType = {
+    date: Date
+    author: Types.ObjectId
+    text: string
+}
+
+type DialogType = {
+    created: Date
+    updated: Date
+    users: Array<Types.ObjectId>
+    messages: Array<MessageType>
+}
+
+const Message = new Schema<MessageType>({
     date: {type: Date, required: true, default: new Date()},
     author: { type: Types.ObjectId, ref: 'User', required: true},
     text: {type: String, required: true}
 })
 
-const schema = new Schema(
+const schema = new Schema<DialogType>(
     {
         created: {type: Date, required: true, default: new Date()},
         updated: {type: Date, required: true, default: new Date()},
@@ -18,4 +31,4 @@ const schema = new Schema(
     }
 )
 
-module.exports = model('Dialog', schema)
+export const Dialog: Model<DialogType> = model('Dialog', schema)
