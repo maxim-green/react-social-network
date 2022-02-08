@@ -6,7 +6,7 @@ import {StateType} from '../../redux/store'
 import Card from '../_shared/Card/Card'
 import LoginForm from '../_forms/LoginForm'
 import SidebarNavigation from '../SideBar/SidebarNavigation/SidebarNavigation'
-import SidebarFriends from '../SideBar/SidebarFriends/SidebarFriends'
+import SidebarSubscriptions from '../SideBar/SidebarSubscriptions/SidebarSubscriptions'
 import {AvatarType, UserItemDataType} from '../../types/types'
 import {logout} from '../../redux/reducers/auth.reducer'
 
@@ -29,7 +29,7 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, a
                 {sidebar && <Sidebar>
                     {!authorized && <Card><div style={{padding: '10px'}}><LoginForm compact={true}/></div></Card>}
                     {authorized && <SidebarNavigation/>}
-                    {authorized && <SidebarFriends subscriptions={subscriptions}/>}
+                    {authorized && <SidebarSubscriptions subscriptions={subscriptions}/>}
                 </Sidebar>}
 
                 <Content>

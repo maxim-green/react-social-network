@@ -1,6 +1,6 @@
 import Card from '../../_shared/Card/Card'
 import React from 'react'
-import classes from './SidebarFriends.module.scss'
+import classes from './SidebarSubscriptions.module.scss'
 import Avatar from '../../_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
 import {UserItemDataType} from '../../../types/types'
@@ -9,7 +9,7 @@ type PropsType = {
     subscriptions: Array<UserItemDataType>
 }
 
-const SidebarFriends: React.FC<PropsType> = ({subscriptions}) => {
+const SidebarSubscriptions: React.FC<PropsType> = ({subscriptions}) => {
     return (
         <Card>
             <div className={classes.sidebarFriends}>
@@ -27,4 +27,4 @@ const SidebarFriends: React.FC<PropsType> = ({subscriptions}) => {
     )
 }
 
-export default SidebarFriends
+export default SidebarSubscriptions
