@@ -1,12 +1,14 @@
-const express = require('express')
+import express from 'express'
+import jwt from 'jsonwebtoken'
+import {generateTokens} from '../../../../utils'
+import { defineUserByRefreshToken } from '../../../../middleware/auth.middleware'
+import {Request, Response} from 'types'
+
 const router = express.Router()
-const jwt = require('jsonwebtoken')
-const { defineUserByRefreshToken } = require('../../../../middleware/auth.middleware')
-const {generateTokens} = require('../../../../utils')
 
 // /api/auth/refresh-tokens
 router.post('/', defineUserByRefreshToken,
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const {user} = req
             if (!user) return res.status(401).json({resultCode: 1, message: "Invalid token"})
@@ -26,4 +28,4 @@ router.post('/', defineUserByRefreshToken,
     }
 )
 
-module.exports = router
+export default router

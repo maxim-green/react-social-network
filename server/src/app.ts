@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 import serveStatic from 'serve-static'
+import api from './routes/api/api.route'
 
 const PORT = config.get('port') || 5000
 
@@ -31,7 +32,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
-app.use('/api', require('./routes/api/api.route'))
+app.use('/api', api)
 
 
 mongoose.set('useFindAndModify', false)

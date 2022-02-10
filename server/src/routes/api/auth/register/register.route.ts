@@ -1,8 +1,10 @@
-const express = require('express')
+import express from 'express'
+import {User} from '../../../../models/User'
+import bcrypt from 'bcryptjs'
+import {check, validationResult} from 'express-validator'
+import {Request, Response} from 'types'
+
 const router = express.Router()
-const User = require('../../../../models/User')
-const bcrypt = require('bcryptjs')
-const {check, validationResult} = require('express-validator')
 
 router.post('/',
     [
@@ -12,7 +14,7 @@ router.post('/',
         check('firstName', 'Invalid first name').exists({checkFalsy: true}).not().isNumeric(),
         check('lastName', 'Invalid last name').exists({checkFalsy: true}).not().isNumeric(),
     ],
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
@@ -53,4 +55,4 @@ router.post('/',
     }
 )
 
-module.exports = router
+export default router

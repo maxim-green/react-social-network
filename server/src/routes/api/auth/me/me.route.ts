@@ -1,9 +1,11 @@
-const express = require('express')
+import express from 'express'
+import { auth, requireAuth } from '../../../../middleware/auth.middleware'
+import { Request, Response } from 'types'
+
 const router = express.Router()
-const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
 
 // /coreApi/auth/me
-router.get('/', auth, requireAuth, async (req, res) => {
+router.get('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         res.status(200).json({resultCode: 0, message: "Authorized", data: {user: req.user.toObject()}})
     } catch (e) {
@@ -11,4 +13,4 @@ router.get('/', auth, requireAuth, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

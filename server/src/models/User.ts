@@ -1,6 +1,7 @@
-const {Schema, model, Types} = require('mongoose')
+import {Schema, model, Types, Model} from 'mongoose'
+import {UserType} from 'User'
 
-const schema = new Schema(
+const schema = new Schema<UserType>(
     {
         registrationDate: {type: Date, required: true},
         refreshToken: {type: String},
@@ -36,4 +37,4 @@ const schema = new Schema(
     }
 )
 
-module.exports = model('User', schema)
+export const User: Model<UserType> = model('User', schema)

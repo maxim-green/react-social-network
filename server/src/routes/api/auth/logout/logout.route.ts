@@ -1,9 +1,11 @@
-const express = require('express')
+import express from 'express'
+import { auth, requireAuth } from '../../../../middleware/auth.middleware'
+import {Request, Response} from 'types'
+
 const router = express.Router()
-const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
 
 // /coreApi/auth/logout
-router.delete('/', auth, requireAuth, async (req, res) => {
+router.delete('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const { user } = req
 
@@ -18,4 +20,4 @@ router.delete('/', auth, requireAuth, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

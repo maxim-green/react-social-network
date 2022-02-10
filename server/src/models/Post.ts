@@ -1,6 +1,23 @@
-const {Schema, model, Types} = require('mongoose')
+import {Schema, model, Types, Model} from 'mongoose'
 
-const schema = new Schema(
+// TODO: move comment to separate model and use it in this schema as ObjectId
+
+type CommentType = {
+    creationDate: Date
+    author: Types.ObjectId
+    text: string
+    likes: Array<Types.ObjectId>
+}
+
+type PostType = {
+    creationDate: Date
+    author: Types.ObjectId
+    text: string
+    likes: Array<Types.ObjectId>
+    comments: Array<CommentType>
+}
+
+const schema = new Schema<PostType>(
     {
         creationDate: {type: Date, required: true},
         author: { type: Types.ObjectId, ref: 'User', required: true},
@@ -18,4 +35,4 @@ const schema = new Schema(
     }
 )
 
-module.exports = model('Post', schema)
+export const Post: Model<PostType> = model('Post', schema)

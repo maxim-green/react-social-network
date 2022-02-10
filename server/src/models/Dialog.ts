@@ -1,17 +1,7 @@
 import {Schema, model, Types, Model} from 'mongoose'
+import {DialogType, MessageType} from 'Dialog'
 
-type MessageType = {
-    date: Date
-    author: Types.ObjectId
-    text: string
-}
-
-type DialogType = {
-    created: Date
-    updated: Date
-    users: Array<Types.ObjectId>
-    messages: Array<MessageType>
-}
+// TODO: Move message to separate model. Use Message ObjectId in messages in Dialog schema.
 
 const Message = new Schema<MessageType>({
     date: {type: Date, required: true, default: new Date()},

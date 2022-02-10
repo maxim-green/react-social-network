@@ -1,15 +1,19 @@
-const express = require('express')
+import express from 'express'
+import {User} from '../../../models/User'
+import {Dialog} from '../../../models/Dialog'
+import { auth, requireAuth } from '../../../middleware/auth.middleware'
+import {MongooseDocument, Request, Response} from 'types'
+import {PopulatedDialogType} from 'Dialog'
+
 const router = express.Router()
-const User = require('../../../models/User')
-const Dialog = require('../../../models/Dialog')
-const { auth, requireAuth } = require('../../../middleware/auth.middleware')
 
 // /api/dialogs/
-router.get('/', auth, requireAuth, async (req, res) => {
+router.get('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
-        const dialogs = await Dialog
+        // TODO refactor using generic in populate()
+        const dialogs: Array<MongooseDocument<PopulatedDialogType>> = await Dialog
             .find({users: user.id})
             .populate("users", ["id", "username", "firstName", "lastName", "avatar"])
             .lean()
@@ -18,7 +22,7 @@ router.get('/', auth, requireAuth, async (req, res) => {
             _id: dialog._id,
             created: dialog.created,
             updated: dialog.updated,
-            companionUser: dialog.users.map(u => ({_id: u.id, username: u.username, firstName: u.firstName, avatar: u.avatar}))
+            companionUser: dialog.users.map(u => ({_id: u._id, username: u.username, firstName: u.firstName, avatar: u.avatar}))
                 .find(u => u.username !== user.username),
         }))
 
@@ -30,14 +34,15 @@ router.get('/', auth, requireAuth, async (req, res) => {
 })
 
 // /api/dialogs/:username
-router.get('/:username', auth, requireAuth, async (req, res) => {
+router.get('/:username', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
         const targetUser = await User.findOne({username: req.params.username})
         if (!targetUser) return res.status(404).json({resultCode: 1, message: `Requested resource not found`})
 
-        let dialog = await Dialog.findOne({
+        // TODO refactor using generic in populate()
+        let dialog: MongooseDocument<PopulatedDialogType> = await Dialog.findOne({
             $and: [
                 {users: {$all: [user.id, targetUser.id]}},
                 {users: {$size: 2}}
@@ -51,7 +56,7 @@ router.get('/:username', auth, requireAuth, async (req, res) => {
                 _id: dialog._id,
                 messages: dialog.messages.map(m => ({
                     ...m,
-                    author: {...m.author, ...m.author.profileData, profileData: undefined}
+                    author: {...m.author, ...m.author.profile, profile: undefined}
                 }))
             }
         }

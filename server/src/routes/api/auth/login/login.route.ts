@@ -1,17 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const User = require('../../../../models/User')
-const bcrypt = require('bcryptjs')
-const {check, validationResult} = require('express-validator')
-const {generateTokens} = require('../../../../utils')
+import express from 'express'
+import {User} from '../../../../models/User'
+import bcrypt from 'bcryptjs'
+import {check, validationResult} from 'express-validator'
+import {generateTokens} from '../../../../utils'
+import {Request, Response} from 'types'
 
+const router = express.Router()
 // /coreApi/auth/login
 router.post('/',
     [
         check('email', 'Invalid email').isEmail(),
         check('password', 'Password length should be at least 6 characters').isLength({min: 6}),
     ],
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
@@ -48,4 +49,4 @@ router.post('/',
     }
 )
 
-module.exports = router
+export default router

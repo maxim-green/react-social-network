@@ -13,7 +13,6 @@ type PropsType = {
     onSubmit: (newPostData: NewPostType) => void
 }
 
-// todo implement react-hook-form in this component
 const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
     const defaultValues = { newPostText: '' }
     const {reset, register, handleSubmit} = useForm({defaultValues})

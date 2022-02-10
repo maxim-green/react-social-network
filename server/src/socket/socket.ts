@@ -1,12 +1,10 @@
 import {Dialog} from '../models/Dialog'
-import User from '../models/User'
+import {User} from '../models/User'
 import cookie from 'cookie'
-import jwt, {JwtPayload} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import config from 'config'
-import {Server, Socket} from 'socket.io'
-
-type SocketWithUser = Socket & { user: any }
-type JwtPayloadWithUserId = JwtPayload & { userId: string }
+import {Server} from 'socket.io'
+import {JwtPayloadWithUserId, SocketWithUser} from 'types'
 
 export const socket = (io: Server) => {
     io.use(async (socket: SocketWithUser, next) => {
@@ -22,22 +20,24 @@ export const socket = (io: Server) => {
         }
 
         try {
-            await jwt.verify(
+            // TODO: move this logic to auth helper or smthn
+            jwt.verify(
                 accessToken,
                 config.get('jwtSecret'),
                 async (err, payload: JwtPayloadWithUserId) => {
-                    if (err) return next(new Error('Socket connection error. Not authorized'))
-                    socket.user = await User.findById(payload.userId)
+                    if (err) {
+                        return next(new Error('Socket connection error. Not authorized'))
+                    } else {
+                        socket.user = await User.findById(payload.userId)
+                        return next()
+                    }
                 })
-            return next()
+
         } catch (e) {
-            console.log(e)
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
             if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
             return next(new Error('Socket connection error. Not authorized'))
         }
-
-        return next()
     })
 
     io.sockets.on('connection', async (socket: SocketWithUser) => {
