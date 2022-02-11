@@ -2,8 +2,7 @@ import express from 'express'
 import {User} from '../../../models/User'
 import {Dialog} from '../../../models/Dialog'
 import { auth, requireAuth } from '../../../middleware/auth.middleware'
-import {MongooseDocument, Request, Response} from 'types'
-import {PopulatedDialogType} from 'Dialog'
+import {MongooseDocument, PopulatedDialogType, Request, Response} from 'types'
 
 const router = express.Router()
 
@@ -79,4 +78,4 @@ router.get('/:username', auth, requireAuth, async (req: Request, res: Response) 
 })
 
 
-module.exports = router
+export default router

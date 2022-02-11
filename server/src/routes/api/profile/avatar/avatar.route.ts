@@ -1,19 +1,22 @@
-const router = require('express').Router()
-const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
-const config = require('config')
-const path = require('path')
-const sharp = require('sharp')
-const multer = require('multer')
+import express from 'express'
+import path from 'path'
+import config from 'config'
+import sharp from 'sharp'
+import multer from 'multer'
+
+import { auth, requireAuth } from 'middleware'
+import {Request, Response} from 'types'
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
+const router = express.Router()
 
 router.put(
     '/',
     upload.single('image'),
     auth,
     requireAuth,
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const {user} = req
 

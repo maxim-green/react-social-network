@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+
+// TODO move swagger config to separate file in config directory
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDefinition = {

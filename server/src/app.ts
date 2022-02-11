@@ -1,14 +1,16 @@
-import express, { Request, Response, NextFunction} from 'express'
+import express from 'express'
 import http from 'http'
-import { Server } from 'socket.io'
-import { socket } from './socket/socket'
+import {Server} from 'socket.io'
 import config from 'config'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 import serveStatic from 'serve-static'
-import api from './routes/api/api.route'
+
+import {NextFunction, Request, Response} from 'types'
+import api from './routes/api'
+import socket from 'socket'
 
 const PORT = config.get('port') || 5000
 

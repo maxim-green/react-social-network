@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
-import {User} from '../models/User'
+import {User} from 'models/User'
 import {Request, Response, NextFunction, JwtPayloadWithUserId} from 'types'
 
 export const defineUserByRefreshToken = async (req: Request, res: Response, next: NextFunction) => {

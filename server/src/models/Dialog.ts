@@ -1,5 +1,5 @@
 import {Schema, model, Types, Model} from 'mongoose'
-import {DialogType, MessageType} from 'Dialog'
+import {DialogType, MessageType} from 'types'
 
 // TODO: Move message to separate model. Use Message ObjectId in messages in Dialog schema.
 

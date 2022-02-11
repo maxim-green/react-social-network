@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\georgievskiy.mi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/bcryptjs @types/body-parser @types/config @types/cookie @types/cookie-parser @types/express @types/express-validator @types/node @types/jsonwebtoken @types/mongoose @types/multer @types/path @types/serve-static @types/sharp @types/shortid @types/socket.io @types/swagger-jsdoc @types/swagger-ui-express
+  C:\Program Files\nodejs\node.exe C:\Users\georgievskiy.mi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/bcryptjs @types/body-parser @types/config @types/cookie @types/cookie-parser @types/express @types/express-validator @types/node @types/jsonwebtoken @types/mongoose @types/multer @types/path @types/serve-static @types/sharp @types/shortid @types/index.io @types/swagger-jsdoc @types/swagger-ui-express
 
 PATH: 
   C:\projects\react-social-network\node_modules\.bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Users\georgievskiy.mi\AppData\Local\Microsoft\WindowsApps;;C:\Users\georgievskiy.mi\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files (x86)\Nmap;C:\Users\georgievskiy.mi\AppData\Roaming\npm;C:\Program Files\heroku\bin;C:\Program Files\JetBrains\WebStorm 2020.1\bin;
@@ -54,7 +54,7 @@ npm manifest:
       "serve-static": "^1.14.1",
       "sharp": "^0.28.3",
       "shortid": "^2.2.16",
-      "socket.io": "^4.4.1",
+      "index.io": "^4.4.1",
       "swagger-jsdoc": "^6.1.0",
       "swagger-ui-express": "^4.3.0"
     }
@@ -1661,31 +1661,31 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/sliced/-/sliced-1.0.1.tgz#0b3a662b5d04c3177b1926bea82b03f837a2ef41"
     integrity sha1-CzpmK10Ewxd7GSa+qCsD+Dei70E=
   
-  socket.io-adapter@~2.3.3:
+  index.io-adapter@~2.3.3:
     version "2.3.3"
-    resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-2.3.3.tgz#4d6111e4d42e9f7646e365b4f578269821f13486"
+    resolved "https://registry.yarnpkg.com/index.io-adapter/-/index.io-adapter-2.3.3.tgz#4d6111e4d42e9f7646e365b4f578269821f13486"
     integrity sha512-Qd/iwn3VskrpNO60BeRyCyr8ZWw9CPZyitW4AQwmRZ8zCiyDiL+znRnWX6tDHXnWn1sJrM1+b6Mn6wEDJJ4aYQ==
   
-  socket.io-parser@~4.0.4:
+  index.io-parser@~4.0.4:
     version "4.0.4"
-    resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.0.4.tgz#9ea21b0d61508d18196ef04a2c6b9ab630f4c2b0"
+    resolved "https://registry.yarnpkg.com/index.io-parser/-/index.io-parser-4.0.4.tgz#9ea21b0d61508d18196ef04a2c6b9ab630f4c2b0"
     integrity sha512-t+b0SS+IxG7Rxzda2EVvyBZbvFPBCjJoyHuE0P//7OAsN23GItzDRdWa6ALxZI/8R5ygK7jAR6t028/z+7295g==
     dependencies:
       "@types/component-emitter" "^1.2.10"
       component-emitter "~1.3.0"
       debug "~4.3.1"
   
-  socket.io@^4.4.1:
+  index.io@^4.4.1:
     version "4.4.1"
-    resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-4.4.1.tgz#cd6de29e277a161d176832bb24f64ee045c56ab8"
+    resolved "https://registry.yarnpkg.com/index.io/-/index.io-4.4.1.tgz#cd6de29e277a161d176832bb24f64ee045c56ab8"
     integrity sha512-s04vrBswdQBUmuWJuuNTmXUVJhP0cVky8bBDhdkf8y0Ptsu7fKU2LuLbts9g+pdmAdyMMn8F/9Mf1/wbtUN0fg==
     dependencies:
       accepts "~1.3.4"
       base64id "~2.0.0"
       debug "~4.3.2"
       engine.io "~6.1.0"
-      socket.io-adapter "~2.3.3"
-      socket.io-parser "~4.0.4"
+      index.io-adapter "~2.3.3"
+      index.io-parser "~4.0.4"
   
   sparse-bitfield@^3.0.3:
     version "3.0.3"

@@ -1,12 +1,13 @@
-import {Dialog} from '../models/Dialog'
-import {User} from '../models/User'
 import cookie from 'cookie'
 import jwt from 'jsonwebtoken'
 import config from 'config'
 import {Server} from 'socket.io'
-import {JwtPayloadWithUserId, SocketWithUser} from 'types'
 
-export const socket = (io: Server) => {
+import {JwtPayloadWithUserId, SocketWithUser} from 'types'
+import {Dialog} from 'models/Dialog'
+import {User} from 'models/User'
+
+const socket = (io: Server) => {
     io.use(async (socket: SocketWithUser, next) => {
         if (!socket.request.headers['cookie']) {
             return next(new Error('Socket connection error. Not authorized'))
@@ -80,3 +81,5 @@ export const socket = (io: Server) => {
         })
     })
 }
+
+export default socket

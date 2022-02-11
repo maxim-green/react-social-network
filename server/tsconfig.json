@@ -8,13 +8,10 @@
     "lib": ["es2018"],
     "module": "commonjs",
     "target": "es2018",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "src/types/*"]
-    },
-    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": "./src",
+    "typeRoots": ["../node_modules/@types", "types"],
     "outDir": "./build"
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["../node_modules"]
 }

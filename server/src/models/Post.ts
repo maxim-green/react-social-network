@@ -1,21 +1,7 @@
 import {Schema, model, Types, Model} from 'mongoose'
+import {PostType} from 'types'
 
 // TODO: move comment to separate model and use it in this schema as ObjectId
-
-type CommentType = {
-    creationDate: Date
-    author: Types.ObjectId
-    text: string
-    likes: Array<Types.ObjectId>
-}
-
-type PostType = {
-    creationDate: Date
-    author: Types.ObjectId
-    text: string
-    likes: Array<Types.ObjectId>
-    comments: Array<CommentType>
-}
 
 const schema = new Schema<PostType>(
     {

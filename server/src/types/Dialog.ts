@@ -1,6 +1,7 @@
 import {Types} from 'mongoose'
-import {UserType} from 'User'
-import {Override} from 'types'
+
+import {UserType} from './User'
+import {Override} from './custom'
 
 export type MessageType = {
     date: Date

@@ -1,16 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const {User} = require('../../../models/User')
-const {Post} = require('../../../models/Post')
-const { auth, requireAuth } = require('../../../middleware/auth.middleware')
-const {check, validationResult} = require('express-validator')
+import express from 'express'
+import {check, validationResult} from 'express-validator'
 
-// /api/posts?author=userId
-router.get('/', async (req, res) => {
+import {User} from 'models/User'
+import {Post} from 'models/Post'
+import { auth, requireAuth } from 'middleware/auth.middleware'
+import {Request, Response, PopulatedPostType, MongooseDocument, UserType} from 'types'
+
+const router = express.Router()
+
+router.get('/', async (req: Request & {query: {author: string}}, res: Response) => {
     try {
         if (req.query.author) {
-            const user = await User.findOne({'username' : req.query.author})
-            const posts = await Post.find({'author': user}).populate('author', 'username firstName lastName avatar')
+            const user: MongooseDocument<UserType> = await User.findOne({'username' : req.query.author})
+            const posts = await Post.find({'author': user._id}).populate('author', 'username firstName lastName avatar')
             return res.status(200).json({resultCode: 0, message: "Success", data: { posts } })
         }
 
@@ -23,7 +25,7 @@ router.get('/', async (req, res) => {
 })
 
 // /api/posts/:postId
-router.get('/:postId', async (req, res) => {
+router.get('/:postId', async (req: Request, res: Response) => {
     try {
         const post = await Post.findById(req.params.postId).populate('author', 'username firstName lastName avatar')
         if (!post) {
@@ -39,7 +41,7 @@ router.get('/:postId', async (req, res) => {
 // /api/posts/
 router.post('/', [
     check('text', 'New post text cannot be empty.').exists()
-], auth, requireAuth, async (req, res) => {
+], auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
@@ -69,12 +71,12 @@ router.post('/', [
     }
 })
 
-router.delete('/:id', auth, requireAuth, async (req, res) => {
+router.delete('/:id', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
         const {id} = req.params
-        const post = await Post.findById(id).populate('author')
+        const post: MongooseDocument<PopulatedPostType> = await Post.findById(id).populate('author').lean()
         if (!post) {
             return res.status(404).json({resultCode: 1, message: 'Requested resource not found'})
         }
@@ -90,4 +92,4 @@ router.delete('/:id', auth, requireAuth, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router
