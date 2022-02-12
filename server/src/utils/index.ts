@@ -1,5 +1,6 @@
 import config from 'config'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 import {MongooseDocument, PopulatedUserType, UserType} from 'types'
 
@@ -15,7 +16,7 @@ export const generateTokens = async (user: MongooseDocument<PopulatedUserType | 
         config.get('jwtSecret'),
         {expiresIn: '60m'}
     )
-    user.refreshToken = refreshToken
+    user.refreshToken = await bcrypt.hash(refreshToken, 10)
     await user.save()
 
     return {accessToken, refreshToken}

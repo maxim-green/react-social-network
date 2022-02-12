@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
+import bcrypt from 'bcryptjs'
 import {Error} from 'mongoose'
 
 import {User} from 'models'
@@ -20,8 +21,8 @@ const getUserByRefreshToken = async (refreshToken: string) => {
 
     if (!candidate) throw new Error('Invalid token')
 
-
-    if (!(refreshToken === candidate.refreshToken)) {   // comparing provided RT with RT from database
+    const isEqual = await bcrypt.compare(refreshToken, candidate.refreshToken)  // comparing provided RT with RT from database
+    if (!isEqual) {
         candidate.refreshToken = ''
         await candidate.save()
         throw new Error('Invalid token')
