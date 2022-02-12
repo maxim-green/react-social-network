@@ -55,7 +55,7 @@ router.get('/:username', auth, requireAuth, async (req: Request, res: Response) 
                 _id: dialog._id,
                 messages: dialog.messages.map(m => ({
                     ...m,
-                    author: {...m.author, ...m.author.profile, profile: undefined}
+                    author: {...m.author, profile: undefined}
                 }))
             }
         }

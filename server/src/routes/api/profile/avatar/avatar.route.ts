@@ -1,6 +1,5 @@
 import express from 'express'
 import path from 'path'
-import config from 'config'
 import sharp from 'sharp'
 import multer from 'multer'
 
@@ -41,8 +40,8 @@ router.put(
                 .toFile(path.join(__dirname, '../../../../../', smPath))
 
             user.avatar = {
-                small: `http://localhost:${config.get('port')}${smPath}`,
-                large: `http://localhost:${config.get('port')}${lgPath}`
+                small: `http://localhost:${process.env.PORT}${smPath}`,
+                large: `http://localhost:${process.env.PORT}${lgPath}`
             }
             await user.save()
 

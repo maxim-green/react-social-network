@@ -185,8 +185,20 @@ components:
               format: date-time
             isOnline:
               type: boolean
-            profile:
-              $ref: '#/components/schemas/Profile'
+            location:
+              $ref: '#/components/schemas/Location'
+            contacts:
+              $ref: '#/components/schemas/Contacts'
+            birthDate:
+              type: string
+              format: date
+            status:
+              type: string
+            bio:
+              type: string
+            coverImage:
+              type: string
+              format: uri
 
     UserProfileUpdatePayload:
       type: object
@@ -208,20 +220,7 @@ components:
     Profile:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        contacts:
-          $ref: '#/components/schemas/Contacts'
-        birthDate:
-          type: string
-          format: date
-        status:
-          type: string
-        bio:
-          type: string
-        coverImage:
-          type: string
-          format: uri
+
 
     ImageWithCrop:
       type: object

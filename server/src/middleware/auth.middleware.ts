@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import config from 'config'
 import bcrypt from 'bcryptjs'
 import {Error} from 'mongoose'
 
@@ -9,8 +8,10 @@ import {Request, Response, NextFunction, UserType} from 'types'
 
 
 const verifyToken = <T extends object>(token: string) => {
-    return jwt.verify(token, config.get('jwtSecret')) as T
+    return jwt.verify(token, process.env.JWT_SECRET) as T
 }
+
+
 
 const getUserByRefreshToken = async (refreshToken: string) => {
     const { userId } = verifyToken<{ userId: string }>(refreshToken)    // validating RT
@@ -31,6 +32,8 @@ const getUserByRefreshToken = async (refreshToken: string) => {
     return candidate    // RT valid and matching RT from database
 }
 
+
+
 const getUserByAccessToken = async (accessToken: string) => {
     const { userId } = verifyToken<{ userId: string }>(accessToken)    // validating RT
 
@@ -49,11 +52,8 @@ export const defineUserByRefreshToken = async (req: Request, res: Response, next
     try {
 
         if (req.method === 'OPTIONS') return next()
-
         if (!req.cookies.refreshToken) return next()
-
         req.user = await getUserByRefreshToken(req.cookies.refreshToken)
-
         return next()
 
     } catch (e) {
@@ -65,15 +65,14 @@ export const defineUserByRefreshToken = async (req: Request, res: Response, next
     }
 }
 
+
+
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
         if (req.method === 'OPTIONS') return next()
-
         if (!req.cookies.accessToken) return next()
-
         req.user = await getUserByAccessToken(req.cookies.accessToken)
-
         return next()
 
     } catch (e) {
@@ -81,6 +80,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
     }
 }
+
+
 
 export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
     try {

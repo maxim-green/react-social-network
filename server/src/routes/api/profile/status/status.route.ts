@@ -11,7 +11,7 @@ router.put('/', auth, requireAuth, async (req: Request, res: Response) => {
 
         const { status } = req.body
 
-        user.profile.status = status
+        user.status = status
         await user.save()
 
         res.status(200).json({resultCode: 0, message: 'Success'})

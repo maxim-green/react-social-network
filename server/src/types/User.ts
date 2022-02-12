@@ -1,10 +1,9 @@
 import {Types} from 'mongoose'
-import {DialogType, PopulatedMessageType} from './Dialog'
 import {Override} from './custom'
 
 export type UserType = {
     _id: Types.ObjectId
-    registrationDate: Date
+    createdAt: number
     refreshToken: string
     email: string
     password: string
@@ -16,20 +15,18 @@ export type UserType = {
         small: string
         large: string
     }
-    profile: {
-        birthDate: Date
-        status: string
-        bio: string
-        coverImage: string
-        location: {
-            country: string
-            city: string
-        }
-        contacts: {
-            website: string
-            vkontakte: string
-            github: string
-        }
+    birthDate: Date
+    status: string
+    bio: string
+    coverImage: string
+    location: {
+        country: string
+        city: string
+    }
+    contacts: {
+        website: string
+        vkontakte: string
+        github: string
     }
     subscriptions: Array<Types.ObjectId>
 }

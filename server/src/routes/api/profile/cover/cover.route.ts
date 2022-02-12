@@ -1,5 +1,4 @@
 import express from 'express'
-import config from 'config'
 import path from 'path'
 import sharp from 'sharp'
 import multer from 'multer'
@@ -32,13 +31,13 @@ router.put(
                 .resize({fit: sharp.fit.contain, width: 720})
                 .toFile(path.join(__dirname, '../../../../../', uploadPath))
 
-            user.profile.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
+            user.coverImage = `http://localhost:${process.env.PORT}${uploadPath}`
             await user.save()
 
             res.status(200).json({
                 resultCode: 0,
                 message: 'Success',
-                data: { coverImage: user.profile.coverImage }
+                data: { coverImage: user.coverImage }
             })
         } catch(e) {
             console.log(e)

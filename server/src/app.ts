@@ -1,7 +1,8 @@
+import 'dotenv/config'  // explanation for this: https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+
 import express from 'express'
 import http from 'http'
 import {Server} from 'socket.io'
-import config from 'config'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -12,7 +13,8 @@ import {NextFunction, Request, Response} from 'types'
 import api from './routes/api'
 import socket from 'socket'
 
-const PORT = config.get('port') || 5000
+// TODO: migrate to using dotenv package https://www.npmjs.com/package/dotenv
+const PORT = process.env.PORT || 5000
 
 const app = express()
 const server = http.createServer(app)
@@ -39,7 +41,7 @@ app.use('/api', api)
 
 const start = async () => {
     try {
-        await mongoose.connect(config.get('databaseURI'))
+        await mongoose.connect(process.env.DB_URI)
         server.listen(PORT, () => {
             console.log(`Server started on port ${PORT}`)
         })

@@ -1,6 +1,5 @@
 import cookie from 'cookie'
 import jwt from 'jsonwebtoken'
-import config from 'config'
 import {Server} from 'socket.io'
 
 import {Dialog, User} from 'models'
@@ -20,10 +19,10 @@ const socket = (io: Server) => {
         }
 
         try {
-            // TODO: move this logic to auth helper or smthn
+            // TODO: (use func getUserByAccessToken from auth middleware; move it to helpers)
             jwt.verify(
                 accessToken,
-                config.get('jwtSecret'),
+                process.env.JWT_SECRET,
                 async (err, payload: JwtPayloadWithUserId) => {
                     if (err) {
                         return next(new Error('Socket connection error. Not authorized'))

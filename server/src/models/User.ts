@@ -3,7 +3,6 @@ import {PopulatedUserType, UserType} from 'types'
 
 const schema = new Schema<UserType>(
     {
-        registrationDate: {type: Date, required: true},
         refreshToken: {type: String},
         email: {type: String, required: true, unique: true},
         password: {type: String, required: true},
@@ -15,24 +14,23 @@ const schema = new Schema<UserType>(
             small: {type: String, default: null},
             large: {type: String, default: null}
         },
-        profile: {
-            birthDate: {type: Date, default: null},
-            status: {type: String, default: null},
-            bio: {type: String, default: null},
-            coverImage: {type: String, default: null},
-            location: {
-                country: {type: String, default: null},
-                city: {type: String, default: null}
-            },
-            contacts: {
-                website: {type: String, default: null},
-                vkontakte: {type: String, default: null},
-                github: {type: String, default: null},
-            }
+        birthDate: {type: Date, default: null},
+        status: {type: String, default: null},
+        bio: {type: String, default: null},
+        coverImage: {type: String, default: null},
+        location: {
+            country: {type: String, default: null},
+            city: {type: String, default: null}
+        },
+        contacts: {
+            website: {type: String, default: null},
+            vkontakte: {type: String, default: null},
+            github: {type: String, default: null},
         },
         subscriptions: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
     },
     {
+        timestamps: true,
         collection: 'users'
     }
 )
