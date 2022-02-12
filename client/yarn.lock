@@ -1703,7 +1703,7 @@
 
 "@socket.io/component-emitter@~3.0.0":
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.0.0.tgz#8863915676f837d9dad7b76f50cb500c1e9422e9"
+  resolved "https://registry.yarnpkg.com/@index.io/component-emitter/-/component-emitter-3.0.0.tgz#8863915676f837d9dad7b76f50cb500c1e9422e9"
   integrity sha512-2pTGuibAXJswAPJjaKisthqS/NOK5ypG4LYT6tEAV0S/mxW0zOIvYvGK0V8w8+SHxAm6vRMSjqSalFXeBAqs+Q==
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
@@ -4742,7 +4742,7 @@ engine.io-client@~6.1.1:
   resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-6.1.1.tgz#800d4b9db5487d169686729e5bd887afa78d36b0"
   integrity sha512-V05mmDo4gjimYW+FGujoGmmmxRaDsrVr7AXA3ZIfa04MWM1jOfZfUwou0oNqhNwy/votUDvGDt4JA4QF4e0b4g==
   dependencies:
-    "@socket.io/component-emitter" "~3.0.0"
+    "@index.io/component-emitter" "~3.0.0"
     debug "~4.3.1"
     engine.io-parser "~5.0.0"
     has-cors "1.1.0"
@@ -10688,22 +10688,22 @@ snapdragon@^0.8.1:
 
 socket.io-client@^4.4.1:
   version "4.4.1"
-  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-4.4.1.tgz#b6aa9448149d09b8d0b2bbf3d2fac310631fdec9"
+  resolved "https://registry.yarnpkg.com/index.io-client/-/index.io-client-4.4.1.tgz#b6aa9448149d09b8d0b2bbf3d2fac310631fdec9"
   integrity sha512-N5C/L5fLNha5Ojd7Yeb/puKcPWWcoB/A09fEjjNsg91EDVr5twk/OEyO6VT9dlLSUNY85NpW6KBhVMvaLKQ3vQ==
   dependencies:
-    "@socket.io/component-emitter" "~3.0.0"
+    "@index.io/component-emitter" "~3.0.0"
     backo2 "~1.0.2"
     debug "~4.3.2"
     engine.io-client "~6.1.1"
     parseuri "0.0.6"
-    socket.io-parser "~4.1.1"
+    index.io-parser "~4.1.1"
 
 socket.io-parser@~4.1.1:
   version "4.1.1"
-  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.1.1.tgz#0ad53d980781cab1eabe320417d8480c0133e62d"
+  resolved "https://registry.yarnpkg.com/index.io-parser/-/index.io-parser-4.1.1.tgz#0ad53d980781cab1eabe320417d8480c0133e62d"
   integrity sha512-USQVLSkDWE5nbcY760ExdKaJxCE65kcsG/8k5FDGZVVxpD1pA7hABYXYkCUvxUuYYh/+uQw0N/fvBzfT8o07KA==
   dependencies:
-    "@socket.io/component-emitter" "~3.0.0"
+    "@index.io/component-emitter" "~3.0.0"
     debug "~4.3.1"
 
 sockjs-client@^1.5.0:

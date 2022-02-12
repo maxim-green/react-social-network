@@ -3,9 +3,8 @@ import jwt from 'jsonwebtoken'
 import config from 'config'
 import {Server} from 'socket.io'
 
+import {Dialog, User} from 'models'
 import {JwtPayloadWithUserId, SocketWithUser} from 'types'
-import {Dialog} from 'models/Dialog'
-import {User} from 'models/User'
 
 const socket = (io: Server) => {
     io.use(async (socket: SocketWithUser, next) => {
@@ -63,7 +62,7 @@ const socket = (io: Server) => {
                 text: message
             }
             console.log(`Message from ${user.username}: ${message}`)
-            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}, updated: new Date()})
+            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}})
 
             const responseMessage = {
                 ...newMessage,

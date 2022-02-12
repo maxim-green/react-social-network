@@ -1,7 +1,11 @@
-const router = require('express').Router()
-const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
+import express from 'express'
 
-router.put('/', auth, requireAuth, async (req, res) => {
+import { auth, requireAuth } from 'middleware'
+import {Request, Response} from 'types'
+
+const router = express.Router()
+
+router.put('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
@@ -17,4 +21,4 @@ router.put('/', auth, requireAuth, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

@@ -1,11 +1,11 @@
-import {Types} from 'mongoose'
+import {SchemaDefinitionProperty, Types} from 'mongoose'
 
 import {UserType} from './User'
 import {Override} from './custom'
 
 export type MessageType = {
-    date: Date
-    author: Types.ObjectId
+    createdAt: number
+    author: SchemaDefinitionProperty<Types.ObjectId>;
     text: string
 }
 
@@ -15,8 +15,8 @@ export type PopulatedMessageType = Override<MessageType, {
 
 export type DialogType = {
     _id: Types.ObjectId
-    created: Date
-    updated: Date
+    createdAt: number
+    updatedAt: number
     users: Array<Types.ObjectId>
     messages: Array<MessageType>
 }

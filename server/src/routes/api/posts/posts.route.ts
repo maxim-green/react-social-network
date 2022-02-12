@@ -1,10 +1,9 @@
 import express from 'express'
 import {check, validationResult} from 'express-validator'
 
-import {User} from 'models/User'
-import {Post} from 'models/Post'
-import { auth, requireAuth } from 'middleware/auth.middleware'
-import {Request, Response, PopulatedPostType, MongooseDocument, UserType} from 'types'
+import {User, Post} from 'models'
+import { auth, requireAuth } from 'middleware'
+import {Request, Response, MongooseDocument, UserType} from 'types'
 
 const router = express.Router()
 
@@ -76,7 +75,7 @@ router.delete('/:id', auth, requireAuth, async (req: Request, res: Response) => 
         const {user} = req
 
         const {id} = req.params
-        const post: MongooseDocument<PopulatedPostType> = await Post.findById(id).populate('author').lean()
+        const post = await Post.findById(id).populate<{author: UserType}>('author')
         if (!post) {
             return res.status(404).json({resultCode: 1, message: 'Requested resource not found'})
         }
@@ -88,6 +87,7 @@ router.delete('/:id', auth, requireAuth, async (req: Request, res: Response) => 
             return res.status(401).json({resultCode: 1, message: 'Forbidden'})
         }
     } catch (e) {
+        console.log(e)
         res.status(500).json({resultCode: 1, message: "Something went wrong :("})
     }
 })

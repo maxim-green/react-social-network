@@ -1,10 +1,10 @@
-import {Types} from "mongoose"
+import {SchemaDefinitionProperty, Types} from 'mongoose'
 import {UserType} from './User'
 import {Override} from './custom'
 
 export type CommentType = {
     creationDate: Date
-    author: Types.ObjectId
+    author: SchemaDefinitionProperty<Types.ObjectId>;
     text: string
     likes: Array<Types.ObjectId>
 }
@@ -12,7 +12,7 @@ export type CommentType = {
 export type PostType = {
     _id: Types.ObjectId
     creationDate: Date
-    author: Types.ObjectId
+    author: SchemaDefinitionProperty<Types.ObjectId>;
     text: string
     likes: Array<Types.ObjectId>
     comments: Array<CommentType>

@@ -33,21 +33,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use('/uploads/', serveStatic(path.join(__dirname, '/uploads')))
+app.use('/uploads/', serveStatic(path.join(__dirname, '../uploads')))
 app.use('/api', api)
 
 
-mongoose.set('useFindAndModify', false)
 const start = async () => {
     try {
-        await mongoose.connect(
-            config.get('databaseURI'),
-            {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true
-            }
-        )
+        await mongoose.connect(config.get('databaseURI'))
         server.listen(PORT, () => {
             console.log(`Server started on port ${PORT}`)
         })

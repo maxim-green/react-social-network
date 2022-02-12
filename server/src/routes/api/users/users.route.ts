@@ -1,11 +1,14 @@
-const express = require('express')
+import express from 'express'
+
+import {auth, requireAuth} from 'middleware'
+import {User} from 'models'
+import {Request, Response, NextFunction} from 'types'
+
 const router = express.Router()
-const {User} = require('../../../models/User')
-const {auth, requireAuth} = require('../../../middleware/auth.middleware')
 
 router.get('/',
     auth,
-    async (req, res, next) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             if (req.query.subscribed) return next()
 
@@ -24,7 +27,7 @@ router.get('/',
         }
     },
     requireAuth,
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const subscriptions = await User.find({_id: {$in: req.user.subscriptions}}).select('username firstName lastName avatar subscriptions').lean()
 

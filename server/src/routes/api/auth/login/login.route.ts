@@ -1,8 +1,9 @@
 import express from 'express'
-import {User} from '../../../../models/User'
 import bcrypt from 'bcryptjs'
 import {check, validationResult} from 'express-validator'
-import {generateTokens} from '../../../../utils'
+
+import {generateTokens} from 'utils'
+import {User} from 'models'
 import {Request, Response} from 'types'
 
 const router = express.Router()

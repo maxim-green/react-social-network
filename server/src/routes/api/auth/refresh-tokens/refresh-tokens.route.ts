@@ -1,7 +1,8 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import {generateTokens} from '../../../../utils'
-import { defineUserByRefreshToken } from '../../../../middleware/auth.middleware'
+
+import {generateTokens} from 'utils'
+import { defineUserByRefreshToken } from 'middleware'
 import {Request, Response} from 'types'
 
 const router = express.Router()

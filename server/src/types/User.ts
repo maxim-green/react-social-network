@@ -1,4 +1,6 @@
 import {Types} from 'mongoose'
+import {DialogType, PopulatedMessageType} from './Dialog'
+import {Override} from './custom'
 
 export type UserType = {
     _id: Types.ObjectId
@@ -31,3 +33,7 @@ export type UserType = {
     }
     subscriptions: Array<Types.ObjectId>
 }
+
+export type PopulatedUserType = Override<UserType, {
+    subscriptions: Array<UserType>
+}>

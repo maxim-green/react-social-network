@@ -1,19 +1,22 @@
-const router = require('express').Router()
-const { auth, requireAuth } = require('../../../../middleware/auth.middleware')
-const config = require('config')
-const path = require('path')
-const sharp = require('sharp')
-const multer = require('multer')
+import express from 'express'
+import config from 'config'
+import path from 'path'
+import sharp from 'sharp'
+import multer from 'multer'
+
+import {auth, requireAuth} from 'middleware'
+import {Request, Response} from 'types'
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
+const router = express.Router()
 
 router.put(
     '/',
     upload.single('image'),
     auth,
     requireAuth,
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const {user} = req
 
@@ -27,7 +30,7 @@ router.put(
                     height: Math.round(cropArea.height)
                 })
                 .resize({fit: sharp.fit.contain, width: 720})
-                .toFile(path.join(__dirname, '../../../', uploadPath))
+                .toFile(path.join(__dirname, '../../../../../', uploadPath))
 
             user.profile.coverImage = `http://localhost:${config.get('port')}${uploadPath}`
             await user.save()
@@ -44,4 +47,4 @@ router.put(
     }
 )
 
-module.exports = router
+export default router

@@ -1,9 +1,9 @@
 import config from 'config'
 import jwt from 'jsonwebtoken'
 
-import {MongooseDocument, UserType} from 'types'
+import {MongooseDocument, PopulatedUserType, UserType} from 'types'
 
-export const generateTokens = async (user: MongooseDocument<UserType>) => {
+export const generateTokens = async (user: MongooseDocument<PopulatedUserType | UserType>) => {
     const accessToken = jwt.sign(
         {userId: user.id, username: user.username},
         config.get('jwtSecret'),

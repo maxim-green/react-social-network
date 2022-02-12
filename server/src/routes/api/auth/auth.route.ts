@@ -1,4 +1,5 @@
 import express from 'express'
+
 import register from './register/register.route'
 import refreshTokens from './refresh-tokens/refresh-tokens.route'
 import login from './login/login.route'

@@ -1,11 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const {User} = require('../../../models/User')
-const { auth, requireAuth } = require('../../../middleware/auth.middleware')
+import express from 'express'
 
-router.use('/avatar', require('./avatar/avatar.route'))
-router.use('/cover', require('./cover/cover.route'))
-router.use('/status', require('./status/status.route'))
+import {User} from 'models'
+import {auth, requireAuth} from 'middleware'
+import {Request, Response} from 'types'
+
+import avatarRouter from './avatar/avatar.route'
+import coverRouter from './cover/cover.route'
+import statusRouter from './status/status.route'
+
+const router = express.Router()
+
+router.use('/avatar', avatarRouter)
+router.use('/cover', coverRouter)
+router.use('/status', statusRouter)
 
 router.get('/:username', async (req, res) => {
     try {
@@ -23,7 +30,7 @@ router.get('/:username', async (req, res) => {
     }
 })
 
-router.put('/', auth, requireAuth, async (req, res) => {
+router.put('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
         const {user} = req
 
@@ -39,5 +46,4 @@ router.put('/', auth, requireAuth, async (req, res) => {
     }
 })
 
-
-module.exports = router
+export default router

@@ -1,7 +1,7 @@
 import express from 'express'
-import {User} from '../../../models/User'
-import {Dialog} from '../../../models/Dialog'
-import { auth, requireAuth } from '../../../middleware/auth.middleware'
+
+import {User, Dialog} from 'models'
+import { auth, requireAuth } from 'middleware'
 import {MongooseDocument, PopulatedDialogType, Request, Response} from 'types'
 
 const router = express.Router()
@@ -19,8 +19,8 @@ router.get('/', auth, requireAuth, async (req: Request, res: Response) => {
 
         const resultDialogs = dialogs.map(dialog => ({
             _id: dialog._id,
-            created: dialog.created,
-            updated: dialog.updated,
+            created: dialog.createdAt,
+            updated: dialog.updatedAt,
             companionUser: dialog.users.map(u => ({_id: u._id, username: u.username, firstName: u.firstName, avatar: u.avatar}))
                 .find(u => u.username !== user.username),
         }))
@@ -61,7 +61,6 @@ router.get('/:username', auth, requireAuth, async (req: Request, res: Response) 
         }
 
         if (!dialog) {
-            console.log('new')
             resultDialog = new Dialog({
                 date: new Date(),
                 users: [user.id, targetUser.id],
