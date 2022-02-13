@@ -2,8 +2,8 @@ import express from 'express'
 import bcrypt from 'bcryptjs'
 import {check, validationResult} from 'express-validator'
 
-import {User} from 'models'
-import {Request, Response} from 'types'
+import {User} from 'models/index'
+import {Request, Response} from 'types/index'
 
 const router = express.Router()
 

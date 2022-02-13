@@ -4,6 +4,7 @@ import {Override} from './custom'
 export type UserType = {
     _id: Types.ObjectId
     createdAt: number
+    updatedAt: number
     refreshToken: string
     email: string
     password: string

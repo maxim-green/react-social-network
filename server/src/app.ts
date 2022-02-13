@@ -10,7 +10,7 @@ import path from 'path'
 import serveStatic from 'serve-static'
 
 import {NextFunction, Request, Response} from 'types'
-import api from './routes/api'
+import api from 'routes'
 import socket from 'socket'
 
 // TODO: migrate to using dotenv package https://www.npmjs.com/package/dotenv

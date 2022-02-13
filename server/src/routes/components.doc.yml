@@ -277,14 +277,18 @@ components:
       properties:
         _id:
           type: string
-        created:
+        createdAt:
           type: string
           format: date-time
-        updated:
+        updatedAt:
           type: string
           format: date-time
-        companionUser:
-          $ref: '#/components/schemas/User'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          minItems: 2
+          maxItems: 2
 
     Message:
       type: object

@@ -2,12 +2,12 @@ import {Router} from 'express'
 
 import docsRouter from './docs'
 
-import authRouter from './auth'
-import dialogsRouter from './dialogs'
-import postsRouter from './posts'
-import profileRouter from './profile'
-import subscriptionRouter from './subscription'
-import usersRouter from './users'
+import authRouter from './auth/index'
+import dialogsRouter from './dialogs/index'
+import postsRouter from './posts/index'
+import profileRouter from './profile/index'
+import subscriptionRouter from './subscription/index'
+import usersRouter from './users/index'
 
 
 const router = Router()

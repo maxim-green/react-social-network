@@ -1,8 +1,8 @@
 import express from 'express'
 
-import {auth, requireAuth} from 'middleware'
-import {User} from 'models'
-import {Request, Response, NextFunction} from 'types'
+import {auth, requireAuth} from 'middleware/index'
+import {User} from 'models/index'
+import {Request, Response, NextFunction} from 'types/index'
 
 const router = express.Router()
 

@@ -1,8 +1,8 @@
 import express from 'express'
 
-import {User} from 'models'
-import {auth, requireAuth} from 'middleware'
-import {Request, Response} from 'types'
+import {User} from 'models/index'
+import {auth, requireAuth} from 'middleware/index'
+import {Request, Response} from 'types/index'
 
 import avatarRouter from './avatar/avatar.route'
 import coverRouter from './cover/cover.route'
