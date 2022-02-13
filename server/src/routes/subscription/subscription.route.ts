@@ -1,8 +1,8 @@
 import express from 'express'
 
-import {auth, requireAuth} from 'middleware'
-import {Request, Response} from 'types'
-import {User} from 'models'
+import {auth, requireAuth} from 'middleware/index'
+import {Request, Response} from 'types/index'
+import {User} from 'models/index'
 const router = express.Router()
 
 // /api/subscription/:targetUserId

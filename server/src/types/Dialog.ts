@@ -1,6 +1,6 @@
 import {SchemaDefinitionProperty, Types} from 'mongoose'
 
-import {UserType} from './User'
+import {PopulatedUserType, UserType} from './User'
 import {Override} from './custom'
 
 export type MessageType = {
@@ -22,6 +22,6 @@ export type DialogType = {
 }
 
 export type PopulatedDialogType = Override<DialogType, {
-    users: Array<UserType>
+    users: Array<PopulatedUserType>
     messages: Array<PopulatedMessageType>
 }>

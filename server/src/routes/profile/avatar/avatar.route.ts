@@ -3,9 +3,9 @@ import path from 'path'
 import sharp from 'sharp'
 import multer from 'multer'
 
-import { auth, requireAuth } from 'middleware'
+import { auth, requireAuth } from 'middleware/index'
 import {Date} from 'mongoose'
-import {Request, Response} from 'types'
+import {Request, Response} from 'types/index'
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})

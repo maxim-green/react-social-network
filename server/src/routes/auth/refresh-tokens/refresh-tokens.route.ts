@@ -1,9 +1,9 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 
-import {generateTokens} from 'utils'
-import { defineUserByRefreshToken } from 'middleware'
-import {Request, Response} from 'types'
+import {generateTokens} from 'utils/index'
+import { defineUserByRefreshToken } from 'middleware/index'
+import {Request, Response} from 'types/index'
 
 const router = express.Router()
 

@@ -1,9 +1,9 @@
 import express from 'express'
 import {check, validationResult} from 'express-validator'
 
-import {User, Post} from 'models'
-import { auth, requireAuth } from 'middleware'
-import {Request, Response, MongooseDocument, UserType} from 'types'
+import {User, Post} from 'models/index'
+import { auth, requireAuth } from 'middleware/index'
+import {Request, Response, MongooseDocument, UserType} from 'types/index'
 
 const router = express.Router()
 
