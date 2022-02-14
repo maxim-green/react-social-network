@@ -5,6 +5,7 @@
 /server/.idea
 /server/config
 /server/node_modules
+/server/.env
 
 # client (create-react-app)
 # dependencies
