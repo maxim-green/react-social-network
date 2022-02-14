@@ -13,7 +13,6 @@ import {NextFunction, Request, Response} from 'types'
 import api from 'routes'
 import socket from 'socket'
 
-// TODO: migrate to using dotenv package https://www.npmjs.com/package/dotenv
 const PORT = process.env.PORT || 5000
 
 const app = express()
