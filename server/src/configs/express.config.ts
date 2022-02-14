@@ -1,7 +1,11 @@
 import {Application} from 'express'
-import {NextFunction, Request, Response} from '../types'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import serveStatic from 'serve-static'
+import path from "path"
+
+import api from 'routes'
+import {NextFunction, Request, Response} from 'types'
 
 export const expressConfig = (app: Application) => {
     app.use((req: Request, res: Response, next: NextFunction) => {
@@ -13,6 +17,9 @@ export const expressConfig = (app: Application) => {
     })
     app.use(bodyParser.json())
     app.use(cookieParser())
+
+    app.use('/uploads', serveStatic(path.join(__dirname, '../../uploads')))
+    app.use('/api', api)
 
     return app
 }

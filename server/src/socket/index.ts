@@ -1,36 +1,33 @@
 import cookie from 'cookie'
 import jwt from 'jsonwebtoken'
-import {Server} from 'socket.io'
+import {Server as SocketIOServer} from 'socket.io'
+import {Server as HTTPServer} from 'http'
 
-import {Dialog, User} from 'models'
-import {JwtPayloadWithUserId, SocketWithUser} from 'types'
+import {Dialog} from 'models'
+import {getUserByAccessToken} from 'utils'
+import {SocketWithUser} from 'types'
+import {ioConfig} from 'configs'
 
-const socket = (io: Server) => {
+
+
+const socket = (server: HTTPServer) => {
+    const io = new SocketIOServer(server, ioConfig)
+
     io.use(async (socket: SocketWithUser, next) => {
-        if (!socket.request.headers['cookie']) {
-            return next(new Error('Socket connection error. Not authorized'))
-        }
-
-        const cookies = cookie.parse(socket.request.headers['cookie'])
-        const {accessToken} = cookies
-
-        if (!accessToken) {
-            return next(new Error('Socket connection error. Not authorized'))
-        }
-
         try {
-            // TODO: (use func getUserByAccessToken from auth middleware; move it to helpers)
-            jwt.verify(
-                accessToken,
-                process.env.JWT_SECRET,
-                async (err, payload: JwtPayloadWithUserId) => {
-                    if (err) {
-                        return next(new Error('Socket connection error. Not authorized'))
-                    } else {
-                        socket.user = await User.findById(payload.userId)
-                        return next()
-                    }
-                })
+            if (!socket.request.headers['cookie']) {
+                return next(new Error('Socket connection error. Not authorized'))
+            }
+
+            const cookies = cookie.parse(socket.request.headers['cookie'])
+            const {accessToken} = cookies
+
+            if (!accessToken) {
+                return next(new Error('Socket connection error. Not authorized'))
+            }
+
+            socket.user = await getUserByAccessToken(accessToken)
+            return next()
 
         } catch (e) {
             if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
