@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/app.ts",
-    "dev": "tsnd --respawn -r tsconfig-paths/register ./src/app.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --exit-child --watch -r tsconfig-paths/register ./src/app.ts",
     "build": "tsc",
     "prod": "tsc && node ./built/src/app.js",
     "debug": "tsc && node --inspect ./built/src/app.js"

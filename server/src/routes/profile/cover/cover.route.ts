@@ -29,7 +29,7 @@ router.put(
                     height: Math.round(cropArea.height)
                 })
                 .resize({fit: sharp.fit.contain, width: 720})
-                .toFile(path.join(__dirname, '../../../../../', uploadPath))
+                .toFile(path.join(__root, uploadPath))
 
             user.coverImage = `http://localhost:${process.env.PORT}${uploadPath}`
             await user.save()

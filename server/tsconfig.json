@@ -5,13 +5,24 @@
     "allowJs": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "lib": ["es2018"],
+    "lib": [
+      "es2018"
+    ],
     "module": "commonjs",
     "target": "es2018",
     "baseUrl": "./src",
-    "typeRoots": ["../node_modules/@types", "types"],
-    "outDir": "./build"
+    "typeRoots": [
+      "../node_modules/@types",
+      "types"
+    ],
+    "outDir": "./build",
+
   },
-  "include": ["./src/**/*"],
-  "exclude": ["../node_modules"]
+  "include": [
+    "./src/*.ts",
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules"
+  ]
 }

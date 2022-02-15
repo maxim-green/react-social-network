@@ -3,9 +3,9 @@ import path from 'path'
 import sharp from 'sharp'
 import multer from 'multer'
 
-import { auth, requireAuth } from 'middleware/index'
+import { auth, requireAuth } from 'middleware'
 import {Date} from 'mongoose'
-import {Request, Response} from 'types/index'
+import {Request, Response} from 'types'
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
@@ -26,7 +26,7 @@ router.put(
 
             const lgPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-lg${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
-                .toFile(path.join(__dirname, '../../../../../', lgPath))
+                .toFile(path.join(__root, lgPath))
 
             const smPath = `/uploads/avatar/${req.file.fieldname}${Date.now()}-sm${path.extname(req.file.originalname)}`
             await sharp(req.file.buffer)
@@ -37,7 +37,7 @@ router.put(
                     height: Math.round(crop.height)
                 })
                 .resize(120, 120)
-                .toFile(path.join(__dirname, '../../../../../', smPath))
+                .toFile(path.join(__root, smPath))
 
             user.avatar = {
                 small: `http://localhost:${process.env.PORT}${smPath}`,

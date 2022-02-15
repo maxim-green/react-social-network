@@ -1,17 +1,16 @@
-import 'dotenv/config'  // explanation for this: https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import path from 'path'
+global.__root = path.join(__dirname, '..')
 
-import express from 'express'
+import 'dotenv/config'  // explanation for this: https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import http from 'http'
 import mongoose from 'mongoose'
 
+import {app} from 'configs'
 import socket from 'socket'
-import {expressConfig} from 'configs'
-
-const app = expressConfig(express())
-const server = http.createServer(app)
 
 const PORT = process.env.PORT || 5000
 
+const server = http.createServer(app)
 const start = async () => {
     try {
         // connecting to database
