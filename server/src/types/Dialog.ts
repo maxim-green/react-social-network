@@ -5,7 +5,8 @@ import {Override} from './custom'
 
 export type MessageType = {
     createdAt: number
-    author: SchemaDefinitionProperty<Types.ObjectId>;
+    dialog: SchemaDefinitionProperty<Types.ObjectId>
+    author: SchemaDefinitionProperty<Types.ObjectId>
     text: string
 }
 

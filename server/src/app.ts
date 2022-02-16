@@ -5,12 +5,12 @@ import 'dotenv/config'  // explanation for this: https://github.com/motdotla/dot
 import http from 'http'
 import mongoose from 'mongoose'
 
-import {app} from 'configs'
-import socket from 'socket'
+import {expressApp} from 'configs'
+import {ioServer} from 'socket'
 
 const PORT = process.env.PORT || 5000
 
-const server = http.createServer(app)
+const server = http.createServer(expressApp)
 const start = async () => {
     try {
         // connecting to database
@@ -22,7 +22,7 @@ const start = async () => {
         })
 
         // starting ws server (socket.io)
-        socket(server)
+        ioServer(server)
     } catch (e) {
         console.log(e)
     }

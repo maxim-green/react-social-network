@@ -2,22 +2,22 @@ import express from 'express'
 
 import { auth, requireAuth } from 'middleware/index'
 import {Request, Response} from 'types/index'
+import {logoutUser} from 'services'
 
 const router = express.Router()
 
 // /coreApi/auth/logout
 router.delete('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
-        const { user } = req
+        await logoutUser(req.user)
 
-        user.refreshToken = ""
         res
             .clearCookie('accessToken')
             .clearCookie('refreshToken')
             .status(200)
             .json({resultCode: 0, message: "Success"})
     } catch (e) {
-        res.status(500).json({resultCode: 1, message: "Something went wrong :("})
+        res.handleError(e)
     }
 })
 

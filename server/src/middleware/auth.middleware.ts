@@ -1,26 +1,7 @@
 import jwt from 'jsonwebtoken'
-import {NextFunction, Request, Response} from 'types'
-import {getUserByAccessToken, getUserByRefreshToken} from 'utils'
-
-
-export const defineUserByRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-
-        if (req.method === 'OPTIONS') return next()
-        if (!req.cookies.refreshToken) return next()
-        req.user = await getUserByRefreshToken(req.cookies.refreshToken)
-        return next()
-
-    } catch (e) {
-
-        if (e instanceof jwt.JsonWebTokenError) console.log('Invalid refresh token')
-        if (e instanceof jwt.TokenExpiredError) console.log('Expired refresh token')
-        next()
-
-    }
-}
-
-
+import {NextFunction, Request, Response, SocketNextFunction, SocketWithUser} from 'types'
+import {getUserByAccessToken, HTTPError} from 'utils'
+import cookie from 'cookie'
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -37,17 +18,38 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-
-
 export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
     try {
         const {user} = req
         if (!user) {
-            return res.status(401).json({resultCode: 1, message: 'Not authorized'})
+            throw new HTTPError(401, {resultCode: 1, message: 'Not authorized'})
         } else {
             return next()
         }
     } catch (e) {
-        return res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+        res.handleError(e)
+    }
+}
+
+export const socketAuth = async (socket: SocketWithUser, next: SocketNextFunction) => {
+    try {
+        if (!socket.request.headers['cookie']) {
+            return next(new Error('Socket connection error. Not authorized'))
+        }
+
+        const cookies = cookie.parse(socket.request.headers['cookie'])
+        const {accessToken} = cookies
+
+        if (!accessToken) {
+            return next(new Error('Socket connection error. Not authorized'))
+        }
+
+        socket.user = await getUserByAccessToken(accessToken)
+        return next()
+
+    } catch (e) {
+        if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
+        if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
+        return next(new Error('Socket connection error. Not authorized'))
     }
 }

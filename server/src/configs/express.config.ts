@@ -1,5 +1,5 @@
 import express from 'express'
-import {Application} from 'express'
+
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import serveStatic from 'serve-static'
@@ -7,21 +7,23 @@ import path from 'path'
 
 import api from 'routes'
 import {NextFunction, Request, Response} from 'types'
+import {withErrorHandler} from 'middleware'
 
-const app = express()
+const expressApp = express()
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+expressApp.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'content-type')
     res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 })
-app.use(bodyParser.json())
-app.use(cookieParser())
+expressApp.use(bodyParser.json())
+expressApp.use(cookieParser())
+expressApp.use(withErrorHandler)
 
-app.use('/uploads', serveStatic(path.join(__dirname, '../../uploads')))
-app.use('/api', api)
+expressApp.use('/uploads', serveStatic(path.join(__dirname, '../../uploads')))
+expressApp.use('/api', api)
 
-export { app }
+export { expressApp }
 

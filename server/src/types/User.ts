@@ -32,6 +32,18 @@ export type UserType = {
     subscriptions: Array<Types.ObjectId>
 }
 
+export type UserRegistrationPayload = {
+    email: string
+    password: string
+    username: string
+    firstName: string
+    lastName: string
+}
+export type UserLoginData = {
+    email: string
+    password: string
+}
+
 export type PopulatedUserType = Override<UserType, {
     subscriptions: Array<UserType>
 }>

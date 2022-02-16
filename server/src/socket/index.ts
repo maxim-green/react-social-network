@@ -1,80 +1,66 @@
-import cookie from 'cookie'
-import jwt from 'jsonwebtoken'
 import {Server as SocketIOServer} from 'socket.io'
 import {Server as HTTPServer} from 'http'
+import {Types} from 'mongoose'
 
-import {Dialog} from 'models'
-import {getUserByAccessToken} from 'utils'
-import {SocketWithUser} from 'types'
+import {Dialog, Message} from 'models'
+import {MessageType, MongooseDocument, PopulatedUserType, SocketWithUser} from 'types'
 import {ioConfig} from 'configs'
+import {socketAuth} from 'middleware'
 
 
 
-const socket = (server: HTTPServer) => {
+const getUserDialogs = async (userId: string) => {
+    return Dialog.find({users: userId})
+}
+
+const connectUser = async (user: MongooseDocument<PopulatedUserType>) => {
+    console.log(`${user.username} connected`)
+    user.isOnline = true
+    await user.save()
+}
+
+const disconnectUser = async (user: MongooseDocument<PopulatedUserType>) => {
+    console.log(`${user.username} disconnected`)
+    user.isOnline = false
+    await user.save()
+}
+
+const createMessage = async (author: MongooseDocument<PopulatedUserType>, text: MongooseDocument<MessageType>, dialogId: string) => {
+    const message = new Message({
+        author,
+        dialog: new Types.ObjectId(dialogId),
+        text
+    })
+    await message.save()
+    return message
+}
+
+export const ioServer = (server: HTTPServer) => {
     const io = new SocketIOServer(server, ioConfig)
 
-    io.use(async (socket: SocketWithUser, next) => {
-        try {
-            if (!socket.request.headers['cookie']) {
-                return next(new Error('Socket connection error. Not authorized'))
-            }
-
-            const cookies = cookie.parse(socket.request.headers['cookie'])
-            const {accessToken} = cookies
-
-            if (!accessToken) {
-                return next(new Error('Socket connection error. Not authorized'))
-            }
-
-            socket.user = await getUserByAccessToken(accessToken)
-            return next()
-
-        } catch (e) {
-            if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
-            if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
-            return next(new Error('Socket connection error. Not authorized'))
-        }
-    })
+    io.use(socketAuth)
 
     io.sockets.on('connection', async (socket: SocketWithUser) => {
-        const {user} = socket
-        console.log(`${user.username} connected`)
-        user.isOnline = true
-        await user.save()
 
-        const dialogs = await Dialog.find({users: user.id}) // get all dialogs of connected user
+        const {user} = socket
+        await connectUser(user)
+
+        const dialogs = await getUserDialogs(user.id)
         socket.join(dialogs.map(d => d.id))    // room id is dialog id
 
         socket.on('disconnect', async () => {
-            console.log(`${user.username} disconnected`)
-            user.isOnline = false
-            await user.save()
+            await disconnectUser(user)
         })
 
-        socket.on('client-message', async (message, dialogId) => {
-            const newMessage = {
-                date: new Date(),
-                author: user,
-                text: message
-            }
-            console.log(`Message from ${user.username}: ${message}`)
-            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: newMessage}})
+        socket.on('client-message', async (text, dialogId) => {
+            const message = await createMessage(user, text, dialogId)
 
-            const responseMessage = {
-                ...newMessage,
-                dialogId: dialogId,
-                author: {
-                    userId: newMessage.author.id,
-                    username: newMessage.author.username,
-                    firstName: newMessage.author.firstName,
-                    lastName: newMessage.author.lastName,
-                    avatar: newMessage.author.avatar
-                }
-            }
+            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: message}})
+
+            const responseMessage = await message
+                .populate<{author: PopulatedUserType}>('author', 'username firstName lastName avatar')
 
             io.to(dialogId).emit('server-message', {dialogId, message: responseMessage})
         })
     })
 }
-
-export default socket

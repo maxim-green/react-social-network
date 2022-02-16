@@ -1,35 +1,42 @@
 import express from 'express'
 
 import {User, Dialog} from 'models'
-import { auth, requireAuth } from 'middleware'
+import {auth, requireAuth} from 'middleware'
 import {
-    MongooseDocument,
-    PopulatedDialogType,
     Request,
     Response,
     UserType
 } from 'types'
-import {Types} from "mongoose"
+import {Types} from 'mongoose'
 
 const router = express.Router()
 
 
-
-const getDialogsWithoutMessages = async (userId: Types.ObjectId): Promise<Array<MongooseDocument<PopulatedDialogType>>> => {
+const getDialogsResponse = async (userId: string) => {
     // TODO consider refactoring using generic in populate() like it described here: https://mongoosejs.com/docs/typescript/populate.html
-    return await Dialog
+    const dialogs = await Dialog
         .find({users: userId})
         .select('-messages')
-        .populate("users", ["_id", "username", "firstName", "lastName", "avatar"])
+        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar'])
+
+    return dialogs.map(dialog => ({
+        _id: dialog._id,
+        createdAt: dialog.createdAt,
+        updatedAt: dialog.updatedAt,
+        companion: dialog.users.find(user => user._id.toString() !== userId)
+    }))
 }
 
 const findDialog = async (userId1: Types.ObjectId, userId2: Types.ObjectId) => {
-    let dialog = await Dialog.findOne({
-        $and: [
-            {users: {$all: [userId1, userId2]}},
-            {users: {$size: 2}}
-        ]
-    }).populate<{messages: {author: UserType}}>('messages.author', ['id', 'username', 'avatar', 'firstName', 'lastName'])
+    let dialog = await Dialog
+        .findOne({
+            $and: [
+                {users: {$all: [userId1, userId2]}},
+                {users: {$size: 2}}
+            ]
+        })
+        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar'])
+        .populate({path: 'messages', populate: { path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar'] }})
 
     return dialog
 }
@@ -46,16 +53,14 @@ const createDialog = async (userId1: Types.ObjectId, userId2: Types.ObjectId) =>
 }
 
 
-
-
 // /api/dialogs/
 router.get('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
 
-        const dialogs = await getDialogsWithoutMessages(req.user.id)
+        const dialogs = await getDialogsResponse(req.user.id)
 
         res.status(200).json({resultCode: 0, message: 'Success', data: {dialogs}})
-    } catch(e) {
+    } catch (e) {
         console.log(e)
         res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
     }
@@ -70,6 +75,7 @@ router.get('/:username', auth, requireAuth, async (req: Request, res: Response) 
         if (!targetUser) return res.status(404).json({resultCode: 1, message: `Requested resource not found`})
 
         const dialog = await findDialog(user.id, targetUser.id)
+        // console.log(dialog)
 
         const resultDialog = dialog ? dialog : await createDialog(user.id, targetUser.id)
 
