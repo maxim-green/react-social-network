@@ -3,7 +3,6 @@ import {generateTokens, HTTPError} from 'utils'
 
 import {MongooseDocument, PopulatedUserType, UserLoginData, UserRegistrationPayload, UserType} from 'types'
 import {User} from 'models'
-import {Error} from 'mongoose'
 import jwt from 'jsonwebtoken'
 
 
@@ -21,6 +20,16 @@ const checkUsername = async (username: string) => {
         resultCode: 1,
         message: 'Username already taken'
     })
+}
+
+export const getSimpleUserData = (user: MongooseDocument<PopulatedUserType>) => {
+    return {
+        _id: user.id,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatar: user.avatar
+    }
 }
 
 export const registerUser = async (payload: UserRegistrationPayload) => {
@@ -96,3 +105,4 @@ export const refreshTokens = async (refreshToken: string) => {
 
     return await generateTokens(user)
 }
+

@@ -34,3 +34,4 @@ export const removeItem = <T = any>(array: Array<T>, value: T) => {
 export {getUserByAccessToken} from '../services'
 export {getUserByRefreshToken} from '../services'
 export {verifyToken} from '../services'
+export {getSimpleUserData} from '../services'
