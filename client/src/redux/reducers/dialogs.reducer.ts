@@ -20,7 +20,7 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
             return {
                 ...state,
                 messages: [...state.messages, action.message],
-                dialogs: state.dialogs.map(dialog => (dialog.id === action.message.dialogId) ? {...dialog, updated: action.message.date} : dialog)
+                dialogs: state.dialogs.map(dialog => (dialog._id === action.message.dialogId) ? {...dialog, updated: action.message.date} : dialog)
             }
         }
         case 'rsn/chat/SET_DIALOG': {
@@ -85,7 +85,7 @@ export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) =
 export const openDialog = (username: string): ThunkType<DialogsActionType> => async (dispatch) => {
     const res = await dialogsApi.getMessages(username)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(dialogsActions.setDialog(res.data.currentDialogId, res.data.messages))
+        dispatch(dialogsActions.setDialog(res.data.dialog._id, res.data.dialog.messages))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

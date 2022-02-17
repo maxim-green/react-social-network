@@ -26,14 +26,12 @@ export type UserDataType = {
     lastName: string
     avatar: AvatarType
     online: boolean
-    profile: {
-        birthDate: string | null,
-        status: string | null,
-        bio: string | null,
-        contacts: ContactsType,
-        location: LocationType,
-        coverImage: string | null
-    }
+    birthDate: string | null
+    status: string | null
+    bio: string | null
+    contacts: ContactsType
+    location: LocationType
+    coverImage: string | null
     subscriptions: Array<UserItemDataType>
 }
 
@@ -58,10 +56,10 @@ export type MessageType = {
 
 // type for items in dialogs list
 export type DialogType = {
-    id: string
-    created: Date
-    updated: Date
-    companionUser: UserItemDataType
+    _id: string
+    createdAt: Date
+    updatedAt: Date
+    companion: UserItemDataType
 }
 
 // type for post-items

@@ -104,10 +104,10 @@ const EditProfileFormContainer: React.FC<{closeModal?: () => void}> = ({closeMod
     const editProfileData: EditProfileDataType = useSelector((state: StateType) => ({
         firstName: state.profile.user?.firstName,
         lastName: state.profile.user?.lastName,
-        birthDate: state.profile.user?.profile.birthDate,
-        bio: state.profile.user?.profile.bio,
-        location: state.profile.user?.profile.location,
-        contacts: state.profile.user?.profile.contacts
+        birthDate: state.profile.user?.birthDate,
+        bio: state.profile.user?.bio,
+        location: state.profile.user?.location,
+        contacts: state.profile.user?.contacts
     }))
     const dispatch: ThunkDispatch<StateType, EditProfileDataType, ProfileActionType> = useDispatch()
 

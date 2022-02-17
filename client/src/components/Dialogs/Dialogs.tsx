@@ -22,10 +22,10 @@ const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessage
         <Card>
             <div className={classes.dialogs}>
                 <div className={classes.dialogsList}>
-                    {dialogs.map(d => <DialogButton key={d.id}
-                                                    username={d.companionUser.username}
-                                                    firstName={d.companionUser.firstName}
-                                                    avatar={d.companionUser.avatar}
+                    {dialogs.map(d => <DialogButton key={d._id}
+                                                    username={d.companion.username}
+                                                    firstName={d.companion.firstName}
+                                                    avatar={d.companion.avatar}
                     />)}
                 </div>
                 <div className={classes.messages}>
@@ -68,8 +68,8 @@ const DialogsContainer: React.FC = () => {
     const {username}: { username: string } = useParams()
 
     const dialogs = useSelector((state: StateType) => state.dialogs.dialogs.slice().sort((a, b) => {
-        const dateA = new Date(a.updated)
-        const dateB = new Date(b.updated)
+        const dateA = new Date(a.updatedAt)
+        const dateB = new Date(b.updatedAt)
         if (dateA > dateB) return -1
         if (dateA < dateB) return 1
         return 0
@@ -95,7 +95,7 @@ const DialogsContainer: React.FC = () => {
     if (!authorized) return <Redirect to={'/login'}/>
 
     // if no username specified in route, then redirect to latest dialog
-    if (!username && dialogs.length !== 0) return <Redirect to={`/dialogs/${dialogs[0].companionUser.username}`}/>
+    if (!username && dialogs[0] && dialogs.length !== 0) return <Redirect to={`/dialogs/${dialogs[0].companion.username}`}/>
     return <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs}
                     authUser={authUser || ''}/>
 }

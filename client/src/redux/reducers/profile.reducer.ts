@@ -30,18 +30,15 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                     ...state.user,
                     firstName: action.userProfileData.firstName,
                     lastName: action.userProfileData.lastName,
-                    profile: {
-                        ...state.user.profile,
-                        bio: action.userProfileData.bio,
-                        birthDate: action.userProfileData.birthDate,
-                        location: {
-                            ...state.user.profile.location,
-                            ...action.userProfileData.location
-                        },
-                        contacts: {
-                            ...state.user.profile.contacts,
-                            ...action.userProfileData.contacts
-                        }
+                    bio: action.userProfileData.bio,
+                    birthDate: action.userProfileData.birthDate,
+                    location: {
+                        ...state.user.location,
+                        ...action.userProfileData.location
+                    },
+                    contacts: {
+                        ...state.user.contacts,
+                        ...action.userProfileData.contacts
                     }
                 }
             }
@@ -61,10 +58,7 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 ...state,
                 user: {
                     ...state.user,
-                    profile: {
-                        ...state.user.profile,
-                        coverImage: action.coverImage
-                    }
+                    coverImage: action.coverImage
                 }
             }
         }
@@ -73,10 +67,7 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                 ...state,
                 user: {
                     ...state.user,
-                    profile: {
-                        ...state.user.profile,
-                        status: action.status
-                    }
+                    status: action.status
                 }
             }
         }

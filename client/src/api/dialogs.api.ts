@@ -1,9 +1,14 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {DialogType, MessageType} from '../types/types'
+import {DialogType, MessageType, UserItemDataType} from '../types/types'
 
-type MessagesDataType = {
-    dialogId: string,
-    messages: Array<MessageType>
+type DialogDataType = {
+    dialog: {
+        _id: string,
+        createdAt: Date,
+        updatedAt: Date,
+        users: Array<UserItemDataType>,
+        messages: Array<MessageType>
+    }
 }
 
 type DialogsDataType = {
@@ -17,6 +22,6 @@ export const dialogsApi = {
         .catch(handleError()),
     getMessages: (username: string) => coreApi
         .get(`/dialogs/${username}`)
-        .then(handleResponse<MessagesDataType>())
+        .then(handleResponse<DialogDataType>())
         .catch(handleError())
 }
