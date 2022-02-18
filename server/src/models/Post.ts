@@ -5,7 +5,6 @@ import {PostType} from 'types'
 
 const schema = new Schema<PostType>(
     {
-        creationDate: {type: Date, required: true},
         author: { type: Types.ObjectId, ref: 'User', required: true},
         text: {type: String, required: true},
         likes: [{ type: Types.ObjectId, ref: 'User' }],
@@ -17,6 +16,7 @@ const schema = new Schema<PostType>(
         }],
     },
     {
+        timestamps: true,
         collection: 'posts'
     }
 )

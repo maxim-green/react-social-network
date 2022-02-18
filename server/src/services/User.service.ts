@@ -4,7 +4,15 @@ import {generateTokens, HTTPError} from 'utils'
 import {MongooseDocument, PopulatedUserType, UserLoginData, UserRegistrationPayload, UserType} from 'types'
 import {User} from 'models'
 import jwt from 'jsonwebtoken'
+import {FilterQuery, Document} from 'mongoose'
 
+
+
+export const findUser = async (filter: FilterQuery<Document>) => {
+    const user = await User.findOne(filter)
+    if (!user) throw new HTTPError(404, {resultCode: 1, message: `User not found`})
+    return user
+}
 
 const checkEmail = async (email: string) => {
     const candidate = await User.findOne({email})

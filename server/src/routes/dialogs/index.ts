@@ -1,2 +1,5 @@
 export {default} from './dialogs.route'
 export * from './dialogs.route'
+export {findUserDialogs} from '../../services/Dialog.service'
+export {findDialog} from '../../services/Dialog.service'
+export {createDialog} from '../../services/Dialog.service'

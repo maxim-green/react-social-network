@@ -1,7 +1,7 @@
 import express from 'express'
 
-import { auth, requireAuth } from 'middleware/index'
-import { Request, Response } from 'types/index'
+import { auth, requireAuth } from 'middleware'
+import { Request, Response } from 'types'
 
 const router = express.Router()
 
