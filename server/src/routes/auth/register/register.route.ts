@@ -1,9 +1,8 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 import {check, validationResult} from 'express-validator'
 
-import {Request, Response} from 'types'
 import {registerUser} from 'services'
-import {throwValidationError} from 'utils'
+import {throwValidationError} from 'helpers'
 
 const router = express.Router()
 

@@ -1,4 +1,4 @@
-import express from 'express'
+import express, {NextFunction, Request, Response} from 'express'
 
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -6,7 +6,6 @@ import serveStatic from 'serve-static'
 import path from 'path'
 
 import api from 'routes'
-import {NextFunction, Request, Response} from 'types'
 import {withErrorHandler} from 'middleware'
 
 const expressApp = express()

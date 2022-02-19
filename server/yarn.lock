@@ -868,7 +868,7 @@ express@^4.17.1:
     setprototypeof "1.2.0"
     statuses "~1.5.0"
     type-is "~1.6.18"
-    utils-merge "1.0.1"
+    helpers-merge "1.0.1"
     vary "~1.1.2"
 
 fill-range@^7.0.1:
@@ -1383,7 +1383,7 @@ nanoid@^2.1.0:
 
 napi-build-utils@^1.0.1:
   version "1.0.2"
-  resolved "https://registry.npmjs.org/napi-build-utils/-/napi-build-utils-1.0.2.tgz#b1fddc0b2c46e380a0b7a76f984dd47c41a13806"
+  resolved "https://registry.npmjs.org/napi-build-helpers/-/napi-build-helpers-1.0.2.tgz#b1fddc0b2c46e380a0b7a76f984dd47c41a13806"
   integrity sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==
 
 negotiator@0.6.3:
@@ -1485,7 +1485,7 @@ prebuild-install@^6.1.2:
     github-from-package "0.0.0"
     minimist "^1.2.3"
     mkdirp-classic "^0.5.3"
-    napi-build-utils "^1.0.1"
+    napi-build-helpers "^1.0.1"
     node-abi "^2.21.0"
     npmlog "^4.0.1"
     pump "^3.0.0"
@@ -2093,7 +2093,7 @@ util@^0.10.3:
 
 utils-merge@1.0.1:
   version "1.0.1"
-  resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
+  resolved "https://registry.npmjs.org/helpers-merge/-/helpers-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
 v8-compile-cache-lib@^3.0.0:

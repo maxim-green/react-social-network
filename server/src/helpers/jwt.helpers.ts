@@ -3,9 +3,6 @@ import bcrypt from 'bcryptjs'
 
 import {MongooseDocument, PopulatedUserType, UserType} from 'types'
 
-export * from './users.util'
-export * from './error.util'
-
 export const generateTokens = async (user: MongooseDocument<PopulatedUserType | UserType>) => {
     const accessToken = jwt.sign(
         {userId: user.id, username: user.username},
@@ -25,13 +22,6 @@ export const generateTokens = async (user: MongooseDocument<PopulatedUserType | 
     return {accessToken, refreshToken}
 }
 
-export const removeItem = <T = any>(array: Array<T>, value: T) => {
-    const index = array.indexOf(value)
-    if (index > -1) {
-        array.splice(index, 1)
-    }
+export const verifyToken = <T extends object>(token: string) => {
+    return jwt.verify(token, process.env.JWT_SECRET) as T
 }
-export {getUserByAccessToken} from '../services'
-export {getUserByRefreshToken} from '../services'
-export {verifyToken} from '../services'
-export {getSimpleUserData} from '../services'

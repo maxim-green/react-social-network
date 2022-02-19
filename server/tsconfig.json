@@ -12,11 +12,10 @@
     "target": "es2018",
     "baseUrl": "./src",
     "typeRoots": [
-      "../node_modules/@types",
-      "types"
+      "types",
+      "../node_modules/@types"
     ],
-    "outDir": "./build",
-
+    "outDir": "./build"
   },
   "include": [
     "./src/*.ts",

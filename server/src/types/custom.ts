@@ -1,8 +1,7 @@
-import {Request as TRequest, Response as TResponse, NextFunction as TNextFunction} from 'express'
 import {JwtPayload} from 'jsonwebtoken'
 import {Socket} from 'socket.io'
 import {Document} from 'mongoose'
-import {HTTPError} from 'utils'
+import {HTTPError} from 'helpers'
 
 import {PopulatedUserType} from './User'
 import {ExtendedError} from 'socket.io/dist/namespace'
@@ -10,13 +9,6 @@ import {ValidationError} from 'express-validator'
 
 export type Override<T1, T2> = Omit<T1, keyof T2> & T2;
 export type MongooseDocument<T> = T & Document<any, any, T>
-
-// todo: refactor by extending
-export type Request = TRequest & { user: MongooseDocument<PopulatedUserType> }     // property 'user' added in auth middleware
-export type Response =
-    TResponse
-    & { handleError: (e: any) => void }
-export type NextFunction = TNextFunction
 
 export type JwtPayloadWithUserId = JwtPayload & { userId: string }
 
@@ -32,3 +24,16 @@ export type ErrorResponseData = {
 }
 
 export type HTTPErrorType = InstanceType<typeof HTTPError>
+
+export type UpdateProfilePayload = {
+    firstName: string,
+    lastName: string,
+    birthDate: string | null,
+    bio: string | null,
+    contacts: {
+        website: string | null,
+        vkontakte: string | null,
+        github: string | null,
+    },
+    location: { country: string | null, city: string | null }
+}

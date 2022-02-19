@@ -32,14 +32,14 @@ export type UserType = {
     subscriptions: Array<Types.ObjectId>
 }
 
-export type UserRegistrationPayload = {
+export type RegistrationPayload = {
     email: string
     password: string
     username: string
     firstName: string
     lastName: string
 }
-export type UserLoginData = {
+export type LoginPayload = {
     email: string
     password: string
 }

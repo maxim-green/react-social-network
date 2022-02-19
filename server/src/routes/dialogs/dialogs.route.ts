@@ -1,7 +1,6 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 
 import {auth, requireAuth} from 'middleware'
-import {Request, Response} from 'types'
 import {findUserDialogs, createDialog, findDialog, findUser} from 'services'
 
 const router = express.Router()

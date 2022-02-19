@@ -1,10 +1,9 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 import {check, validationResult} from 'express-validator'
 
 import {auth, requireAuth} from 'middleware'
-import {Request, Response} from 'types'
-import {createPost, deletePost, findPost, findPosts, findUser, findUserPosts} from 'services'
-import {throwValidationError} from 'utils'
+import {createPost, deletePost, getPost, getPosts, findUser, getUserPosts} from 'services'
+import {throwValidationError} from 'helpers'
 
 const router = express.Router()
 
@@ -13,11 +12,11 @@ router.get('/', async (req: Request & { query: { author: string } }, res: Respon
         // todo: move to route /user/:id/posts
         if (req.query.author) {
             const user = await findUser({'username': req.query.author})
-            const posts = await findUserPosts(user._id)
+            const posts = await getUserPosts(user._id)
             return res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
         }
 
-        const posts = findPosts()
+        const posts = getPosts()
         res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
     } catch (e) {
         res.handleError(e)
@@ -27,7 +26,7 @@ router.get('/', async (req: Request & { query: { author: string } }, res: Respon
 // /api/posts/:postId
 router.get('/:postId', async (req: Request, res: Response) => {
     try {
-        const post = await findPost(req.params.postId)
+        const post = await getPost(req.params.postId)
         res.status(200).json({resultCode: 0, message: 'Success', data: {post}})
     } catch (e) {
         res.handleError(e)

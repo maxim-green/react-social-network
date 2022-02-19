@@ -1,6 +1,5 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 
-import {Request, Response} from 'types'
 import {refreshTokens} from 'services'
 
 const router = express.Router()

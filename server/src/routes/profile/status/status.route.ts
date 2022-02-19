@@ -1,23 +1,17 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 
-import { auth, requireAuth } from 'middleware/index'
-import {Request, Response} from 'types/index'
+import { auth, requireAuth } from 'middleware'
+import {updateStatus} from 'services'
 
 const router = express.Router()
 
 router.put('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
-        const {user} = req
-
-        const { status } = req.body
-
-        user.status = status
-        await user.save()
+        await updateStatus(req.user, req.body.status)
 
         res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
-        console.log(e)
-        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+        res.handleError(e)
     }
 })
 

@@ -15,9 +15,9 @@ const router = Router()
 router.use('/docs', docsRouter)
 router.use('/auth', authRouter)
 router.use('/profile', profileRouter)
-router.use('/dialogs', dialogsRouter)
-router.use('/users', usersRouter)
-router.use('/posts', postsRouter)
+router.use('/dialog', dialogsRouter)
+router.use('/user', usersRouter)
+router.use('/post', postsRouter)
 router.use('/subscription', subscriptionRouter)
 
 export default router

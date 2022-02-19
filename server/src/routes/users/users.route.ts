@@ -1,40 +1,29 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 
-import {auth, requireAuth} from 'middleware/index'
-import {User} from 'models/index'
-import {Request, Response, NextFunction} from 'types/index'
+import {auth} from 'middleware'
+import {getUsers} from 'services'
+
+import postsRouter from './posts'
+import subscriptionsRouter from './subscriptions'
 
 const router = express.Router()
 
+router.use('/', postsRouter)
+router.use('/subscriptions', subscriptionsRouter)
+
 router.get('/',
     auth,
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: Request, res: Response) => {
         try {
-            if (req.query.subscribed) return next()
-
-            const users = await User.find().select('username firstName lastName avatar subscriptions').lean()
+            const users = await getUsers()
 
             return res.status(200).json({
                 resultCode: 0,
                 message: 'Success',
-                data: {
-                    users: users,
-                }
+                data: {users}
             })
         } catch (e) {
-            console.log(e)
-            res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
-        }
-    },
-    requireAuth,
-    async (req: Request, res: Response) => {
-        try {
-            const subscriptions = await User.find({_id: {$in: req.user.subscriptions}}).select('username firstName lastName avatar subscriptions').lean()
-
-            return res.status(200).json({resultCode: 0, message: 'Success', data: {users: subscriptions}})
-        } catch (e) {
-            console.log(e)
-            res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+            res.handleError(e)
         }
     }
 )

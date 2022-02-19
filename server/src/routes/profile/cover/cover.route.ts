@@ -1,10 +1,8 @@
-import express from 'express'
-import path from 'path'
-import sharp from 'sharp'
+import express, {Request, Response} from 'express'
 import multer from 'multer'
 
-import {auth, requireAuth} from 'middleware/index'
-import {Request, Response} from 'types/index'
+import {auth, requireAuth} from 'middleware'
+import {updateCoverImage} from 'services'
 
 const storage = multer.memoryStorage()
 const upload = multer({storage})
@@ -17,31 +15,15 @@ router.put(
     requireAuth,
     async (req: Request, res: Response) => {
         try {
-            const {user} = req
-
-            const cropArea = JSON.parse(req.body.crop)
-            const uploadPath = `/uploads/cover/${req.file.fieldname}${Date.now()}${path.extname(req.file.originalname)}`
-            await sharp(req.file.buffer)
-                .extract({
-                    left: Math.round(cropArea.x),
-                    top: Math.round(cropArea.y),
-                    width: Math.round(cropArea.width),
-                    height: Math.round(cropArea.height)
-                })
-                .resize({fit: sharp.fit.contain, width: 720})
-                .toFile(path.join(__root, uploadPath))
-
-            user.coverImage = `http://localhost:${process.env.PORT}${uploadPath}`
-            await user.save()
+            const coverImage = await updateCoverImage(req.user, req.file, JSON.parse(req.body.crop))
 
             res.status(200).json({
                 resultCode: 0,
                 message: 'Success',
-                data: { coverImage: user.coverImage }
+                data: { coverImage }
             })
         } catch(e) {
-            console.log(e)
-            res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+            res.handleError(e)
         }
     }
 )

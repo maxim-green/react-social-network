@@ -1,5 +1,5 @@
-import {Request, Response, NextFunction} from 'types'
-import {HTTPError} from '../utils'
+import {Request, Response, NextFunction} from 'express'
+import {HTTPError} from 'helpers'
 
 export const withErrorHandler = (req: Request, res: Response, next: NextFunction) => {
     res.handleError = (e) => {

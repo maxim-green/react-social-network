@@ -1,17 +1,21 @@
 import jwt from 'jsonwebtoken'
-import {NextFunction, Request, Response, SocketNextFunction, SocketWithUser} from 'types'
-import {getUserByAccessToken, HTTPError} from 'utils'
+import {NextFunction, Request, Response} from 'express'
+import { SocketNextFunction, SocketWithUser } from 'types'
+import {getUserByAccessToken} from 'services'
+import {HTTPError} from 'helpers'
 import cookie from 'cookie'
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
-    try {
+    if (req.method === 'OPTIONS') return next()
 
-        if (req.method === 'OPTIONS') return next()
+    try {
         if (!req.cookies.accessToken) return next()
         req.user = await getUserByAccessToken(req.cookies.accessToken)
+
         return next()
 
     } catch (e) {
+        console.log(e)
         if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
         if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
         return next()

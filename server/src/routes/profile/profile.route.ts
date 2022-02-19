@@ -1,12 +1,12 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 
-import {User} from 'models/index'
-import {auth, requireAuth} from 'middleware/index'
-import {Request, Response} from 'types/index'
+import {auth, requireAuth} from 'middleware'
+import {getUserProfile, updateProfile} from 'services'
 
 import avatarRouter from './avatar/avatar.route'
 import coverRouter from './cover/cover.route'
 import statusRouter from './status/status.route'
+
 
 const router = express.Router()
 
@@ -14,32 +14,23 @@ router.use('/avatar', avatarRouter)
 router.use('/cover', coverRouter)
 router.use('/status', statusRouter)
 
-router.get('/:username', async (req, res) => {
+router.get('/:username', async (req: Request, res: Response) => {
     try {
-        const {username} = req.params
-        const user = await User
-            .findOne({username})
-            .select('-refreshToken -password -incomingFriendshipRequests -outgoingFriendshipRequests')
-
-        if (!user) return res.status(404).json({ resultCode: 1, message: 'Requested resource not found' })
+        const user = await getUserProfile(req.params.username)
 
         res.status(200).json({resultCode: 0, message: 'Success', data: {user: user.toObject()}})
     } catch (e) {
-        console.log(e)
-        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+        res.handleError(e)
     }
 })
 
 router.put('/', auth, requireAuth, async (req: Request, res: Response) => {
     try {
-        const {user} = req
-
-        Object.assign(user, req.body)
-        await user.save()
+        await updateProfile(req.user, req.body)
 
         res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
-        res.status(500).json({resultCode: 1, message: 'Something went wrong :('})
+        res.handleError(e)
     }
 })
 
