@@ -17,7 +17,7 @@ socket.on('connect', () => console.log('Socket connection opened'))
 socket.on('disconnect', () => console.log('Socket connection closed'))
 
 // todo need to debug: after logout and then login again several messages show up on UI (on message sent)
-// unsubscribe isnt working (but its called). Subscribers array not changing after logout.
+// deleteSubscription isnt working (but its called). Subscribers array not changing after logout.
 // looks like it works when reseting subscribers array on disconnect
 export const socketApi = {
     connect() {

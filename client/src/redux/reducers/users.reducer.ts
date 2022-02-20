@@ -33,14 +33,7 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 //region ACTION CREATORS
 export const usersActions = {
     setUsers: (users: Array<UserItemDataType>) => ({type: 'rsn/users/SET_USERS', users} as const),
-    setFriends: (friends: Array<UserItemDataType>) => ({type: 'rsn/users/SET_FRIENDS', friends} as const),
-    setIsFriend: (userId: string, isFriend: boolean) => ({type: 'rsn/users/SET_IS_FRIEND', userId, isFriend} as const),
     setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'rsn/users/SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
-    setOutgoingFriendshipRequests: (outgoingFriendshipRequests: Array<string>) => ({type: 'rsn/users/SET_OUTGOING_FRIENDSHIP_REQUESTS', outgoingFriendshipRequests} as const),
-    setIncomingFriendshipRequests: (incomingFriendshipRequests: Array<string>) => ({type: 'rsn/users/SET_INCOMING_FRIENDSHIP_REQUESTS', incomingFriendshipRequests} as const),
-    addOutgoingFriendshipRequest: (userId: string) => ({type: 'rsn/users/ADD_OUTGOING_FRIENDSHIP_REQUEST', userId} as const),
-    removeOutgoingFriendshipRequest: (userId: string) => ({type: 'rsn/users/REMOVE_OUTGOING_FRIENDSHIP_REQUEST', userId} as const),
-    removeIncomingFriendshipRequest: (userId: string) => ({type: 'rsn/users/REMOVE_INCOMING_FRIENDSHIP_REQUEST', userId} as const),
 }
 export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 //endregion
@@ -50,8 +43,6 @@ export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
     const res = await usersApi.getUsers()
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setUsers(res.data.users))
-        dispatch(usersActions.setIncomingFriendshipRequests(res.data.incomingFriendshipRequests))
-        dispatch(usersActions.setOutgoingFriendshipRequests(res.data.outgoingFriendshipRequests))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
