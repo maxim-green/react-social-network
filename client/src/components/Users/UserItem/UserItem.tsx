@@ -43,7 +43,7 @@ const UserItem: React.FC<PropsType> = ({
         <div className={classes.userItem}>
             <div className={classes.avatar}>
                 <NavLink to={`/profile/${user.username}`}><Avatar img={user.avatar && user.avatar.small} online
-                                                                   size='md'/></NavLink>
+                                                                   size={70}/></NavLink>
             </div>
             <div className={classes.info}>
                 <NavLink to={`/profile/${user.username}`}>

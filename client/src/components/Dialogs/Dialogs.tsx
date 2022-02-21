@@ -44,7 +44,7 @@ type DialogButtonType = { username: string, firstName: string, avatar: AvatarTyp
 const DialogButton: React.FC<DialogButtonType> = ({username, firstName, avatar}) => {
     return (
         <NavLink to={`/dialogs/${username}`} className={classes.dialogButton} activeClassName={classes.active}>
-            <Avatar size={'xs'} name={firstName} img={avatar.small}/>
+            <Avatar size={30} name={firstName} img={avatar.small}/>
         </NavLink>
     )
 }
@@ -53,7 +53,7 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
     return (
         <div className={(authUser === message.author.username) ? classes.messageSelf : classes.messageOther}>
             <div className={classes.messageAvatar}>
-                <Avatar online img={message.author.avatar.small} size={'xs'}/>
+                <Avatar online img={message.author.avatar.small} size={30}/>
             </div>
             <div>
                 <div className={classes.messageAuthorName}>{message.author.firstName}</div>

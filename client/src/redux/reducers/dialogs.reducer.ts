@@ -2,7 +2,7 @@ import {InferActionsTypes, ThunkType} from '../store'
 import {DialogType, MessageType} from '../../types/types'
 import {socketApi} from '../../api/socket.api'
 import {Dispatch} from 'react'
-import {dialogsApi} from '../../api/dialogs.api'
+import {dialogApi} from '../../api/dialog.api'
 import {ResultCodes} from '../../api/core.api'
 
 // INITIAL STATE
@@ -72,7 +72,7 @@ export const sendMessage = (message: string, dialogId: string): ThunkType<Dialog
 }
 
 export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) => {
-    const res =  await dialogsApi.getDialogs()
+    const res =  await dialogApi.getDialogs()
 
     if (res.resultCode === ResultCodes.success) {
         dispatch(dialogsActions.setDialogs(res.data.dialogs))
@@ -83,7 +83,7 @@ export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) =
 }
 
 export const openDialog = (username: string): ThunkType<DialogsActionType> => async (dispatch) => {
-    const res = await dialogsApi.getMessages(username)
+    const res = await dialogApi.getMessages(username)
     if (res.resultCode === ResultCodes.success) {
         dispatch(dialogsActions.setDialog(res.data.dialog._id, res.data.dialog.messages))
     }

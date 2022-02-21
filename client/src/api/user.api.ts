@@ -7,9 +7,9 @@ export type UsersDataType = {
     users: Array<UserItemDataType>
 }
 
-export const usersApi = {
+export const userApi = {
     getUsers: () => coreApi
-        .get('/users')
+        .get('/user')
         .then(handleResponse<UsersDataType>())
         .catch(handleError()),
     subscribe: (userId: string) => coreApi

@@ -3,8 +3,8 @@ import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from
 import {APIResponseType, ResultCodes} from '../api/core.api'
 
 jest.mock('../api/users.api')
-import {usersApi} from '../api/users.api'
-const mockUsersApi = usersApi as jest.Mocked<typeof usersApi>
+import {userApi} from '../api/user.api'
+const mockUsersApi = userApi as jest.Mocked<typeof userApi>
 
 const dispatchMock = jest.fn()  // фейковый dispatch
 const getStateMock = jest.fn() // фейковая функция getState

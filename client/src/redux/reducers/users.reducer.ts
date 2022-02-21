@@ -1,5 +1,5 @@
 import {UserItemDataType} from '../../types/types'
-import {usersApi} from '../../api/users.api'
+import {userApi} from '../../api/user.api'
 import {ResultCodes} from '../../api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
 
@@ -40,7 +40,7 @@ export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 
 //region THUNK CREATORS
 export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
-    const res = await usersApi.getUsers()
+    const res = await userApi.getUsers()
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setUsers(res.data.users))
     }
@@ -50,7 +50,7 @@ export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
 }
 
 export const subscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
-    const res = await usersApi.subscribe(userId)
+    const res = await userApi.subscribe(userId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, true))
     }
@@ -60,7 +60,7 @@ export const subscribe = (userId: string): ThunkType<UsersActionType> => async (
 }
 
 export const unsubscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
-    const res = await usersApi.unsubscribe(userId)
+    const res = await userApi.unsubscribe(userId)
 
     if (res.resultCode === ResultCodes.success) {
         dispatch(usersActions.setIsSubscription(userId, false))

@@ -8,7 +8,7 @@ import UsersPage from './_pages/UsersPage'
 import {deinitializeApp, initializeApp} from '../redux/reducers/app.reducer'
 import {StateType} from '../redux/store'
 import Layout from './Layout/Layout'
-import TestPage from './TestPage'
+import TestPage from 'components/TestPage/TestPage'
 import DialogsPage from "./_pages/DialogsPage";
 import Spinner from "./_shared/Spinner/Spinner";
 import PostPage from './_pages/PostPage'

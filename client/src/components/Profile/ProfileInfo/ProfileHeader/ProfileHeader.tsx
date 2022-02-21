@@ -58,10 +58,13 @@ const ProfileHeader: React.FC<PropsType> = ({
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
-                <Avatar img={avatar?.small} online size='lg' owner={owner} onSubmit={onAvatarSubmit}/>
+                <Avatar img={avatar?.small} border size={128} owner={owner} onSubmit={onAvatarSubmit}/>
             </div>
             <div className={classes.profileHeaderInfo}>
-                <div className={classes.name}>{firstName} {lastName}</div>
+                <div className={classes.name}>
+                    {firstName} {lastName}
+                    <span style={{backgroundColor: 'limegreen', fontSize: 12, padding: '2px 6px', marginLeft: 8}}>online</span>
+                </div>
                 {owner && <div className={classes.status}>
                     {!statusEditMode && <div className={classes.statusText} onDoubleClick={statusClickHandler}>{statusValue}</div>}
                     {statusEditMode && <div className={classes.editStatus}>

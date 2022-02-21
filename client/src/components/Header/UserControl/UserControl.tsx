@@ -21,7 +21,7 @@ const UserControl: React.FC<PropsType> = (props) => {
 
     return (
         <div className={classes.userControl}>
-            <NavLink to={`/profile/${props.username}`}><Avatar img={props.avatar} contextBgColor={colors.accent} online size='xs'/></NavLink>
+            <NavLink to={`/profile/${props.username}`}><Avatar img={props.avatar} online size={30}/></NavLink>
             <div className={classes.userControlDropdown}>
                 <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
                 {isOpened && <div className={classes.userControlList}>

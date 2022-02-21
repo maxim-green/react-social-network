@@ -15,13 +15,13 @@ type DialogsDataType = {
     dialogs: Array<DialogType>
 }
 
-export const dialogsApi = {
+export const dialogApi = {
     getDialogs: () => coreApi
-        .get(`/dialogs`)
+        .get(`/dialog`)
         .then(handleResponse<DialogsDataType>())
         .catch(handleError()),
     getMessages: (username: string) => coreApi
-        .get(`/dialogs/${username}`)
+        .get(`/dialog/${username}`)
         .then(handleResponse<DialogDataType>())
         .catch(handleError())
 }

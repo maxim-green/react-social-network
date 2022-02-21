@@ -1,7 +1,7 @@
 // INITIAL STATE
 import {PostType} from '../../types/types'
 import {InferActionsTypes, ThunkType} from '../store'
-import {postsApi} from '../../api/posts.api'
+import {postApi} from '../../api/post.api'
 import {ResultCodes} from '../../api/core.api'
 import {authActions, AuthActionType} from './auth.reducer'
 
@@ -54,7 +54,7 @@ export const postsActions = {
 export type PostsActionType = ReturnType<InferActionsTypes<typeof postsActions>>
 
 export const getPost = (postId: string): ThunkType<PostsActionType> => async (dispatch) => {
-    const res = await postsApi.getPost(postId)
+    const res = await postApi.getPost(postId)
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.setPosts([res.data.post]))
     }
@@ -64,7 +64,7 @@ export const getPost = (postId: string): ThunkType<PostsActionType> => async (di
 }
 
 export const getPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
-    const res = await postsApi.getPosts()
+    const res = await postApi.getPosts()
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.setPosts(res.data.posts))
     }
@@ -74,7 +74,7 @@ export const getPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
 }
 
 export const getUserPosts = (username: string): ThunkType<PostsActionType> => async (dispatch) => {
-    const res = await postsApi.getUserPosts(username)
+    const res = await postApi.getUserPosts(username)
 
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.setPosts(res.data.posts))
@@ -85,7 +85,7 @@ export const getUserPosts = (username: string): ThunkType<PostsActionType> => as
 }
 export const addPost = (text: string): ThunkType<PostsActionType | AuthActionType> => async (dispatch) => {
     dispatch(postsActions.setAddPostPending(true))
-    const res = await postsApi.addPost(text)
+    const res = await postApi.addPost(text)
     dispatch(postsActions.setAddPostPending(false))
     if (res.resultCode === ResultCodes.success) {
         console.log(res)
@@ -99,7 +99,7 @@ export const addPost = (text: string): ThunkType<PostsActionType | AuthActionTyp
     }
 }
 export const deletePost = (id: string): ThunkType<PostsActionType> => async (dispatch) => {
-    const res = await postsApi.deletePost(id)
+    const res = await postApi.deletePost(id)
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.deletePost(id))
     }
