@@ -18,17 +18,9 @@ a {
   }
 }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
 body {
+  color: $clr-font;
   background-color: $clr-background;
   font-family: 'Roboto', sans-serif;
-}
-
-#root {
-
+  font-size: 14px;
 }

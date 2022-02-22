@@ -44,7 +44,7 @@ const Post: React.FC<PropsType> = ({
         <Card>
             <div className={classes.header}>
                 <div className={classes.avatar}>
-                    <NavLink to="/profile/1"><Avatar img={avatar} online
+                    <NavLink to="/profile/1"><Avatar smallImg={avatar} online
                                                      size={50}/></NavLink>
                 </div>
                 <div className={classes.info}>

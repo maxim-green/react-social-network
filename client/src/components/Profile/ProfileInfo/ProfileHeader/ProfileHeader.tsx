@@ -58,7 +58,7 @@ const ProfileHeader: React.FC<PropsType> = ({
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
-                <Avatar img={avatar?.small} border size={128} owner={owner} onSubmit={onAvatarSubmit}/>
+                <Avatar smallImg={avatar?.small} largeImg={avatar?.large} border size={128} onEdit={owner ? onAvatarSubmit : undefined }/>
             </div>
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>
@@ -79,7 +79,7 @@ const ProfileHeader: React.FC<PropsType> = ({
                         <Button.Icon><PencilFill width={12} height={12}/></Button.Icon>
                         <Button.Text>Edit profile</Button.Text>
                     </Button>
-                    <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
+                    <Popup open={open} modal nested  contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                         <EditProfileForm closeModal={closeModal}/>
                     </Popup>
                 </div>

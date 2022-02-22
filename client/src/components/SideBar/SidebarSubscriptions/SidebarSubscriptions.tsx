@@ -17,7 +17,7 @@ const SidebarSubscriptions: React.FC<PropsType> = ({subscriptions}) => {
                 <div className={classes.Avatars}>
                     {subscriptions.length !== 0 && subscriptions.map(sub => <NavLink to={`/profile/${sub.username}`}
                                                                             key={sub._id}>
-                            <Avatar img={sub.avatar.small} online size={50} name={sub.firstName}/>
+                            <Avatar smallImg={sub.avatar.small} online size={50} name={sub.firstName}/>
                         </NavLink>
                     )}
                 </div>

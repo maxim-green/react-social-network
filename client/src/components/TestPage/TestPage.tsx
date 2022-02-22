@@ -10,6 +10,7 @@ import {InputDate} from 'components/_shared/Input/InputDate'
 import {InputFile} from 'components/_shared/Input/InputFile'
 import Button from 'components/_shared/Button/Button'
 import Avatar from 'components/_shared/Avatar/Avatar'
+import {Search} from 'react-bootstrap-icons'
 
 
 const TestPage: React.FC = () => {
@@ -50,9 +51,18 @@ const TestPage: React.FC = () => {
 
                             <div>Button sizes</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
-                                <Button type={'primary'} size={'small'}>small</Button>
-                                <Button type={'primary'} size={'medium'}>medium</Button>
-                                <Button type={'primary'} size={'large'}>large</Button>
+                                <Button type={'primary'} size={'small'}><Button.Text>small</Button.Text></Button>
+                                <Button type={'primary'} size={'medium'}><Button.Text>medium</Button.Text></Button>
+                                <Button type={'primary'} size={'large'}><Button.Text>large</Button.Text></Button>
+                            </div>
+
+                            <div>Buttons with icons</div>
+                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
+                                <Button type={'primary'} size={'small'}>
+                                    <Button.Icon><Search/></Button.Icon>
+                                </Button>
+                                <Button type={'primary'} size={'medium'}><Button.Icon><Search/></Button.Icon></Button>
+                                <Button type={'primary'} size={'large'}><Button.Icon><Search/></Button.Icon></Button>
                             </div>
 
                             <div>Button sizes with spinners</div>
@@ -78,36 +88,33 @@ const TestPage: React.FC = () => {
                     <Card>
                         <div className={classes.cardContent}>
                             <Avatar
-                                img={'https://i.pravatar.cc/300'}
+                                smallImg={'https://i.pravatar.cc/300'}
+                                largeImg={'https://i.pravatar.cc/600'}
                                 online
                                 name={'Human One'}
                                 size={90}
-                                owner
-                                onSubmit={() => console.log('Avatar updated.')}
+                                onEdit={() => console.log('Avatar updated.')}
                             />
                             <Avatar
-                                img={'https://i.pravatar.cc/300'}
+                                smallImg={'https://i.pravatar.cc/300'}
                                 online
                                 name={'Human One'}
                                 size={70}
-                                owner
-                                onSubmit={() => console.log('Avatar updated.')}
+                                onEdit={() => console.log('Avatar updated.')}
                             />
                             <Avatar
-                                img={'https://i.pravatar.cc/300'}
+                                smallImg={'https://i.pravatar.cc/300'}
                                 online
                                 name={'Human One'}
                                 size={50}
-                                owner
-                                onSubmit={() => console.log('Avatar updated.')}
+                                onEdit={() => console.log('Avatar updated.')}
                             />
                             <Avatar
-                                img={'https://i.pravatar.cc/300'}
+                                smallImg={'https://i.pravatar.cc/300'}
                                 online
                                 name={'Human One'}
                                 size={30}
-                                owner
-                                onSubmit={() => console.log('Avatar updated.')}
+                                onEdit={() => console.log('Avatar updated.')}
                             />
                         </div>
                     </Card>

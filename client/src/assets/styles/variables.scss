@@ -1,3 +1,4 @@
+// color definitions (don't use directly in components)
 $white: #FFFFFF;
 $black: #000000;
 $accent: #2086C4;
@@ -13,51 +14,48 @@ $light-blue-1: #7ECEFB;
 $light-blue-2: #BEE7FD;
 
 // colors
-  $clr-appbar: $accent;
-  $clr-background: $white;
-  $clr-font-dark: #373C42;
-  $clr-font-link: $accent;
-  $clr-font-light: #FFFFFF;
+$clr-appbar: $accent;
+$clr-background: $white;
+$clr-font: $dark-grey-1;
+$clr-font-dark: $dark-grey-1;
+$clr-font-light: $white;
+$clr-font-link: $accent;
 
-  $clr-primary: #2086C4;
-  $clr-primary-border: darken($clr-primary, 5%);
-  $clr-primary-hover: adjust-hue(desaturate(lighten($clr-primary, 10%), 10%), 5deg);
-  $clr-primary-active: adjust-hue(saturate(darken($clr-primary, 5%), 10%), 5deg);
+$clr-primary: $accent;
+$clr-primary-border: darken($clr-primary, 5%);
+$clr-primary-hover: lighten($clr-primary, 5%);
+$clr-primary-active: darken($clr-primary, 5%);
 
-  $clr-secondary: #BEE7FD;
-  $clr-secondary-border: darken($clr-secondary, 5%);
-  $clr-secondary-hover: adjust-hue(lighten($clr-secondary, 3%), 7deg);
-  $clr-secondary-active: adjust-hue(darken($clr-secondary, 3%), -7deg);
+$clr-secondary: $light-blue-2;
+$clr-secondary-border: darken($clr-secondary, 5%);
+$clr-secondary-hover: adjust-hue(lighten($clr-secondary, 3%), 7deg);
+$clr-secondary-active: adjust-hue(darken($clr-secondary, 3%), -7deg);
 
-  $clr-neutral: #E8E9E8;
-  $clr-neutral-border: darken($clr-neutral, 5%);
-  $clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
-  $clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
+$clr-neutral: $light-grey-2;
+$clr-neutral-border: darken($clr-neutral, 5%);
+$clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
+$clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
 
-  $clr-text: transparent;
-  $clr-text-border: darken($clr-neutral, 5%);
-  $clr-text-hover: transparent;
-  $clr-text-active: transparent;
+$clr-text: transparent;
+$clr-text-border: darken($clr-neutral, 5%);
+$clr-text-hover: transparent;
+$clr-text-active: transparent;
 
-  $clr-cancel: #F2280C;
-  $clr-cancel-border: darken($clr-cancel, 5%);
-  $clr-cancel-hover: lighten($clr-cancel, 5%);
-  $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
+$clr-cancel: $error;
+$clr-cancel-border: darken($clr-cancel, 5%);
+$clr-cancel-hover: lighten($clr-cancel, 5%);
+$clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
 // ui
 $ui-transition: .2s;
-$ui-border-radius: 5px;
+$ui-border-radius: 4px;
 
 @mixin ui-form-item-label-font {
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
 }
-@mixin ui-button-font {
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
+
 @mixin form-focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba($dark-grey-2, 0) inset;
@@ -68,6 +66,7 @@ $ui-border-radius: 5px;
     box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
   }
 }
+
 @mixin ui-button-colors($bg-color, $hover-bg-color, $active-bg-color, $color: black, $hover-color: $color,  $active-color: $color) {
   color: $color;
   background-color: $bg-color;

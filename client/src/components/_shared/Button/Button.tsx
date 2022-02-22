@@ -1,8 +1,8 @@
 import React, {CSSProperties} from 'react'
 import classnames from 'classnames'
 import classes from './Button.module.scss'
-import Spinner from '../Spinner/Spinner'
-import {sizes} from '../../../config'
+import Spinner from 'components/_shared/Spinner/Spinner'
+import {sizes} from 'config'
 
 type ButtonType = {
     onClick?: (e: React.MouseEvent) => void
@@ -37,16 +37,16 @@ const Button: React.FC<ButtonType> & { Icon: React.FC, Text: React.FC } = ({
                     {[classes.medium]: size === 'medium'},
                     {[classes.large]: size === 'large'}
                 )}>
-            {/*<div className={classes.buttonChildren}>*/}
+
+
             {spinner && <div className={classes.buttonSpinner}>
                 <Spinner color={spinnerColor} width={sizes[size] - 14} height={sizes[size] - 14}/>
             </div>}
+
             <div className={classes.content} style={{opacity: spinner ? 0 : 1}}>
                 {children}
             </div>
 
-
-            {/*</div>*/}
         </button>
     )
 }

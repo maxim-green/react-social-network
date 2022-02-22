@@ -43,7 +43,6 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
                         {closeModal && <Button type={"cancel"} size='large' onClick={closeModal}>Close</Button>}
                     </div>
                 </Form.Row>
-
                 {!srcFileUrl && <Form.Row>
                     <Controller
                         control={control}

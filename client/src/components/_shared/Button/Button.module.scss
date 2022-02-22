@@ -1,10 +1,13 @@
 .button {
+  margin: 0;
+  padding: 0;
   position: relative;
   border: none;
   border-radius: $ui-border-radius;
   cursor: pointer;
   transition: $ui-transition;
-  @include ui-button-font;
+  font-weight: 400;
+  letter-spacing: 1px;
   @include form-focus;
   &.spinner {
     box-shadow: none;
@@ -27,45 +30,23 @@
   &.cancel {
     @include ui-button-colors($clr-cancel, $clr-cancel-hover, $clr-cancel-active, $clr-font-light);
   }
-  .contentIcon {
-    &:first-child {
-      margin-right: 5px;
-    }
-    &:last-child {
-      margin-left: 5px;
-    }
-    &:first-child:last-child {
-      margin: 0;
-    }
-  }
+
   &.small {
-    padding: 0 8px;
-    .content {
-      height: 24px;
-    }
-    .contentText {
-      font-size: 11px;
-    }
+    font-size: 12px;
   }
   &.medium {
-    padding: 6px 14px;
-    .content {
-      height: 25px;
-    }
+    font-size: 16px;
   }
   &.large {
-    padding: 8px 20px;
-    .content {
-      height: 30px;
-    }
+    font-size: 20px;
   }
+
   &:disabled {
     opacity: 50%;
   }
   .buttonSpinner {
     position: absolute;
     left: 0;
-    top: 1px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -77,14 +58,28 @@
     align-items: center;
     justify-content: center;
   }
+  .contentText {
+    padding: .5em .75em;
+    line-height: 1em;
+  }
   .contentIcon {
     display: flex;
     align-items: center;
+    padding: .5em;
+    &:first-child {
+      margin-right: 5px;
+    }
+    &:last-child {
+      margin-left: 5px;
+    }
+    &:first-child:last-child {
+      margin: 0;
+    }
   }
 }
 
-.button, .input, .formItem {
-  & + & {
-    margin-left: 10px;
-  }
-}
+//.button, .input, .formItem {
+//  & + & {
+//    margin-left: 10px;
+//  }
+//}

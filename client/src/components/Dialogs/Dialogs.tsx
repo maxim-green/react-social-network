@@ -1,14 +1,14 @@
 import classes from './Dialogs.module.scss'
-import NewMessageForm from '../_forms/NewMessageForm/NewMessageForm'
-import Card from '../_shared/Card/Card'
+import NewMessageForm from 'components/_forms/NewMessageForm/NewMessageForm'
+import Card from 'components/_shared/Card/Card'
 import React, {useEffect} from 'react'
-import {AvatarType, DialogType, MessageType} from '../../types/types'
-import Avatar from '../_shared/Avatar/Avatar'
-import {StateType} from '../../redux/store'
+import {AvatarType, DialogType, MessageType} from 'types/types'
+import Avatar from 'components/_shared/Avatar/Avatar'
+import {StateType} from 'redux/store'
 import {useDispatch, useSelector} from 'react-redux'
-import {getDialogs, openDialog, sendMessage} from '../../redux/reducers/dialogs.reducer'
+import {getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
 import {NavLink, Redirect, useParams} from 'react-router-dom'
-import {useAuthCheck} from '../../utils/hooks'
+import {useAuthCheck} from 'utils/hooks'
 
 type PropsType = {
     messages: Array<MessageType>
@@ -44,7 +44,7 @@ type DialogButtonType = { username: string, firstName: string, avatar: AvatarTyp
 const DialogButton: React.FC<DialogButtonType> = ({username, firstName, avatar}) => {
     return (
         <NavLink to={`/dialogs/${username}`} className={classes.dialogButton} activeClassName={classes.active}>
-            <Avatar size={30} name={firstName} img={avatar.small}/>
+            <Avatar size={30} name={firstName} smallImg={avatar.small}/>
         </NavLink>
     )
 }
@@ -53,7 +53,7 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
     return (
         <div className={(authUser === message.author.username) ? classes.messageSelf : classes.messageOther}>
             <div className={classes.messageAvatar}>
-                <Avatar online img={message.author.avatar.small} size={30}/>
+                <Avatar online smallImg={message.author.avatar.small} size={30}/>
             </div>
             <div>
                 <div className={classes.messageAuthorName}>{message.author.firstName}</div>
