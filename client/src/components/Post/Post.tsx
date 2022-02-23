@@ -5,7 +5,7 @@ import Avatar from '../_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
 import Button from '../_shared/Button/Button'
 import {TrashFill, Heart, HeartFill, ChatSquareTextFill, ShareFill} from 'react-bootstrap-icons'
-import colors from '../../assets/styles/exports.module.scss'
+import colors from '../../assets/styles/colors.module.scss'
 import Popup from 'reactjs-popup'
 import ConfirmPopup from '../_shared/ConfirmPopup/ConfirmPopup'
 

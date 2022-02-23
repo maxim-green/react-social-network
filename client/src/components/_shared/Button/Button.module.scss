@@ -1,85 +1,92 @@
 .button {
-  margin: 0;
-  padding: 0;
   position: relative;
-  border: none;
-  border-radius: $ui-border-radius;
-  cursor: pointer;
-  transition: $ui-transition;
-  font-weight: 400;
-  letter-spacing: 1px;
-  @include form-focus;
-  &.spinner {
-    box-shadow: none;
-    &:disabled {
-      opacity: 1;
-    }
-  }
-  &.primary {
-    @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
-  }
-  &.secondary {
-    @include ui-button-colors($clr-secondary, $clr-secondary-hover, $clr-secondary-active, $clr-font-dark);
-  }
-  &.neutral {
-    @include ui-button-colors($clr-neutral, $clr-neutral-hover, $clr-neutral-active, $clr-font-dark);
-  }
-  &.text {
-    @include ui-button-colors($clr-text, $clr-text-hover, $clr-text-active, $clr-font-dark);
-  }
-  &.cancel {
-    @include ui-button-colors($clr-cancel, $clr-cancel-hover, $clr-cancel-active, $clr-font-light);
+  & + & {
+    margin-left: 10px;
   }
 
   &.small {
-    font-size: 12px;
+    font-size: $btn-small;
   }
   &.medium {
-    font-size: 16px;
+    font-size: $btn-medium;
   }
   &.large {
-    font-size: 20px;
+    font-size: $btn-large;
   }
 
+  &.spinner:disabled {
+    opacity: 1;
+  }
+
+  &.primary {
+    @include button-colors($clr-font-light, $clr-primary);
+  }
+  &.secondary {
+    @include button-colors($clr-font-dark, $clr-secondary);
+  }
+  &.neutral {
+    @include button-colors($clr-font-dark, $clr-neutral);
+  }
+  &.text {
+    @include button-colors($clr-font-dark, $clr-text);
+  }
+  &.cancel {
+    @include button-colors($clr-font-light, $clr-cancel);
+  }
   &:disabled {
+    // todo: maybe it's better to use color scheme for this
     opacity: 50%;
   }
-  .buttonSpinner {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .contentText {
-    padding: .5em .75em;
-    line-height: 1em;
-  }
-  .contentIcon {
-    display: flex;
-    align-items: center;
-    padding: .5em;
-    &:first-child {
-      margin-right: 5px;
-    }
-    &:last-child {
-      margin-left: 5px;
-    }
-    &:first-child:last-child {
-      margin: 0;
-    }
+
+  border-radius: $ui-border-radius;
+  transition: $ui-transition;
+
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.spinner {
+    color: transparent;
   }
 }
 
-//.button, .input, .formItem {
-//  & + & {
-//    margin-left: 10px;
-//  }
-//}
+.contentText {
+  padding: .5em .75em;
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: .1em;
+  text-transform: capitalize;
+}
+
+.contentIcon {
+  display: flex;
+  align-items: center;
+  padding: .5em;
+  &:first-child {
+    margin-right: 5px;
+  }
+  &:last-child {
+    margin-left: 5px;
+  }
+  &:first-child:last-child {
+    margin: 0;
+  }
+}
+
+.buttonSpinner {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+

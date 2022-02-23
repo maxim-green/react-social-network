@@ -1,5 +1,5 @@
 import classes from './Header.module.scss'
-import colors from '../../assets/styles/exports.module.scss'
+import colors from '../../assets/styles/colors.module.scss'
 import logoImg from '../../assets/images/logo.svg'
 import Logo from '../_shared/Logo/Logo'
 import UserControl from './UserControl/UserControl'

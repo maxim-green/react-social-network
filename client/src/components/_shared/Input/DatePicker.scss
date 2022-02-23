@@ -1,5 +1,3 @@
-@import '../../../assets/styles/variables';
-
 .react-datepicker-wrapper, .react-datepicker__input-container, .react-datepicker__input-container input {
   position: absolute;
   top: 0;
@@ -20,7 +18,7 @@
   line-height: 16px;
   color: $dark-grey-2;
   transition: $ui-transition;
-  @include form-focus()
+  @include focus()
 }
 
 
@@ -67,10 +65,9 @@
   &__day {
     border-radius: $ui-border-radius;
     transition: $ui-transition;
-    @include ui-button-colors($clr-text, $clr-text-hover, $clr-text-active, $clr-font-dark);
-
+    @include button-colors($clr-font-dark, $clr-text);
     &--selected {
-      @include ui-button-colors($clr-primary, $clr-primary-hover, $clr-primary-active, $clr-font-light);
+      @include button-colors($clr-font-light, $clr-primary);
     }
   }
 

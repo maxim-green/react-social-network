@@ -42,8 +42,7 @@ router.post('/', validators, auth, requireAuth,
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) throwValidationError(errors.array())
-
-            const post = createPost(req.user, req.body.text )
+            const post = await createPost(req.user, req.body.text )
 
             res.status(200).json({resultCode: 0, message: 'Success', data: { post }})
         } catch (e) {

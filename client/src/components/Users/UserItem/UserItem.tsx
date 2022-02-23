@@ -5,7 +5,7 @@ import React from 'react'
 import {UserItemDataType} from '../../../types/types'
 import Button from '../../_shared/Button/Button'
 import {ChatLeftTextFill, GearFill} from 'react-bootstrap-icons'
-import colors from '../../../assets/styles/exports.module.scss'
+import colors from '../../../assets/styles/colors.module.scss'
 
 type PropsType = {
     authorized: boolean

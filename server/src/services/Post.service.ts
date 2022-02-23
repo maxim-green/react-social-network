@@ -2,6 +2,7 @@ import {Types} from 'mongoose'
 import {Post, User} from 'models'
 import {HTTPError} from 'helpers'
 import {MongooseDocument, PopulatedUserType} from 'types'
+import {PopulatedPostType} from '../types/Post'
 
 
 export const getPosts = async () => {
@@ -22,8 +23,9 @@ export const createPost = async (
     author: MongooseDocument<PopulatedUserType>,
     text: string
 ) => {
-    const post = await User.create({author, text})
+    const post = await Post.create({author, text})
     await Post.populate(post, {path: 'author', model: 'User', select: 'username firstName lastName avatar'})
+
     return post
 }
 
@@ -32,6 +34,9 @@ export const deletePost = async (
     postId: Types.ObjectId | string
 ) => {
     const post = await getPost(postId)
-    if (!(initiator === post.author)) throw new HTTPError(401, {resultCode: 1, message: 'Forbidden'})
+
+    // todo learn about post.author.id type error
+    // @ts-ignore
+    if (!(initiator.id === post.author.id)) throw new HTTPError(401, {resultCode: 1, message: 'Forbidden'})
     await post.delete()
 }

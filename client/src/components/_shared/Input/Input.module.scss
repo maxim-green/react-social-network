@@ -54,7 +54,7 @@
   -webkit-box-shadow: inset 0 0 0 50px $white;
   color: $dark-grey-2;
   transition: $ui-transition;
-  @include form-focus;
+  @include focus;
   &:disabled {
     background-color: $light-grey-1;
   }
@@ -84,7 +84,7 @@
   transition: $ui-transition;
   border: 1px solid $light-grey-2;
   border-radius: $ui-border-radius;
-  @include form-focus;
+  @include focus;
   &:disabled {
     background-color: $light-grey-1;
   }
@@ -113,7 +113,7 @@
   box-shadow: 0 0 0 2px rgba($dark-grey-1, 0) inset;
   transition: $ui-transition;
   border: 2px dotted $clr-primary;
-  @include ui-button-colors($clr-text, $clr-secondary, $clr-secondary-active, $clr-primary);
+  @include button-colors($clr-primary, $clr-text);
   cursor: pointer;
   &:focus-visible {
     outline: none;

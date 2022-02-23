@@ -50,52 +50,19 @@ $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 $ui-transition: .2s;
 $ui-border-radius: 4px;
 
-@mixin ui-form-item-label-font {
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
-
-@mixin form-focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba($dark-grey-2, 0) inset;
-  &:focus {
-    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
-  }
-  &:focus-visible {
-    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
-  }
-}
-
-@mixin ui-button-colors($bg-color, $hover-bg-color, $active-bg-color, $color: black, $hover-color: $color,  $active-color: $color) {
-  color: $color;
-  background-color: $bg-color;
-  transition: $ui-transition;
-  &:hover {
-    color: $hover-color;
-    background-color: $hover-bg-color;
-  }
-  &:active {
-    color: $active-color;
-    background-color: $active-bg-color;
-  }
-  &.spinner {
-    &, &:hover, &:active {
-      color: $color;
-      background-color: $bg-color;
-    }
-  }
-}
-
 // shadows
 $card-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
 $bar-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
 //$bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
 
-// global sizes
+// sizes
 $appbar-height: 40px;
 $container-width: 920px;
 $container-padding: 10px;
 $components-gap: 10px;
 $sidebar-width: 220px;
 $card-padding: 20px;
+
+$btn-small: 12px;
+$btn-medium: 16px;
+$btn-large: 20px;

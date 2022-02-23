@@ -1,28 +1,36 @@
 import React, {CSSProperties} from 'react'
 import classnames from 'classnames'
 import classes from './Button.module.scss'
+import colors from 'assets/styles/colors.module.scss'
+import sizes from 'assets/styles/sizes.module.scss'
 import Spinner from 'components/_shared/Spinner/Spinner'
-import {sizes} from 'config'
+
+type ButtonTypes = 'primary' | 'secondary' | 'neutral' | 'text' | 'cancel'
+type ButtonSizes = 'small' | 'medium' | 'large'
 
 type ButtonType = {
     onClick?: (e: React.MouseEvent) => void
-    type?: 'primary' | 'secondary' | 'neutral' | 'text' | 'cancel'
-    size?: 'small' | 'medium' | 'large'
+    type?: ButtonTypes
+    size?: ButtonSizes
     disabled?: boolean
     spinner?: boolean
     style?: CSSProperties
 }
 
-const Button: React.FC<ButtonType> & { Icon: React.FC, Text: React.FC } = ({
-          children,
-          onClick,
-          type = 'primary',
-          size = 'medium',
-          disabled = false,
-          spinner = false,
-          style
-      }) => {
-    const spinnerColor = (type === 'primary' || type === 'cancel') ? '#FFFFFF' : undefined
+const Button: React.FC<ButtonType> & {
+    Icon: React.FC,
+    Text: React.FC,
+    Spinner: React.FC<{type: ButtonTypes, size: ButtonSizes}>
+} = ({
+         children,
+         onClick,
+         type = 'primary',
+         size = 'medium',
+         disabled = false,
+         spinner = false,
+         style
+     }) => {
+
     return (
         <button onClick={onClick} disabled={disabled || spinner} style={style}
                 className={classnames(
@@ -38,17 +46,19 @@ const Button: React.FC<ButtonType> & { Icon: React.FC, Text: React.FC } = ({
                     {[classes.large]: size === 'large'}
                 )}>
 
-
-            {spinner && <div className={classes.buttonSpinner}>
-                <Spinner color={spinnerColor} width={sizes[size] - 14} height={sizes[size] - 14}/>
-            </div>}
-
-            <div className={classes.content} style={{opacity: spinner ? 0 : 1}}>
+            <div className={classnames(
+                classes.content,
+                {[classes.spinner]: spinner}
+            )}>
                 {children}
+                {spinner && <div className={classes.buttonSpinner}>
+                    <Button.Spinner size={size} type={type}/>
+                </div>}
             </div>
 
         </button>
     )
+
 }
 
 Button.Icon = ({children}) => {
@@ -61,6 +71,17 @@ Button.Text = ({children}) => {
     return <div className={classes.contentText}>
         {children}
     </div>
+}
+
+Button.Spinner = ({type, size}) => {
+    const spinnerColor = (type === 'primary' || type === 'cancel') ? colors.fontLight : colors.fontDark
+    const spinnerSizes = {
+        small: sizes.btnSmall,
+        medium: sizes.btnMedium,
+        large: sizes.btnLarge
+    }
+    const spinnerSize = Number.parseInt(spinnerSizes[size])
+    return <Spinner color={spinnerColor} height={spinnerSize} width={spinnerSize}/>
 }
 
 export default Button

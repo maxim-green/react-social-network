@@ -1,8 +1,9 @@
-import {Types} from 'mongoose'
+import {SchemaDefinitionProperty, Types} from 'mongoose'
 import {Override} from './custom'
 
 export type UserType = {
-    _id: Types.ObjectId
+    _id: Types.ObjectId;
+    id: string
     createdAt: number
     updatedAt: number
     refreshToken: string

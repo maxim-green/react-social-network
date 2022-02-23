@@ -32,21 +32,21 @@ const TestPage: React.FC = () => {
 
                             <div>Button types</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
-                                <Button type={'primary'}>primary</Button>
-                                <Button type={'secondary'}>secondary</Button>
-                                <Button type={'neutral'}>neutral</Button>
-                                <Button type={'text'}>text</Button>
-                                <Button type={'cancel'}>text</Button>
-                                <Button type={'primary'} disabled>Disabled</Button>
+                                <Button type={'primary'}><Button.Text>primary</Button.Text></Button>
+                                <Button type={'secondary'}><Button.Text>secondary</Button.Text></Button>
+                                <Button type={'neutral'}><Button.Text>neutral</Button.Text></Button>
+                                <Button type={'text'}><Button.Text>text</Button.Text></Button>
+                                <Button type={'cancel'}><Button.Text>Cancel</Button.Text></Button>
+                                <Button type={'primary'} disabled><Button.Text>disabled</Button.Text></Button>
                             </div>
 
                             <div>Button types with spinners</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
-                                <Button type={'primary'} spinner>primary</Button>
-                                <Button type={'secondary'} spinner>secondary</Button>
-                                <Button type={'neutral'} spinner>neutral</Button>
-                                <Button type={'text'} spinner>text</Button>
-                                <Button type={'cancel'} spinner>text</Button>
+                                <Button type={'primary'} spinner><Button.Text>primary</Button.Text></Button>
+                                <Button type={'secondary'} spinner><Button.Text>secondary</Button.Text></Button>
+                                <Button type={'neutral'} spinner><Button.Text>neutral</Button.Text></Button>
+                                <Button type={'text'} spinner><Button.Text>text</Button.Text></Button>
+                                <Button type={'cancel'} spinner><Button.Text>cancel</Button.Text></Button>
                             </div>
 
                             <div>Button sizes</div>
@@ -67,9 +67,9 @@ const TestPage: React.FC = () => {
 
                             <div>Button sizes with spinners</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
-                                <Button type={'primary'} size={'small'} spinner>small</Button>
-                                <Button type={'primary'} size={'medium'} spinner>medium</Button>
-                                <Button type={'primary'} size={'large'} spinner>large</Button>
+                                <Button type={'primary'} size={'small'} spinner><Button.Text>small</Button.Text></Button>
+                                <Button type={'primary'} size={'medium'} spinner><Button.Text>medium</Button.Text></Button>
+                                <Button type={'primary'} size={'large'} spinner><Button.Text>large</Button.Text></Button>
                             </div>
 
                             <Form.Item name={'zoom'} component={InputRange}/>

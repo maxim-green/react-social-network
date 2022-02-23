@@ -5,7 +5,13 @@ html {
 }
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+body {
+  color: $clr-font;
+  background-color: $clr-background;
   font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 }
 
 a {
@@ -18,9 +24,18 @@ a {
   }
 }
 
-body {
-  color: $clr-font;
-  background-color: $clr-background;
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+
+  @include focus;
 }
+
+//button, input, .formItem {
+//  & + & {
+//    margin-left: 10px;
+//  }
+//}

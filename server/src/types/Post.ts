@@ -11,6 +11,7 @@ export type CommentType = {
 
 export type PostType = {
     _id: Types.ObjectId
+    id: string
     creationDate: Date
     author: SchemaDefinitionProperty<Types.ObjectId>;
     text: string
