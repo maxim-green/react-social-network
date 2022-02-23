@@ -14,6 +14,8 @@ import Spinner from "./_shared/Spinner/Spinner";
 import PostPage from './_pages/PostPage'
 import FeedPage from './_pages/FeedPage'
 
+// todo: implement separate pages bundling (lazy imports)
+
 type PropsType = {
     authorized: boolean,
     username?: string,
