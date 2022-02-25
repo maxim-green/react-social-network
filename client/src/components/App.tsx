@@ -74,7 +74,7 @@ const AppContainer: React.FC<PropsType> = () => {
     }, [dispatch])
 
     if (!initialized) return <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Spinner/>
+        <Spinner size={100} thickness={8}/>
     </div>
 
     return (

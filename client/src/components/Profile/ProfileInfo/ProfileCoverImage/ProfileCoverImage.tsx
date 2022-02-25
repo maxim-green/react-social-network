@@ -1,11 +1,11 @@
-import classes from './ProfileCoverImage.module.scss'
-import defaultCoverImage from '../../../../assets/images/cover-default.jpg'
 import React, {useEffect, useState} from 'react'
+import classes from './ProfileCoverImage.module.scss'
 import Popup from 'reactjs-popup'
-import ImageUploadForm from '../../../_forms/ImageUploadForm/ImageUploadForm'
 import {Area} from 'react-easy-crop/types'
 import {CameraFill} from 'react-bootstrap-icons'
-import Button from '../../../_shared/Button/Button'
+import defaultCoverImage from 'assets/images/cover-default.jpg'
+import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsTypes = {
     img: string | null

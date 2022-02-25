@@ -1,16 +1,16 @@
 import React from 'react'
-import {login} from '../../redux/reducers/auth.reducer'
-import {LoginDataType} from '../../api/auth.api'
+import {login} from 'redux/reducers/auth.reducer'
+import {LoginDataType} from 'api/auth.api'
 import {useDispatch} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
-import {StateType} from '../../redux/store'
-import {AuthActionType} from '../../redux/reducers/auth.reducer'
-import Form from "../_shared/Form/Form";
+import {StateType} from 'redux/store'
+import {AuthActionType} from 'redux/reducers/auth.reducer'
+import Form from "components/_shared/Form/Form";
 import {useForm} from "react-hook-form";
-import {Input} from '../_shared/Input/Input'
-import {InputPassword} from '../_shared/Input/InputPassword'
-import {InputCheckbox} from '../_shared/Input/InputCheckbox'
-import Button from '../_shared/Button/Button'
+import {Input} from 'components/_shared/Input/Input'
+import {InputPassword} from 'components/_shared/Input/InputPassword'
+import {InputCheckbox} from 'components/_shared/Input/InputCheckbox'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     compact?: boolean
@@ -29,7 +29,7 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, compact = false}) => {
             <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
                                  error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/></Form.Row>
             <Form.Row><Form.Item component={InputCheckbox} {...register('rememberMe')} label='Remember me'/></Form.Row>
-            <Form.Row><Button type='primary' size='large'>Log in</Button></Form.Row>
+            <Form.Row><Button type='primary' size='large'><Button.Text>Log in</Button.Text></Button></Form.Row>
         </Form>
     )
 }

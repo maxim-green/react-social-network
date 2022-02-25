@@ -1,15 +1,15 @@
 import React from 'react'
 import classes from './TestPage.module.scss'
 import Form from "components/_shared/Form/Form";
-import Card from "components/_shared/Card/Card";
+import {Card} from "components/_shared/Card/Card";
 import {Input} from 'components/_shared/Input/Input'
 import {InputPassword} from 'components/_shared/Input/InputPassword'
 import {InputCheckbox} from 'components/_shared/Input/InputCheckbox'
 import {InputRange} from 'components/_shared/Input/InputRange'
 import {InputDate} from 'components/_shared/Input/InputDate'
 import {InputFile} from 'components/_shared/Input/InputFile'
-import Button from 'components/_shared/Button/Button'
-import Avatar from 'components/_shared/Avatar/Avatar'
+import {Button} from 'components/_shared/Button/Button'
+import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Search} from 'react-bootstrap-icons'
 
 
@@ -60,9 +60,15 @@ const TestPage: React.FC = () => {
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
                                 <Button type={'primary'} size={'small'}>
                                     <Button.Icon><Search/></Button.Icon>
+                                    <Button.Badge>5</Button.Badge>
                                 </Button>
-                                <Button type={'primary'} size={'medium'}><Button.Icon><Search/></Button.Icon></Button>
-                                <Button type={'primary'} size={'large'}><Button.Icon><Search/></Button.Icon></Button>
+                                <Button type={'primary'} size={'medium'}>
+                                    <Button.Icon><Search/></Button.Icon>
+                                </Button>
+                                <Button type={'primary'} size={'large'}>
+                                    <Button.Icon><Search/></Button.Icon>
+                                    <Button.Badge>5</Button.Badge>
+                                </Button>
                             </div>
 
                             <div>Button sizes with spinners</div>

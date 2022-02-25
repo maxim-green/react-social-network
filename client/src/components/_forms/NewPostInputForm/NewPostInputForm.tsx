@@ -1,12 +1,12 @@
-import {Image} from 'react-bootstrap-icons'
 import React from "react";
-import classes from "./NewPostInputForm.module.scss"
-import Form from '../../_shared/Form/Form'
-import Card from '../../_shared/Card/Card'
-import {NewPostType} from '../../../types/types'
+import {Image} from 'react-bootstrap-icons'
 import {useForm} from "react-hook-form";
-import {InputTextarea} from '../../_shared/Input/InputTextArea'
-import Button from '../../_shared/Button/Button'
+import {NewPostType} from 'types/types'
+import classes from "./NewPostInputForm.module.scss"
+import Form from 'components/_shared/Form/Form'
+import {Card} from 'components/_shared/Card/Card'
+import {InputTextarea} from 'components/_shared/Input/InputTextArea'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     isAddPostPending: boolean

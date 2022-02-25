@@ -1,13 +1,13 @@
-import classes from './ProfileHeader.module.scss'
-import Avatar from '../../../_shared/Avatar/Avatar'
 import React, {useEffect, useState} from 'react'
-import {AvatarType} from '../../../../types/types'
 import {Area} from 'react-easy-crop/types'
-import EditStatusForm from '../../../_forms/EditStatusForm'
 import Popup from 'reactjs-popup'
-import EditProfileForm from '../../../_forms/EditProfileForm'
+import classes from './ProfileHeader.module.scss'
+import {Avatar} from 'components/_shared/Avatar/Avatar'
+import {AvatarType} from 'types/types'
+import EditStatusForm from 'components/_forms/EditStatusForm'
+import EditProfileForm from 'components/_forms/EditProfileForm'
 import {PencilFill} from 'react-bootstrap-icons'
-import Button from '../../../_shared/Button/Button'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     owner?: boolean

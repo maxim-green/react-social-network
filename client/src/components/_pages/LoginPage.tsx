@@ -1,9 +1,9 @@
 import React from 'react'
-import NavTabs from '../_shared/NavTabs/NavTabs'
-import NavTab from '../_shared/NavTabs/NavTab/NavTab'
-import Card from '../_shared/Card/Card'
-import LoginForm from '../_forms/LoginForm'
-import Layout from '../Layout/Layout'
+import NavTabs from 'components/_shared/NavTabs/NavTabs'
+import NavTab from 'components/_shared/NavTabs/NavTab/NavTab'
+import {Card} from 'components/_shared/Card/Card'
+import LoginForm from 'components/_forms/LoginForm'
+import Layout from 'components/Layout/Layout'
 
 const LoginPage: React.FC = () => {
     return (

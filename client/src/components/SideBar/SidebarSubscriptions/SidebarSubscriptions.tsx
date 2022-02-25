@@ -1,9 +1,9 @@
-import Card from '../../_shared/Card/Card'
 import React from 'react'
 import classes from './SidebarSubscriptions.module.scss'
-import Avatar from '../../_shared/Avatar/Avatar'
+import {Card} from 'components/_shared/Card/Card'
+import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
-import {UserItemDataType} from '../../../types/types'
+import {UserItemDataType} from 'types/types'
 
 type PropsType = {
     subscriptions: Array<UserItemDataType>

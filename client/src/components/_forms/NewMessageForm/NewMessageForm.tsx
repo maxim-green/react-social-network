@@ -1,9 +1,9 @@
 import classes from './NewMessageForm.module.scss'
 import React from "react";
 import {useForm} from 'react-hook-form'
-import Form from '../../_shared/Form/Form'
-import {InputTextarea} from '../../_shared/Input/InputTextArea'
-import Button from '../../_shared/Button/Button'
+import Form from 'components/_shared/Form/Form'
+import {InputTextarea} from 'components/_shared/Input/InputTextArea'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     onSubmit: (message: string) => void

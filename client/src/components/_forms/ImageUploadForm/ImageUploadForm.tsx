@@ -1,12 +1,12 @@
-import Form from '../../_shared/Form/Form'
 import React, {useEffect, useState} from 'react'
-import {Area, Point} from 'react-easy-crop/types'
-import Slider from "rc-slider";
-import classes from './ImageUploadForm.module.scss'
+import {Controller, useForm} from 'react-hook-form'
 import Cropper from 'react-easy-crop'
-import {Controller, useForm} from "react-hook-form";
-import {InputFile} from '../../_shared/Input/InputFile'
-import Button from '../../_shared/Button/Button'
+import {Area, Point} from 'react-easy-crop/types'
+import Slider from 'rc-slider'
+import classes from './ImageUploadForm.module.scss'
+import Form from 'components/_shared/Form/Form'
+import {InputFile} from 'components/_shared/Input/InputFile'
+import {Button} from 'components/_shared/Button/Button'
 
 
 type PropsType = {
@@ -23,7 +23,7 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
         const subscription = watch((data) => {
             data.file ? setSrcFileUrl(window.URL.createObjectURL(data.file)) : setSrcFileUrl(undefined)
         })
-        return () => subscription.unsubscribe();
+        return () => subscription.unsubscribe()
     }, [watch])
 
     const submit = (data: { file: File, crop: Area }) => {
@@ -34,13 +34,21 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
         <div>
             <Form onSubmit={handleSubmit(submit)}>
                 <Form.Row>
-                    {srcFileUrl && <Button size="large">Save</Button>}
+                    {srcFileUrl && <Button size="large">
+                        <Button.Text>
+                            Save
+                        </Button.Text>
+                    </Button>}
                     {srcFileUrl && <Button type='secondary' size="large" onClick={(e) => {
-                        e.preventDefault();
+                        e.preventDefault()
                         reset()
-                    }}>Choose other image</Button>}
+                    }}>
+                        <Button.Text>Choose other image</Button.Text>
+                    </Button>}
                     <div style={{marginLeft: 'auto'}}>
-                        {closeModal && <Button type={"cancel"} size='large' onClick={closeModal}>Close</Button>}
+                        {closeModal && <Button type={'cancel'} size='large' onClick={closeModal}>
+                            <Button.Text>Close</Button.Text>
+                        </Button>}
                     </div>
                 </Form.Row>
                 {!srcFileUrl && <Form.Row>

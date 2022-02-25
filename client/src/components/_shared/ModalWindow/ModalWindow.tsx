@@ -1,9 +1,9 @@
 import React from 'react'
 import './popupjs.css'
-import classes from './ModalWindow.module.scss'
-import Button from 'components/_shared/Button/Button'
-import {XLg} from 'react-bootstrap-icons'
 import Popup from 'reactjs-popup'
+import {XLg} from 'react-bootstrap-icons'
+import classes from './ModalWindow.module.scss'
+import {Button} from 'components/_shared/Button/Button'
 
 type Props = {
     title?: string
@@ -19,7 +19,7 @@ export const ModalWindow: React.FC<Props> = ({title, close, open, children}) => 
             <div className={classes.title}>{title}</div>
             <div className={classes.button}>
                 <Button type={'cancel'} size='small' onClick={close}>
-                    <XLg/>
+                    <Button.Icon><XLg/></Button.Icon>
                 </Button>
             </div>
         </div>}

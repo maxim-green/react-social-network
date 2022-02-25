@@ -1,11 +1,11 @@
 import React from 'react'
-import Card from '../../_shared/Card/Card'
+import {Area} from 'react-easy-crop/types'
 import 'reactjs-popup/dist/index.css'
 import ProfileCoverImage from './ProfileCoverImage/ProfileCoverImage'
 import ProfileInfoHeader from './ProfileHeader/ProfileHeader'
 import ProfileInfoData from './ProfileInfoData/ProfileInfoData'
-import {Area} from 'react-easy-crop/types'
-import {UserDataType} from '../../../types/types'
+import {Card} from 'components/_shared/Card/Card'
+import {UserDataType} from 'types/types'
 
 type PropsType = {
     authorized: boolean,

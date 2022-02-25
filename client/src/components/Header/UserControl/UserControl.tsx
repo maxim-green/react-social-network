@@ -1,8 +1,8 @@
-import classes from "./UserControl.module.scss";
-import Avatar from "components/_shared/Avatar/Avatar";
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
-import Button from 'components/_shared/Button/Button'
+import classes from "./UserControl.module.scss";
+import {Avatar} from "components/_shared/Avatar/Avatar";
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     username?: string
@@ -10,7 +10,7 @@ type PropsType = {
     logout: () => void
 }
 
-const UserControl: React.FC<PropsType> = (props) => {
+export const UserControl: React.FC<PropsType> = (props) => {
     const [isOpened, setIsOpened] = useState(false)
 
     const clickHandler = () => {
@@ -32,5 +32,3 @@ const UserControl: React.FC<PropsType> = (props) => {
         </div>
     )
 }
-
-export default UserControl

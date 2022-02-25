@@ -1,11 +1,11 @@
 import classes from './UserItem.module.scss'
 import {NavLink} from 'react-router-dom'
-import Avatar from '../../_shared/Avatar/Avatar'
+import {Avatar} from 'components/_shared/Avatar/Avatar'
 import React from 'react'
-import {UserItemDataType} from '../../../types/types'
-import Button from '../../_shared/Button/Button'
+import {UserItemDataType} from 'types/types'
+import {Button} from 'components/_shared/Button/Button'
 import {ChatLeftTextFill, GearFill} from 'react-bootstrap-icons'
-import colors from '../../../assets/styles/colors.module.scss'
+import colors from 'assets/styles/colors.module.scss'
 
 type PropsType = {
     authorized: boolean

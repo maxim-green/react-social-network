@@ -1,11 +1,13 @@
-import Card from '../../_shared/Card/Card'
+import {NavLink} from 'react-router-dom'
 import React from 'react'
 import classes from './SidebarNavigation.module.scss'
-import {NavLink} from 'react-router-dom'
-import feedIcon from '../../../assets/images/feed-icon.svg'
-import dialogsIcon from '../../../assets/images/dialogs-icon.svg'
-import settingsIcon from '../../../assets/images/settings-icon.svg'
-import usersIcon from '../../../assets/images/members-icon.svg'
+
+import {Card} from 'components/_shared/Card/Card'
+// todo change icons to react-bootstrap-icons
+import feedIcon from 'assets/images/feed-icon.svg'
+import dialogsIcon from 'assets/images/dialogs-icon.svg'
+import settingsIcon from 'assets/images/settings-icon.svg'
+import usersIcon from 'assets/images/members-icon.svg'
 
 type PropsType = {}
 

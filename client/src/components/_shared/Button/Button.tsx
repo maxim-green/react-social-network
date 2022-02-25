@@ -17,10 +17,11 @@ type ButtonType = {
     style?: CSSProperties
 }
 
-const Button: React.FC<ButtonType> & {
+export const Button: React.FC<ButtonType> & {
     Icon: React.FC,
     Text: React.FC,
-    Spinner: React.FC<{type: ButtonTypes, size: ButtonSizes}>
+    Spinner: React.FC<{type: ButtonTypes, size: ButtonSizes}>,
+    Badge: React.FC
 } = ({
          children,
          onClick,
@@ -81,7 +82,9 @@ Button.Spinner = ({type, size}) => {
         large: sizes.btnLarge
     }
     const spinnerSize = Number.parseInt(spinnerSizes[size])
-    return <Spinner color={spinnerColor} height={spinnerSize} width={spinnerSize}/>
+    return <Spinner color={spinnerColor} size={spinnerSize}/>
 }
 
-export default Button
+Button.Badge = ({children}) => {
+    return <div className={classes.badge}>{children}</div>
+}

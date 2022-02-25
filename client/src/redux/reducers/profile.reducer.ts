@@ -126,7 +126,7 @@ export const updateProfile = (profileData: EditProfileDataType): ThunkType<Profi
 export const updateAvatar = (formData: FormDataType): ThunkType<ProfileActionType> => async (dispatch) => {
     const res = await profileApi.updateAvatar(formData)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(profileActions.setAvatar(res.data))
+        dispatch(profileActions.setAvatar(res.data.avatar))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

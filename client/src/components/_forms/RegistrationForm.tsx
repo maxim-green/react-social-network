@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react'
-import Form from '../_shared/Form/Form'
-import {RegistrationDataType} from '../../api/auth.api'
-import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from '../../redux/store'
-import {ThunkDispatch} from 'redux-thunk'
-import {authActions, AuthActionType, register} from '../../redux/reducers/auth.reducer'
 import {useForm} from 'react-hook-form'
-import {Input} from '../_shared/Input/Input'
-import {InputPassword} from '../_shared/Input/InputPassword'
-import Button from '../_shared/Button/Button'
+import {ThunkDispatch} from 'redux-thunk'
+import {useDispatch, useSelector} from 'react-redux'
+import {StateType} from 'redux/store'
+import {authActions, AuthActionType, register} from 'redux/reducers/auth.reducer'
+import {RegistrationDataType} from 'api/auth.api'
+import Form from 'components/_shared/Form/Form'
+import {Input} from 'components/_shared/Input/Input'
+import {InputPassword} from 'components/_shared/Input/InputPassword'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     registrationSuccessful: boolean
@@ -51,7 +51,7 @@ const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit
                                  }}
                                  required/></Form.Row>
             <Form.Row>
-                <Button size="large">Register</Button>
+                <Button size="large"><Button.Text>Register</Button.Text></Button>
             </Form.Row>
         </Form>
     )

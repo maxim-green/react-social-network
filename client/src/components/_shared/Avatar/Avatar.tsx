@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import defaultAvatarImage from 'assets/images/avatar-default.jpg'
 import {Area} from 'react-easy-crop/types'
 import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
-import Button from 'components/_shared/Button/Button'
+import {Button} from 'components/_shared/Button/Button'
 import {PencilFill, ZoomIn} from 'react-bootstrap-icons'
 import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
 
@@ -18,7 +18,7 @@ type PropsType = {
     onEdit?: (image: File, cropArea: Area) => void
 }
 
-const Avatar: React.FC<PropsType> = ({
+export const Avatar: React.FC<PropsType> = ({
                                          smallImg,
                                          largeImg,
                                          size = 90,
@@ -135,16 +135,16 @@ const AvatarButtons: React.FC<AvatarButtonsPropsType> = ({
                                                          }) => {
     return (
         <div className={classes.buttons}>
-            {onZoomClick && <button onClick={onZoomClick}>
-                <Button.Icon><ZoomIn width={22} height={22} color={'white'}/></Button.Icon>
-            </button>}
-            {onEditClick && <button onClick={onEditClick}>
-                <Button.Icon><PencilFill width={22} height={22} color={'white'}/></Button.Icon>
-            </button>}
+            {onZoomClick && <Button onClick={onZoomClick} type={'text'} size={'large'} style={{color: 'white'}}>
+                <Button.Icon>
+                    <ZoomIn color={'white'}/>
+                </Button.Icon>
+            </Button>}
+            {onEditClick && <Button onClick={onEditClick} type={'text'} size={'large'} style={{color: 'white'}}>
+                <Button.Icon>
+                    <PencilFill color={'white'}/>
+                </Button.Icon>
+            </Button>}
         </div>
     )
 }
-
-
-
-export default Avatar

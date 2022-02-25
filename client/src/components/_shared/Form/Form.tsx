@@ -4,6 +4,8 @@ import 'rc-slider/assets/index.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../Input/DatePicker.scss'
 
+
+// todo: Consider refactoring. Probably its possible to use react-hook-form here instead of actual forms
 export type InputPropsType<V = any> = {
     name: string,
     required?: boolean,

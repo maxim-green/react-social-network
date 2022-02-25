@@ -1,13 +1,12 @@
-import Card from '../_shared/Card/Card'
 import React, {useState} from 'react'
-import classes from './Post.module.scss'
-import Avatar from '../_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'
-import Button from '../_shared/Button/Button'
 import {TrashFill, Heart, HeartFill, ChatSquareTextFill, ShareFill} from 'react-bootstrap-icons'
-import colors from '../../assets/styles/colors.module.scss'
-import Popup from 'reactjs-popup'
-import ConfirmPopup from '../_shared/ConfirmPopup/ConfirmPopup'
+import colors from 'assets/styles/colors.module.scss'
+import classes from './Post.module.scss'
+import {Card} from 'components/_shared/Card/Card'
+import {Avatar} from 'components/_shared/Avatar/Avatar'
+import {Button} from 'components/_shared/Button/Button'
+import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
 
 type PropsType = {
     id: string
@@ -55,12 +54,19 @@ const Post: React.FC<PropsType> = ({
                 </div>
                 <div className={classes.menu}>
                     {isAuthorizedUserProfile && onPostDelete && <div>
-                        <Button onClick={openModal} type="text" size="small" style={{padding: '0 4px'}}>
-                            <TrashFill color={colors.midGrey1} size={16}/>
+                        <Button onClick={openModal} type="text" size="small">
+                            <Button.Icon>
+                                <TrashFill color={colors.midGrey1} size={16}/>
+                            </Button.Icon>
                         </Button>
-                        <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px', width: 320}} closeOnDocumentClick={false}>
-                            <ConfirmPopup onConfirm={onDeleteClickHandler} onDecline={closeModal} important>Are you sure you want to delete this post?</ConfirmPopup>
-                        </Popup>
+                        <ConfirmPopup
+                            open={open}
+                            onConfirm={onDeleteClickHandler}
+                            onDecline={closeModal}
+                            important
+                        >
+                            Are you sure you want to delete this post?
+                        </ConfirmPopup>
                     </div>}
                 </div>
             </div>

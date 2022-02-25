@@ -24,7 +24,7 @@ export const profileApi = {
 
     updateAvatar: (formData: FormDataType) => coreApi
         .put('/profile/avatar', formData)
-        .then(handleResponse<AvatarType>())
+        .then(handleResponse<{ avatar: AvatarType }>())
         .catch(handleError()),
 
     updateCoverImage: (formData: FormDataType) => coreApi

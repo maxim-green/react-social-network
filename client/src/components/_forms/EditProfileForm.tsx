@@ -1,16 +1,16 @@
 import React from 'react'
-import Form from '../_shared/Form/Form'
-import {EditProfileDataType} from '../../api/profile.api'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from '../../redux/store'
-import {useAuthCheck} from '../../utils/hooks'
+import {Controller, useForm} from 'react-hook-form'
 import {ThunkDispatch} from 'redux-thunk'
-import {ProfileActionType, updateProfile} from '../../redux/reducers/profile.reducer'
-import {Controller, useForm} from "react-hook-form";
-import Spinner from "../_shared/Spinner/Spinner";
-import {Input} from '../_shared/Input/Input'
-import {InputDate} from '../_shared/Input/InputDate'
-import Button from '../_shared/Button/Button'
+import {StateType} from 'redux/store'
+import {useAuthCheck} from 'utils/hooks'
+import {EditProfileDataType} from 'api/profile.api'
+import {ProfileActionType, updateProfile} from 'redux/reducers/profile.reducer'
+import Spinner from 'components/_shared/Spinner/Spinner'
+import Form from 'components/_shared/Form/Form'
+import {Input} from 'components/_shared/Input/Input'
+import {InputDate} from 'components/_shared/Input/InputDate'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {
     initialValues: EditProfileDataType
@@ -19,10 +19,12 @@ type PropsType = {
 }
 
 const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeModal}) => {
-    const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues: {
-        ...initialValues,
+    const {control, register, handleSubmit, formState: {errors}} = useForm({
+        defaultValues: {
+            ...initialValues,
             birthDate: initialValues.birthDate
-        }})
+        }
+    })
 
     const submit = (data: EditProfileDataType) => {
         onSubmit(data)
@@ -37,9 +39,17 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <Form.Row>
-                <Button size="medium">Save</Button>
+                <Button size="medium">
+                    <Button.Text>
+                        Save
+                    </Button.Text>
+                </Button>
                 <div style={{marginLeft: 'auto'}}>
-                    <Button onClick={backButtonClickHandler} size="medium" type='cancel'>Cancel</Button>
+                    <Button onClick={backButtonClickHandler} size="medium" type='cancel'>
+                        <Button.Text>
+                            Cancel
+                        </Button.Text>
+                    </Button>
                 </div>
             </Form.Row>
             <Form.Row>
@@ -95,12 +105,11 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
                            {...register('contacts.github')}
                 />
             </Form.Row>
-
         </Form>
     )
 }
 
-const EditProfileFormContainer: React.FC<{closeModal?: () => void}> = ({closeModal}) => {
+const EditProfileFormContainer: React.FC<{ closeModal?: () => void }> = ({closeModal}) => {
     const editProfileData: EditProfileDataType = useSelector((state: StateType) => ({
         firstName: state.profile.user?.firstName,
         lastName: state.profile.user?.lastName,
@@ -114,11 +123,10 @@ const EditProfileFormContainer: React.FC<{closeModal?: () => void}> = ({closeMod
     useAuthCheck()
 
     const onSubmit = (profileData: EditProfileDataType) => {
-        console.log(profileData)
         dispatch(updateProfile(profileData))
     }
 
-    if (!editProfileData) return <Spinner />
+    if (!editProfileData) return <Spinner/>
 
     return <EditProfileForm
         closeModal={closeModal}
