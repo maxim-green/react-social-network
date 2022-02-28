@@ -30,6 +30,9 @@
   &.text {
     @include button-colors($clr-font-dark, $clr-text);
   }
+  &.link {
+    @include button-colors($clr-font-link, $clr-text);
+  }
   &.cancel {
     @include button-colors($clr-font-light, $clr-cancel);
   }

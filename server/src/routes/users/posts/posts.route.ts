@@ -5,10 +5,10 @@ import {getUserPosts} from 'services'
 const router = express.Router()
 
 // todo: fill doc file
-// /api/user/:userId/posts
-router.get('/:userId/posts', async (req: Request, res: Response) => {
+// /api/user/:username/posts
+router.get('/:username/posts', async (req: Request, res: Response) => {
     try {
-        const posts = await getUserPosts(req.params.userId)
+        const posts = await getUserPosts(req.params.username)
         return res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
 
     } catch (e) {

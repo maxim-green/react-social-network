@@ -5,7 +5,7 @@ import colors from 'assets/styles/colors.module.scss'
 import sizes from 'assets/styles/sizes.module.scss'
 import Spinner from 'components/_shared/Spinner/Spinner'
 
-type ButtonTypes = 'primary' | 'secondary' | 'neutral' | 'text' | 'cancel'
+type ButtonTypes = 'primary' | 'secondary' | 'neutral' | 'text' | 'link' | 'cancel'
 type ButtonSizes = 'small' | 'medium' | 'large'
 
 type ButtonType = {
@@ -41,6 +41,8 @@ export const Button: React.FC<ButtonType> & {
                     {[classes.neutral]: type === 'neutral'},
                     {[classes.text]: type === 'text'},
                     {[classes.cancel]: type === 'cancel'},
+                    {[classes.link]: type === 'link'},
+
                     {[classes.spinner]: spinner},
                     {[classes.small]: size === 'small'},
                     {[classes.medium]: size === 'medium'},

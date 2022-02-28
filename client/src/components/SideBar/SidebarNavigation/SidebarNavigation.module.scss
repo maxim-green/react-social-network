@@ -19,9 +19,6 @@
 }
 
 .NavigationItem {
-  & + & {
-    margin-top: 20px;
-  }
   a {
     display: flex;
     align-items: center;

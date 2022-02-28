@@ -87,6 +87,7 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
         const {user} = res.data
         dispatch(authActions.setUser(user))
     } else {
+        dispatch(stopMessagesListening())
         dispatch(authActions.clearUser())
     }
 
