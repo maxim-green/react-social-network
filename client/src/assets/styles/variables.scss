@@ -46,6 +46,8 @@ $clr-cancel-border: darken($clr-cancel, 5%);
 $clr-cancel-hover: lighten($clr-cancel, 5%);
 $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
+$clr-input-invalid: $error;
+
 // ui
 $ui-transition: .2s;
 $ui-border-radius: 4px;

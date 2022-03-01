@@ -13,6 +13,7 @@ import DialogsPage from "./_pages/DialogsPage";
 import Spinner from "./_shared/Spinner/Spinner";
 import PostPage from './_pages/PostPage'
 import FeedPage from './_pages/FeedPage'
+import {FormTestPage} from 'components/TestPage/FormTestPage'
 
 // todo: implement separate pages bundling (lazy imports)
 
@@ -48,7 +49,9 @@ const App: React.FC<PropsType> = ({
                 <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                 <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
                 <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
+
                 <Route path={'/testpage'} component={TestPage}/>
+                <Route path={'/formtestpage'} component={FormTestPage}/>
 
                 {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}
                 {authorized &&

@@ -11,6 +11,7 @@ import {InputFile} from 'components/_shared/Input/InputFile'
 import {Button} from 'components/_shared/Button/Button'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Search} from 'react-bootstrap-icons'
+import {CForm} from 'components/_shared/CForm/CForm'
 
 
 const TestPage: React.FC = () => {
@@ -92,36 +93,36 @@ const TestPage: React.FC = () => {
 
                 <div className={classes.column}>
                     <Card>
-                        <div className={classes.cardContent}>
-                            <Avatar
-                                smallImg={'https://i.pravatar.cc/300'}
-                                largeImg={'https://i.pravatar.cc/600'}
-                                online
-                                name={'Human One'}
-                                size={90}
-                                onEdit={() => console.log('Avatar updated.')}
-                            />
-                            <Avatar
-                                smallImg={'https://i.pravatar.cc/300'}
-                                online
-                                name={'Human One'}
-                                size={70}
-                                onEdit={() => console.log('Avatar updated.')}
-                            />
-                            <Avatar
-                                smallImg={'https://i.pravatar.cc/300'}
-                                online
-                                name={'Human One'}
-                                size={50}
-                                onEdit={() => console.log('Avatar updated.')}
-                            />
-                            <Avatar
-                                smallImg={'https://i.pravatar.cc/300'}
-                                online
-                                name={'Human One'}
-                                size={30}
-                                onEdit={() => console.log('Avatar updated.')}
-                            />
+                        <div className={classes.cardContent} style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <Avatar
+                                    smallImg={'https://i.pravatar.cc/300'}
+                                    largeImg={'https://i.pravatar.cc/600'}
+                                    online
+                                    name={'Human One'}
+                                    size={90}
+                                    onEdit={() => console.log('Avatar updated.')}
+                                />
+                                <Avatar
+                                    smallImg={'https://i.pravatar.cc/300'}
+                                    online
+                                    name={'Human One'}
+                                    size={70}
+                                    onEdit={() => console.log('Avatar updated.')}
+                                />
+                                <Avatar
+                                    smallImg={'https://i.pravatar.cc/300'}
+                                    online
+                                    name={'Human One'}
+                                    size={50}
+                                    onEdit={() => console.log('Avatar updated.')}
+                                />
+                                <Avatar
+                                    smallImg={'https://i.pravatar.cc/300'}
+                                    online
+                                    name={'Human One'}
+                                    size={30}
+                                    onEdit={() => console.log('Avatar updated.')}
+                                />
                         </div>
                     </Card>
                 </div>
