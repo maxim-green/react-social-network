@@ -2,7 +2,15 @@ import React from 'react'
 import classes from './TestPage.module.scss'
 import {Card} from "components/_shared/Card/Card";
 
-import {CForm, CFormRow, Input} from 'components/_shared/CForm/CForm'
+import {
+    CForm,
+    CFormRow,
+    InputText,
+    InputPassword,
+    InputTextarea,
+    Checkbox,
+    InputDate, InputFile, InputRange
+} from 'components/_shared/CForm/CForm'
 import {Button} from 'components/_shared/Button/Button'
 
 export const FormTestPage: React.FC = () => {
@@ -15,11 +23,27 @@ export const FormTestPage: React.FC = () => {
                         <div className={classes.cardContent}>
                             <CForm onSubmit={data => console.log(data)}>
                                 <CFormRow align={'fill'}>
-                                    <Input name={'email'} label={'E-mail:'} rules={{required: true}}/>
-                                    <Input name={'username'} label={'Username:'} rules={{required: true}}/>
+                                    <InputText name={'email'} label={'E-mail:'} rules={{required: true}}/>
+                                    <InputText name={'username'} label={'Username:'} disabled={true}/>
                                 </CFormRow>
                                 <CFormRow>
-                                    <Input name={'password'} label={'Password:'} rules={{required: true}}/>
+                                    <InputPassword name={'password'} label={'Password:'} disabled={true}/>
+                                </CFormRow>
+                                <CFormRow>
+                                    <InputTextarea name={'message'} label={'Message:'} rules={{required: true}}/>
+                                </CFormRow>
+                                <CFormRow>
+                                    <InputDate name={'birthdate'} label={'BirthDate:'} rules={{required: true}}/>
+                                </CFormRow>
+                                <CFormRow>
+                                    <InputFile name={'image'} label={'Dima Loh:'} rules={{required: true}}/>
+                                </CFormRow>
+                                <CFormRow>
+                                    <InputRange name={'size'} label={'Max Krutoy Chelik:'} rules={{required: true}}/>
+                                </CFormRow>
+                                <CFormRow align={'left'}>
+                                    <Checkbox name={'remember'} label={'Remember me:'} />
+                                    <Checkbox name={'remember2'} label={'Remember me 2:'} disabled={true}/>
                                 </CFormRow>
                                 <CFormRow>
                                     <Button>Send</Button>
