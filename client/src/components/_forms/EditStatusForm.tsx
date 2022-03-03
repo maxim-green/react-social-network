@@ -7,6 +7,8 @@ type PropsType = {
     onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
+//todo: add form control and custom components
+
 const EditStatusForm: React.FC<PropsType> = ({value, onBlur, onChange, onEnter}) => {
     return (
         <form onSubmit={(e: React.FormEvent) => {e.preventDefault()}}>

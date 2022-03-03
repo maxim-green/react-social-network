@@ -216,3 +216,17 @@
     background-color: $clr-secondary-hover;
   }
 }
+
+.cropperContainer {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  margin-bottom: 15px;
+}
+
+.imageCrop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

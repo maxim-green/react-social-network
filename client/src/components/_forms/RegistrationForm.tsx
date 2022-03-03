@@ -1,14 +1,11 @@
 import React, {useEffect} from 'react'
-import {useForm} from 'react-hook-form'
 import {ThunkDispatch} from 'redux-thunk'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from 'redux/store'
 import {authActions, AuthActionType, register} from 'redux/reducers/auth.reducer'
 import {RegistrationDataType} from 'api/auth.api'
-import Form from 'components/_shared/Form/Form'
-import {Input} from 'components/_shared/Input/Input'
-import {InputPassword} from 'components/_shared/Input/InputPassword'
 import {Button} from 'components/_shared/Button/Button'
+import {CForm, CFormRow, InputText, InputPassword} from 'components/_shared/CForm/CForm'
 
 type PropsType = {
     registrationSuccessful: boolean
@@ -16,44 +13,30 @@ type PropsType = {
 }
 
 const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit}) => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
-    const submit = (formData: RegistrationDataType) => {
-        onSubmit(formData)
-    }
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <CForm onSubmit={onSubmit}>
             {registrationSuccessful && <div>Registration successful.</div>}
-            <Form.Row><Form.Item component={Input} label='First name' {...register('firstName', {required: true})}
-                                 error={errors.firstName && {
-                                     type: errors.firstName.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='Last name' {...register('lastName', {required: true})}
-                                 error={errors.lastName && {
-                                     type: errors.lastName.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='User name' {...register('username', {required: true})}
-                                 error={errors.username && {
-                                     type: errors.username.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='E-mail' {...register('email', {required: true})}
-                                 error={errors.email && {type: errors.email.type, message: 'This field is required'}}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
-                                 error={errors.password && {
-                                     type: errors.password.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row>
-                <Button size="large"><Button.Text>Register</Button.Text></Button>
-            </Form.Row>
-        </Form>
+            <CFormRow>
+                <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <InputText name={'username'} label={'Username'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <InputText name={'email'} label={'E-mail name'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <InputPassword name={'password'} label={'Password'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <Button size="large">
+                    <Button.Text>Register</Button.Text>
+                </Button>
+            </CFormRow>
+        </CForm>
     )
 }
 

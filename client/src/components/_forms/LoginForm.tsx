@@ -5,44 +5,45 @@ import {useDispatch} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {StateType} from 'redux/store'
 import {AuthActionType} from 'redux/reducers/auth.reducer'
-import Form from "components/_shared/Form/Form";
-import {useForm} from "react-hook-form";
-import {Input} from 'components/_shared/Input/Input'
-import {InputPassword} from 'components/_shared/Input/InputPassword'
-import {InputCheckbox} from 'components/_shared/Input/InputCheckbox'
+import Form from 'components/_shared/Form/Form'
+import {useForm} from 'react-hook-form'
 import {Button} from 'components/_shared/Button/Button'
+import {CForm, CFormRow, InputText, InputPassword, Checkbox} from 'components/_shared/CForm/CForm'
 
 type PropsType = {
-    compact?: boolean
     onSubmit: (loginFormData: LoginDataType) => void
 }
 
-const LoginForm: React.FC<PropsType> = ({onSubmit, compact = false}) => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
-    const submit = (formData: LoginDataType) => {
-        onSubmit(formData)
-    }
+const LoginForm: React.FC<PropsType> = ({onSubmit}) => {
     return (
-        <Form onSubmit={handleSubmit(submit)}>
-            <Form.Row><Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
-                                 error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/></Form.Row>
-            <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
-                                 error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/></Form.Row>
-            <Form.Row><Form.Item component={InputCheckbox} {...register('rememberMe')} label='Remember me'/></Form.Row>
-            <Form.Row><Button type='primary' size='large'><Button.Text>Log in</Button.Text></Button></Form.Row>
-        </Form>
+        <CForm onSubmit={onSubmit}>
+            <CFormRow>
+                <InputText name={'email'} label={'E-mail'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <InputPassword name={'password'} label={'Password'} rules={{required: true}}/>
+            </CFormRow>
+            <CFormRow>
+                <Checkbox name={'rememberMe'} label={'Remember me'}/>
+            </CFormRow>
+            <CFormRow>
+                <Button type='primary' size='large'>
+                    <Button.Text>Log in</Button.Text>
+                </Button>
+            </CFormRow>
+        </CForm>
     )
 }
 
 
-const LoginFormContainer: React.FC<{ compact?: boolean }> = ({compact}) => {
+const LoginFormContainer: React.FC = () => {
     const dispatch: ThunkDispatch<StateType, LoginDataType, AuthActionType> = useDispatch()
 
     const onSubmit = (loginFormData: LoginDataType) => {
         dispatch(login(loginFormData))
     }
 
-    return <LoginForm onSubmit={onSubmit} compact={compact}/>
+    return <LoginForm onSubmit={onSubmit}/>
 }
 
 export default LoginFormContainer
