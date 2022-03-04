@@ -15,13 +15,17 @@ import Cropper from 'react-easy-crop'
 type FormPropsType = {
     onSubmit: (data: any) => void
     initialValues?: { [key: string]: any }
+    resetAfterSubmit?: boolean
+    submitOnBlur?: boolean
 }
 export const CForm: React.FC<FormPropsType> = ({
                                                    onSubmit,
                                                    children,
-                                                   initialValues
+                                                   initialValues,
+                                                   submitOnBlur = false,
+    resetAfterSubmit = false
                                                }) => {
-    const {control, handleSubmit} = useForm({
+    const {control, handleSubmit, reset} = useForm({
         defaultValues: {
             ...initialValues
         }
@@ -34,9 +38,19 @@ export const CForm: React.FC<FormPropsType> = ({
         return child
     })
 
-    const submit = (formData: LoginDataType) => onSubmit(formData)
+    const submit = (data: { [key: string]: any }) => {
+        onSubmit(data)
+        if (resetAfterSubmit) reset()
+    }
 
-    return <form className={classes.wrapper} onSubmit={handleSubmit(submit)}>
+    const onBlurHandler = () => {
+        debugger
+        // todo: need to somehow trigger submit event here
+        // check possible solution here https://stackoverflow.com/questions/52665541/react-how-to-trigger-form-submit-on-input-blur
+        if (submitOnBlur) handleSubmit(submit)
+    }
+
+    return <form className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
         {childrenWithProps}
     </form>
 }
@@ -100,13 +114,15 @@ type InputTextPropsType = {
     rules?: RegisterOptions,
     control?: Control,
     disabled?: boolean
+    autoFocus?: boolean
 }
 export const InputText: React.FC<InputTextPropsType> = ({
                                                             name,
                                                             label,
                                                             rules,
                                                             control,
-                                                            disabled = false
+                                                            disabled = false,
+                                                            autoFocus= false
                                                         }) => {
     return <Controller
         control={control}
@@ -121,6 +137,7 @@ export const InputText: React.FC<InputTextPropsType> = ({
                 value={field.value}
                 onChange={field.onChange}
                 disabled={disabled}
+                autoFocus={autoFocus}
             />
         </Item>}
     />
