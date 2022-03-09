@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import {Area} from 'react-easy-crop/types'
 import {Button} from 'components/_shared/Button/Button'
-import {CForm, CFormRow, InputFile, InputImageCrop} from 'components/_shared/CForm/CForm'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
+import {InputImageCrop} from 'components/_shared/Input/InputImageCrop/InputImageCrop'
 
 
 type PropsType = {
@@ -23,8 +25,8 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
     return (
         <div>
-            <CForm onSubmit={submit}>
-                <CFormRow>
+            <Form onSubmit={submit}>
+                <FormRow>
                     {srcFileUrl && <Button size="large">
                         <Button.Text>
                             Save
@@ -43,16 +45,16 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
                             <Button.Text>Close</Button.Text>
                         </Button>}
                     </div>
-                </CFormRow>
+                </FormRow>
 
-                {!srcFileUrl && <CFormRow>
+                {!srcFileUrl && <FormRow>
                     <InputFile
                         name={'file'}
                         label={'Drop your files in the area below'}
                         rules={{required: true}}
                         onChange={fileChangeHandler}
                     />
-                </CFormRow>}
+                </FormRow>}
 
                 {srcFileUrl && <InputImageCrop
                     name={'crop'}
@@ -60,7 +62,7 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
                     srcFileUrl={srcFileUrl}
                 />}
 
-            </CForm>
+            </Form>
         </div>
     )
 }

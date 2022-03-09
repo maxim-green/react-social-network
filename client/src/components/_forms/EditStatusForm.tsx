@@ -1,5 +1,6 @@
 import React from 'react'
-import {CForm, InputText} from 'components/_shared/CForm/CForm'
+import {Form} from 'components/_shared/Form/Form'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
 
 type PropsType = {
     onSubmit: (data: { status: string }) => void
@@ -9,10 +10,10 @@ type PropsType = {
 
 const EditStatusForm: React.FC<PropsType> = ({onSubmit}) => {
     return (
-        <CForm onSubmit={onSubmit} submitOnBlur={true}>
+        <Form onSubmit={onSubmit} submitOnBlur={true}>
             <InputText name={'status'} autoFocus={true}/>
             {/*<input defaultValue={value} autoFocus onBlur={onBlur} onChange={onChange} onKeyDown={onEnter}/>*/}
-        </CForm>
+        </Form>
     )
 }
 

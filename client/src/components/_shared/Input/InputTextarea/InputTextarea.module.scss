@@ -1,0 +1,32 @@
+.textarea {
+  display: block;
+  resize: none;
+  width: 100%;
+  font-size: 16px;
+  line-height: 16px;
+  color: $dark-grey-2;
+  padding: 14px 18px;
+  -webkit-box-shadow: inset 0 0 0 50px $white;
+  transition: $ui-transition;
+  border: 1px solid $light-grey-2;
+  border-radius: $ui-border-radius;
+  @include focus;
+  &.error {
+    border-color: $clr-input-invalid;
+  }
+  &:disabled {
+    background-color: $light-grey-1;
+  }
+  &::-webkit-input-placeholder {
+    color: $light-grey-2;
+  }
+  &::-moz-placeholder {
+    color: $light-grey-2;
+  }
+  &::-ms-placeholder {
+    color: $light-grey-2;
+  }
+  &::placeholder {
+    color: $light-grey-2;
+  }
+}

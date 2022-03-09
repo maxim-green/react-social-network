@@ -1,7 +1,8 @@
 import classes from './NewMessageForm.module.scss'
 import React from "react";
 import {Button} from 'components/_shared/Button/Button'
-import {CForm, CFormRow, InputTextarea} from 'components/_shared/CForm/CForm'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
 
 type PropsType = {
     onSubmit: (message: string) => void
@@ -14,14 +15,14 @@ const NewMessageForm: React.FC<PropsType> = ({onSubmit}) => {
     }
 
     return (
-        <CForm onSubmit={submit} initialValues={{newMessageInput: ''}} resetAfterSubmit={true}>
-            <CFormRow>
+        <Form onSubmit={submit} initialValues={{newMessageInput: ''}} resetAfterSubmit={true}>
+            <FormRow>
                 <InputTextarea name={'newMessageInput'} />
                 <div className={classes.button}>
                     <Button>Send</Button>
                 </div>
-            </CFormRow>
-        </CForm>
+            </FormRow>
+        </Form>
     )
 }
 

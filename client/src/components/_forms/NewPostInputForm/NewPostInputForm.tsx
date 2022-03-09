@@ -5,7 +5,8 @@ import {NewPostType} from 'types/types'
 import classes from './NewPostInputForm.module.scss'
 import {Card} from 'components/_shared/Card/Card'
 import {Button} from 'components/_shared/Button/Button'
-import {CForm, CFormRow, InputTextarea} from 'components/_shared/CForm/CForm'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
 
 type PropsType = {
     isAddPostPending: boolean
@@ -25,7 +26,7 @@ const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => 
 
     return (
         <Card>
-            <CForm onSubmit={onSubmit} initialValues={{newPostText: ''}}>
+            <Form onSubmit={onSubmit} initialValues={{newPostText: ''}}>
                 <InputTextarea name={'newPostText'}/>
                 <div className={classes.controls}>
                     <Button onClick={onAttachFileButtonClick} type="text" size="small">
@@ -35,7 +36,7 @@ const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => 
                         <Button.Text>Send</Button.Text>
                     </Button>
                 </div>
-            </CForm>
+            </Form>
         </Card>
     )
 }

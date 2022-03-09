@@ -5,7 +5,9 @@ import {StateType} from 'redux/store'
 import {authActions, AuthActionType, register} from 'redux/reducers/auth.reducer'
 import {RegistrationDataType} from 'api/auth.api'
 import {Button} from 'components/_shared/Button/Button'
-import {CForm, CFormRow, InputText, InputPassword} from 'components/_shared/CForm/CForm'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
+import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
 
 type PropsType = {
     registrationSuccessful: boolean
@@ -14,29 +16,29 @@ type PropsType = {
 
 const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit}) => {
     return (
-        <CForm onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
             {registrationSuccessful && <div>Registration successful.</div>}
-            <CFormRow>
+            <FormRow>
                 <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'username'} label={'Username'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'email'} label={'E-mail name'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputPassword name={'password'} label={'Password'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <Button size="large">
                     <Button.Text>Register</Button.Text>
                 </Button>
-            </CFormRow>
-        </CForm>
+            </FormRow>
+        </Form>
     )
 }
 

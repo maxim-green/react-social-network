@@ -46,6 +46,15 @@ $clr-cancel-border: darken($clr-cancel, 5%);
 $clr-cancel-hover: lighten($clr-cancel, 5%);
 $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
+// focus outline
+$clr-focus-outline: $dark-grey-2;
+
+// inputs
+$clr-input-font: $dark-grey-2;
+$clr-input-font-placeholder: $dark-grey-2;
+$clr-input-background: $white;
+$clr-input-background-disabled: $light-grey-1;
+$clr-input-border: $light-grey-2;
 $clr-input-invalid: $error;
 
 // ui
@@ -68,3 +77,8 @@ $card-padding: 20px;
 $btn-small: 12px;
 $btn-medium: 15px;
 $btn-large: 18px;
+
+$input-small: 14px;
+$input-medium: 17px;
+$input-large: 20px;
+

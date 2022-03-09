@@ -3,15 +3,17 @@ import classes from './TestPage.module.scss'
 import {Card} from "components/_shared/Card/Card";
 
 import {
-    CForm,
-    CFormRow,
-    InputText,
-    InputPassword,
-    InputTextarea,
-    Checkbox,
-    InputDate, InputFile, InputRange
-} from 'components/_shared/CForm/CForm'
+    Form,
+    FormRow
+} from 'components/_shared/Form/Form'
 import {Button} from 'components/_shared/Button/Button'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
+import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
+import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
+import {InputCheckbox} from 'components/_shared/Input/InputCheckbox/InputCheckbox'
+import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
+import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
+import {InputRange} from 'components/_shared/Input/InputRange/InputRange'
 
 export const FormTestPage: React.FC = () => {
     return(
@@ -21,34 +23,34 @@ export const FormTestPage: React.FC = () => {
 
                     <Card>
                         <div className={classes.cardContent}>
-                            <CForm onSubmit={data => console.log(data)}>
-                                <CFormRow align={'fill'}>
+                            <Form onSubmit={data => console.log(data)}>
+                                <FormRow align={'fill'}>
                                     <InputText name={'email'} label={'E-mail:'} rules={{required: true}}/>
                                     <InputText name={'username'} label={'Username:'} disabled={true}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow>
                                     <InputPassword name={'password'} label={'Password:'} disabled={true}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow>
                                     <InputTextarea name={'message'} label={'Message:'} rules={{required: true}}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow>
                                     <InputDate name={'birthdate'} label={'BirthDate:'} rules={{required: true}}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow>
                                     <InputFile name={'image'} label={'Dima Loh:'} rules={{required: true}}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow>
                                     <InputRange name={'size'} label={'Max Krutoy Chelik:'} rules={{required: true}}/>
-                                </CFormRow>
-                                <CFormRow align={'left'}>
-                                    <Checkbox name={'remember'} label={'Remember me:'} />
-                                    <Checkbox name={'remember2'} label={'Remember me 2:'} disabled={true}/>
-                                </CFormRow>
-                                <CFormRow>
+                                </FormRow>
+                                <FormRow align={'left'}>
+                                    <InputCheckbox name={'remember'} label={'Remember me:'} />
+                                    <InputCheckbox name={'remember2'} label={'Remember me 2:'} disabled={true}/>
+                                </FormRow>
+                                <FormRow>
                                     <Button>Send</Button>
-                                </CFormRow>
-                            </CForm>
+                                </FormRow>
+                            </Form>
                         </div>
                     </Card>
 

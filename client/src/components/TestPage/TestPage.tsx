@@ -1,17 +1,9 @@
 import React from 'react'
 import classes from './TestPage.module.scss'
-import Form from "components/_shared/Form/Form";
 import {Card} from "components/_shared/Card/Card";
-import {Input} from 'components/_shared/Input/Input'
-import {InputPassword} from 'components/_shared/Input/InputPassword'
-import {InputCheckbox} from 'components/_shared/Input/InputCheckbox'
-import {InputRange} from 'components/_shared/Input/InputRange'
-import {InputDate} from 'components/_shared/Input/InputDate'
-import {InputFile} from 'components/_shared/Input/InputFile'
 import {Button} from 'components/_shared/Button/Button'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Search} from 'react-bootstrap-icons'
-import {CForm} from 'components/_shared/CForm/CForm'
 
 
 const TestPage: React.FC = () => {
@@ -21,15 +13,6 @@ const TestPage: React.FC = () => {
                 <div className={classes.column}>
                     <Card>
                         <div className={classes.cardContent}>
-                            <Form onSubmit={() => console.log('Submit')}>
-                                <Form.Row>
-                                    <Form.Item component={Input} name='email' label='E-mail:' required/>
-                                    <Form.Item component={Input} name='username' label='Username:' required disabled/>
-                                </Form.Row>
-                                <Form.Item component={InputPassword} name='name' label='Password:' required/>
-                                <Form.Item component={InputCheckbox} name={'rememberMe'} label={'Remember me'} required/>
-                                <Form.Item component={InputCheckbox} name={'rememberMe'} label={'Remember me'} disabled/>
-                            </Form>
 
                             <div>Button types</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
@@ -77,14 +60,6 @@ const TestPage: React.FC = () => {
                                 <Button type={'primary'} size={'small'} spinner><Button.Text>small</Button.Text></Button>
                                 <Button type={'primary'} size={'medium'} spinner><Button.Text>medium</Button.Text></Button>
                                 <Button type={'primary'} size={'large'} spinner><Button.Text>large</Button.Text></Button>
-                            </div>
-
-                            <Form.Item name={'zoom'} component={InputRange}/>
-                            <Form.Row>
-                                <Form.Item name={'date'} component={InputDate} value={new Date()}/>
-                            </Form.Row>
-                            <div style={{display: 'flex', justifyContent: 'space-between', width: '400px'}}>
-                                <InputFile name={'date'}/>
                             </div>
 
                         </div>

@@ -7,7 +7,9 @@ import {EditProfileDataType} from 'api/profile.api'
 import {ProfileActionType, updateProfile} from 'redux/reducers/profile.reducer'
 import Spinner from 'components/_shared/Spinner/Spinner'
 import {Button} from 'components/_shared/Button/Button'
-import {CForm, CFormRow, InputText, InputDate} from 'components/_shared/CForm/CForm'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
+import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
 
 type PropsType = {
     initialValues: EditProfileDataType
@@ -28,8 +30,8 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
     }
 
     return (
-        <CForm onSubmit={submit} initialValues={initialValues}>
-            <CFormRow>
+        <Form onSubmit={submit} initialValues={initialValues}>
+            <FormRow>
                 <Button size="medium">
                     <Button.Text>
                         Save
@@ -42,33 +44,33 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
                         </Button.Text>
                     </Button>
                 </div>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputDate name={'birthDate'} label={'Birth date'}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'location.country'} label={'Country'}/>
                 <InputText name={'location.city'} label={'City'}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'bio'} label={'Bio'}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'contacts.website'} label={'Website'}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'contacts.vkontakte'} label={'Vkontakte'}/>
-            </CFormRow>
-            <CFormRow>
+            </FormRow>
+            <FormRow>
                 <InputText name={'contacts.github'} label={'Github'}/>
-            </CFormRow>
-        </CForm>
+            </FormRow>
+        </Form>
     )
 }
 
