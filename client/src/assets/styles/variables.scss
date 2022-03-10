@@ -74,11 +74,17 @@ $components-gap: 10px;
 $sidebar-width: 220px;
 $card-padding: 20px;
 
+$modal-content-width: 600px;
+$modal-content-height: 800px;
+
+$image-crop-area-width: $modal-content-width;
+$image-crop-area-height: $modal-content-width;
+
 $btn-small: 12px;
 $btn-medium: 15px;
 $btn-large: 18px;
 
-$input-small: 14px;
-$input-medium: 17px;
-$input-large: 20px;
+$input-small: 12px;
+$input-medium: 15px;
+$input-large: 18px;
 

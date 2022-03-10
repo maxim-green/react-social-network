@@ -56,11 +56,13 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
                     />
                 </FormRow>}
 
-                {srcFileUrl && <InputImageCrop
-                    name={'crop'}
-                    aspect={aspect}
-                    srcFileUrl={srcFileUrl}
-                />}
+                {srcFileUrl && <FormRow>
+                    <InputImageCrop
+                        name={'crop'}
+                        aspect={aspect}
+                        srcFileUrl={srcFileUrl}
+                    />
+                </FormRow>}
 
             </Form>
         </div>

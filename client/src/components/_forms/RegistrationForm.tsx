@@ -8,16 +8,16 @@ import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow} from 'components/_shared/Form/Form'
 import {InputText} from 'components/_shared/Input/InputText/InputText'
 import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
+import {ServerValidationErrorType} from 'types/types'
 
 type PropsType = {
-    registrationSuccessful: boolean
+    registrationErrors: Array<ServerValidationErrorType>
     onSubmit: (formData: RegistrationDataType) => void
 }
 
-const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit}) => {
+const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) => {
     return (
-        <Form onSubmit={onSubmit}>
-            {registrationSuccessful && <div>Registration successful.</div>}
+        <Form onSubmit={onSubmit} errors={registrationErrors}>
             <FormRow>
                 <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
             </FormRow>
@@ -44,7 +44,7 @@ const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit
 
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
-    const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
+    const registrationErrors = useSelector((state: StateType) => state.auth.registrationErrors)
     const dispatch: ThunkDispatch<StateType, RegistrationDataType | boolean, AuthActionType> = useDispatch()
 
     const onSubmit = async (registrationFormData: RegistrationDataType) => {
@@ -57,7 +57,7 @@ const RegistrationFormContainer: React.FC = () => {
 
     return <RegistrationForm
         onSubmit={onSubmit}
-        registrationSuccessful={registrationSuccessful}
+        registrationErrors={registrationErrors}
     />
 }
 

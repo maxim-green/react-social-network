@@ -17,6 +17,12 @@ export type AuthUserDataType = UserDataType & {
     email: string
 }
 
+//
+export type ServerValidationErrorType = {
+    field: string,
+    message: string
+}
+
 // type for user profile data
 export type UserDataType = {
     _id: string

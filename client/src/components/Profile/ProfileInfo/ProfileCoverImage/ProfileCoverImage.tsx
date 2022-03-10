@@ -4,8 +4,9 @@ import Popup from 'reactjs-popup'
 import {Area} from 'react-easy-crop/types'
 import {CameraFill} from 'react-bootstrap-icons'
 import defaultCoverImage from 'assets/images/cover-default.jpg'
-import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
 import {Button} from 'components/_shared/Button/Button'
+import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
+import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
 
 type PropsTypes = {
     img: string | null
@@ -34,9 +35,9 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
                     <Button.Text>Edit Cover Image</Button.Text>
                 </Button>}
             </div>
-            <Popup open={open} modal nested onClose={closeModal} contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
-                <ImageUploadForm aspect={7 / 2} onSubmit={onCoverImageSubmit} closeModal={closeModal} />
-            </Popup>
+            <ModalWindow open={open}>
+                <ImageUploadForm aspect={7 / 2} onSubmit={onCoverImageSubmit} closeModal={closeModal}/>
+            </ModalWindow>
             <img className={classes.image} src={img ? img : defaultCoverImage} alt={''}/>
         </div>
     )

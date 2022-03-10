@@ -1,14 +1,16 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import classes from 'components/_shared/Form/Form.module.scss'
 import classnames from 'classnames'
 import {useForm} from 'react-hook-form'
 import {Control} from 'react-hook-form/dist/types/form'
 import {FieldError} from 'react-hook-form/dist/types'
+import {ServerValidationErrorType} from 'types/types'
 
 
 type FormPropsType = {
     onSubmit: (data: any) => void
     initialValues?: { [key: string]: any }
+    errors?: Array<ServerValidationErrorType>
     resetAfterSubmit?: boolean
     submitOnBlur?: boolean
 }
@@ -28,14 +30,20 @@ export const Form: React.FC<FormPropsType> = ({
                                                    onSubmit,
                                                    children,
                                                    initialValues,
+                                                  errors= [],
                                                    submitOnBlur = false,
     resetAfterSubmit = false
                                                }) => {
-    const {control, handleSubmit, reset} = useForm({
+    const {control, handleSubmit, reset, setError} = useForm({
         defaultValues: {
             ...initialValues
         }
     })
+    const [formError, setFormError] = useState<ServerValidationErrorType | null>(null)
+    useEffect(() => {
+        setFormError(errors.find(error => error.field === 'form') || null)
+        errors.forEach(({field, message}) => setError(field, {type: 'server', message}))
+    }, [errors])
 
     const childrenWithProps = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
@@ -58,6 +66,7 @@ export const Form: React.FC<FormPropsType> = ({
     }
 
     return <form ref={formRef} className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
+        {formError && <FormRow><span className={classes.formError}>{formError.message}</span></FormRow>}
         {childrenWithProps}
     </form>
 }
@@ -99,6 +108,7 @@ export const Item: React.FC<ItemPropsType> = ({
             {required && <span className={classes.labelRequired}>*</span>}
             <span className={classes.labelText}>{label}</span>
             {error?.type === 'required' && <span className={classes.formItemError}>This field is required</span>}
+            {error?.type === 'server' && <span className={classes.formItemError}>{error.message}</span>}
         </div>
         {children}
     </label>

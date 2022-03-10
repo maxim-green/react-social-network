@@ -1,6 +1,6 @@
 import React from 'react'
 import {Controller, RegisterOptions} from 'react-hook-form'
-import classes from 'components/_shared/Form/Form.module.scss'
+import classes from './InputPassword.module.scss'
 import {Control} from 'react-hook-form/dist/types/form'
 import {Item} from 'components/_shared/Form/Form'
 

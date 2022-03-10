@@ -1,6 +1,7 @@
 import {Controller, RegisterOptions} from 'react-hook-form'
 import {Control} from 'react-hook-form/dist/types/form'
 import React from 'react'
+import 'rc-slider/assets/index.css';
 import classes from 'components/_shared/Form/Form.module.scss'
 import Slider from 'rc-slider'
 import {Item} from 'components/_shared/Form/Form'

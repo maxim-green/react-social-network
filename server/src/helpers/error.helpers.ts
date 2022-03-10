@@ -16,6 +16,6 @@ export const throwValidationError = (errors: Array<ValidationError>) => {
     throw new HTTPError(400, {
         resultCode: 1,
         message: 'Invalid input data',
-        errors
+        errors: errors.map(error => ({field: error.param, message: error.msg}))
     })
 }

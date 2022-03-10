@@ -1,8 +1,10 @@
 import axios, {AxiosError, AxiosResponse} from 'axios'
+import {ServerValidationErrorType} from 'types/types'
 
 export const coreApi = axios.create({
     baseURL: 'http://localhost:5000/api/',
-    withCredentials: true
+    withCredentials: true,
+    validateStatus: status => status < 500
 })
 
 // basic result codes. used by default in ResponseType
@@ -15,12 +17,13 @@ export enum ResultCodes {
 }
 
 // all server responses have this type
-export type APIResponseType<D = undefined, R = ResultCodes> = {
-    resultCode: R
+export type APIResponseType<D = undefined> = {
+    resultCode: ResultCodes
     message: string
     data: D
+    errors?: Array<ServerValidationErrorType>
 }
-export const handleResponse = <DataType = undefined, ResultCodesType = ResultCodes>() => (res: AxiosResponse<APIResponseType<DataType, ResultCodesType>>) => {
+export const handleResponse = <DataType = undefined>() => (res: AxiosResponse<APIResponseType<DataType>>) => {
     return res.data
 }
 

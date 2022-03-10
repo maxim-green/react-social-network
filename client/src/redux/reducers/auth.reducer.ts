@@ -1,14 +1,15 @@
-import {authApi, LoginDataType, RegistrationDataType} from '../../api/auth.api'
-import {ResultCodes} from '../../api/core.api'
+import {authApi, LoginDataType, RegistrationDataType} from 'api/auth.api'
+import {ResultCodes} from 'api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
-import {EditProfileDataType} from '../../api/profile.api'
 import {startMessagesListening, stopMessagesListening} from './dialogs.reducer'
-import {AuthUserDataType} from '../../types/types'
+import {AuthUserDataType, ServerValidationErrorType} from 'types/types'
 
 // INITIAL STATE
 const initialState = {
     authorized: false,
     user: null as AuthUserDataType | null,
+    registrationErrors: [] as Array<ServerValidationErrorType>,
+    loginErrors: [] as Array<ServerValidationErrorType>,
     registrationSuccessful: false
 }
 type AuthStateType = typeof initialState
@@ -36,6 +37,18 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 registrationSuccessful: action.registrationSuccessful
             }
         }
+        case 'rsn/auth/SET_REGISTRATION_ERRORS': {
+            return  {
+                ...state,
+                registrationErrors: action.errors
+            }
+        }
+        case 'rsn/auth/SET_LOGIN_ERRORS': {
+            return {
+                ...state,
+                loginErrors: action.errors
+            }
+        }
         default: {
             return state
         }
@@ -52,6 +65,14 @@ export const authActions = {
     setRegistrationSuccessful: (registrationSuccessful: boolean) => ({
         type: 'rsn/auth/SET_REGISTRATION_SUCCESSFUL',
         registrationSuccessful
+    } as const),
+    setRegistrationErrors: (errors: Array<ServerValidationErrorType>) => ({
+        type: 'rsn/auth/SET_REGISTRATION_ERRORS',
+        errors
+    } as const),
+    setLoginErrors: (errors: Array<ServerValidationErrorType>) => ({
+        type: 'rsn/auth/SET_LOGIN_ERRORS',
+        errors
     } as const)
 }
 export type AuthActionType = ReturnType<InferActionsTypes<typeof authActions>>
@@ -65,7 +86,7 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
         dispatch(startMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
-        console.log(res)
+        dispatch(authActions.setLoginErrors(res.errors))
     }
 }
 
@@ -105,7 +126,7 @@ export const register = (registrationData: RegistrationDataType): ThunkType<Auth
         dispatch(authActions.setRegistrationSuccessful(true))
     }
     if (res.resultCode === ResultCodes.error) {
-        console.log(res)
+        dispatch(authActions.setRegistrationErrors(res.errors))
     }
 }
 //endregion

@@ -2,10 +2,15 @@
     width: 100%;
 }
 
+.formError {
+  font-size: 16px;
+  color: $error;
+}
+
 .row {
   width: 100%;
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   &:last-child {
     margin: 0;
   }

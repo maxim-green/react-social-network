@@ -17,12 +17,12 @@
 
 @mixin input-style {
   input {
-    padding: .5em;
+    padding: .5em;  // needed for date input
   }
   position: relative;
   line-height: 1em;
   height: 2em;
-  padding: .5em;
+  padding: .75em;
   background: $clr-input-background;
   border: 1px solid $clr-input-border;
   border-radius: $ui-border-radius;
