@@ -4,7 +4,7 @@ import {ServerValidationErrorType} from 'types/types'
 export const coreApi = axios.create({
     baseURL: 'http://localhost:5000/api/',
     withCredentials: true,
-    validateStatus: status => status < 500
+    // validateStatus: status => status < 500
 })
 
 // basic result codes. used by default in ResponseType

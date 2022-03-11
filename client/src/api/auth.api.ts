@@ -1,5 +1,5 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {EditProfileDataType} from "./profile.api";
+import {EditProfileDataType} from './profile.api'
 import {AuthUserDataType} from '../types/types'
 
 //region DATA TYPES
@@ -42,6 +42,11 @@ export const authApi = {
         .then(handleResponse<AuthUserDataType>())
         .catch(handleError()),
 
+    refreshToken: () => coreApi
+        .post('http://localhost:5000/api/auth/refresh-tokens')
+        .then(handleResponse())
+        .catch(handleError()),
+
     logout: () => coreApi
         .delete('/auth/logout')
         .then(handleResponse())
@@ -52,3 +57,22 @@ export const authApi = {
         .then(handleResponse())
         .catch(handleError())
 }
+
+
+coreApi.interceptors.response.use(
+    (res) => {
+        return res
+    },
+    async (err) => {
+        const originalConfig = err.config
+        console.log(originalConfig._retry)
+        console.log(err.response.status)
+        if (err.response.status === 401 && !originalConfig._retry && err.response.data.message !== 'Invalid token') {
+            originalConfig._retry = true
+            const res = await authApi.refreshToken()
+            console.log(res)
+            return coreApi(originalConfig);
+        }
+        return Promise.reject(err)
+    }
+)

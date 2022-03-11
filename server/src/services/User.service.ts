@@ -77,6 +77,7 @@ export const createUser = async (payload: RegistrationPayload) => {
 
 
 export const loginUser = async (payload: LoginPayload) => {
+    console.log(payload)
     const user = await User.findOne({email: payload.email})
 
     const condition = user ? await bcrypt.compare(payload.password, user.password) : false
@@ -84,7 +85,7 @@ export const loginUser = async (payload: LoginPayload) => {
         resultCode: 1, message: 'Unauthorized', errors: [{field: 'form', message: 'Wrong e-mail or password'}]
     })
 
-    const {accessToken, refreshToken} = await generateTokens(user)
+    const {accessToken, refreshToken} = await generateTokens(user, payload.rememberMe)
     user.isOnline = true
     await user.save()
 
