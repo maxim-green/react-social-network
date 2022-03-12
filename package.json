@@ -16,7 +16,6 @@
     "i": "yarn install && yarn server:install && yarn client:install",
     "dev": "concurrently \"yarn server\" \"yarn client\""
   },
-  "packageManager": "yarn@3.2.0",
   "devDependencies": {
     "concurrently": "^7.0.0"
   }
