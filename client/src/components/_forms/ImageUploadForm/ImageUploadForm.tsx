@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Controller, useForm} from 'react-hook-form'
+import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import Cropper from 'react-easy-crop'
 import {Area, Point} from 'react-easy-crop/types'
 import Slider from 'rc-slider'
@@ -32,7 +32,8 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
     return (
         <div>
-            <Form onSubmit={handleSubmit(submit)}>
+            {/*todo: fix this ugly any*/}
+            <Form onSubmit={handleSubmit(submit as any)}>
                 <Form.Row>
                     {srcFileUrl && <Button size="large">
                         <Button.Text>

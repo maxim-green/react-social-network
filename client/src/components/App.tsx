@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import LoginPageContainer from './_pages/LoginPage'
-import RegistrationPageContainer from './_pages/RegistrationPage'
+import LoginPageContainer from 'components/_pages/LoginPage'
+import RegistrationPageContainer from 'components/_pages/RegistrationPage'
 import {useDispatch, useSelector} from 'react-redux'
-import ProfilePage from './_pages/ProfilePage'
-import UsersPage from './_pages/UsersPage'
+import ProfilePage from 'components/_pages/ProfilePage'
+import UsersPage from 'components/_pages/UsersPage'
 import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import {StateType} from 'redux/store'
-import Layout from './Layout/Layout'
+import Layout from 'components/Layout/Layout'
 import TestPage from 'components/TestPage/TestPage'
-import DialogsPage from "./_pages/DialogsPage";
-import Spinner from "./_shared/Spinner/Spinner";
-import PostPage from './_pages/PostPage'
-import FeedPage from './_pages/FeedPage'
+import DialogsPage from "components/_pages/DialogsPage";
+import Spinner from "components/_shared/Spinner/Spinner";
+import PostPage from 'components/_pages/PostPage'
+import FeedPage from 'components/_pages/FeedPage'
 
 // todo: implement separate pages bundling (lazy imports)
 

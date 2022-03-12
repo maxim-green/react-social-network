@@ -23,7 +23,8 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, compact = false}) => {
         onSubmit(formData)
     }
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        // todo fix this ugly any
+        <Form onSubmit={handleSubmit(submit as any)}>
             <Form.Row><Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
                                  error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/></Form.Row>
             <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}

@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@atlaskit/css-reset": "^6.0.5",
+    "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
-    "craco": "^0.0.3",
     "moment": "^2.29.1",
     "rc-slider": "^9.7.5",
     "react": "^17.0.2",
@@ -26,7 +25,7 @@
     "reactjs-popup": "^2.0.5",
     "redux": "^4.1.0",
     "redux-thunk": "2.3.0",
-    "sass": "^1.35.1",
+    "sass": "^1.49.9",
     "socket.io-client": "^4.4.1",
     "web-vitals": "^1.0.1"
   },

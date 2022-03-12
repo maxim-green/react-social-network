@@ -21,7 +21,8 @@ const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit
         onSubmit(formData)
     }
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        // todo fix this ugly any
+        <Form onSubmit={handleSubmit(submit as any)}>
             {registrationSuccessful && <div>Registration successful.</div>}
             <Form.Row><Form.Item component={Input} label='First name' {...register('firstName', {required: true})}
                                  error={errors.firstName && {

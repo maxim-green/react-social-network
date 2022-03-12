@@ -7,6 +7,7 @@
   "author": "mgeorgievsky <max.georgievsky@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "concurrently \"yarn server\" \"yarn client\"",
     "client": "yarn --cwd client start",
     "server": "yarn --cwd server dev",
     "client:test": "yarn --cwd client test",
@@ -15,8 +16,8 @@
     "i": "yarn install && yarn server:install && yarn client:install",
     "dev": "concurrently \"yarn server\" \"yarn client\""
   },
+  "packageManager": "yarn@3.2.0",
   "devDependencies": {
     "concurrently": "^7.0.0"
-  },
-  "dependencies": {}
+  }
 }
