@@ -33,12 +33,12 @@ const ProfileHeader: React.FC<PropsType> = ({
     const [statusValue, setStatusValue] = useState<string>(status || 'What is your status?')
     useEffect(() => {
         setStatusValue(status || 'What is your status?')
-        setStatusEditMode(false)
     }, [status])
 
 
     const statusSubmitHandler = (data: {status: string}) => {
         onStatusUpdate(data.status)
+        setStatusEditMode(false)
     }
     const statusClickHandler = () => {
         setStatusEditMode(true)
@@ -61,7 +61,7 @@ const ProfileHeader: React.FC<PropsType> = ({
                 {owner && <div className={classes.status}>
                     {!statusEditMode && <div className={classes.statusText} onDoubleClick={statusClickHandler}>{statusValue}</div>}
                     {statusEditMode && <div className={classes.editStatus}>
-                        <EditStatusForm onSubmit={statusSubmitHandler}/>
+                        <EditStatusForm onSubmit={statusSubmitHandler} initialStatus={statusValue}/>
                     </div>}
                 </div>}
                 {!owner && <div className={classes.status}>{status}</div>}

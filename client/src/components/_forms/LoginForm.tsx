@@ -19,16 +19,6 @@ type PropsType = {
 
 const LoginForm: React.FC<PropsType> = ({onSubmit, errors}) => {
     return (
-<<<<<<< HEAD
-        // todo fix this ugly any
-        <Form onSubmit={handleSubmit(submit as any)}>
-            <Form.Row><Form.Item component={Input} label='E-mail:' {...register('email', {required: true})}
-                                 error={errors.email && {type: errors.email.type, message: 'This field is required'}} required/></Form.Row>
-            <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
-                                 error={errors.password && {type: errors.password.type, message: 'This field is required'}} required/></Form.Row>
-            <Form.Row><Form.Item component={InputCheckbox} {...register('rememberMe')} label='Remember me'/></Form.Row>
-            <Form.Row><Button type='primary' size='large'><Button.Text>Log in</Button.Text></Button></Form.Row>
-=======
         <Form onSubmit={onSubmit} errors={errors}>
             <FormRow>
                 <InputText name={'email'} label={'E-mail'} rules={{required: true}}/>
@@ -44,7 +34,6 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, errors}) => {
                     <Button.Text>Log in</Button.Text>
                 </Button>
             </FormRow>
->>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
         </Form>
     )
 }

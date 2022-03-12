@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 import React, {useEffect, useState} from 'react'
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import Cropper from 'react-easy-crop'
 import {Area, Point} from 'react-easy-crop/types'
 import Slider from 'rc-slider'
 import classes from './ImageUploadForm.module.scss'
-import Form from 'components/_shared/Form/Form'
-import {InputFile} from 'components/_shared/Input/InputFile'
-=======
-import React, {useState} from 'react'
-import {Area} from 'react-easy-crop/types'
->>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
 import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow} from 'components/_shared/Form/Form'
 import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
@@ -36,14 +29,9 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
     return (
         <div>
-<<<<<<< HEAD
-            {/*todo: fix this ugly any*/}
-            <Form onSubmit={handleSubmit(submit as any)}>
-                <Form.Row>
-=======
+
             <Form onSubmit={submit}>
                 <FormRow>
->>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
                     {srcFileUrl && <Button size="large">
                         <Button.Text>
                             Save

@@ -37,7 +37,8 @@ export const Form: React.FC<FormPropsType> = ({
     const {control, handleSubmit, reset, setError} = useForm({
         defaultValues: {
             ...initialValues
-        }
+        },
+        mode: 'onBlur'
     })
     const [formError, setFormError] = useState<ServerValidationErrorType | null>(null)
     useEffect(() => {
@@ -57,15 +58,11 @@ export const Form: React.FC<FormPropsType> = ({
         if (resetAfterSubmit) reset()
     }
 
-    const formRef = useRef(null)
-
     const onBlurHandler = () => {
-        // todo: need to somehow trigger submit event here
-        // check possible solution here https://stackoverflow.com/questions/52665541/react-how-to-trigger-form-submit-on-input-blur
-        if (submitOnBlur) handleSubmit(submit)
+        if (submitOnBlur) handleSubmit(submit)()
     }
 
-    return <form ref={formRef} className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
+    return <form className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
         {formError && <FormRow><span className={classes.formError}>{formError.message}</span></FormRow>}
         {childrenWithProps}
     </form>

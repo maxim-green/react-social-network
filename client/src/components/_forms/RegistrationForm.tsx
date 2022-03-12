@@ -17,41 +17,6 @@ type PropsType = {
 
 const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) => {
     return (
-<<<<<<< HEAD
-        // todo fix this ugly any
-        <Form onSubmit={handleSubmit(submit as any)}>
-            {registrationSuccessful && <div>Registration successful.</div>}
-            <Form.Row><Form.Item component={Input} label='First name' {...register('firstName', {required: true})}
-                                 error={errors.firstName && {
-                                     type: errors.firstName.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='Last name' {...register('lastName', {required: true})}
-                                 error={errors.lastName && {
-                                     type: errors.lastName.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='User name' {...register('username', {required: true})}
-                                 error={errors.username && {
-                                     type: errors.username.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={Input} label='E-mail' {...register('email', {required: true})}
-                                 error={errors.email && {type: errors.email.type, message: 'This field is required'}}
-                                 required/></Form.Row>
-            <Form.Row><Form.Item component={InputPassword} label='Password:' {...register('password', {required: true})}
-                                 error={errors.password && {
-                                     type: errors.password.type,
-                                     message: 'This field is required'
-                                 }}
-                                 required/></Form.Row>
-            <Form.Row>
-                <Button size="large"><Button.Text>Register</Button.Text></Button>
-            </Form.Row>
-=======
         <Form onSubmit={onSubmit} errors={registrationErrors}>
             <FormRow>
                 <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
@@ -73,7 +38,6 @@ const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) =
                     <Button.Text>Register</Button.Text>
                 </Button>
             </FormRow>
->>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
         </Form>
     )
 }
