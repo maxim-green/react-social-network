@@ -15,7 +15,7 @@ import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
 import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
 import {InputRange} from 'components/_shared/Input/InputRange/InputRange'
 
-export const FormTestPage: React.FC = () => {
+const FormTestPage: React.FC = () => {
     return(
 
             <div className={classes.wrapper}>
@@ -59,3 +59,5 @@ export const FormTestPage: React.FC = () => {
 
     )
 }
+
+export default FormTestPage

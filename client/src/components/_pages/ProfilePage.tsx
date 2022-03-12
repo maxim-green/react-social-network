@@ -1,14 +1,7 @@
 import React from 'react'
 import Profile from '../Profile/Profile'
-import Layout from '../Layout/Layout'
 
-
-const ProfilePage: React.FC = (props) => {
-    return (
-        <Layout sidebar={true}>
-            <Profile/>
-        </Layout>
-    )
-}
+// todo consider refactoring (maybe by using feed component here instead of ProfilePosts in Profile component)
+const ProfilePage: React.FC = () => <Profile/>
 
 export default ProfilePage

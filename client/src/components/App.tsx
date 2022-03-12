@@ -1,22 +1,23 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, Suspense, lazy} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import LoginPageContainer from 'components/_pages/LoginPage'
 import RegistrationPageContainer from 'components/_pages/RegistrationPage'
 import {useDispatch, useSelector} from 'react-redux'
-import ProfilePage from 'components/_pages/ProfilePage'
-import UsersPage from 'components/_pages/UsersPage'
 import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import {StateType} from 'redux/store'
 import Layout from 'components/Layout/Layout'
-import TestPage from 'components/TestPage/TestPage'
-import DialogsPage from "components/_pages/DialogsPage";
 import Spinner from "components/_shared/Spinner/Spinner";
-import PostPage from 'components/_pages/PostPage'
-import FeedPage from 'components/_pages/FeedPage'
-import {FormTestPage} from 'components/TestPage/FormTestPage'
+
+const ProfilePage = lazy(() => import('components/_pages/ProfilePage'))
+const UsersPage = lazy(() => import('components/_pages/UsersPage'))
+const DialogsPage = lazy(() => import('components/_pages/DialogsPage'))
+const PostPage = lazy(() => import('components/_pages/PostPage'))
+const FeedPage = lazy(() => import('components/_pages/FeedPage'))
+
+const TestPage = lazy(() => import('components/TestPage/TestPage'))
+const FormTestPage = lazy(() => import('components/TestPage/FormTestPage'))
 
 
-// todo: implement separate pages bundling (lazy imports)
 
 type PropsType = {
     authorized: boolean,
@@ -28,7 +29,7 @@ const App: React.FC<PropsType> = ({
                                       username
                                   }) => {
     return (
-        <>
+        <Suspense fallback={<AppSpinner/>}>
             <Switch>
                 {!authorized && <Route path="/login" component={LoginPageContainer}/>}
                 {authorized &&
@@ -38,18 +39,18 @@ const App: React.FC<PropsType> = ({
                 {authorized &&
                 <Route path="/register" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
-                {!authorized && <Route path="/profile/edit" render={() => <Redirect to="/login"/>}/>}
-                <Route exact path="/profile/:username" component={ProfilePage}/>
+
 
                 <Route path="/post/:id" component={PostPage}/>
                 <Route path="/feed" component={FeedPage}/>
 
-                <Route path="/users/:filter?" component={UsersPage}/>
-                <Route path="/dialogs/:username" component={DialogsPage}/>
-                <Route path="/dialogs/" component={DialogsPage}/>
+                <Route exact path="/profile/:username" render={() => <Layout sidebar={true}><ProfilePage/></Layout>}/>
+                <Route path="/users/:filter?" render={() => <Layout sidebar={true}><UsersPage/></Layout>}/>
+                <Route path="/dialogs/:username" render={() => <Layout sidebar={true}><DialogsPage/></Layout>}/>
+                <Route path="/dialogs/" render={() => <Layout sidebar={true}><DialogsPage/></Layout>}/>
+                <Route path="/settings" render={() => <Layout sidebar={true}>Settings Page</Layout>}/>
                 <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                 <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
-                <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
 
                 <Route path={'/testpage'} component={TestPage}/>
                 <Route path={'/formtestpage'} component={FormTestPage}/>
@@ -58,7 +59,7 @@ const App: React.FC<PropsType> = ({
                 {authorized &&
                 <Route path="/" render={() => <Redirect to={`/profile/${username}`}/>}/>}
             </Switch>
-        </>
+        </Suspense>
     )
 }
 
@@ -77,13 +78,15 @@ const AppContainer: React.FC<PropsType> = () => {
         }
     }, [dispatch])
 
-    if (!initialized) return <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Spinner size={100} thickness={8}/>
-    </div>
+    if (!initialized) return <AppSpinner/>
 
     return (
         <App authorized={authorized} username={username}/>
     )
 }
+
+const AppSpinner = () => <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <Spinner size={100} thickness={8}/>
+</div>
 
 export default AppContainer
