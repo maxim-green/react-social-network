@@ -2,15 +2,16 @@ import {Types} from 'mongoose'
 import {Post, User} from 'models'
 import {HTTPError} from 'helpers'
 import {MongooseDocument, PopulatedUserType} from 'types'
-import {PopulatedPostType} from '../types/Post'
+import {findUser} from 'services'
 
 
 export const getPosts = async () => {
     return await Post.find().populate('author', 'username firstName lastName avatar')
 }
 
-export const getUserPosts = async (userId: Types.ObjectId | string) => {
-    return await Post.find({'author': userId}).populate('author', 'username firstName lastName avatar')
+export const getUserPosts = async (username: string) => {
+            const user = await findUser({'username': username})
+    return await Post.find({'author': user.id}).populate('author', 'username firstName lastName avatar')
 }
 
 export const getPost = async (postId: Types.ObjectId | string) => {

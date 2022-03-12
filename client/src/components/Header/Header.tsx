@@ -3,7 +3,6 @@ import classes from './Header.module.scss'
 import {UserControl} from './UserControl/UserControl'
 import {NotificationArea} from './NotificationArea/NotificationArea'
 import {Logo} from 'components/_shared/Logo/Logo'
-import {Input} from 'components/_shared/Input/Input'
 
 type PropsType = {
     authorized: boolean

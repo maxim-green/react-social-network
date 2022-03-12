@@ -14,7 +14,7 @@ export const postApi = {
         .then(handleResponse<PostsDataType>())
         .catch(handleError()),
     getUserPosts: (username: string) => coreApi
-        .get(`/post?author=${username}`)
+        .get(`/user/${username}/posts`)
         .then(handleResponse<PostsDataType>())
         .catch(handleError()),
     getPost: (postId: string) => coreApi

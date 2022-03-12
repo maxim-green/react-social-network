@@ -1,67 +1,78 @@
-@import "../../../assets/styles/variables";
-
-.form {
-  width: 100%;
+.wrapper {
+    width: 100%;
 }
 
-.formRow {
+.formError {
+  font-size: 16px;
+  color: $error;
+}
+
+.row {
   width: 100%;
   display: flex;
-  justify-content: left;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   &:last-child {
     margin: 0;
   }
+
+  &.left {
+    justify-content: start;
+  }
+
+  &.right {
+    justify-content: end;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.fill {
+    justify-content: space-between;
+    .item {
+      flex: 1;
+    }
+  }
+
+  .item {
+    margin-right: 10px;
+    &:last-child {
+      margin: 0;
+    }
+  }
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 700;
-  margin-left: 20px;
+.item {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  &.left {
+    flex-direction: row;
+    align-items: center;
+  }
+  &.right {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
 }
 
-.error {
-  color: $error;
-  font-size: 18px;
-  font-weight: 500;
-  margin-left: 20px;
-}
-
-.success {
-  color: $success;
-  font-size: 18px;
-  font-weight: 500;
-  margin-left: 20px;
-}
-
-.formItem {
-  max-width: 100%;
-  flex-shrink: 0;
+.label {
+  display: flex;
+  justify-content: left;
   flex-grow: 1;
+  padding: 0 4px;
+  @include ui-form-item-label-font;
+  white-space: nowrap;
   &.disabled {
-    .formItemInfo {
-      opacity: .5;
+    .labelText {
+      opacity: .3;
     }
   }
-  &.formItemCheckbox {
-    label {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: left;
-    }
-  }
-  .formItemInfo {
-    display: flex;
-    justify-content: left;
-    flex-grow: 1;
-    padding: 0 4px;
-    @include ui-form-item-label-font
-  }
-  .formItemRequiredMark {
+  .labelRequired {
     margin-right: 2px;
     color: $error;
   }
-  .formItemLabel {
+  .labelText {
     color: $dark-grey-2;
   }
   .formItemError {
@@ -69,4 +80,48 @@
     color: $error;
   }
 }
+
+
+
+.input {
+  position: relative;
+  height: 44px;
+  padding: 14px 18px;
+  font-size: 16px;
+  line-height: 16px;
+  background: $white;
+  border: 1px solid $light-grey-2;
+  border-radius: $ui-border-radius;
+  width: 100%;
+  -webkit-box-shadow: inset 0 0 0 50px $white;
+  color: $dark-grey-2;
+  transition: $ui-transition;
+  @include focus;
+  &.error {
+    border-color: $clr-input-invalid;
+  }
+  &:disabled {
+    background-color: $light-grey-1;
+  }
+  &::-webkit-input-placeholder {
+    color: $light-grey-2;
+  }
+  &::-moz-placeholder {
+    color: $light-grey-2;
+  }
+  &::-ms-placeholder {
+    color: $light-grey-2;
+  }
+  &::placeholder {
+    color: $light-grey-2;
+  }
+}
+
+
+
+
+
+
+
+
 

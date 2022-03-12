@@ -20,7 +20,7 @@ export type SocketNextFunction = (err?: ExtendedError) => void
 export type ErrorResponseData = {
     resultCode: number,
     message: string,
-    errors?: Array<ValidationError>
+    errors?: Array<{field: string, message: string}>
 }
 
 export type HTTPErrorType = InstanceType<typeof HTTPError>

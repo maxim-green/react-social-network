@@ -3,16 +3,16 @@ import {
     getUserData,
     updateAvatar, updateCoverImage,
     updateStatus
-} from '../../redux/reducers/profile.reducer'
+} from 'redux/reducers/profile.reducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import ProfilePosts from './ProfilePosts/ProfilePosts'
-import {StateType} from '../../redux/store'
-import {NewPostType, PostType, UserDataType} from '../../types/types'
-import {Area, Point} from 'react-easy-crop/types'
-import {addPost, deletePost, getUserPosts} from '../../redux/reducers/posts.reducer'
-import Spinner from '../_shared/Spinner/Spinner'
+import {StateType} from 'redux/store'
+import {NewPostType, PostType, UserDataType} from 'types/types'
+import {Area} from 'react-easy-crop/types'
+import {addPost, deletePost, getUserPosts} from 'redux/reducers/posts.reducer'
+import Spinner from 'components/_shared/Spinner/Spinner'
 
 type PropsType = {
     authorized: boolean

@@ -66,37 +66,26 @@ export const getUserByRefreshToken = async (refreshToken: string) => {
 }
 
 
-const isEmailAvailable = async (email: string) => !(await User.findOne({email}))
+export const isEmailAvailable = async (email: string) => !(await User.findOne({email}))
 
-const isUsernameAvailable = async (username: string) => !(await User.findOne({username}))
+export const isUsernameAvailable = async (username: string) => !(await User.findOne({username}))
 
-export const registerUser = async (payload: RegistrationPayload) => {
-    if (!(await isEmailAvailable(payload.email))) throw new HTTPError(409, {
-        resultCode: 1,
-        message: 'Email already taken'
-    })
-
-
-    if (!(await isUsernameAvailable(payload.username))) throw new HTTPError(409, {
-        resultCode: 1,
-        message: 'Username already taken'
-    })
-
+export const createUser = async (payload: RegistrationPayload) => {
     const password = await bcrypt.hash(payload.password, 10)
-
     return await User.create({...payload, password})
 }
 
 
 export const loginUser = async (payload: LoginPayload) => {
+    console.log(payload)
     const user = await User.findOne({email: payload.email})
 
     const condition = user ? await bcrypt.compare(payload.password, user.password) : false
     if (!condition) throw new HTTPError(401, {
-        resultCode: 1, message: 'Wrong e-mail or password'
+        resultCode: 1, message: 'Unauthorized', errors: [{field: 'form', message: 'Wrong e-mail or password'}]
     })
 
-    const {accessToken, refreshToken} = await generateTokens(user)
+    const {accessToken, refreshToken} = await generateTokens(user, payload.rememberMe)
     user.isOnline = true
     await user.save()
 

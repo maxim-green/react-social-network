@@ -27,7 +27,7 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, a
             </AppBar>
             <Main>
                 {sidebar && <Sidebar>
-                    {!authorized && <Card><div style={{padding: '10px'}}><LoginForm compact={true}/></div></Card>}
+                    {!authorized && <Card><div style={{padding: '10px'}}><LoginForm/></div></Card>}
                     {authorized && <SidebarNavigation/>}
                     {authorized && <SidebarSubscriptions subscriptions={subscriptions}/>}
                 </Sidebar>}

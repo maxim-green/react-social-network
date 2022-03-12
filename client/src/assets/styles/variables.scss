@@ -46,6 +46,17 @@ $clr-cancel-border: darken($clr-cancel, 5%);
 $clr-cancel-hover: lighten($clr-cancel, 5%);
 $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
 
+// focus outline
+$clr-focus-outline: $dark-grey-2;
+
+// inputs
+$clr-input-font: $dark-grey-2;
+$clr-input-font-placeholder: $dark-grey-2;
+$clr-input-background: $white;
+$clr-input-background-disabled: $light-grey-1;
+$clr-input-border: $light-grey-2;
+$clr-input-invalid: $error;
+
 // ui
 $ui-transition: .2s;
 $ui-border-radius: 4px;
@@ -63,6 +74,17 @@ $components-gap: 10px;
 $sidebar-width: 220px;
 $card-padding: 20px;
 
+$modal-content-width: 600px;
+$modal-content-height: 800px;
+
+$image-crop-area-width: $modal-content-width;
+$image-crop-area-height: $modal-content-width;
+
 $btn-small: 12px;
 $btn-medium: 15px;
 $btn-large: 18px;
+
+$input-small: 12px;
+$input-medium: 15px;
+$input-large: 18px;
+

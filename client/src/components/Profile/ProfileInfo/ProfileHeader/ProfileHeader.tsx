@@ -8,6 +8,7 @@ import EditStatusForm from 'components/_forms/EditStatusForm'
 import EditProfileForm from 'components/_forms/EditProfileForm'
 import {PencilFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
+import {OnlineIndicator} from 'components/_shared/OnlineIndicator/OnlineIndicator'
 
 type PropsType = {
     owner?: boolean
@@ -32,23 +33,15 @@ const ProfileHeader: React.FC<PropsType> = ({
     const [statusValue, setStatusValue] = useState<string>(status || 'What is your status?')
     useEffect(() => {
         setStatusValue(status || 'What is your status?')
+        setStatusEditMode(false)
     }, [status])
 
+
+    const statusSubmitHandler = (data: {status: string}) => {
+        onStatusUpdate(data.status)
+    }
     const statusClickHandler = () => {
         setStatusEditMode(true)
-    }
-    const statusBlurHandler = () => {
-        setStatusEditMode(false)
-        onStatusUpdate(statusValue)
-    }
-    const statusEnterHandler = (e: React.KeyboardEvent) => {
-        if (e.code === 'Enter') {
-            setStatusEditMode(false)
-            onStatusUpdate(statusValue)
-        }
-    }
-    const onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStatusValue(e.target.value || '')
     }
 
     const [open, setOpen] = useState(false)
@@ -63,12 +56,12 @@ const ProfileHeader: React.FC<PropsType> = ({
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>
                     {firstName} {lastName}
-                    <span style={{backgroundColor: 'limegreen', fontSize: 12, padding: '2px 6px', marginLeft: 8}}>online</span>
+                    <OnlineIndicator>online</OnlineIndicator>
                 </div>
                 {owner && <div className={classes.status}>
                     {!statusEditMode && <div className={classes.statusText} onDoubleClick={statusClickHandler}>{statusValue}</div>}
                     {statusEditMode && <div className={classes.editStatus}>
-                        <EditStatusForm value={statusValue} onChange={onStatusChangeHandler} onBlur={statusBlurHandler} onEnter={statusEnterHandler}/>
+                        <EditStatusForm onSubmit={statusSubmitHandler}/>
                     </div>}
                 </div>}
                 {!owner && <div className={classes.status}>{status}</div>}

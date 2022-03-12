@@ -9,10 +9,18 @@ import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import {StateType} from 'redux/store'
 import Layout from 'components/Layout/Layout'
 import TestPage from 'components/TestPage/TestPage'
+<<<<<<< HEAD
 import DialogsPage from "components/_pages/DialogsPage";
 import Spinner from "components/_shared/Spinner/Spinner";
 import PostPage from 'components/_pages/PostPage'
 import FeedPage from 'components/_pages/FeedPage'
+=======
+import DialogsPage from "./_pages/DialogsPage";
+import Spinner from "./_shared/Spinner/Spinner";
+import PostPage from './_pages/PostPage'
+import FeedPage from './_pages/FeedPage'
+import {FormTestPage} from 'components/TestPage/FormTestPage'
+>>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
 
 // todo: implement separate pages bundling (lazy imports)
 
@@ -48,7 +56,9 @@ const App: React.FC<PropsType> = ({
                 <Route path="/photos" render={() => <Layout>Photos Page</Layout>}/>
                 <Route path="/music" render={() => <Layout>Music Page</Layout>}/>
                 <Route path="/settings" render={() => <Layout>Settings Page</Layout>}/>
+
                 <Route path={'/testpage'} component={TestPage}/>
+                <Route path={'/formtestpage'} component={FormTestPage}/>
 
                 {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}
                 {authorized &&

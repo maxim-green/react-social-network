@@ -1,26 +1,23 @@
 import React, {useEffect} from 'react'
-import {useForm} from 'react-hook-form'
 import {ThunkDispatch} from 'redux-thunk'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from 'redux/store'
 import {authActions, AuthActionType, register} from 'redux/reducers/auth.reducer'
 import {RegistrationDataType} from 'api/auth.api'
-import Form from 'components/_shared/Form/Form'
-import {Input} from 'components/_shared/Input/Input'
-import {InputPassword} from 'components/_shared/Input/InputPassword'
 import {Button} from 'components/_shared/Button/Button'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
+import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
+import {ServerValidationErrorType} from 'types/types'
 
 type PropsType = {
-    registrationSuccessful: boolean
+    registrationErrors: Array<ServerValidationErrorType>
     onSubmit: (formData: RegistrationDataType) => void
 }
 
-const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit}) => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
-    const submit = (formData: RegistrationDataType) => {
-        onSubmit(formData)
-    }
+const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) => {
     return (
+<<<<<<< HEAD
         // todo fix this ugly any
         <Form onSubmit={handleSubmit(submit as any)}>
             {registrationSuccessful && <div>Registration successful.</div>}
@@ -54,13 +51,36 @@ const RegistrationForm: React.FC<PropsType> = ({registrationSuccessful, onSubmit
             <Form.Row>
                 <Button size="large"><Button.Text>Register</Button.Text></Button>
             </Form.Row>
+=======
+        <Form onSubmit={onSubmit} errors={registrationErrors}>
+            <FormRow>
+                <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
+            </FormRow>
+            <FormRow>
+                <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
+            </FormRow>
+            <FormRow>
+                <InputText name={'username'} label={'Username'} rules={{required: true}}/>
+            </FormRow>
+            <FormRow>
+                <InputText name={'email'} label={'E-mail name'} rules={{required: true}}/>
+            </FormRow>
+            <FormRow>
+                <InputPassword name={'password'} label={'Password'} rules={{required: true}}/>
+            </FormRow>
+            <FormRow>
+                <Button size="large">
+                    <Button.Text>Register</Button.Text>
+                </Button>
+            </FormRow>
+>>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
         </Form>
     )
 }
 
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
-    const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
+    const registrationErrors = useSelector((state: StateType) => state.auth.registrationErrors)
     const dispatch: ThunkDispatch<StateType, RegistrationDataType | boolean, AuthActionType> = useDispatch()
 
     const onSubmit = async (registrationFormData: RegistrationDataType) => {
@@ -73,7 +93,7 @@ const RegistrationFormContainer: React.FC = () => {
 
     return <RegistrationForm
         onSubmit={onSubmit}
-        registrationSuccessful={registrationSuccessful}
+        registrationErrors={registrationErrors}
     />
 }
 

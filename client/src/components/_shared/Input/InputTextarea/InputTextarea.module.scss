@@ -1,0 +1,6 @@
+.textarea {
+  font-size: $input-large;
+  @include input-style;
+  height: auto;
+  resize: none;
+}

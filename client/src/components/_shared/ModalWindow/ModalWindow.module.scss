@@ -1,7 +1,7 @@
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
 }
 
 .title {
@@ -13,10 +13,8 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: $modal-content-width;
+  max-height: $modal-content-height;
   display: flex;
   justify-content: center;
-  img {
-    width: 100%;
-  }
 }

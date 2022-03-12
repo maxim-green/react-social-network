@@ -1,18 +1,22 @@
 import React from 'react'
+import {Form} from 'components/_shared/Form/Form'
+import {InputText} from 'components/_shared/Input/InputText/InputText'
 
 type PropsType = {
-    onBlur: () => void
-    value: string
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    onSubmit: (data: { status: string }) => void
 }
 
-const EditStatusForm: React.FC<PropsType> = ({value, onBlur, onChange, onEnter}) => {
+//todo: add form control and custom components
+
+const EditStatusForm: React.FC<PropsType> = ({onSubmit}) => {
     return (
-        <form onSubmit={(e: React.FormEvent) => {e.preventDefault()}}>
-            <input defaultValue={value} autoFocus onBlur={onBlur} onChange={onChange} onKeyDown={onEnter}/>
-        </form>
+        <Form onSubmit={onSubmit} submitOnBlur={true}>
+            <InputText name={'status'} autoFocus={true}/>
+            {/*<input defaultValue={value} autoFocus onBlur={onBlur} onChange={onChange} onKeyDown={onEnter}/>*/}
+        </Form>
     )
 }
+
+
 
 export default EditStatusForm

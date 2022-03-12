@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useEffect, useState} from 'react'
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import Cropper from 'react-easy-crop'
@@ -6,7 +7,14 @@ import Slider from 'rc-slider'
 import classes from './ImageUploadForm.module.scss'
 import Form from 'components/_shared/Form/Form'
 import {InputFile} from 'components/_shared/Input/InputFile'
+=======
+import React, {useState} from 'react'
+import {Area} from 'react-easy-crop/types'
+>>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
 import {Button} from 'components/_shared/Button/Button'
+import {Form, FormRow} from 'components/_shared/Form/Form'
+import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
+import {InputImageCrop} from 'components/_shared/Input/InputImageCrop/InputImageCrop'
 
 
 type PropsType = {
@@ -16,15 +24,11 @@ type PropsType = {
 }
 
 const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) => {
-    const {handleSubmit, control, watch, reset} = useForm()
-    const [srcFileUrl, setSrcFileUrl] = useState<string | undefined>(undefined)
+    const [srcFileUrl, setSrcFileUrl] = useState<string | null>(null)
 
-    useEffect(() => {
-        const subscription = watch((data) => {
-            data.file ? setSrcFileUrl(window.URL.createObjectURL(data.file)) : setSrcFileUrl(undefined)
-        })
-        return () => subscription.unsubscribe()
-    }, [watch])
+    const fileChangeHandler = (file: File) => {
+        setSrcFileUrl(window.URL.createObjectURL(file))
+    }
 
     const submit = (data: { file: File, crop: Area }) => {
         onSubmit(data.file, data.crop)
@@ -32,98 +36,52 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
     return (
         <div>
+<<<<<<< HEAD
             {/*todo: fix this ugly any*/}
             <Form onSubmit={handleSubmit(submit as any)}>
                 <Form.Row>
+=======
+            <Form onSubmit={submit}>
+                <FormRow>
+>>>>>>> 52a7b24a91f5893b374a8a155e48a7bfe397d94c
                     {srcFileUrl && <Button size="large">
                         <Button.Text>
                             Save
                         </Button.Text>
                     </Button>}
+
                     {srcFileUrl && <Button type='secondary' size="large" onClick={(e) => {
                         e.preventDefault()
-                        reset()
-                    }}>
+                        setSrcFileUrl(null)}}
+                    >
                         <Button.Text>Choose other image</Button.Text>
                     </Button>}
+
                     <div style={{marginLeft: 'auto'}}>
                         {closeModal && <Button type={'cancel'} size='large' onClick={closeModal}>
                             <Button.Text>Close</Button.Text>
                         </Button>}
                     </div>
-                </Form.Row>
-                {!srcFileUrl && <Form.Row>
-                    <Controller
-                        control={control}
+                </FormRow>
+
+                {!srcFileUrl && <FormRow>
+                    <InputFile
                         name={'file'}
+                        label={'Drop your files in the area below'}
                         rules={{required: true}}
-                        render={({field, fieldState: {error}}) => <Form.Item name={field.name} component={InputFile}
-                                                                             onChange={field.onChange}
-                                                                             error={error && {
-                                                                                 type: error.type,
-                                                                                 message: 'This field is required'
-                                                                             }}
-                                                                             label={'Drop your files in the area below'}
-                                                                             required/>}
+                        onChange={fileChangeHandler}
                     />
-                </Form.Row>}
+                </FormRow>}
 
-
-                {srcFileUrl && <Form.Row><Controller
-                    control={control}
-                    name={'crop'}
-                    render={({field}) => <ImageCrop aspect={aspect} srcFileUrl={srcFileUrl}
-                                                    onChange={field.onChange}/>}
-                /></Form.Row>}
+                {srcFileUrl && <FormRow>
+                    <InputImageCrop
+                        name={'crop'}
+                        aspect={aspect}
+                        srcFileUrl={srcFileUrl}
+                    />
+                </FormRow>}
 
             </Form>
-        </div>
-    )
-}
-
-type ImageCropPropsType = {
-    aspect: number
-    srcFileUrl?: string
-    onChange?: (value: Area) => void
-}
-const ImageCrop: React.FC<ImageCropPropsType> = ({aspect, srcFileUrl, onChange}) => {
-    const [zoom, setZoom] = useState<number>(1)
-    const [crop, setCrop] = useState<Point>({
-        x: 0,
-        y: 0
-    } as Point)
-
-    const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
-        onChange && onChange(croppedAreaPixels)
-    }
-
-    const sliderChangeHandler = (value: number) => {
-        setZoom(value)
-    }
-    return (
-        <div className={classes.imageCrop}>
-            <div className={classes.cropperContainer}>
-                {srcFileUrl && <Cropper
-                    image={srcFileUrl}
-                    crop={crop}
-                    zoom={zoom}
-                    showGrid={false}
-                    aspect={aspect}
-                    onCropComplete={onCropComplete}
-                    onCropChange={setCrop}
-                    onZoomChange={setZoom}
-                />}
-            </div>
-            <div style={{width: '100%'}}>
-                Use this slider to zoom your image
-                <Slider
-                    min={1}
-                    max={3}
-                    step={0.01}
-                    value={zoom}
-                    onChange={sliderChangeHandler}
-                />
-            </div>
         </div>
     )
 }

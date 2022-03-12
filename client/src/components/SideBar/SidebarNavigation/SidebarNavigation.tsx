@@ -3,48 +3,59 @@ import React from 'react'
 import classes from './SidebarNavigation.module.scss'
 
 import {Card} from 'components/_shared/Card/Card'
-// todo change icons to react-bootstrap-icons
-import feedIcon from 'assets/images/feed-icon.svg'
-import dialogsIcon from 'assets/images/dialogs-icon.svg'
-import settingsIcon from 'assets/images/settings-icon.svg'
-import usersIcon from 'assets/images/members-icon.svg'
+import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide} from 'react-bootstrap-icons'
+import {Button} from 'components/_shared/Button/Button'
 
 type PropsType = {}
 
-const SidebarNavigation: React.FC<PropsType> & {
-    Item: React.FC<{ to: string, icon: string, iconAlt?: string }>
-    List: React.FC
-} = () => {
+const SidebarNavigation: React.FC<PropsType> = () => {
     return (
         <Card>
             <div className={classes.Navigation}>
-                <SidebarNavigation.List>
-                    <SidebarNavigation.Item to='/profile' icon={feedIcon}>Profile</SidebarNavigation.Item>
-                    <SidebarNavigation.Item to='/dialogs' icon={dialogsIcon}>Dialogs</SidebarNavigation.Item>
-                    {/*<SidebarNavigation.Item to='/photos' icon={photosIcon}>Photos</SidebarNavigation.Item>*/}
-                    {/*<SidebarNavigation.Item to='/music' icon={musicIcon}>Music</SidebarNavigation.Item>*/}
-                    <SidebarNavigation.Item to='/users' icon={usersIcon}>Users</SidebarNavigation.Item>
-                    <SidebarNavigation.Item to='/settings' icon={settingsIcon}>Settings</SidebarNavigation.Item>
-                </SidebarNavigation.List>
+                <List>
+                    <Item to='/profile'>
+                        <Button type={'link'} size={'large'}>
+                            <Button.Icon><PersonLinesFill/></Button.Icon>
+                            <Button.Text>Profile</Button.Text>
+                        </Button>
+                    </Item>
+                    <Item to='/dialogs'>
+                        <Button type={'link'} size={'large'}>
+                            <Button.Icon><ChatLeftTextFill/></Button.Icon>
+                            <Button.Text>Dialogs</Button.Text>
+                        </Button>
+                    </Item>
+                    <Item to='/users'>
+                        <Button type={'link'} size={'large'}>
+                            <Button.Icon><PeopleFill/></Button.Icon>
+                            <Button.Text>Users</Button.Text>
+                        </Button>
+                    </Item>
+                    <Item to='/settings'>
+                        <Button type={'link'} size={'large'}>
+                            <Button.Icon><GearWide/></Button.Icon>
+                            <Button.Text>Settings</Button.Text>
+                        </Button>
+                    </Item>
+                </List>
             </div>
         </Card>
     )
 }
 
-SidebarNavigation.List = ({children}) => {
+const List: React.FC = ({children}) => {
     return (
-        <ul className={classes.NavigationList}>
+        <ul>
             {children}
         </ul>
     )
 }
 
-SidebarNavigation.Item = ({to, icon, iconAlt = 'icon', children}) => {
+const Item: React.FC<{to: string}> = ({to, children}) => {
     return (
-        <li className={classes.NavigationItem}>
+        <li>
             <NavLink to={to}>
-                <img src={icon} alt={iconAlt}/>
-                <span>{children}</span>
+                {children}
             </NavLink>
         </li>
     )

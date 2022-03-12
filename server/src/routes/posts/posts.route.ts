@@ -9,13 +9,6 @@ const router = express.Router()
 
 router.get('/', async (req: Request & { query: { author: string } }, res: Response) => {
     try {
-        // todo: move to route /user/:id/posts
-        if (req.query.author) {
-            const user = await findUser({'username': req.query.author})
-            const posts = await getUserPosts(user._id)
-            return res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
-        }
-
         const posts = getPosts()
         res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
     } catch (e) {

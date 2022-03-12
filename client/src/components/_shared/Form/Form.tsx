@@ -1,84 +1,118 @@
-import React, {CSSProperties} from 'react'
-import classes from './Form.module.scss'
-import 'rc-slider/assets/index.css'
-import 'react-datepicker/dist/react-datepicker.css'
-import '../Input/DatePicker.scss'
+import React, {useEffect, useRef, useState} from 'react'
+import classes from 'components/_shared/Form/Form.module.scss'
+import classnames from 'classnames'
+import {useForm} from 'react-hook-form'
+import {Control} from 'react-hook-form/dist/types/form'
+import {FieldError} from 'react-hook-form/dist/types'
+import {ServerValidationErrorType} from 'types/types'
 
 
-// todo: Consider refactoring. Probably its possible to use react-hook-form here instead of actual forms
-export type InputPropsType<V = any> = {
-    name: string,
+type FormPropsType = {
+    onSubmit: (data: any) => void
+    initialValues?: { [key: string]: any }
+    errors?: Array<ServerValidationErrorType>
+    resetAfterSubmit?: boolean
+    submitOnBlur?: boolean
+}
+type RowPropsType = {
+    control?: Control,
+    align?: 'fill' | 'left' | 'right' | 'center'
+}
+type ItemPropsType = {
+    label?: string,
+    labelPosition?: 'top' | 'left' | 'right'
     required?: boolean,
     disabled?: boolean,
-    value?: V,
-    onChange?: ((e: React.ChangeEvent | V) => void),
-    onBlur?: (e: React.ChangeEvent) => void,
-    ref?: React.ForwardedRef<any>
-    style?: CSSProperties
+    error?: FieldError,
+    align?: 'fill' | 'left' | 'right' | 'center'
+}
+export const Form: React.FC<FormPropsType> = ({
+                                                   onSubmit,
+                                                   children,
+                                                   initialValues,
+                                                  errors= [],
+                                                   submitOnBlur = false,
+    resetAfterSubmit = false
+                                               }) => {
+    const {control, handleSubmit, reset, setError} = useForm({
+        defaultValues: {
+            ...initialValues
+        }
+    })
+    const [formError, setFormError] = useState<ServerValidationErrorType | null>(null)
+    useEffect(() => {
+        setFormError(errors.find(error => error.field === 'form') || null)
+        errors.forEach(({field, message}) => setError(field, {type: 'server', message}))
+    }, [errors])
+
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, {control})
+        }
+        return child
+    })
+
+    const submit = (data: { [key: string]: any }) => {
+        onSubmit(data)
+        if (resetAfterSubmit) reset()
+    }
+
+    const formRef = useRef(null)
+
+    const onBlurHandler = () => {
+        // todo: need to somehow trigger submit event here
+        // check possible solution here https://stackoverflow.com/questions/52665541/react-how-to-trigger-form-submit-on-input-blur
+        if (submitOnBlur) handleSubmit(submit)
+    }
+
+    return <form ref={formRef} className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
+        {formError && <FormRow><span className={classes.formError}>{formError.message}</span></FormRow>}
+        {childrenWithProps}
+    </form>
 }
 
-type FormPropsType = { onSubmit: (e: React.FormEvent) => void }
 
-type FormItemPropsType = {
-    component: React.FC<InputPropsType>,
-    label?: string,
-    error?: { message: string, type: string } | string,
-} & InputPropsType
 
-const Form: React.FC<FormPropsType> & {
-    Item: React.FC<FormItemPropsType>
-    Row: React.FC
-} = ({children, onSubmit}) => {
-    return (
-        <form className={classes.form} onSubmit={onSubmit}>
-            {children}
-        </form>
-    )
+export const FormRow: React.FC<RowPropsType> = ({
+                                                     children,
+                                                     control,
+                                                     align = 'fill'
+                                                 }) => {
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, {control, align})
+        }
+        return child
+    })
+
+    return <div className={classnames(
+        classes.row,
+        {[classes[align]]: align}
+    )}>
+        {childrenWithProps}
+    </div>
 }
 
-Form.Item = React.forwardRef(({
-                                  children,
-                                  component,
-                                  name,
-                                  label,
-                                  error,
-                                  required,
-                                  disabled = false,
-                                  onChange,
-                                  onBlur,
-                                  value,
-                                  style
-                              }, ref) => {
 
-    const checkbox = component?.displayName === 'InputCheckbox'
-    const forwardRequired = !ref
-    const forwardedRequiredProp = forwardRequired ? required : undefined
-    return (
-        <div
-            className={classes.formItem + (disabled ? ' ' + classes.disabled : '') + (checkbox ? ' ' + classes.formItemCheckbox : '')}>
-            <label>
-                <div className={classes.formItemInfo}>
-                    {required && <span className={classes.formItemRequiredMark}>*</span>}
-                    <span className={classes.formItemLabel}>{label}</span>
-                    {(typeof error === 'string') && <span className={classes.formItemError}>{error}</span>}
-                    {(typeof error === 'object') && <span className={classes.formItemError}>{error.message}</span>}
-                </div>
-                {React.createElement(component, {
-                    name,
-                    required: forwardedRequiredProp,
-                    disabled,
-                    value,
-                    onChange,
-                    onBlur,
-                    ref,
-                    style
-                }, children)}
-            </label>
+
+export const Item: React.FC<ItemPropsType> = ({
+                                                  children,
+                                                  label,
+                                                  labelPosition = 'top',
+                                                  required = false,
+                                                  disabled = false,
+                                                  error, align = 'fill'
+                                              }) => {
+    return <label className={classnames(classes.item, {[classes[labelPosition]]: labelPosition})}>
+        <div className={classnames(classes.label, {[classes.disabled]: disabled})}>
+            {required && <span className={classes.labelRequired}>*</span>}
+            <span className={classes.labelText}>{label}</span>
+            {error?.type === 'required' && <span className={classes.formItemError}>This field is required</span>}
+            {error?.type === 'server' && <span className={classes.formItemError}>{error.message}</span>}
         </div>
-    )
-})
+        {children}
+    </label>
+}
 
-Form.Row = ({children}) => <div className={classes.formRow}>{children}</div>
 
 
-export default Form

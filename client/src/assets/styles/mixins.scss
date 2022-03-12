@@ -15,6 +15,42 @@
   }
 }
 
+@mixin input-style {
+  input {
+    padding: .5em;  // needed for date input
+  }
+  position: relative;
+  line-height: 1em;
+  height: 2em;
+  padding: .75em;
+  background: $clr-input-background;
+  border: 1px solid $clr-input-border;
+  border-radius: $ui-border-radius;
+  width: 100%;
+  -webkit-box-shadow: inset 0 0 0 50px $clr-input-background;
+  color: $clr-input-font;
+  transition: $ui-transition;
+  @include focus;
+  &.error {
+    border-color: $clr-input-invalid;
+  }
+  &:disabled {
+    background-color: $clr-input-background-disabled;
+  }
+  &::-webkit-input-placeholder {
+    color: $clr-input-font-placeholder;
+  }
+  &::-moz-placeholder {
+    color: $clr-input-font-placeholder;
+  }
+  &::-ms-placeholder {
+    color: $clr-input-font-placeholder;
+  }
+  &::placeholder {
+    color: $clr-input-font-placeholder;
+  }
+}
+
 @mixin ui-form-item-label-font {
   font-size: 14px;
   font-weight: 400;
@@ -23,11 +59,12 @@
 
 @mixin focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba($dark-grey-2, 0) inset;
+  box-shadow: 0 0 0 2px rgba($clr-focus-outline, 0) inset;
   &:focus {
-    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
+    box-shadow: 0 0 0 2px rgba($clr-focus-outline, 1) inset;
   }
   &:focus-visible {
-    box-shadow: 0 0 0 2px rgba($dark-grey-2, 1) inset;
+    box-shadow: 0 0 0 2px rgba($clr-focus-outline, 1) inset;
   }
 }
+
