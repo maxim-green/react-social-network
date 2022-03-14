@@ -68,3 +68,26 @@
   }
 }
 
+
+$breakpoints: (
+        "phone":        $phone,
+        "phone-wide":   $phone-wide,
+        "phone-tablet": $phone-tablet,
+        "tablet-small": $tablet-small,
+        "tablet":       $tablet,
+        "tablet-wide":  $tablet-wide,
+        "desktop":      $desktop,
+        "desktop-wide": $desktop-wide
+);
+@mixin mq($width, $type: max) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+

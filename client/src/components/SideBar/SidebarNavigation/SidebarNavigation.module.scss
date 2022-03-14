@@ -2,6 +2,9 @@
 
 .Navigation {
   padding: 30px;
+  @include mq('tablet') {
+    padding: 10px;
+  }
 }
 
 .NavigationTitle {

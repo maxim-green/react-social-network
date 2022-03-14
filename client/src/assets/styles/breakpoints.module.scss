@@ -1,0 +1,10 @@
+:export {
+  phone: strip-unit($phone);
+  phoneWide: strip-unit($phone-wide);
+  phoneTablet: strip-unit($phone-tablet);
+  tabletSmall: strip-unit($tablet-small);
+  tablet: strip-unit($tablet);
+  tabletWide: strip-unit($tablet-wide);
+  desktop: strip-unit($desktop);
+  desktopWide: strip-unit($desktop-wide);
+}

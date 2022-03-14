@@ -32,6 +32,9 @@
 }
 
 .sidebar {
-  width: $sidebar-width;
+  max-width: $sidebar-width;
   margin-right: $components-gap;
+  @include mq('tablet') {
+    width: 56px;
+  }
 }

@@ -9,6 +9,7 @@ import SidebarNavigation from 'components/SideBar/SidebarNavigation/SidebarNavig
 import SidebarSubscriptions from 'components/SideBar/SidebarSubscriptions/SidebarSubscriptions'
 import {AvatarType, UserItemDataType} from 'types/types'
 import {logout} from 'redux/reducers/auth.reducer'
+import {useBreakpoint} from 'utils/hooks'
 
 type PropsType = {
     sidebar?: boolean
@@ -20,6 +21,7 @@ type PropsType = {
 
 const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, authUserName, authUserAvatar, onLogout}) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
+    const {tablet} = useBreakpoint()
     return (
         <div className={classes.layout}>
             <AppBar>
@@ -29,7 +31,7 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, a
                 {sidebar && <Sidebar>
                     {!authorized && <Card><div style={{padding: '10px'}}><LoginForm/></div></Card>}
                     {authorized && <SidebarNavigation/>}
-                    {authorized && <SidebarSubscriptions subscriptions={subscriptions}/>}
+                    {authorized && !tablet && <SidebarSubscriptions subscriptions={subscriptions}/>}
                 </Sidebar>}
 
                 <Content>

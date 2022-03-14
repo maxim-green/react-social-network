@@ -5,10 +5,13 @@ import classes from './SidebarNavigation.module.scss'
 import {Card} from 'components/_shared/Card/Card'
 import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
+import {useBreakpoint} from 'utils/hooks'
 
 type PropsType = {}
 
 const SidebarNavigation: React.FC<PropsType> = () => {
+    const {tablet} = useBreakpoint()
+
     return (
         <Card>
             <div className={classes.Navigation}>
@@ -16,25 +19,25 @@ const SidebarNavigation: React.FC<PropsType> = () => {
                     <Item to='/profile'>
                         <Button type={'link'} size={'large'}>
                             <Button.Icon><PersonLinesFill/></Button.Icon>
-                            <Button.Text>Profile</Button.Text>
+                            {!tablet && <Button.Text>Profile</Button.Text>}
                         </Button>
                     </Item>
                     <Item to='/dialogs'>
                         <Button type={'link'} size={'large'}>
                             <Button.Icon><ChatLeftTextFill/></Button.Icon>
-                            <Button.Text>Dialogs</Button.Text>
+                            {!tablet && <Button.Text>Dialogs</Button.Text>}
                         </Button>
                     </Item>
                     <Item to='/users'>
                         <Button type={'link'} size={'large'}>
                             <Button.Icon><PeopleFill/></Button.Icon>
-                            <Button.Text>Users</Button.Text>
+                            {!tablet && <Button.Text>Users</Button.Text> }
                         </Button>
                     </Item>
                     <Item to='/settings'>
                         <Button type={'link'} size={'large'}>
                             <Button.Icon><GearWide/></Button.Icon>
-                            <Button.Text>Settings</Button.Text>
+                            {!tablet && <Button.Text>Settings</Button.Text> }
                         </Button>
                     </Item>
                 </List>

@@ -7,6 +7,7 @@ import defaultCoverImage from 'assets/images/cover-default.jpg'
 import {Button} from 'components/_shared/Button/Button'
 import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
 import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
+import {useBreakpoint} from 'utils/hooks'
 
 type PropsTypes = {
     img: string | null
@@ -20,6 +21,7 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
                                                      onCoverImageSubmit
                                                  }) => {
     const [open, setOpen] = useState<boolean>(false)
+    const {tablet} = useBreakpoint()
 
     useEffect(() => {
         setOpen(false)
@@ -30,9 +32,9 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
     return (
         <div className={classes.coverImage}>
             <div className={classes.editCoverImageButton}>
-                {owner && <Button type="neutral" onClick={openModal} size={"small"}>
-                    <Button.Icon><CameraFill width={15} height={15}/></Button.Icon>
-                    <Button.Text>Edit Cover Image</Button.Text>
+                {owner && <Button type="neutral" onClick={openModal} size={!tablet ? 'small' : 'large'}>
+                    <Button.Icon><CameraFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
+                    {!tablet && <Button.Text>Edit Cover Image</Button.Text>}
                 </Button>}
             </div>
             <ModalWindow open={open}>
