@@ -9,6 +9,7 @@ import EditProfileForm from 'components/_forms/EditProfileForm'
 import {PencilFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
 import {OnlineIndicator} from 'components/_shared/OnlineIndicator/OnlineIndicator'
+import {useBreakpoint} from 'utils/hooks'
 
 type PropsType = {
     owner?: boolean
@@ -48,10 +49,12 @@ const ProfileHeader: React.FC<PropsType> = ({
     const openModal = () => setOpen(true)
     const closeModal = () => setOpen(false)
 
+    const {tablet, phoneTablet} = useBreakpoint()
+
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
-                <Avatar smallImg={avatar?.small} largeImg={avatar?.large} border size={128} onEdit={owner ? onAvatarSubmit : undefined }/>
+                <Avatar smallImg={avatar?.small} largeImg={avatar?.large} border size={!phoneTablet ? 128 : 80} onEdit={owner ? onAvatarSubmit : undefined }/>
             </div>
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>
@@ -68,9 +71,9 @@ const ProfileHeader: React.FC<PropsType> = ({
             </div>
             <div className={classes.editProfile}>
                 {owner && <div>
-                    <Button type="secondary" onClick={openModal} size={"small"}>
-                        <Button.Icon><PencilFill width={12} height={12}/></Button.Icon>
-                        <Button.Text>Edit profile</Button.Text>
+                    <Button type="secondary" onClick={openModal} size={!tablet ? 'small' : 'large'}>
+                        <Button.Icon><PencilFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
+                        {!tablet && <Button.Text>Edit profile</Button.Text>}
                     </Button>
                     <Popup open={open} modal nested  contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                         <EditProfileForm closeModal={closeModal}/>

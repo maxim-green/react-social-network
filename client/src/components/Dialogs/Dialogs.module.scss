@@ -1,7 +1,7 @@
 @import "../../assets/styles/variables";
 
 .dialogs {
-  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
+  height: calc(100vh - #{$appbar-height} - #{$bottom-navigation-height} - #{$components-gap * 2});
   display: grid;
   grid-template-areas: "a b" "c c";
   grid-template-columns: 70px 1fr;

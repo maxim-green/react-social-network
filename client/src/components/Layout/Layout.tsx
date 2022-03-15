@@ -10,6 +10,7 @@ import SidebarSubscriptions from 'components/SideBar/SidebarSubscriptions/Sideba
 import {AvatarType, UserItemDataType} from 'types/types'
 import {logout} from 'redux/reducers/auth.reducer'
 import {useBreakpoint} from 'utils/hooks'
+import {BottomNavigation} from 'components/BottomNavigation/BottomNavigation'
 
 type PropsType = {
     sidebar?: boolean
@@ -21,14 +22,14 @@ type PropsType = {
 
 const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, authUserName, authUserAvatar, onLogout}) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
-    const {tablet} = useBreakpoint()
+    const {tablet, phoneTablet} = useBreakpoint()
     return (
         <div className={classes.layout}>
             <AppBar>
                 <Header authorized={authorized} username={authUserName} avatar={authUserAvatar?.small} logout={onLogout}/>
             </AppBar>
             <Main>
-                {sidebar && <Sidebar>
+                {sidebar && !tablet && <Sidebar>
                     {!authorized && <Card><div style={{padding: '10px'}}><LoginForm/></div></Card>}
                     {authorized && <SidebarNavigation/>}
                     {authorized && !tablet && <SidebarSubscriptions subscriptions={subscriptions}/>}
@@ -38,9 +39,12 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, a
                     {children}
                 </Content>
             </Main>
+            {tablet && <BottomNavigation avatar={authUserAvatar?.small}/>}
         </div>
     )
 }
+
+
 
 const Container: React.FC = ({children}) => <div className={classes.container}>
     {children}

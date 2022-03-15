@@ -6,13 +6,19 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  @include mq('phone') {
+    min-height: 160px;
+  }
 }
 
 .image {
   position: absolute;
   display: block;
-  max-width: $content-max-width;
+  object-fit: contain;
   left: 0;
   top: 0;
   z-index: -1;
+  @include mq('phone-tablet') {
+
+  }
 }

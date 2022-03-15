@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import classes from './ProfileCoverImage.module.scss'
-import Popup from 'reactjs-popup'
 import {Area} from 'react-easy-crop/types'
 import {CameraFill} from 'react-bootstrap-icons'
 import defaultCoverImage from 'assets/images/cover-default.jpg'
@@ -14,6 +13,8 @@ type PropsTypes = {
     owner?: boolean
     onCoverImageSubmit: (image: File, cropArea: Area) => void
 }
+
+// todo need to figure out how scale cover image preserving aspect-ratio.
 
 const ProfileCoverImage: React.FC<PropsTypes> = ({
                                                      img = defaultCoverImage,

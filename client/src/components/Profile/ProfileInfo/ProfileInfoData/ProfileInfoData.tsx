@@ -1,7 +1,7 @@
 import classes from './ProfileInfoData.module.scss'
 import React from 'react'
 import {ContactsType, LocationType} from '../../../../types/types'
-import {GeoAlt, Link45deg} from 'react-bootstrap-icons'
+import {GeoAlt, Link45deg, CalendarEvent} from 'react-bootstrap-icons'
 import moment from 'moment'
 
 type PropsTypes = {
@@ -38,7 +38,7 @@ const Bio: React.FC<BioPropsType> = ({bio}) => <div className={classes.bio}>
 
 type BirthDatePropsType = { birthDate: string }
 const BirthDate: React.FC<BirthDatePropsType> = ({ birthDate }) => <div className={classes.birthDate + ' ' + classes.item}>
-    <span>Birthday: {moment(birthDate).format("MMMM, D")}</span>
+    <CalendarEvent size={20}/><span>Birthday: {moment(birthDate).format("MMMM, D")}</span>
 </div>
 
 type LocationProps = { country: string, city: string}

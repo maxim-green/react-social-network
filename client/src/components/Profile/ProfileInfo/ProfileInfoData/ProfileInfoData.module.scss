@@ -2,16 +2,30 @@
 
 .profileInfoItems {
   display: flex;
+  @include mq('phone-tablet') {
+    flex-wrap: wrap;
+  }
 }
 
 .bio {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   font-size: 16px;
 }
 
 .item {
+  width: 100%;
   & + & {
     margin-left: 20px;
+  }
+  @include mq('phone-tablet') {
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    & + & {
+      margin-left: 0;
+    }
   }
 }
 
@@ -19,6 +33,7 @@
   display: flex;
   align-items: center;
   span {
+    margin-left: 3px;
     margin-top: 2px;
   }
 }

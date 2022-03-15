@@ -15,6 +15,7 @@ $light-blue-2: #BEE7FD;
 
 // colors
 $clr-appbar: $accent;
+$clr-bottom-navigation: $dark-grey-1;
 $clr-background: $white;
 $clr-font: $dark-grey-1;
 $clr-font-dark: $dark-grey-1;
@@ -68,6 +69,7 @@ $bar-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
 
 // sizes
 $appbar-height: 40px;
+$bottom-navigation-height: 40px;
 $container-width: 920px;
 $container-padding: 10px;
 $components-gap: 10px;
@@ -88,7 +90,7 @@ $input-small: 12px;
 $input-medium: 15px;
 $input-large: 18px;
 
-$content-max-width: 670px;
+$content-max-width: 720px;
 
 
 // breakpoints
