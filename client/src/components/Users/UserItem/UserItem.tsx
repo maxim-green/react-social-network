@@ -57,13 +57,13 @@ const UserItem: React.FC<PropsType> = ({
                 {authorized && !isAuthorizedUserItem && <div className={classes.row}>
                     <div className={classes.button}>
                         <NavLink to={`/dialogs/${user.username}`}>
-                            <Button type="text" size="small" style={{padding: '0 4px'}}>
+                            <Button type="text" size="sm" style={{padding: '0 4px'}}>
                                 <Button.Icon><ChatLeftTextFill size={16} color={colors.midGrey1}/></Button.Icon>
                             </Button>
                         </NavLink>
                     </div>
                     <div className={classes.button}>
-                        <Button type="text" size="small" style={{padding: '0 4px'}}>
+                        <Button type="text" size="sm" style={{padding: '0 4px'}}>
                             <Button.Icon><GearFill size={16} color={colors.midGrey1}/></Button.Icon>
                         </Button>
                     </div>
@@ -72,7 +72,7 @@ const UserItem: React.FC<PropsType> = ({
                     <div className={classes.button}>
                         <Button
                             type="neutral"
-                            size="small"
+                            size="sm"
                             onClick={followButtonClickHandler}
                         ><Button.Text>{!isSubscribed ? 'Follow' : 'Unfollow'}</Button.Text></Button>
                     </div>

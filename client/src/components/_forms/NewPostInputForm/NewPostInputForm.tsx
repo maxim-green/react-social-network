@@ -1,11 +1,10 @@
 import React from 'react'
 import {Image} from 'react-bootstrap-icons'
-import {useForm} from 'react-hook-form'
 import {NewPostType} from 'types/types'
 import classes from './NewPostInputForm.module.scss'
 import {Card} from 'components/_shared/Card/Card'
 import {Button} from 'components/_shared/Button/Button'
-import {Form, FormRow} from 'components/_shared/Form/Form'
+import {Form} from 'components/_shared/Form/Form'
 import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
 
 type PropsType = {
@@ -29,10 +28,10 @@ const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => 
             <Form onSubmit={onSubmit} initialValues={{newPostText: ''}}>
                 <InputTextarea name={'newPostText'}/>
                 <div className={classes.controls}>
-                    <Button onClick={onAttachFileButtonClick} type="text" size="small">
+                    <Button onClick={onAttachFileButtonClick} type="text" size="sm">
                         <Button.Icon><Image color={'#909BA4'} size={18}/></Button.Icon>
                     </Button>
-                    <Button type="primary" size="small" spinner={isAddPostPending}>
+                    <Button type="primary" size="sm" spinner={isAddPostPending}>
                         <Button.Text>Send</Button.Text>
                     </Button>
                 </div>

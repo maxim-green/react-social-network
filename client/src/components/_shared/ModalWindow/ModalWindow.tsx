@@ -18,7 +18,7 @@ export const ModalWindow: React.FC<Props> = ({title, close, open, children}) => 
         {(title || close) && <div className={classes.header}>
             <div className={classes.title}>{title}</div>
             <div className={classes.button}>
-                <Button type={'cancel'} size='small' onClick={close}>
+                <Button type={'cancel'} size='sm' onClick={close}>
                     <Button.Icon><XLg/></Button.Icon>
                 </Button>
             </div>

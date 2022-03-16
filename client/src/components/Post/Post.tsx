@@ -54,7 +54,7 @@ const Post: React.FC<PropsType> = ({
                 </div>
                 <div className={classes.menu}>
                     {isAuthorizedUserProfile && onPostDelete && <div>
-                        <Button onClick={openModal} type="text" size="small">
+                        <Button onClick={openModal} type="text" size="sm">
                             <Button.Icon>
                                 <TrashFill color={colors.midGrey1} size={16}/>
                             </Button.Icon>
@@ -79,20 +79,20 @@ const Post: React.FC<PropsType> = ({
 
             <div className={classes.controls}>
                 <div className={classes.controlsItem}>
-                    {!liked && <Button type="text" size="small" style={{padding: '0 4px'}}>
+                    {!liked && <Button type="text" size="sm" style={{padding: '0 4px'}}>
                         <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
                     </Button>}
-                    {liked && <Button type="text" size="small" style={{padding: '0 4px'}}>
+                    {liked && <Button type="text" size="sm" style={{padding: '0 4px'}}>
                         <Button.Icon><HeartFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>}
                 </div>
                 <div className={classes.controlsItem}>
-                    <Button type="text" size="small" style={{padding: '0 4px'}}>
+                    <Button type="text" size="sm" style={{padding: '0 4px'}}>
                         <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
                 </div>
                 <div className={classes.controlsItem}>
-                    <Button type="text" size="small" style={{padding: '0 4px'}}>
+                    <Button type="text" size="sm" style={{padding: '0 4px'}}>
                         <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
                 </div>

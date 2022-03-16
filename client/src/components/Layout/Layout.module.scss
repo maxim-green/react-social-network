@@ -1,6 +1,5 @@
 .layout {
   padding-top: $appbar-height;
-  padding-bottom: $bottom-navigation-height;
   background-color: transparent;
 }
 
@@ -32,10 +31,17 @@
   flex-grow: 1;
 }
 
+.contentCentered {
+  display: flex;
+  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
+  justify-content: center;
+  align-items: center;
+}
+
 .sidebar {
   max-width: $sidebar-width;
-  margin-right: $components-gap;
-  @include mq('tablet') {
-    width: 56px;
-  }
+  margin-right: $components-gap;@include mq('tablet') {
+  width: 56px;
+}
+
 }

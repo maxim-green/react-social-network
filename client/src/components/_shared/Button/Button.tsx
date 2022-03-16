@@ -6,7 +6,7 @@ import sizes from 'assets/styles/sizes.module.scss'
 import Spinner from 'components/_shared/Spinner/Spinner'
 
 type ButtonTypes = 'primary' | 'secondary' | 'neutral' | 'text' | 'link' | 'cancel'
-type ButtonSizes = 'small' | 'medium' | 'large'
+type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl'
 
 type ButtonType = {
     onClick?: (e: React.MouseEvent) => void
@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonType> & {
          children,
          onClick,
          type = 'primary',
-         size = 'medium',
+         size = 'md',
          disabled = false,
          spinner = false,
          style
@@ -44,9 +44,8 @@ export const Button: React.FC<ButtonType> & {
                     {[classes.link]: type === 'link'},
 
                     {[classes.spinner]: spinner},
-                    {[classes.small]: size === 'small'},
-                    {[classes.medium]: size === 'medium'},
-                    {[classes.large]: size === 'large'}
+
+                    {[classes[size]]: size },
                 )}>
 
             <div className={classnames(
@@ -78,10 +77,10 @@ Button.Text = ({children}) => {
 
 Button.Spinner = ({type, size}) => {
     const spinnerColor = (type === 'primary' || type === 'cancel') ? colors.fontLight : colors.fontDark
-    const spinnerSizes = {
-        small: sizes.btnSmall,
-        medium: sizes.btnMedium,
-        large: sizes.btnLarge
+    const spinnerSizes: {[key: string]: string} = {
+        sm: sizes.btnSmall,
+        md: sizes.btnMedium,
+        lg: sizes.btnLarge
     }
     const spinnerSize = Number.parseInt(spinnerSizes[size])
     return <Spinner color={spinnerColor} size={spinnerSize}/>

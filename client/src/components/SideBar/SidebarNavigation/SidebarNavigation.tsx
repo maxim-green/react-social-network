@@ -17,25 +17,25 @@ const SidebarNavigation: React.FC<PropsType> = () => {
             <div className={classes.Navigation}>
                 <List>
                     <Item to='/profile'>
-                        <Button type={'link'} size={'large'}>
+                        <Button type={'link'} size={'lg'}>
                             <Button.Icon><PersonLinesFill/></Button.Icon>
                             {!tablet && <Button.Text>Profile</Button.Text>}
                         </Button>
                     </Item>
                     <Item to='/dialogs'>
-                        <Button type={'link'} size={'large'}>
+                        <Button type={'link'} size={'lg'}>
                             <Button.Icon><ChatLeftTextFill/></Button.Icon>
                             {!tablet && <Button.Text>Dialogs</Button.Text>}
                         </Button>
                     </Item>
                     <Item to='/users'>
-                        <Button type={'link'} size={'large'}>
+                        <Button type={'link'} size={'lg'}>
                             <Button.Icon><PeopleFill/></Button.Icon>
                             {!tablet && <Button.Text>Users</Button.Text> }
                         </Button>
                     </Item>
                     <Item to='/settings'>
-                        <Button type={'link'} size={'large'}>
+                        <Button type={'link'} size={'lg'}>
                             <Button.Icon><GearWide/></Button.Icon>
                             {!tablet && <Button.Text>Settings</Button.Text> }
                         </Button>

@@ -32,13 +32,13 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
     return (
         <Form onSubmit={submit} initialValues={initialValues}>
             <FormRow>
-                <Button size="medium">
+                <Button size="md">
                     <Button.Text>
                         Save
                     </Button.Text>
                 </Button>
                 <div style={{marginLeft: 'auto'}}>
-                    <Button onClick={backButtonClickHandler} size="medium" type='cancel'>
+                    <Button onClick={backButtonClickHandler} size="md" type='cancel'>
                         <Button.Text>
                             Cancel
                         </Button.Text>

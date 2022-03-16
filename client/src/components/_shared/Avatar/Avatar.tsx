@@ -135,12 +135,12 @@ const AvatarButtons: React.FC<AvatarButtonsPropsType> = ({
                                                          }) => {
     return (
         <div className={classes.buttons}>
-            {onZoomClick && <Button onClick={onZoomClick} type={'text'} size={'large'} style={{color: 'white'}}>
+            {onZoomClick && <Button onClick={onZoomClick} type={'text'} size={'lg'} style={{color: 'white'}}>
                 <Button.Icon>
                     <ZoomIn color={'white'}/>
                 </Button.Icon>
             </Button>}
-            {onEditClick && <Button onClick={onEditClick} type={'text'} size={'large'} style={{color: 'white'}}>
+            {onEditClick && <Button onClick={onEditClick} type={'text'} size={'lg'} style={{color: 'white'}}>
                 <Button.Icon>
                     <PencilFill color={'white'}/>
                 </Button.Icon>

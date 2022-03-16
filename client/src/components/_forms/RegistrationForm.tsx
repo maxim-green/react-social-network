@@ -34,7 +34,7 @@ const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) =
                 <InputPassword name={'password'} label={'Password'} rules={{required: true}}/>
             </FormRow>
             <FormRow>
-                <Button size="large">
+                <Button size="lg">
                     <Button.Text>Register</Button.Text>
                 </Button>
             </FormRow>

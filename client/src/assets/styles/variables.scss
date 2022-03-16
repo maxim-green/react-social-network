@@ -82,9 +82,10 @@ $modal-content-height: 800px;
 $image-crop-area-width: $modal-content-width;
 $image-crop-area-height: $modal-content-width;
 
-$btn-small: 12px;
-$btn-medium: 15px;
-$btn-large: 18px;
+$btn-sm: 12px;
+$btn-md: 15px;
+$btn-lg: 18px;
+$btn-xl: 22px;
 
 $input-small: 12px;
 $input-medium: 15px;
@@ -102,3 +103,4 @@ $tablet: 768px;
 $tablet-wide: 1024px;
 $desktop: 1248px;
 $desktop-wide: 1440px;
+

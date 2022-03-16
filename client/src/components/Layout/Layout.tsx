@@ -20,17 +20,27 @@ type PropsType = {
     onLogout: () => void
 }
 
-const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, authUserName, authUserAvatar, onLogout}) => {
+const Layout: React.FC<PropsType> = ({
+                                         children,
+                                         sidebar = false,
+                                         subscriptions,
+                                         authUserName,
+                                         authUserAvatar,
+                                         onLogout
+                                     }) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const {tablet, phoneTablet} = useBreakpoint()
     return (
         <div className={classes.layout}>
             <AppBar>
-                <Header authorized={authorized} username={authUserName} avatar={authUserAvatar?.small} logout={onLogout}/>
+                <Header authorized={authorized} username={authUserName} avatar={authUserAvatar?.small}
+                        logout={onLogout}/>
             </AppBar>
             <Main>
                 {sidebar && !tablet && <Sidebar>
-                    {!authorized && <Card><div style={{padding: '10px'}}><LoginForm/></div></Card>}
+                    {!authorized && <Card>
+                        <div style={{padding: '10px'}}><LoginForm/></div>
+                    </Card>}
                     {authorized && <SidebarNavigation/>}
                     {authorized && !tablet && <SidebarSubscriptions subscriptions={subscriptions}/>}
                 </Sidebar>}
@@ -39,11 +49,18 @@ const Layout: React.FC<PropsType> = ({children, sidebar= false, subscriptions, a
                     {children}
                 </Content>
             </Main>
-            {tablet && <BottomNavigation avatar={authUserAvatar?.small}/>}
+            {tablet && authUserAvatar?.small && <BottomNavigation avatar={authUserAvatar?.small}/>}
         </div>
     )
 }
 
+export const Centered: React.FC = ({children}) => {
+    return (
+        <div className={classes.contentCentered}>
+            {children}
+        </div>
+    )
+}
 
 
 const Container: React.FC = ({children}) => <div className={classes.container}>
@@ -96,7 +113,8 @@ const LayoutContainer: React.FC<{ sidebar?: boolean }> = (props) => {
         dispatch(logout())
     }
 
-    return  <Layout {...props} subscriptions={authUserSubscriptions} authUserName={authUserName} authUserAvatar={authUserAvatar} onLogout={onLogout}/>
+    return <Layout {...props} subscriptions={authUserSubscriptions} authUserName={authUserName}
+                   authUserAvatar={authUserAvatar} onLogout={onLogout}/>
 }
 
 export default LayoutContainer

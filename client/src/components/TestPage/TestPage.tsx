@@ -35,21 +35,21 @@ const TestPage: React.FC = () => {
 
                             <div>Button sizes</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
-                                <Button type={'primary'} size={'small'}><Button.Text>small</Button.Text></Button>
-                                <Button type={'primary'} size={'medium'}><Button.Text>medium</Button.Text></Button>
-                                <Button type={'primary'} size={'large'}><Button.Text>large</Button.Text></Button>
+                                <Button type={'primary'} size={'sm'}><Button.Text>small</Button.Text></Button>
+                                <Button type={'primary'} size={'md'}><Button.Text>medium</Button.Text></Button>
+                                <Button type={'primary'} size={'lg'}><Button.Text>large</Button.Text></Button>
                             </div>
 
                             <div>Buttons with icons</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
-                                <Button type={'primary'} size={'small'}>
+                                <Button type={'primary'} size={'sm'}>
                                     <Button.Icon><Search/></Button.Icon>
                                     <Button.Badge>5</Button.Badge>
                                 </Button>
-                                <Button type={'primary'} size={'medium'}>
+                                <Button type={'primary'} size={'md'}>
                                     <Button.Icon><Search/></Button.Icon>
                                 </Button>
-                                <Button type={'primary'} size={'large'}>
+                                <Button type={'primary'} size={'lg'}>
                                     <Button.Icon><Search/></Button.Icon>
                                     <Button.Badge>5</Button.Badge>
                                 </Button>
@@ -57,9 +57,9 @@ const TestPage: React.FC = () => {
 
                             <div>Button sizes with spinners</div>
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
-                                <Button type={'primary'} size={'small'} spinner><Button.Text>small</Button.Text></Button>
-                                <Button type={'primary'} size={'medium'} spinner><Button.Text>medium</Button.Text></Button>
-                                <Button type={'primary'} size={'large'} spinner><Button.Text>large</Button.Text></Button>
+                                <Button type={'primary'} size={'sm'} spinner><Button.Text>small</Button.Text></Button>
+                                <Button type={'primary'} size={'md'} spinner><Button.Text>medium</Button.Text></Button>
+                                <Button type={'primary'} size={'lg'} spinner><Button.Text>large</Button.Text></Button>
                             </div>
 
                         </div>

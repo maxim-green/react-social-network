@@ -1,11 +1,11 @@
 import React from 'react'
 import classes from './Card.module.scss'
 
-type PropsType = {width?: number}
+type PropsType = {maxWidth?: number}
 
-export const Card: React.FC<PropsType> = ({children, width}) => <div
+export const Card: React.FC<PropsType> = ({children, maxWidth}) => <div
     className={classes.Card}
-    style={{width: width, alignSelf: 'center'}}
+    style={{maxWidth}}
 >
     {children}
 </div>

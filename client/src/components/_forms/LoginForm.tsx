@@ -30,7 +30,7 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, errors}) => {
                 <InputCheckbox name={'rememberMe'} label={'Remember me'}/>
             </FormRow>
             <FormRow>
-                <Button type='primary' size='large'>
+                <Button type='primary' size='lg'>
                     <Button.Text>Log in</Button.Text>
                 </Button>
             </FormRow>

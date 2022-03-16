@@ -1,15 +1,31 @@
 @import "../../assets/styles/variables";
 
 .dialogs {
-  height: calc(100vh - #{$appbar-height} - #{$bottom-navigation-height} - #{$components-gap * 2});
+  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
+  @include mq('tablet') {
+    height: calc(100vh - #{$appbar-height} - #{$bottom-navigation-height} - #{$components-gap * 2});
+  }
   display: grid;
-  grid-template-areas: "a b" "c c";
-  grid-template-columns: 70px 1fr;
-  grid-template-rows: 1fr 100px;
+  grid-template-areas: "list header" "list messages" "input input";
+  grid-template-columns: 0px 1fr;
+  grid-template-rows: 75px 1fr 100px;
+  transition: $ui-transition;
+  &.listActive {
+    grid-template-columns: 70px 1fr;
+  }
+}
+
+.header {
+  grid-area: header;
+  padding: 5px;
+  border-bottom: 1px solid $light-grey-2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .dialogsList {
-  grid-area: a;
+  grid-area: list;
   border-right: 1px solid $light-grey-2;
   border-bottom: 1px solid $light-grey-2;
   display: flex;
@@ -17,6 +33,11 @@
   align-items: stretch;
   overflow: auto;
   padding: 5px;
+  transform: scaleX(0);
+  transition: $ui-transition;
+  &.listActive {
+    transform: scaleX(1);
+  }
 }
 
 .dialogButton {
@@ -38,12 +59,12 @@ a.dialogButton {
 
 .newMessageForm {
   padding: 10px;
-  grid-area: c;
+  grid-area: input;
 }
 
 .messages {
   padding: 10px;
-  grid-area: b;
+  grid-area: messages;
   border-bottom: 1px solid $light-grey-2;
   overflow: auto;
   display: flex;

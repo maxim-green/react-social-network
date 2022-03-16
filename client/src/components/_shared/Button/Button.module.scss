@@ -4,14 +4,17 @@
     margin-left: 10px;
   }
 
-  &.small {
-    font-size: $btn-small;
+  &.sm {
+    font-size: $btn-sm;
   }
-  &.medium {
-    font-size: $btn-medium;
+  &.md {
+    font-size: $btn-md;
   }
-  &.large {
-    font-size: $btn-large;
+  &.lg {
+    font-size: $btn-lg;
+  }
+  &.xl {
+    font-size: $btn-xl;
   }
 
   &.spinner:disabled {

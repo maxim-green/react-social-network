@@ -71,7 +71,7 @@ const ProfileHeader: React.FC<PropsType> = ({
             </div>
             <div className={classes.editProfile}>
                 {owner && <div>
-                    <Button type="secondary" onClick={openModal} size={!tablet ? 'small' : 'large'}>
+                    <Button type="secondary" onClick={openModal} size={!tablet ? 'sm' : 'lg'}>
                         <Button.Icon><PencilFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
                         {!tablet && <Button.Text>Edit profile</Button.Text>}
                     </Button>

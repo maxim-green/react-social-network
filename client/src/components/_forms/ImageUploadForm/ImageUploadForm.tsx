@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {Controller, SubmitHandler, useForm} from 'react-hook-form'
-import Cropper from 'react-easy-crop'
-import {Area, Point} from 'react-easy-crop/types'
-import Slider from 'rc-slider'
-import classes from './ImageUploadForm.module.scss'
+import React, {useState} from 'react'
+import {Area} from 'react-easy-crop/types'
 import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow} from 'components/_shared/Form/Form'
 import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
@@ -32,13 +28,13 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
 
             <Form onSubmit={submit}>
                 <FormRow>
-                    {srcFileUrl && <Button size="large">
+                    {srcFileUrl && <Button size="lg">
                         <Button.Text>
                             Save
                         </Button.Text>
                     </Button>}
 
-                    {srcFileUrl && <Button type='secondary' size="large" onClick={(e) => {
+                    {srcFileUrl && <Button type='secondary' size="lg" onClick={(e) => {
                         e.preventDefault()
                         setSrcFileUrl(null)}}
                     >
@@ -46,7 +42,7 @@ const ImageUploadForm: React.FC<PropsType> = ({aspect, onSubmit, closeModal}) =>
                     </Button>}
 
                     <div style={{marginLeft: 'auto'}}>
-                        {closeModal && <Button type={'cancel'} size='large' onClick={closeModal}>
+                        {closeModal && <Button type={'cancel'} size='lg' onClick={closeModal}>
                             <Button.Text>Close</Button.Text>
                         </Button>}
                     </div>

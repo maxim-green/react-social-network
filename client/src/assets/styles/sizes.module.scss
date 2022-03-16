@@ -1,5 +1,5 @@
 :export {
-  btnSmall: strip-unit($btn-small);
-  btnMedium: strip-unit($btn-medium);
-  btnLarge: strip-unit($btn-large);
+  btnSmall: strip-unit($btn-sm);
+  btnMedium: strip-unit($btn-md);
+  btnLarge: strip-unit($btn-lg);
 }

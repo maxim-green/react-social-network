@@ -7,28 +7,28 @@ import {NavLink} from 'react-router-dom'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 
 type Props = {
-    avatar?: string
+    avatar: string | null
 }
 
 export const BottomNavigation: React.FC<Props> = ({avatar}) => {
     return <div className={classes.wrapper}>
         <div className={classes.item}>
             <NavLink to={'/users'}>
-                <Button type={'link'} size={'large'}>
+                <Button type={'link'} size={'lg'}>
                     <Button.Icon><PeopleFill color={colors.fontLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>
         <div className={classes.item}>
             <NavLink to={'/dialogs'}>
-                <Button type={'link'} size={'large'}>
+                <Button type={'link'} size={'lg'}>
                     <Button.Icon><ChatLeftTextFill color={colors.fontLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>
         <div className={classes.item}>
             <NavLink to={'/profile'}>
-                <Button type={'link'} size={'large'}>
+                <Button type={'link'} size={'lg'}>
                     <Button.Icon><Avatar smallImg={avatar} size={24}/></Button.Icon>
                 </Button>
             </NavLink>
