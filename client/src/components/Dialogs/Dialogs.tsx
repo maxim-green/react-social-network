@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {NavLink, Redirect, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import classes from './Dialogs.module.scss'
-import {AvatarType, DialogType, MessageType} from 'types/types'
+import {AvatarType, DialogType, MessageType, UserItemDataType} from 'types/types'
 import NewMessageForm from 'components/_forms/NewMessageForm/NewMessageForm'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
@@ -16,13 +16,13 @@ import classnames from 'classnames'
 type PropsType = {
     messages: Array<MessageType>
     dialogs: Array<DialogType>
+    currentCompanion?: UserItemDataType
     authUser: string
     onNewMessageSubmit: (message: string) => void
 }
 
-const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessageSubmit}) => {
+const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessageSubmit, currentCompanion}) => {
     const [listActive, setListActive] = useState<boolean>(false)
-    debugger
 
     const activateList = () => setListActive(true)
     const deactivateList = () => setListActive(false)
@@ -37,16 +37,15 @@ const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessage
                             <Button.Icon><List width={22} height={22}/></Button.Icon>
                         </Button>}
                     </div>
-                    <div>Companion Name</div>
-                    <div><Avatar size={36}/></div>
+                    <div>{currentCompanion?.firstName} {currentCompanion?.lastName}</div>
+                    <div style={{marginRight: 10}}><Avatar smallImg={currentCompanion?.avatar.small} size={36}/></div>
                 </div>
                 <div className={classnames(classes.dialogsList, {[classes.listActive]: listActive})}>
-                    <div style={{height: 65, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 15}}>
+                    <div style={{height: 65, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
                         {listActive && <Button type={'text'} size={'xl'} onClick={deactivateList}>
                             <Button.Icon><ArrowLeft width={22} height={22}/></Button.Icon>
                         </Button>}
                     </div>
-
                     {dialogs.map(d => <DialogButton key={d._id}
                                                     username={d.companion.username}
                                                     firstName={d.companion.firstName}
@@ -102,6 +101,7 @@ const DialogsContainer: React.FC = () => {
     const currentDialogId = useSelector((state: StateType) => state.dialogs.currentDialogId)
     const authUser = useSelector((state: StateType) => state.auth.user?.username)
     const messages = useSelector((state: StateType) => state.dialogs.messages)
+    const currentCompanion = dialogs.find(dialog => dialog.companion.username === username)?.companion
     const dispatch = useDispatch()
 
     const onNewMessageSubmit = (message: string) => {
@@ -122,7 +122,8 @@ const DialogsContainer: React.FC = () => {
     // if no username specified in route, then redirect to latest dialog
     if (!username && dialogs[0] && dialogs.length !== 0) return <Redirect
         to={`/dialogs/${dialogs[0].companion.username}`}/>
-    return <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs}
+
+    return <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs} currentCompanion={currentCompanion}
                     authUser={authUser || ''}/>
 }
 
