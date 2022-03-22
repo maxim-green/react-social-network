@@ -7,13 +7,10 @@ type PropsType = {
     initialStatus: string
 }
 
-//todo: add form control and custom components
-
 const EditStatusForm: React.FC<PropsType> = ({onSubmit, initialStatus}) => {
     return (
-        <Form onSubmit={onSubmit} submitOnBlur={true} initialValues={{status: initialStatus}}>
+        <Form onSubmit={onSubmit} submitOnBlur={true} initialValues={{status: initialStatus}} submitOnEnter={true}>
             <InputText name={'status'} autoFocus={true}/>
-            {/*<input defaultValue={value} autoFocus onBlur={onBlur} onChange={onChange} onKeyDown={onEnter}/>*/}
         </Form>
     )
 }

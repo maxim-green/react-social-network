@@ -18,7 +18,7 @@ export const InputTextarea: React.FC<InputTextareaPropsType> = ({
                                                                     rules,
                                                                     control,
                                                                     rows = 2,
-                                                                    disabled = false
+                                                                    disabled = false,
                                                                 }) => {
     return <Controller
         control={control}

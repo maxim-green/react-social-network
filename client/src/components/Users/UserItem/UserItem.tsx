@@ -11,6 +11,7 @@ type PropsType = {
     authorized: boolean
     authorizedUserId?: string
     user: UserItemDataType
+    subscribePending: boolean
     isSubscribed: boolean
     subscribe: (userId: string) => void
     unsubscribe: (userId: string) => void
@@ -21,6 +22,7 @@ const UserItem: React.FC<PropsType> = ({
                                            authorized,
                                            authorizedUserId,
                                            user,
+                                           subscribePending,
                                            isSubscribed,
                                            subscribe,
                                            unsubscribe,
@@ -74,6 +76,7 @@ const UserItem: React.FC<PropsType> = ({
                             type="neutral"
                             size="sm"
                             onClick={followButtonClickHandler}
+                            spinner={subscribePending}
                         ><Button.Text>{!isSubscribed ? 'Follow' : 'Unfollow'}</Button.Text></Button>
                     </div>
                 </div>}

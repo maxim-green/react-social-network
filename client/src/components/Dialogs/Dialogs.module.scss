@@ -12,6 +12,9 @@
   transition: $ui-transition;
   &.listActive {
     grid-template-columns: 70px 1fr;
+    .dialogsList {
+      transform: scaleX(1) translateX(0);
+    }
   }
 }
 
@@ -33,11 +36,8 @@
   align-items: stretch;
   overflow: auto;
   padding: 5px;
-  transform: scaleX(0);
+  transform: scaleX(0) translateX(-100%);
   transition: $ui-transition;
-  &.listActive {
-    transform: scaleX(1);
-  }
 }
 
 .dialogButton {
@@ -67,6 +67,7 @@ a.dialogButton {
   grid-area: messages;
   border-bottom: 1px solid $light-grey-2;
   overflow: auto;
+  scrollbar-width: thin;
   display: flex;
   flex-direction: column-reverse;
 }
@@ -76,6 +77,7 @@ a.dialogButton {
   align-items: flex-start;
   padding: 10px;
   border: 1px solid $light-grey-2;
+  white-space: pre-line;
 
   & + & {
     margin-bottom: 10px;

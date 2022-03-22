@@ -65,12 +65,9 @@ coreApi.interceptors.response.use(
     },
     async (err) => {
         const originalConfig = err.config
-        console.log(originalConfig._retry)
-        console.log(err.response.status)
         if (err.response.status === 401 && !originalConfig._retry && err.response.data.message !== 'Invalid token') {
             originalConfig._retry = true
             const res = await authApi.refreshToken()
-            console.log(res)
             return coreApi(originalConfig);
         }
         return Promise.reject(err)

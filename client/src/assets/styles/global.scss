@@ -2,6 +2,8 @@
 
 html {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: $accent $light-grey-1;
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -12,6 +14,9 @@ body {
   background-color: $clr-background;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 a {

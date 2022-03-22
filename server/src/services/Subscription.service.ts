@@ -22,8 +22,6 @@ export const deleteSubscription = async (
     user: MongooseDocument<PopulatedUserType>,
     targetUserId: Types.ObjectId | string
 ) => {
-    console.log(targetUserId)
-    console.log(user)
     const targetUser = await User.findById(targetUserId).lean()
 
     if (!user.subscriptions.find(u => targetUserId === u.id)) throw new HTTPError(404, {

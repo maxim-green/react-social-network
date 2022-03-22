@@ -24,41 +24,51 @@ type PropsType = {
 const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessageSubmit, currentCompanion}) => {
     const [listActive, setListActive] = useState<boolean>(false)
 
-    const activateList = () => setListActive(true)
-    const deactivateList = () => setListActive(false)
+    const showDialogsList = () => setListActive(true)
+    const hideDialogsList = () => setListActive(false)
 
 
     return (
         <Card>
             <div className={classnames(classes.dialogs, {[classes.listActive]: listActive})}>
+
                 <div className={classes.header}>
                     <div>
-                        {!listActive && <Button type={'text'} size={'xl'} onClick={activateList}>
+                        {!listActive && <Button type={'text'} size={'xl'} onClick={showDialogsList}>
                             <Button.Icon><List width={22} height={22}/></Button.Icon>
                         </Button>}
                     </div>
-                    <div>{currentCompanion?.firstName} {currentCompanion?.lastName}</div>
-                    <div style={{marginRight: 10}}><Avatar smallImg={currentCompanion?.avatar.small} size={36}/></div>
+                    <div style={{fontWeight: 700}}>
+                        {currentCompanion?.firstName} {currentCompanion?.lastName}
+                    </div>
+                    <div style={{marginRight: 10}}>
+                        <Avatar smallImg={currentCompanion?.avatar.small} size={36}/>
+                    </div>
                 </div>
+
                 <div className={classnames(classes.dialogsList, {[classes.listActive]: listActive})}>
                     <div style={{height: 65, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
-                        {listActive && <Button type={'text'} size={'xl'} onClick={deactivateList}>
+                        {listActive && <Button type={'text'} size={'xl'} onClick={hideDialogsList}>
                             <Button.Icon><ArrowLeft width={22} height={22}/></Button.Icon>
                         </Button>}
                     </div>
+
                     {dialogs.map(d => <DialogButton key={d._id}
                                                     username={d.companion.username}
                                                     firstName={d.companion.firstName}
                                                     avatar={d.companion.avatar}
                     />)}
                 </div>
+
                 <div className={classes.messages}>
                     {messages.slice().reverse().map((message, index) => <Message key={index} message={message}
                                                                                  authUser={authUser}/>)}
                 </div>
+
                 <div className={classes.newMessageForm}>
                     <NewMessageForm onSubmit={onNewMessageSubmit}/>
                 </div>
+
             </div>
         </Card>
     )
@@ -105,7 +115,7 @@ const DialogsContainer: React.FC = () => {
     const dispatch = useDispatch()
 
     const onNewMessageSubmit = (message: string) => {
-        if (message && currentDialogId) dispatch(sendMessage(message, currentDialogId))
+        if (message.trim() && currentDialogId) dispatch(sendMessage(message.trim(), currentDialogId))
     }
 
     useEffect(() => {

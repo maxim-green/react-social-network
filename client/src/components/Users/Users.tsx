@@ -15,6 +15,7 @@ type PropsType = {
     authorizedUserId?: string
     authorizedUserSubscriptions: Array<UserItemDataType>
     users: Array<UserItemDataType>
+    subscribePendingUserIds: Array<string>
     subscribe: (userId: string) => void
     unsubscribe: (userId: string) => void
 }
@@ -24,6 +25,7 @@ const Users: React.FC<PropsType> = ({
                                         authorizedUserId,
                                         authorizedUserSubscriptions,
                                         users,
+                                        subscribePendingUserIds,
                                         subscribe,
                                         unsubscribe
                                     }) => {
@@ -58,6 +60,7 @@ const Users: React.FC<PropsType> = ({
                     authorized={authorized}
                     authorizedUserId={authorizedUserId}
                     user={user}
+                    subscribePending={subscribePendingUserIds.includes(user._id)}
                     isSubscribed={authorizedUserSubscriptions.map(user => user._id).includes(user._id)}
                     subscribe={subscribe}
                     unsubscribe={unsubscribe}
@@ -76,8 +79,9 @@ const UsersContainer: React.FC = () => {
         authorizedUserId: useSelector((state: StateType) => state.auth.user?._id),
         authorizedUserSubscriptions: useSelector((state: StateType) => state.auth.user?.subscriptions || []),
         users: useSelector((state: StateType) => state.users.users),
+        subscribePendingUserIds: useSelector((state: StateType) => state.users.subscribePendingUserIds),
         subscribe: (userId: string) => dispatch(subscribe(userId)),
-        unsubscribe: (userId: string) => dispatch(unsubscribe(userId))
+        unsubscribe: (userId: string) => dispatch(unsubscribe(userId)),
     }
 
     useEffect(() => {

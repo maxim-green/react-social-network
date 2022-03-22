@@ -6,12 +6,16 @@ import {findUser} from 'services'
 
 
 export const getPosts = async () => {
-    return await Post.find().populate('author', 'username firstName lastName avatar')
+    return Post.find().populate('author', 'username firstName lastName avatar')
 }
 
 export const getUserPosts = async (username: string) => {
             const user = await findUser({'username': username})
-    return await Post.find({'author': user.id}).populate('author', 'username firstName lastName avatar')
+    return Post.find({'author': user.id}).populate('author', 'username firstName lastName avatar')
+}
+
+export const getSubscriptionsPosts = async (user: MongooseDocument<PopulatedUserType>) => {
+    return Post.find({author: {$in: user.subscriptions}}).populate('author', 'username firstName lastName avatar')
 }
 
 export const getPost = async (postId: Types.ObjectId | string) => {

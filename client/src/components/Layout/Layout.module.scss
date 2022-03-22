@@ -19,6 +19,7 @@
   background-color: $clr-appbar;
   color: $white;
   box-shadow: $bar-shadow;
+  width: 100vw;
 }
 
 .main {
@@ -40,8 +41,8 @@
 
 .sidebar {
   max-width: $sidebar-width;
+  width: 100%;
   margin-right: $components-gap;@include mq('tablet') {
-  width: 56px;
 }
 
 }

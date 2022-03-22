@@ -49,7 +49,9 @@ const Layout: React.FC<PropsType> = ({
                     {children}
                 </Content>
             </Main>
-            {tablet && authUserAvatar?.small && <BottomNavigation avatar={authUserAvatar?.small}/>}
+
+            {tablet && authUserAvatar && <BottomNavigation avatar={authUserAvatar?.small} authorized={authorized}/>}
+            {tablet && !authUserAvatar && <BottomNavigation authorized={authorized}/>}
         </div>
     )
 }

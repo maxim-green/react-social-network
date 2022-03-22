@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {KeyboardEventHandler, useEffect, useRef, useState} from 'react'
 import classes from 'components/_shared/Form/Form.module.scss'
 import classnames from 'classnames'
 import {useForm} from 'react-hook-form'
@@ -13,6 +13,7 @@ type FormPropsType = {
     errors?: Array<ServerValidationErrorType>
     resetAfterSubmit?: boolean
     submitOnBlur?: boolean
+    submitOnEnter?: boolean
 }
 type RowPropsType = {
     control?: Control,
@@ -32,9 +33,10 @@ export const Form: React.FC<FormPropsType> = ({
                                                    initialValues,
                                                   errors= [],
                                                    submitOnBlur = false,
+                                                    submitOnEnter = false,
     resetAfterSubmit = false
                                                }) => {
-    const {control, handleSubmit, reset, setError} = useForm({
+    const {control, handleSubmit, reset, setError, watch, setValue} = useForm({
         defaultValues: {
             ...initialValues
         },
@@ -62,7 +64,25 @@ export const Form: React.FC<FormPropsType> = ({
         if (submitOnBlur) handleSubmit(submit)()
     }
 
-    return <form className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler}>
+    const onKeyDownHandler = (e: any) => {
+
+        // handle 'Enter' key
+        if (e.key === 'Enter') {
+            if (submitOnEnter && e.ctrlKey) {
+                const elementName = e.target.name
+                const elementValue = watch(elementName)
+                setValue(elementName, elementValue + '\n')
+            }
+
+            if (submitOnEnter && !e.ctrlKey) {
+                e.preventDefault()
+                handleSubmit(submit)()
+            }
+        }
+
+    }
+
+    return <form className={classes.wrapper} onSubmit={handleSubmit(submit)} onBlur={onBlurHandler} onKeyDown={onKeyDownHandler}>
         {formError && <FormRow><span className={classes.formError}>{formError.message}</span></FormRow>}
         {childrenWithProps}
     </form>

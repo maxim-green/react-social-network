@@ -33,9 +33,12 @@ const ProfileCoverImage: React.FC<PropsTypes> = ({
     return (
         <div className={classes.coverImage}>
             <div className={classes.editCoverImageButton}>
-                {owner && <Button type="neutral" onClick={openModal} size={!tablet ? 'sm' : 'lg'}>
-                    <Button.Icon><CameraFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
-                    {!tablet && <Button.Text>Edit Cover Image</Button.Text>}
+                {owner && !tablet && <Button type="neutral" onClick={openModal} size={'sm'}>
+                    <Button.Icon><CameraFill width={15} height={15}/></Button.Icon>
+                    <Button.Text>Edit Cover Image</Button.Text>
+                </Button>}
+                {owner && tablet && <Button type="neutral" onClick={openModal} size={'lg'}>
+                    <Button.Icon><CameraFill width={20} height={20}/></Button.Icon>
                 </Button>}
             </div>
             <ModalWindow open={open}>

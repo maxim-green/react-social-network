@@ -71,10 +71,13 @@ const ProfileHeader: React.FC<PropsType> = ({
             </div>
             <div className={classes.editProfile}>
                 {owner && <div>
-                    <Button type="secondary" onClick={openModal} size={!tablet ? 'sm' : 'lg'}>
+                    {!tablet && <Button type="secondary" onClick={openModal} size={'sm'}>
                         <Button.Icon><PencilFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
-                        {!tablet && <Button.Text>Edit profile</Button.Text>}
-                    </Button>
+                        <Button.Text>Edit profile</Button.Text>
+                    </Button>}
+                    {tablet && <Button type="secondary" onClick={openModal} size={'lg'}>
+                        <Button.Icon><PencilFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
+                    </Button>}
                     <Popup open={open} modal nested  contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
                         <EditProfileForm closeModal={closeModal}/>
                     </Popup>

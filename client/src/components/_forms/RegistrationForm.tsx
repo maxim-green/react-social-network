@@ -9,15 +9,22 @@ import {Form, FormRow} from 'components/_shared/Form/Form'
 import {InputText} from 'components/_shared/Input/InputText/InputText'
 import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
 import {ServerValidationErrorType} from 'types/types'
+import colors from 'assets/styles/colors.module.scss'
 
 type PropsType = {
     registrationErrors: Array<ServerValidationErrorType>
+    registrationSuccessful: boolean
     onSubmit: (formData: RegistrationDataType) => void
 }
 
-const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) => {
+const RegistrationForm: React.FC<PropsType> = ({registrationErrors, registrationSuccessful, onSubmit}) => {
     return (
         <Form onSubmit={onSubmit} errors={registrationErrors}>
+            {registrationSuccessful && <FormRow>
+                <div style={{fontSize: 18, color: colors.success}}>
+                    Registration Successful!
+                </div>
+            </FormRow>}
             <FormRow>
                 <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
             </FormRow>
@@ -44,6 +51,7 @@ const RegistrationForm: React.FC<PropsType> = ({registrationErrors, onSubmit}) =
 
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
+    const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
     const registrationErrors = useSelector((state: StateType) => state.auth.registrationErrors)
     const dispatch: ThunkDispatch<StateType, RegistrationDataType | boolean, AuthActionType> = useDispatch()
 
@@ -58,6 +66,7 @@ const RegistrationFormContainer: React.FC = () => {
     return <RegistrationForm
         onSubmit={onSubmit}
         registrationErrors={registrationErrors}
+        registrationSuccessful={registrationSuccessful}
     />
 }
 

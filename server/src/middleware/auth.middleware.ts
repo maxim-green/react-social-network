@@ -15,7 +15,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         return next()
 
     } catch (e) {
-        console.log(e)
         if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')
         if (e instanceof jwt.TokenExpiredError) console.log('Expired access token')
         return next()

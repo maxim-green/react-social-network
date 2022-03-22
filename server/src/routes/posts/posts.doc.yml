@@ -1,4 +1,4 @@
-/posts:
+/post:
   get:
     summary: Get list of posts
     description: Get list of posts
@@ -13,7 +13,7 @@
       200:
         description: User profile data
         content:
-          application/json:
+          application/json
             schema:
               allOf:
                 - $ref: '#/components/schemas/SuccessfulResponse'
@@ -64,7 +64,33 @@
       500:
         $ref: '#/components/responses/ServerError'
 
-/posts/:id:
+/post/feed:
+  get:
+    summary: Get feed posts
+    description: Get list of posts of users wich is in authorized user subscriptions
+    tags:
+      - posts
+    responses:
+      200:
+        description: Posts of subscriptions
+        content:
+          application/json
+          schema:
+            allOf:
+                - $ref: '#/components/schemas/SuccessfulResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          posts:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/Post'
+      500:
+        $ref: '#/components/responses/ServerError'
+
+/post/:id:
   get:
     summary: Get post
     description: Get post by id

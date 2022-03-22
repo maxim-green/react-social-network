@@ -91,15 +91,17 @@
 
 .badge {
   position: absolute;
-  width: 1.5em;
-  height: 1.5em;
-  bottom: -.25em;
-  right: -.25em;
-  font-size: 9px;
-  line-height: 1.5em;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  left: -18px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 10px;
   background-color: $success;
-  color: $dark-grey-1;
-  border-radius: 50%;
+  color: $white;
+  border-radius: 9px;
   z-index: 5;
 }

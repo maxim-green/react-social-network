@@ -70,6 +70,7 @@ export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (
 }
 export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
     socketApi.sendMessage(message, dialogId)
+    dispatch(getDialogs())
 }
 
 export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) => {

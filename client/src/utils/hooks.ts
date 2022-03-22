@@ -1,13 +1,13 @@
 import breakpoints from 'assets/styles/breakpoints.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
-import {checkAuthorized} from 'redux/reducers/auth.reducer'
+import {getAuthUserData} from 'redux/reducers/auth.reducer'
 import {StateType} from 'redux/store'
 
 export const useAuthCheck = () => {
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(checkAuthorized())
+        dispatch(getAuthUserData())
     }, [dispatch])
 
     return useSelector((state: StateType) => state.auth.authorized)

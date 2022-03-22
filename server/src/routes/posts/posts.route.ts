@@ -2,14 +2,24 @@ import express, {Request, Response} from 'express'
 import {check, validationResult} from 'express-validator'
 
 import {auth, requireAuth} from 'middleware'
-import {createPost, deletePost, getPost, getPosts, findUser, getUserPosts} from 'services'
+import {createPost, deletePost, getPost, getPosts, findUser, getUserPosts, getSubscriptionsPosts} from 'services'
 import {throwValidationError} from 'helpers'
 
 const router = express.Router()
 
 router.get('/', async (req: Request & { query: { author: string } }, res: Response) => {
     try {
-        const posts = getPosts()
+        const posts = await getPosts()
+        console.log(posts)
+        res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+router.get('/feed', auth, requireAuth, async (req:Request, res: Response) => {
+    try {
+        const posts = await getSubscriptionsPosts(req.user)
         res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
     } catch (e) {
         res.handleError(e)

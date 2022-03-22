@@ -1,11 +1,13 @@
-import {UserItemDataType} from '../../types/types'
-import {userApi} from '../../api/user.api'
-import {ResultCodes} from '../../api/core.api'
+import {UserItemDataType} from 'types/types'
+import {userApi} from 'api/user.api'
+import {ResultCodes} from 'api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
+import {getAuthUserData} from 'redux/reducers/auth.reducer'
 
 // INITIAL STATE
 const initialState = {
     users: [] as Array<UserItemDataType>,
+    subscribePendingUserIds: [] as Array<string>
 }
 export type UsersStateType = typeof initialState
 
@@ -18,10 +20,16 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
                 users: action.users
             }
         }
-        case 'rsn/users/SET_IS_SUBSCRIPTION': {
+        case 'rsn/users/ADD_SUBSCRIBE_PENDING_USER_ID': {
             return {
                 ...state,
-                users: state.users.map(user => (user._id === action.userId) ? {...user, isSubscription: action.isSubscription} : user)
+                subscribePendingUserIds: [...state.subscribePendingUserIds, action.userId]
+            }
+        }
+        case 'rsn/users/DELETE_SUBSCRIBE_PENDING_USER_ID': {
+            return {
+                ...state,
+                subscribePendingUserIds: state.subscribePendingUserIds.filter(userId => userId !== action.userId)
             }
         }
         default: {
@@ -33,7 +41,8 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 //region ACTION CREATORS
 export const usersActions = {
     setUsers: (users: Array<UserItemDataType>) => ({type: 'rsn/users/SET_USERS', users} as const),
-    setIsSubscription: (userId: string, isSubscription: boolean) => ({type: 'rsn/users/SET_IS_SUBSCRIPTION', userId, isSubscription} as const),
+    addSubscribePendingUserId: (userId: string) => ({type: 'rsn/users/ADD_SUBSCRIBE_PENDING_USER_ID', userId} as const),
+    deleteSubscribePendingUserId: (userId: string) => ({type: 'rsn/users/DELETE_SUBSCRIBE_PENDING_USER_ID', userId} as const)
 }
 export type UsersActionType = ReturnType<InferActionsTypes<typeof usersActions>>
 //endregion
@@ -50,9 +59,11 @@ export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
 }
 
 export const subscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
+    dispatch(usersActions.addSubscribePendingUserId(userId))
     const res = await userApi.subscribe(userId)
+    dispatch(usersActions.deleteSubscribePendingUserId(userId))
     if (res.resultCode === ResultCodes.success) {
-        dispatch(usersActions.setIsSubscription(userId, true))
+        dispatch(getAuthUserData())
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)
@@ -60,10 +71,11 @@ export const subscribe = (userId: string): ThunkType<UsersActionType> => async (
 }
 
 export const unsubscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
+    dispatch(usersActions.addSubscribePendingUserId(userId))
     const res = await userApi.unsubscribe(userId)
-
+    dispatch(usersActions.deleteSubscribePendingUserId(userId))
     if (res.resultCode === ResultCodes.success) {
-        dispatch(usersActions.setIsSubscription(userId, false))
+        dispatch(getAuthUserData())
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

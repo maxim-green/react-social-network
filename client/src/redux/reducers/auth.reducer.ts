@@ -82,7 +82,7 @@ export type AuthActionType = ReturnType<InferActionsTypes<typeof authActions>>
 export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.login(loginFormData)
     if (res.resultCode === ResultCodes.success) {
-        dispatch(checkAuthorized())
+        dispatch(getAuthUserData())
         dispatch(startMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
@@ -93,7 +93,7 @@ export const login = (loginFormData: LoginDataType): ThunkType<AuthActionType> =
 export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.logout()
     if (res.resultCode === ResultCodes.success) {
-        dispatch(checkAuthorized())
+        dispatch(getAuthUserData())
         dispatch(stopMessagesListening())
     }
     if (res.resultCode === ResultCodes.error) {
@@ -101,8 +101,7 @@ export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
     }
 }
 
-// Checking if user is authorized. If true - setting authorized user data in state. If false - clearing it.
-export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch) => {
+export const getAuthUserData = (): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.me()
     if (res.resultCode === ResultCodes.success) {
         const {user} = res.data
@@ -119,6 +118,7 @@ export const checkAuthorized = (): ThunkType<AuthActionType> => async (dispatch)
         console.log(res)
     }
 }
+
 
 export const register = (registrationData: RegistrationDataType): ThunkType<AuthActionType> => async (dispatch) => {
     const res = await authApi.register(registrationData)

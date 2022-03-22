@@ -39,12 +39,12 @@ const App: React.FC<PropsType> = ({
                 {authorized &&
                 <Route path="/register" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
-
-
                 <Route path="/post/:id" component={PostPage}/>
-                <Route path="/feed" component={FeedPage}/>
+                {authorized && <Route path="/feed" component={FeedPage}/>}
 
+                <Route exact path="/profile" render={() => <Redirect to={`/profile/${username}`}/>}/>
                 <Route exact path="/profile/:username" render={() => <Layout sidebar={true}><ProfilePage/></Layout>}/>
+
                 <Route path="/users/:filter?" render={() => <Layout sidebar={true}><UsersPage/></Layout>}/>
                 <Route path="/dialogs/:username" render={() => <Layout sidebar={true}><DialogsPage/></Layout>}/>
                 <Route path="/dialogs/" render={() => <Layout sidebar={true}><DialogsPage/></Layout>}/>
@@ -56,8 +56,7 @@ const App: React.FC<PropsType> = ({
                 <Route path={'/formtestpage'} component={FormTestPage}/>
 
                 {!authorized && <Route path="/" render={() => <Redirect to="/login"/>}/>}
-                {authorized &&
-                <Route path="/" render={() => <Redirect to={`/profile/${username}`}/>}/>}
+                {authorized && <Route path="/" render={() => <Redirect to={`/feed`}/>}/>}
             </Switch>
         </Suspense>
     )

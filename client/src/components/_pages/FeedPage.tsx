@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react'
 import Layout from '../Layout/Layout'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from '../../redux/store'
-import {getPosts} from '../../redux/reducers/posts.reducer'
+import {StateType} from 'redux/store'
 import Post from '../Post/Post'
 import moment from 'moment'
+import {getFeed} from 'redux/reducers/feed.reducer'
 
 const FeedPage: React.FC = () => {
     const dispatch = useDispatch()
-    const posts = useSelector((state: StateType) => state.posts.posts)
-debugger
+    const posts = useSelector((state: StateType) => state.feed.posts)
+
     useEffect(() => {
-        dispatch(getPosts())
-    }, [dispatch, posts])
+        dispatch(getFeed())
+    }, [dispatch])
 
     return (
         <Layout sidebar>
