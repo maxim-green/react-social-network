@@ -77,10 +77,14 @@ $sidebar-width: 220px;
 $card-padding: 20px;
 
 $modal-content-width: 600px;
-$modal-content-height: 800px;
+$modal-content-height: 90vh;
+$modal-content-tablet-width: 90vw;
+$modal-content-tablet-height: 100vh;
 
-$image-crop-area-width: $modal-content-width;
+$image-crop-area-width: 600px;
 $image-crop-area-height: $modal-content-width;
+$image-crop-area-tablet-width: 90vw;
+$image-crop-area-tablet-height: $modal-content-width;
 
 $btn-sm: 12px;
 $btn-md: 15px;

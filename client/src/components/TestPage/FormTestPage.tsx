@@ -14,6 +14,7 @@ import {InputCheckbox} from 'components/_shared/Input/InputCheckbox/InputCheckbo
 import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
 import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
 import {InputRange} from 'components/_shared/Input/InputRange/InputRange'
+import Slider from 'rc-slider'
 
 const FormTestPage: React.FC = () => {
     return(
@@ -41,7 +42,9 @@ const FormTestPage: React.FC = () => {
                                     <InputFile name={'image'} label={'Dima Loh:'} rules={{required: true}}/>
                                 </FormRow>
                                 <FormRow>
-                                    <InputRange name={'size'} label={'Max Krutoy Chelik:'} rules={{required: true}}/>
+                                    <InputRange min={1}
+                                                max={3}
+                                                step={0.01} name={'size'} label={'Max Krutoy Chelik:'} rules={{required: true}}/>
                                 </FormRow>
                                 <FormRow align={'left'}>
                                     <InputCheckbox name={'remember'} label={'Remember me:'} />

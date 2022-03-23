@@ -2,7 +2,16 @@ import express, {Request, Response} from 'express'
 import {check, validationResult} from 'express-validator'
 
 import {auth, requireAuth} from 'middleware'
-import {createPost, deletePost, getPost, getPosts, findUser, getUserPosts, getSubscriptionsPosts} from 'services'
+import {
+    addLike,
+    createPost,
+    deleteLike,
+    deletePost,
+    getPost,
+    getPosts,
+    getSubscriptionsPosts,
+    getUserPosts
+} from 'services'
 import {throwValidationError} from 'helpers'
 
 const router = express.Router()
@@ -10,7 +19,6 @@ const router = express.Router()
 router.get('/', async (req: Request & { query: { author: string } }, res: Response) => {
     try {
         const posts = await getPosts()
-        console.log(posts)
         res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
     } catch (e) {
         res.handleError(e)
@@ -19,14 +27,35 @@ router.get('/', async (req: Request & { query: { author: string } }, res: Respon
 
 router.get('/feed', auth, requireAuth, async (req:Request, res: Response) => {
     try {
-        const posts = await getSubscriptionsPosts(req.user)
-        res.status(200).json({resultCode: 0, message: 'Success', data: {posts}})
+        const userPosts = await getUserPosts(req.user.username)
+        const subscriptionsPosts = await getSubscriptionsPosts(req.user)
+        res.status(200).json({resultCode: 0, message: 'Success', data: {posts: [...userPosts, ...subscriptionsPosts]}})
     } catch (e) {
         res.handleError(e)
     }
 })
 
-// /api/posts/:postId
+//todo add documentation for this route
+router.post('/:postId/like', auth, requireAuth, async (req: Request, res: Response) => {
+    try {
+        await addLike(req.params.postId, req.user)
+        res.status(200).json({resultCode: 0, message: 'Success'})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+//todo add documentation for this route
+router.delete('/:postId/like', auth, requireAuth, async (req: Request, res: Response) => {
+    try {
+        await deleteLike(req.params.postId, req.user)
+        res.status(200).json({resultCode: 0, message: 'Success'})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+// /api/post/:postId
 router.get('/:postId', async (req: Request, res: Response) => {
     try {
         const post = await getPost(req.params.postId)
@@ -39,7 +68,7 @@ router.get('/:postId', async (req: Request, res: Response) => {
 const validators = [
     check('text', 'New post text cannot be empty.').exists()
 ]
-// /api/posts/
+// /api/post/
 router.post('/', validators, auth, requireAuth,
     async (req: Request, res: Response) => {
         try {

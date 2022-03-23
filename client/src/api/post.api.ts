@@ -1,5 +1,5 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {PostType} from '../types/types'
+import {PostType} from 'types/types'
 
 export type PostsDataType = { posts: Array<PostType> }
 export type PostDataType = { post: PostType }
@@ -11,6 +11,10 @@ export type NewPostDataType = {
 export const postApi = {
     getPosts: () => coreApi
         .get(`/post`)
+        .then(handleResponse<PostsDataType>())
+        .catch(handleError()),
+    getFeed: () => coreApi
+        .get(`/post/feed`)
         .then(handleResponse<PostsDataType>())
         .catch(handleError()),
     getUserPosts: (username: string) => coreApi
@@ -27,6 +31,14 @@ export const postApi = {
         .catch(handleError()),
     deletePost: (id: string) => coreApi
         .delete(`/post/${id}`)
+        .then(handleResponse())
+        .catch(handleError()),
+    addLike: (id: string) => coreApi
+        .post(`/post/${id}/like`)
+        .then(handleResponse())
+        .catch(handleError()),
+    deleteLike: (id: string) => coreApi
+        .delete(`/post/${id}/like`)
         .then(handleResponse())
         .catch(handleError())
 }

@@ -49,7 +49,7 @@ export type UserItemDataType = {
     firstName: string
     lastName: string
     avatar: AvatarType
-    subscriptions: Array<string>
+    subscriptions: Array<UserItemDataType>
 }
 
 // type for dialogs messages
@@ -71,9 +71,10 @@ export type DialogType = {
 // type for post-items
 export type PostType = {
     _id: string,
-    creationDate: string,
+    createdAt: string,
     author: UserItemDataType,
     text: string
+    likes: Array<UserItemDataType>
 }
 
 export type NewPostType = {

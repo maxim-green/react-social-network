@@ -1,8 +1,8 @@
 // INITIAL STATE
-import {PostType} from '../../types/types'
+import {AuthUserDataType, PostType, UserItemDataType} from 'types/types'
 import {InferActionsTypes, ThunkType} from '../store'
-import {postApi} from '../../api/post.api'
-import {ResultCodes} from '../../api/core.api'
+import {postApi} from 'api/post.api'
+import {ResultCodes} from 'api/core.api'
 import {authActions, AuthActionType} from './auth.reducer'
 
 const initialState = {
@@ -14,28 +14,54 @@ export type PostsStateType = typeof initialState
 // REDUCER
 const reducer = (state: PostsStateType = initialState, action: PostsActionType): PostsStateType => {
     switch (action.type) {
-        case 'rsn/posts/SET_POSTS': {
+        case 'rsn/post/SET_POSTS': {
             return {
                 ...state,
                 posts: action.posts
             }
         }
-        case 'rsn/posts/ADD_POST': {
+        case 'rsn/post/ADD_POST': {
             return {
                 ...state,
                 posts: [...state.posts, action.post]
             }
         }
-        case 'rsn/posts/SET_ADD_POST_PENDING': {
+        case 'rsn/post/SET_ADD_POST_PENDING': {
             return {
                 ...state,
                 isAddPostPending: action.isPending
             }
         }
-        case 'rsn/posts/DELETE_POST': {
+        case 'rsn/post/DELETE_POST': {
             return {
                 ...state,
                 posts: state.posts.filter(post => post._id !== action.id)
+            }
+        }
+        case 'rsn/post/ADD_POST_LIKE': {
+            const user: UserItemDataType = {
+                _id: action.user._id,
+                username: action.user.username,
+                firstName: action.user.firstName,
+                lastName: action.user.lastName,
+                avatar: action.user.avatar,
+                subscriptions: action.user.subscriptions
+            }
+            return {
+                ...state,
+                posts: state.posts.map(post => (post._id !== action.postId) ? post : {
+                    ...post,
+                    likes: [...post.likes, user]
+                })
+            }
+        }
+        case 'rsn/post/DELETE_POST_LIKE': {
+            return {
+                ...state,
+                posts: state.posts.map(post => (post._id !== action.postId) ? post : {
+                    ...post,
+                    likes: post.likes.filter(user => user._id !== action.user._id)
+                })
             }
         }
         default: {
@@ -46,10 +72,16 @@ const reducer = (state: PostsStateType = initialState, action: PostsActionType):
 export default reducer
 
 export const postsActions = {
-    setPosts: (posts: Array<PostType>) => ({type: 'rsn/posts/SET_POSTS', posts} as const),
-    addPost: (post: PostType) => ({type: 'rsn/posts/ADD_POST', post} as const),
-    deletePost: (id: string) => ({type: 'rsn/posts/DELETE_POST', id} as const),
-    setAddPostPending: (isPending: boolean) => ({type: 'rsn/posts/SET_ADD_POST_PENDING', isPending} as const),
+    setPosts: (posts: Array<PostType>) => ({type: 'rsn/post/SET_POSTS', posts} as const),
+    addPost: (post: PostType) => ({type: 'rsn/post/ADD_POST', post} as const),
+    deletePost: (id: string) => ({type: 'rsn/post/DELETE_POST', id} as const),
+    setAddPostPending: (isPending: boolean) => ({type: 'rsn/post/SET_ADD_POST_PENDING', isPending} as const),
+    addPostLike: (postId: string, user: AuthUserDataType) => ({type: 'rsn/post/ADD_POST_LIKE', postId, user} as const),
+    deletePostLike: (postId: string, user: AuthUserDataType) => ({
+        type: 'rsn/post/DELETE_POST_LIKE',
+        postId,
+        user
+    } as const)
 }
 export type PostsActionType = ReturnType<InferActionsTypes<typeof postsActions>>
 
@@ -63,8 +95,8 @@ export const getPost = (postId: string): ThunkType<PostsActionType> => async (di
     }
 }
 
-export const getPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
-    const res = await postApi.getPosts()
+export const getFeedPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
+    const res = await postApi.getFeed()
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.setPosts(res.data.posts))
     }
@@ -102,6 +134,31 @@ export const deletePost = (id: string): ThunkType<PostsActionType> => async (dis
     const res = await postApi.deletePost(id)
     if (res.resultCode === ResultCodes.success) {
         dispatch(postsActions.deletePost(id))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+
+// todo: figure out how to dispatch a post. maybe it's better to send updated post in response and then set it to state.
+export const addPostLike = (id: string): ThunkType<PostsActionType> => async (dispatch, getState) => {
+    const user = getState().auth.user
+    const res = await postApi.addLike(id)
+    if ((res.resultCode === ResultCodes.success) && user) {
+        dispatch(postsActions.addPostLike(id, user))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+// todo: figure out how to dispatch a post. maybe it's better to send updated post in response and then set it to state.
+export const deletePostLike = (id: string): ThunkType<PostsActionType> => async (dispatch, getState) => {
+    const user = getState().auth.user
+    const res = await postApi.deleteLike(id)
+    if ((res.resultCode === ResultCodes.success) && user) {
+        dispatch(postsActions.deletePostLike(id, user))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

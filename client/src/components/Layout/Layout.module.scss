@@ -42,7 +42,7 @@
 .sidebar {
   max-width: $sidebar-width;
   width: 100%;
-  margin-right: $components-gap;@include mq('tablet') {
-}
-
+  margin-right: $components-gap;
+  @include mq('tablet') {
+  }
 }

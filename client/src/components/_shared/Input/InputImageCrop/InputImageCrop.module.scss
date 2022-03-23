@@ -1,9 +1,13 @@
 .cropperContainer {
   display: inline-block;
   position: relative;
-  width: 600px;
+  width: $image-crop-area-width;
   height: $image-crop-area-height;
   margin-bottom: 15px;
+  @include mq('tablet') {
+    width: $image-crop-area-tablet-width;
+    height: $image-crop-area-tablet-height;
+  }
 }
 
 .imageCrop {

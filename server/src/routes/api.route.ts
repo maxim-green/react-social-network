@@ -4,7 +4,7 @@ import docsRouter from './docs'
 
 import authRouter from './auth/index'
 import dialogsRouter from './dialogs/index'
-import postsRouter from './posts/index'
+import postsRouter from './post/index'
 import profileRouter from './profile/index'
 import subscriptionRouter from './subscription/index'
 import usersRouter from './users/index'

@@ -50,7 +50,7 @@ const reducer = (state: ProfileStateType = initialState, action: ProfileActionTy
                     ...state.user,
                     avatar: {...state.user.avatar, ...action.avatar}
                 },
-                // posts: state.posts.map(post => ({...post, author: {...post.author, avatar: action.avatar}}))
+                // post: state.post.map(post => ({...post, author: {...post.author, avatar: action.avatar}}))
             }
         }
         case 'rsn/profile/SET_COVER_IMAGE': {

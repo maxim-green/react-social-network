@@ -1,9 +1,7 @@
 import React from 'react'
-import classes from './ProfilePosts.module.scss'
 import NewPostInputForm from '../../_forms/NewPostInputForm/NewPostInputForm'
-import Post from '../../Post/Post'
-import {NewPostType, PostType} from '../../../types/types'
-import moment from 'moment'
+import {NewPostType, PostType} from 'types/types'
+import Feed from 'components/Feed/Feed'
 
 type PropsType = {
     authorized: boolean
@@ -22,28 +20,13 @@ const ProfilePosts: React.FC<PropsType> = ({
                                                posts,
                                                onNewPostSubmit,
                                                isAddPostPending,
-                                               onPostDelete
                                            }) => {
     const isAuthorizedUserProfile = authorized && (authorizedUserId === userId)
 
     return (
         <>
             {isAuthorizedUserProfile && <NewPostInputForm isAddPostPending={isAddPostPending} onSubmit={onNewPostSubmit}/>}
-            <div className={classes.posts}>
-                {
-                    posts.slice().reverse().map(post => <Post
-                        key={post._id}
-                        id={post._id}
-                        text={post.text}
-                        username={post.author.firstName + ' ' + post.author.lastName}
-                        avatar={post.author.avatar.small}
-                        date={moment(post.creationDate).format('DD.MM.YYYY')}
-                        liked
-                        onPostDelete={onPostDelete}
-                        isAuthorizedUserProfile={isAuthorizedUserProfile}
-                    />)
-                }
-            </div>
+            <Feed posts={posts}/>
         </>
     )
 }

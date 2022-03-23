@@ -7,53 +7,62 @@ import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
+import {PostType, UserItemDataType} from 'types/types'
+import moment from 'moment'
 
 type PropsType = {
-    id: string
-    username: string
-    avatar: string | null
-    date: string
-    text: string
-    liked?: boolean
-    onPostDelete?: (id: string) => void
-    isAuthorizedUserProfile?: boolean
+    post: PostType
+    onPostAddLike: (id: string) => void
+    onPostDeleteLike: (id: string) => void
+    onPostDelete: (id: string) => void
+    authorizedUserId?: string
 }
 
 const Post: React.FC<PropsType> = ({
-                                       id,
-                                       username,
-                                       avatar,
-                                       date,
-                                       text,
-                                       liked,
+                                       post,
                                        onPostDelete,
-                                       isAuthorizedUserProfile= false
+                                       onPostAddLike,
+                                       onPostDeleteLike,
+                                       authorizedUserId
                                    }) => {
-
     const [open, setOpen] = useState(false)
     const openModal = () => setOpen(true)
     const closeModal = () => setOpen(false)
 
+    const isAuthor = authorizedUserId === post.author._id
+    const fullName = post.author.firstName + ' ' + post.author.lastName
+    const date = moment(post.createdAt).format('DD.MM.YYYY')
+    const isLiked = authorizedUserId ? post.likes.map(user => user._id).includes(authorizedUserId) : false
 
     const onDeleteClickHandler = () => {
-        if (onPostDelete) onPostDelete(id)
+        if (onPostDelete) onPostDelete(post._id)
+    }
+
+    const onAddLikeClickHandler = () => {
+        if (onPostAddLike) onPostAddLike(post._id)
+    }
+
+    const onDeleteLikeClickHandler = () => {
+        if (onPostDeleteLike) onPostDeleteLike(post._id)
     }
 
     return (
         <Card>
             <div className={classes.header}>
                 <div className={classes.avatar}>
-                    <NavLink to="/profile/1"><Avatar smallImg={avatar} online
+                    <NavLink to="/profile/1"><Avatar smallImg={post.author.avatar.small} online
                                                      size={50}/></NavLink>
                 </div>
                 <div className={classes.info}>
                     <NavLink to="/">
-                        <div className={classes.userName}>{username}</div>
+                        <div className={classes.userName}>{fullName}</div>
                     </NavLink>
-                    <NavLink to={`/post/${id}`}><div className={classes.date}>posted on {date}</div></NavLink>
+                    <NavLink to={`/post/${post._id}`}>
+                        <div className={classes.date}>posted on {date}</div>
+                    </NavLink>
                 </div>
                 <div className={classes.menu}>
-                    {isAuthorizedUserProfile && onPostDelete && <div>
+                    {isAuthor && onPostDelete && <div>
                         <Button onClick={openModal} type="text" size="sm">
                             <Button.Icon>
                                 <TrashFill color={colors.midGrey1} size={16}/>
@@ -73,26 +82,27 @@ const Post: React.FC<PropsType> = ({
 
             <div className={classes.content}>
                 <div className={classes.text}>
-                    {text}
+                    {post.text}
                 </div>
             </div>
 
             <div className={classes.controls}>
                 <div className={classes.controlsItem}>
-                    {!liked && <Button type="text" size="sm" style={{padding: '0 4px'}}>
+                    <div>{post.likes.length}</div>
+                    {!isLiked && <Button type="text" size="sm" onClick={onAddLikeClickHandler}>
                         <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
                     </Button>}
-                    {liked && <Button type="text" size="sm" style={{padding: '0 4px'}}>
+                    {isLiked && <Button type="text" size="sm" onClick={onDeleteLikeClickHandler}>
                         <Button.Icon><HeartFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>}
                 </div>
                 <div className={classes.controlsItem}>
-                    <Button type="text" size="sm" style={{padding: '0 4px'}}>
+                    <Button type="text" size="sm">
                         <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
                 </div>
                 <div className={classes.controlsItem}>
-                    <Button type="text" size="sm" style={{padding: '0 4px'}}>
+                    <Button type="text" size="sm">
                         <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
                 </div>

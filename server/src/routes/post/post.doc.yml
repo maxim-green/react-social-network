@@ -1,13 +1,13 @@
 /post:
   get:
-    summary: Get list of posts
-    description: Get list of posts
+    summary: Get list of post
+    description: Get list of post
     tags:
-      - posts
+      - post
     parameters:
       - in: query
         name: author
-        description: If this parameter is passed response will be list of posts with specific author
+        description: If this parameter is passed response will be list of post with specific author
         required: false
     responses:
       200:
@@ -33,7 +33,7 @@
     summary: Add new post
     description: Adds new post. Request must be authorized.
     tags:
-      - posts
+      - post
     requestBody:
       required: true
       description: Post text must be provided by user
@@ -66,10 +66,10 @@
 
 /post/feed:
   get:
-    summary: Get feed posts
-    description: Get list of posts of users wich is in authorized user subscriptions
+    summary: Get feed post
+    description: Get list of post of users wich is in authorized user subscriptions
     tags:
-      - posts
+      - post
     responses:
       200:
         description: Posts of subscriptions
@@ -95,7 +95,7 @@
     summary: Get post
     description: Get post by id
     tags:
-      - posts
+      - post
     parameters:
       - in: path
         name: id
@@ -124,7 +124,7 @@
     summary: Delete post
     description: Delete post by post id. Request must be authorized. User must be author of the post.
     tags:
-      - posts
+      - post
     parameters:
       - in: path
         name: id

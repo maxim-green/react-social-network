@@ -17,7 +17,7 @@ export const ModalWindow: React.FC<Props> = ({title, close, open, children}) => 
                   closeOnDocumentClick={false}>
         {(title || close) && <div className={classes.header}>
             <div className={classes.title}>{title}</div>
-            <div className={classes.button}>
+            <div className={classes.button} style={{marginBottom: 10}}>
                 <Button type={'cancel'} size='sm' onClick={close}>
                     <Button.Icon><XLg/></Button.Icon>
                 </Button>

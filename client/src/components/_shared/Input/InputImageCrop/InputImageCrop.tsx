@@ -5,6 +5,7 @@ import {Control} from 'react-hook-form/dist/types/form'
 import classes from './InputImageCrop.module.scss'
 import Cropper from 'react-easy-crop'
 import Slider from 'rc-slider'
+import 'rc-slider/assets/index.css';
 import {Item} from 'components/_shared/Form/Form'
 
 type InputImageCropPropsType = {

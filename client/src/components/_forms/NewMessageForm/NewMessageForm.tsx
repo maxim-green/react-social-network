@@ -15,7 +15,7 @@ const NewMessageForm: React.FC<PropsType> = ({onSubmit}) => {
     }
 
     return (
-        <Form onSubmit={submit} initialValues={{newMessageInput: ``.trim()}} resetAfterSubmit={true} submitOnEnter={true}>
+        <Form onSubmit={submit} initialValues={{newMessageInput: ``}} resetAfterSubmit={true} submitOnEnter={true}>
             <FormRow>
                 <InputTextarea name={'newMessageInput'}/>
                 <div className={classes.button}>

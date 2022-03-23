@@ -13,11 +13,6 @@ type PropsType = {
 }
 
 const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => {
-    const submit = (data: NewPostType) => {
-        onSubmit(data)
-        // reset()
-    }
-
     const onAttachFileButtonClick = (e: React.MouseEvent) => {
         e.preventDefault()
         console.log('Attach file button clicked')
@@ -25,7 +20,7 @@ const NewPostInputForm: React.FC<PropsType> = ({isAddPostPending, onSubmit}) => 
 
     return (
         <Card>
-            <Form onSubmit={onSubmit} initialValues={{newPostText: ''}}>
+            <Form onSubmit={onSubmit} initialValues={{newPostText: ''}} resetAfterSubmit={true}>
                 <InputTextarea name={'newPostText'}/>
                 <div className={classes.controls}>
                     <Button onClick={onAttachFileButtonClick} type="text" size="sm">

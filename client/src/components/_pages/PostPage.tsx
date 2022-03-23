@@ -26,17 +26,19 @@ const PostPage: React.FC<PostPageType> = () => {
     return (
         <Layout sidebar={true}>
             {!post && <Spinner/>}
-            {post && <Post
-                key={post._id}
-                id={post._id}
-                text={post.text}
-                username={post.author.firstName + ' ' + post.author.lastName}
-                avatar={post.author.avatar.small}
-                date={moment(post.creationDate).format('DD.MM.YYYY')}
-                liked
-                onPostDelete={onPostDelete}
-            />}
+            {/*{post && <Post*/}
+            {/*    key={post._id}*/}
+            {/*    id={post._id}*/}
+            {/*    text={post.text}*/}
+            {/*    username={post.author.firstName + ' ' + post.author.lastName}*/}
+            {/*    avatar={post.author.avatar.small}*/}
+            {/*    date={moment(post.creationDate).format('DD.MM.YYYY')}*/}
+            {/*    liked*/}
+            {/*    onPostLike={() => {}}*/}
+            {/*    onPostDelete={onPostDelete}*/}
+            {/*/>}*/}
         </Layout>
+
     )
 }
 

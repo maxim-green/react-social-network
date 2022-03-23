@@ -54,17 +54,21 @@ const Profile: React.FC<PropsType> = (props) => {
 const ProfileContainer: React.FC = () => {
     const dispatch = useDispatch()
 
+
     const {username}: { username: string } = useParams()
+
+    useEffect(() => {
+        dispatch(getUserData(username))
+        dispatch(getUserPosts(username))
+    }, [username, dispatch])
+
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
     const userProfileData = useSelector((state: StateType) => state.profile.user)
     const posts = useSelector((state: StateType) => state.posts.posts)
     const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
 
-    useEffect(() => {
-        dispatch(getUserData(username))
-        dispatch(getUserPosts(username))
-    }, [username, dispatch])
+
 
     const onAvatarSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()
