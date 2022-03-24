@@ -1,13 +1,10 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Card} from 'components/_shared/Card/Card'
 import classes from './Users.module.scss'
 import UserItem from './UserItem/UserItem'
 import NavTab from 'components/_shared/NavTabs/NavTab/NavTab'
 import NavTabs from 'components/_shared/NavTabs/NavTabs'
 import {UserItemDataType} from 'types/types'
-import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
-import {subscribe, getUsers, unsubscribe} from 'redux/reducers/users.reducer'
 import {useParams} from 'react-router'
 
 type PropsType = {
@@ -50,10 +47,6 @@ const Users: React.FC<PropsType> = ({
                 <NavTab to="/users/subscriptions">Subscriptions</NavTab>
             </NavTabs>}
 
-            {/*<div className={classes.searchForm}>*/}
-            {/*    Search form will be here.*/}
-            {/*</div>*/}
-
             <div className={classes.usersItems}>
                 {shownUsers && shownUsers.map(user => <UserItem
                     key={user._id}
@@ -71,25 +64,4 @@ const Users: React.FC<PropsType> = ({
     )
 }
 
-const UsersContainer: React.FC = () => {
-    const dispatch = useDispatch()
-
-    const props: PropsType = {
-        authorized: useSelector((state: StateType) => state.auth.authorized),
-        authorizedUserId: useSelector((state: StateType) => state.auth.user?._id),
-        authorizedUserSubscriptions: useSelector((state: StateType) => state.auth.user?.subscriptions || []),
-        users: useSelector((state: StateType) => state.users.users),
-        subscribePendingUserIds: useSelector((state: StateType) => state.users.subscribePendingUserIds),
-        subscribe: (userId: string) => dispatch(subscribe(userId)),
-        unsubscribe: (userId: string) => dispatch(unsubscribe(userId)),
-    }
-
-    useEffect(() => {
-        dispatch(getUsers())
-    }, [dispatch, props.authorized])
-
-
-    return (<Users {...props} />)
-}
-
-export default UsersContainer
+export default Users

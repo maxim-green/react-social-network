@@ -1,4 +1,4 @@
-import classes from './ProfileInfoItem.module.scss'
+import classes from 'components/Profile/ProfileInfoItem/ProfileInfoItem.module.scss'
 import React from 'react'
 import {Icon} from 'react-bootstrap-icons'
 

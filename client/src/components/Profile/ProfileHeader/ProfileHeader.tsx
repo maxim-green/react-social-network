@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Area} from 'react-easy-crop/types'
 import Popup from 'reactjs-popup'
-import classes from './ProfileHeader.module.scss'
+import classes from 'components/Profile/ProfileHeader/ProfileHeader.module.scss'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {AvatarType} from 'types/types'
 import EditStatusForm from 'components/_forms/EditStatusForm'

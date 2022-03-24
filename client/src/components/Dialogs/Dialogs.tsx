@@ -1,16 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import {NavLink, Redirect, useParams} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useState} from 'react'
+import {NavLink} from 'react-router-dom'
 import classes from './Dialogs.module.scss'
 import {AvatarType, DialogType, MessageType, UserItemDataType} from 'types/types'
 import NewMessageForm from 'components/_forms/NewMessageForm/NewMessageForm'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
-import {StateType} from 'redux/store'
-import {getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
-import {useAuthCheck} from 'utils/hooks'
 import {Button} from 'components/_shared/Button/Button'
-import {List, ArrowLeft} from 'react-bootstrap-icons'
+import {ArrowLeft, List} from 'react-bootstrap-icons'
 import classnames from 'classnames'
 
 type PropsType = {
@@ -97,44 +93,4 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
     )
 }
 
-
-const DialogsContainer: React.FC = () => {
-    const {username}: { username: string } = useParams()
-
-    const dialogs = useSelector((state: StateType) => state.dialogs.dialogs.slice().sort((a, b) => {
-        const dateA = new Date(a.updatedAt)
-        const dateB = new Date(b.updatedAt)
-        if (dateA > dateB) return -1
-        if (dateA < dateB) return 1
-        return 0
-    }))
-    const currentDialogId = useSelector((state: StateType) => state.dialogs.currentDialogId)
-    const authUser = useSelector((state: StateType) => state.auth.user?.username)
-    const messages = useSelector((state: StateType) => state.dialogs.messages)
-    const currentCompanion = dialogs.find(dialog => dialog.companion.username === username)?.companion
-    const dispatch = useDispatch()
-
-    const onNewMessageSubmit = (message: string) => {
-        if (message.trim() && currentDialogId) dispatch(sendMessage(message.trim(), currentDialogId))
-    }
-
-    useEffect(() => {
-        dispatch(openDialog(username))
-    }, [username, dispatch])
-
-    useEffect(() => {
-        dispatch(getDialogs())
-    }, [dispatch])
-
-    const authorized = useAuthCheck()
-    if (!authorized) return <Redirect to={'/login'}/>
-
-    // if no username specified in route, then redirect to latest dialog
-    if (!username && dialogs[0] && dialogs.length !== 0) return <Redirect
-        to={`/dialogs/${dialogs[0].companion.username}`}/>
-
-    return <Dialogs onNewMessageSubmit={onNewMessageSubmit} messages={messages} dialogs={dialogs} currentCompanion={currentCompanion}
-                    authUser={authUser || ''}/>
-}
-
-export default DialogsContainer
+export default Dialogs

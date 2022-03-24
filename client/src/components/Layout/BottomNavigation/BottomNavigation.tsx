@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './BottomNavigation.module.scss'
+import classes from 'components/Layout/BottomNavigation/BottomNavigation.module.scss'
 import colors from 'assets/styles/colors.module.scss'
 import {Button} from 'components/_shared/Button/Button'
 import {ChatLeftTextFill, PeopleFill, HouseDoorFill, DoorOpenFill} from 'react-bootstrap-icons'

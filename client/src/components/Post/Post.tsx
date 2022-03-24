@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import {NavLink} from 'react-router-dom'
-import {TrashFill, Heart, HeartFill, ChatSquareTextFill, ShareFill} from 'react-bootstrap-icons'
+import {ChatSquareTextFill, Heart, HeartFill, ShareFill, TrashFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'
 import classes from './Post.module.scss'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
-import {PostType, UserItemDataType} from 'types/types'
+import {PostType} from 'types/types'
 import moment from 'moment'
 
 type PropsType = {

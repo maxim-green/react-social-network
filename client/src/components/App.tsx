@@ -1,13 +1,15 @@
 import React, {useEffect, Suspense, lazy} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import LoginPageContainer from 'components/_pages/LoginPage'
-import RegistrationPageContainer from 'components/_pages/RegistrationPage'
 import {useDispatch, useSelector} from 'react-redux'
-import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
+
 import {StateType} from 'redux/store'
+import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import Layout from 'components/Layout/Layout'
 import Spinner from "components/_shared/Spinner/Spinner";
 
+// todo refactor two imports below to lazy
+import LoginPage from 'components/_pages/LoginPage'
+import RegistrationPage from 'components/_pages/RegistrationPage'
 const ProfilePage = lazy(() => import('components/_pages/ProfilePage'))
 const UsersPage = lazy(() => import('components/_pages/UsersPage'))
 const DialogsPage = lazy(() => import('components/_pages/DialogsPage'))
@@ -31,16 +33,16 @@ const App: React.FC<PropsType> = ({
     return (
         <Suspense fallback={<AppSpinner/>}>
             <Switch>
-                {!authorized && <Route path="/login" component={LoginPageContainer}/>}
+                {!authorized && <Route path="/login" component={LoginPage}/>}
                 {authorized &&
                 <Route path="/login" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
-                {!authorized && <Route path="/register" component={RegistrationPageContainer}/>}
+                {!authorized && <Route path="/register" component={RegistrationPage}/>}
                 {authorized &&
                 <Route path="/register" render={() => <Redirect to={`/profile/${username}`}/>}/>}
 
-                <Route path="/post/:id" component={PostPage}/>
-                {authorized && <Route path="/feed" component={FeedPage}/>}
+                <Route path="/post/:id" render={() => <Layout sidebar={true}><PostPage/></Layout>}/>
+                {authorized && <Route path="/feed" render={() => <Layout sidebar={true}><FeedPage/></Layout>}/>}
 
                 <Route exact path="/profile" render={() => <Redirect to={`/profile/${username}`}/>}/>
                 <Route exact path="/profile/:username" render={() => <Layout sidebar={true}><ProfilePage/></Layout>}/>

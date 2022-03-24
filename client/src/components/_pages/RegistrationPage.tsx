@@ -5,6 +5,7 @@ import {Card} from 'components/_shared/Card/Card'
 import RegistrationForm from 'components/_forms/RegistrationForm'
 import Layout, {Centered} from 'components/Layout/Layout'
 
+// todo: refactor registration page and login page
 const RegistrationPage: React.FC = () => {
     return (
         <Layout>

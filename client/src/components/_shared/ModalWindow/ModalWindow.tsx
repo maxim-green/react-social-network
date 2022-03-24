@@ -1,3 +1,4 @@
+import 'reactjs-popup/dist/index.css'
 import React from 'react'
 import './popupjs.css'
 import Popup from 'reactjs-popup'

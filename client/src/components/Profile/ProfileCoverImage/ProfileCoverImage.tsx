@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import classes from './ProfileCoverImage.module.scss'
+import classes from 'components/Profile/ProfileCoverImage/ProfileCoverImage.module.scss'
 import {Area} from 'react-easy-crop/types'
 import {CameraFill} from 'react-bootstrap-icons'
 import defaultCoverImage from 'assets/images/cover-default.jpg'

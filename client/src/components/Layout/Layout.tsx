@@ -10,7 +10,7 @@ import SidebarSubscriptions from 'components/SideBar/SidebarSubscriptions/Sideba
 import {AvatarType, UserItemDataType} from 'types/types'
 import {logout} from 'redux/reducers/auth.reducer'
 import {useBreakpoint} from 'utils/hooks'
-import {BottomNavigation} from 'components/BottomNavigation/BottomNavigation'
+import {BottomNavigation} from 'components/Layout/BottomNavigation/BottomNavigation'
 
 type PropsType = {
     sidebar?: boolean
@@ -29,7 +29,7 @@ const Layout: React.FC<PropsType> = ({
                                          onLogout
                                      }) => {
     const authorized = useSelector((state: StateType) => state.auth.authorized)
-    const {tablet, phoneTablet} = useBreakpoint()
+    const {tablet} = useBreakpoint()
     return (
         <div className={classes.layout}>
             <AppBar>

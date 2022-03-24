@@ -1,118 +1,56 @@
-import React, {useEffect} from 'react'
-import {
-    getUserData,
-    updateAvatar, updateCoverImage,
-    updateStatus
-} from 'redux/reducers/profile.reducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {useParams} from 'react-router-dom'
-import ProfileInfo from './ProfileInfo/ProfileInfo'
-import ProfilePosts from './ProfilePosts/ProfilePosts'
-import {StateType} from 'redux/store'
-import {NewPostType, PostType, UserDataType} from 'types/types'
+import React from 'react'
 import {Area} from 'react-easy-crop/types'
-import {addPost, deletePost, getUserPosts} from 'redux/reducers/posts.reducer'
-import Spinner from 'components/_shared/Spinner/Spinner'
+import ProfileCoverImage from 'components/Profile/ProfileCoverImage/ProfileCoverImage'
+import ProfileInfoHeader from 'components/Profile/ProfileHeader/ProfileHeader'
+import ProfileInfoData from 'components/Profile/ProfileInfoData/ProfileInfoData'
+import {Card} from 'components/_shared/Card/Card'
+import {UserDataType} from 'types/types'
 
 type PropsType = {
-    authorized: boolean
+    authorized: boolean,
     authorizedUserId?: string
     profileData: UserDataType
-    posts: Array<PostType>
-    isAddPostPending: boolean
     onAvatarSubmit: (image: File, cropArea: Area) => void
     onCoverImageSubmit: (image: File, cropArea: Area) => void
-    onNewPostSubmit: (newPostData: NewPostType) => void
-    onPostDelete: (id: string) => void
-    onStatusUpdate: (string: string) => void
+    onStatusUpdate: (status: string) => void
 }
 
-const Profile: React.FC<PropsType> = (props) => {
-    return (
-        <>
-            {props.profileData && <ProfileInfo
-                profileData={props.profileData}
-                authorized={props.authorized}
-                authorizedUserId={props.authorizedUserId}
-                onAvatarSubmit={props.onAvatarSubmit}
-                onCoverImageSubmit={props.onCoverImageSubmit}
-                onStatusUpdate={props.onStatusUpdate}
-            />}
-            <ProfilePosts
-                authorized={props.authorized}
-                authorizedUserId={props.authorizedUserId}
-                userId={props.profileData._id}
-                posts={props.posts}
-                isAddPostPending={props.isAddPostPending}
-                onNewPostSubmit={props.onNewPostSubmit}
-                onPostDelete={props.onPostDelete}
-            />
-        </>
-    )
-}
-
-const ProfileContainer: React.FC = () => {
-    const dispatch = useDispatch()
-
-
-    const {username}: { username: string } = useParams()
-
-    useEffect(() => {
-        dispatch(getUserData(username))
-        dispatch(getUserPosts(username))
-    }, [username, dispatch])
-
-    const authorized = useSelector((state: StateType) => state.auth.authorized)
-    const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
-    const userProfileData = useSelector((state: StateType) => state.profile.user)
-    const posts = useSelector((state: StateType) => state.posts.posts)
-    const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
-
-
-
-    const onAvatarSubmit = (image: File, cropArea: Area) => {
-        const formData = new FormData()
-        formData.append('image', image)
-        formData.append('crop', JSON.stringify(cropArea))
-        dispatch(updateAvatar(formData))
-    }
-
-    const onCoverImageSubmit = (image: File, cropArea: Area) => {
-        const formData = new FormData()
-        formData.append('image', image)
-        formData.append('crop', JSON.stringify(cropArea))
-        dispatch(updateCoverImage(formData))
-    }
-
-    const onNewPostSubmit = (newPostData: NewPostType) => {
-        const {newPostText} = newPostData
-        dispatch(addPost(newPostText))
-    }
-
-    const onPostDelete = (id: string) => {
-        dispatch(deletePost(id))
-    }
-
-    const onStatusUpdate = (status: string) => {
-        dispatch(updateStatus(status))
-    }
-
-    if (!userProfileData._id) return <Spinner/>
+const Profile: React.FC<PropsType> = ({
+                                              authorized,
+                                              authorizedUserId,
+                                              profileData,
+                                              onAvatarSubmit,
+                                              onCoverImageSubmit,
+    onStatusUpdate
+                                          }) => {
+    const owner = authorized && (authorizedUserId === profileData._id)
 
     return (
-            <Profile
-                authorized={authorized}
-                authorizedUserId={authorizedUserId}
-                profileData={userProfileData}
-                posts={posts}
-                isAddPostPending={isAddPostPending}
-                onAvatarSubmit={onAvatarSubmit}
+        <Card>
+            <ProfileCoverImage
+                owner={owner}
+                img={profileData.coverImage}
                 onCoverImageSubmit={onCoverImageSubmit}
-                onNewPostSubmit={onNewPostSubmit}
-                onPostDelete={onPostDelete}
-                onStatusUpdate={onStatusUpdate}
             />
+            <div style={{padding: '20px'}}>
+                <ProfileInfoHeader
+                    owner={owner}
+                    firstName={profileData.firstName}
+                    lastName={profileData.lastName}
+                    status={profileData.status}
+                    avatar={profileData.avatar}
+                    onAvatarSubmit={onAvatarSubmit}
+                    onStatusUpdate={onStatusUpdate}
+                />
+                <ProfileInfoData
+                    birthDate={profileData.birthDate}
+                    location={profileData.location}
+                    contacts={profileData.contacts}
+                    bio={profileData.bio}
+                />
+            </div>
+        </Card>
     )
 }
 
-export default ProfileContainer
+export default Profile

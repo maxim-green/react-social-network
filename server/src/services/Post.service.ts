@@ -24,7 +24,9 @@ export const getSubscriptionsPosts = async (user: MongooseDocument<PopulatedUser
 
 
 export const getPost = async (postId: Types.ObjectId | string) => {
-    const post = await Post.findById(postId).populate('author', 'username firstName lastName avatar')
+    const post = await Post.findById(postId)
+        .populate('author', 'username firstName lastName avatar')
+        .populate('likes', 'username firstName lastName avatar')
     if (!post) throw new HTTPError(404, {resultCode: 1, message: 'Post not found'})
     return post
 }
