@@ -20,4 +20,8 @@ router.use('/user', usersRouter)
 router.use('/post', postsRouter)
 router.use('/subscription', subscriptionRouter)
 
+router.get('/img', (req, res) => {
+    const url = 'https://source.unsplash.com/random/1920x1080/?nature'
+})
+
 export default router

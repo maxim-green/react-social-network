@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {useParams} from 'react-router-dom'
+import {Redirect, useParams} from 'react-router-dom'
 import {getUserData, updateAvatar, updateCoverImage, updateStatus} from 'redux/reducers/profile.reducer'
 import {addPost, getUserPosts} from 'redux/reducers/posts.reducer'
 import {StateType} from 'redux/store'
@@ -12,14 +12,14 @@ import Profile from 'components/Profile/Profile'
 
 
 const ProfilePage: React.FC = () => {
-    const {username}: { username: string } = useParams()
+    let {username}: { username: string } = useParams()
+    const authorizedUsername = useSelector((state: StateType) => state.auth.user?.username)
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
     const userProfileData = useSelector((state: StateType) => state.profile.user)
     const posts = useSelector((state: StateType) => state.posts.posts)
     const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
     const isAuthorizedUserProfile = authorized && (authorizedUserId === userProfileData._id)
-
 
     const dispatch = useDispatch()
 
@@ -51,7 +51,7 @@ const ProfilePage: React.FC = () => {
         dispatch(updateStatus(status))
     }
 
-
+    if (!username) return <Redirect to={`/profile/${authorizedUsername}`}/>
     return <>
         <Profile
             profileData={userProfileData}

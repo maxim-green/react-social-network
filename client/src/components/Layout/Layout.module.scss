@@ -3,6 +3,27 @@
   background-color: transparent;
 }
 
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  &::before {
+    position: absolute;
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: $black;
+    opacity: .4;
+  }
+  img {
+    object-fit: contain;
+  }
+}
+
 .container {
   max-width: $container-width;
   padding: 0 $container-padding;

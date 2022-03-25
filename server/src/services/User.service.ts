@@ -31,6 +31,7 @@ export const getUserSubscriptions = async (user: MongooseDocument<PopulatedUserT
 
 export const getUserProfile = async (username: string) => {
     const user = await User.findOne({username}).select('-refreshToken -password -incomingFriendshipRequests -outgoingFriendshipRequests')
+    if (!user) throw new HTTPError(404, {resultCode: 1, message: `User not found`})
     return user
 }
 

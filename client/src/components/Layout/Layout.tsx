@@ -14,6 +14,7 @@ import {BottomNavigation} from 'components/Layout/BottomNavigation/BottomNavigat
 
 type PropsType = {
     sidebar?: boolean
+    background?: boolean
     authUserName?: string
     authUserAvatar?: AvatarType
     subscriptions: Array<UserItemDataType>
@@ -23,6 +24,7 @@ type PropsType = {
 const Layout: React.FC<PropsType> = ({
                                          children,
                                          sidebar = false,
+                                         background = false,
                                          subscriptions,
                                          authUserName,
                                          authUserAvatar,
@@ -52,6 +54,10 @@ const Layout: React.FC<PropsType> = ({
 
             {tablet && authUserAvatar && <BottomNavigation avatar={authUserAvatar?.small} authorized={authorized}/>}
             {tablet && !authUserAvatar && <BottomNavigation authorized={authorized}/>}
+
+            {background && <div className={classes.background}>
+                <img src="https://source.unsplash.com/random/1920x1080/?nature" alt=""/>
+            </div>}
         </div>
     )
 }
@@ -105,7 +111,7 @@ const Sidebar: React.FC = ({children}) => {
     )
 }
 
-const LayoutContainer: React.FC<{ sidebar?: boolean }> = (props) => {
+const LayoutContainer: React.FC<{ sidebar?: boolean, background?: boolean }> = (props) => {
     const dispatch = useDispatch()
     const authUserSubscriptions = useSelector((state: StateType) => state.auth.user?.subscriptions || [])
     const authUserName = useSelector((state: StateType) => state.auth.user?.username)

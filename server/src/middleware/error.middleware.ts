@@ -4,6 +4,7 @@ import {HTTPError} from 'helpers'
 export const withErrorHandler = (req: Request, res: Response, next: NextFunction) => {
     res.handleError = (e) => {
         if (e instanceof HTTPError) {
+            // todo: consider redirecting to 404 page if e.statusCode === 404
             return res
                 .status(e.statusCode)
                 .json(e.responseData)
