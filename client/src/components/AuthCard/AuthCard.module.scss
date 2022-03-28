@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+}

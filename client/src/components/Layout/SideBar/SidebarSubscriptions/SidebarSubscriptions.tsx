@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './SidebarSubscriptions.module.scss'
+import classes from 'components/Layout/SideBar/SidebarSubscriptions/SidebarSubscriptions.module.scss'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {NavLink} from 'react-router-dom'

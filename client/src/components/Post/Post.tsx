@@ -3,12 +3,14 @@ import {NavLink} from 'react-router-dom'
 import {ChatSquareTextFill, Heart, HeartFill, ShareFill, TrashFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'
 import classes from './Post.module.scss'
+import classnames from 'classnames'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
 import {PostType} from 'types/types'
 import moment from 'moment'
+import AddCommentForm from 'components/_forms/AddCommentForm/AddCommentForm'
 
 type PropsType = {
     post: PostType
@@ -25,6 +27,7 @@ const Post: React.FC<PropsType> = ({
                                        onPostDeleteLike,
                                        authorizedUserId
                                    }) => {
+    const [commentSectionActive, setCommentSectionActive] = useState(false)
     const [open, setOpen] = useState(false)
     const openModal = () => setOpen(true)
     const closeModal = () => setOpen(false)
@@ -46,12 +49,16 @@ const Post: React.FC<PropsType> = ({
         if (onPostDeleteLike) onPostDeleteLike(post._id)
     }
 
+    const toggleCommentSection = () => {
+        commentSectionActive ? setCommentSectionActive(false) : setCommentSectionActive(true)
+    }
+
     return (
         <Card>
             <div className={classes.header}>
                 <div className={classes.avatar}>
                     <NavLink to="/profile/1"><Avatar smallImg={post.author.avatar.small} online
-                                                     size={50}/></NavLink>
+                                                     size={55}/></NavLink>
                 </div>
                 <div className={classes.info}>
                     <NavLink to="/">
@@ -97,7 +104,7 @@ const Post: React.FC<PropsType> = ({
                     </Button>}
                 </div>
                 <div className={classes.controlsItem}>
-                    <Button type="text" size="sm">
+                    <Button type="text" size="sm" onClick={toggleCommentSection}>
                         <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
                 </div>
@@ -105,6 +112,63 @@ const Post: React.FC<PropsType> = ({
                     <Button type="text" size="sm">
                         <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>
                     </Button>
+                </div>
+            </div>
+
+            <div className={classnames(
+                classes.comments,
+                {[classes.active]: commentSectionActive}
+            )}>
+                <div className={classes.commentInput}>
+                    <AddCommentForm/>
+                </div>
+
+                <div className={classes.commentsList}>
+
+                    <div className={classes.comment}>
+                        <div className={classes.commentAvatar}>
+                            <Avatar smallImg={'https://i.pravatar.cc/300'} size={40}/>
+                        </div>
+                        <div className={classes.commentContent}>
+                            <div className={classes.commentText}>
+                                <span className={classes.commentAuthor}>John Dowe</span>
+                                Wow! I like it!
+                            </div>
+                            <div className={classes.commentDate}>28.03.2022</div>
+                        </div>
+                        <div className={classes.commentControls}>
+                            <Button type="text" size="sm">
+                                <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className={classes.comment}>
+                        <div className={classes.commentAvatar}>
+                            <Avatar smallImg={'https://i.pravatar.cc/300'} size={40}/>
+                        </div>
+                        <div className={classes.commentContent}>
+                            <div className={classes.commentText}>
+                                <span className={classes.commentAuthor}>John Dowe</span>
+                                Wow! I like it!
+                            </div>
+                            <div className={classes.commentDate}>28.03.2022</div>
+                        </div>
+                        <div className={classes.commentControls}>
+                            <Button type="text" size="sm">
+                                <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
+                            </Button>
+                            <Button type="text" size="sm">
+                                <Button.Icon>
+                                    <TrashFill color={colors.midGrey1} size={16}/>
+                                </Button.Icon>
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className={classes.commentsShowMore}>
+                        <Button type={'link'}><Button.Text>Show more</Button.Text></Button>
+                    </div>
                 </div>
             </div>
         </Card>

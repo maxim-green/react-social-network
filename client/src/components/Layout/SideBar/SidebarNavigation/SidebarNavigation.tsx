@@ -1,6 +1,6 @@
 import {NavLink} from 'react-router-dom'
 import React from 'react'
-import classes from './SidebarNavigation.module.scss'
+import classes from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigation.module.scss'
 
 import {Card} from 'components/_shared/Card/Card'
 import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide, HouseDoorFill} from 'react-bootstrap-icons'

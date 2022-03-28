@@ -7,18 +7,21 @@ import {Item} from 'components/_shared/Form/Form'
 type InputTextPropsType = {
     name: string,
     label?: string,
+    placeholder?: string,
     rules?: RegisterOptions,
     control?: Control,
     disabled?: boolean
     autoFocus?: boolean
 }
+
 export const InputText: React.FC<InputTextPropsType> = ({
                                                             name,
                                                             label,
                                                             rules,
                                                             control,
                                                             disabled = false,
-                                                            autoFocus = false
+                                                            autoFocus = false,
+                                                            placeholder
                                                         }) => {
     return <Controller
         control={control}
@@ -34,6 +37,7 @@ export const InputText: React.FC<InputTextPropsType> = ({
                 onChange={field.onChange}
                 disabled={disabled}
                 autoFocus={autoFocus}
+                placeholder={placeholder}
             />
         </Item>}
     />

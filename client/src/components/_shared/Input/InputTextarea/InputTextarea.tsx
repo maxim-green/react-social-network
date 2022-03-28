@@ -7,6 +7,7 @@ import {Item} from 'components/_shared/Form/Form'
 export type InputTextareaPropsType = {
     name: string,
     label?: string,
+    placeholder?: string,
     rules?: RegisterOptions,
     control?: Control,
     rows?: number,
@@ -19,6 +20,7 @@ export const InputTextarea: React.FC<InputTextareaPropsType> = ({
                                                                     control,
                                                                     rows = 2,
                                                                     disabled = false,
+    placeholder
                                                                 }) => {
     return <Controller
         control={control}
@@ -33,6 +35,7 @@ export const InputTextarea: React.FC<InputTextareaPropsType> = ({
                 onChange={field.onChange}
                 rows={rows}
                 disabled={disabled}
+                placeholder={placeholder}
             />
         </Item>}
     />

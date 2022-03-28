@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
-import classes from "./UserControl.module.scss";
+import classes from "components/Layout/Header/UserControl/UserControl.module.scss";
 import {Avatar} from "components/_shared/Avatar/Avatar";
 import {Button} from 'components/_shared/Button/Button'
 

@@ -7,6 +7,7 @@ import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import Layout from 'components/Layout/Layout'
 import Spinner from "components/_shared/Spinner/Spinner";
 import HomePage from 'components/_pages/HomePage'
+import {AuthCard} from 'components/AuthCard/AuthCard'
 
 const RegistrationPage = lazy(() => import('components/_pages/RegistrationPage'))
 const LoginPage = lazy(() => import('components/_pages/LoginPage'))
@@ -38,8 +39,8 @@ const App: React.FC = () => {
                 <Route path={'/testpage'} component={TestPage}/>
                 <Route path={'/formtestpage'} component={FormTestPage}/>
 
-                <Route path="/login" component={LoginPage}/>
-                <Route path="/register" component={RegistrationPage}/>
+                <Route path="/login" render={() => <Layout background={true}><LoginPage/></Layout>}/>
+                <Route path="/register" render={() => <Layout background={true}><RegistrationPage/></Layout>}/>
                 <Route exact path="/" component={HomePage}/>
 
                 <Route render={() => <div>404 Error: No such page</div>}/>

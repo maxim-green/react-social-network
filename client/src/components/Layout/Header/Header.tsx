@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from './Header.module.scss'
-import {UserControl} from './UserControl/UserControl'
+import classes from 'components/Layout/Header/Header.module.scss'
+import {UserControl} from 'components/Layout/Header/UserControl/UserControl'
 import {Logo} from 'components/_shared/Logo/Logo'
 
 type PropsType = {

@@ -140,8 +140,6 @@ export const deletePost = (id: string): ThunkType<PostsActionType> => async (dis
     }
 }
 
-
-// todo: figure out how to dispatch a post. maybe it's better to send updated post in response and then set it to state.
 export const addPostLike = (id: string): ThunkType<PostsActionType> => async (dispatch, getState) => {
     const user = getState().auth.user
     const res = await postApi.addLike(id)
@@ -153,7 +151,6 @@ export const addPostLike = (id: string): ThunkType<PostsActionType> => async (di
     }
 }
 
-// todo: figure out how to dispatch a post. maybe it's better to send updated post in response and then set it to state.
 export const deletePostLike = (id: string): ThunkType<PostsActionType> => async (dispatch, getState) => {
     const user = getState().auth.user
     const res = await postApi.deleteLike(id)

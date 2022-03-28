@@ -24,8 +24,10 @@ const ProfilePage: React.FC = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getUserData(username))
-        dispatch(getUserPosts(username))
+        if (username) {
+            dispatch(getUserData(username))
+            dispatch(getUserPosts(username))
+        }
     }, [username, dispatch])
 
     const onAvatarSubmit = (image: File, cropArea: Area) => {

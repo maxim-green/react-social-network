@@ -37,7 +37,6 @@ const DialogsPage: React.FC = () => {
     }, [dispatch])
 
 
-    // todo: consider using this solution on other pages thad restricted for guest users
     const authorized = useAuthCheck()
     if (!authorized) return <Redirect to={'/login'}/>
 

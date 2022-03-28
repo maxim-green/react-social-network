@@ -1,7 +1,7 @@
 // color definitions (don't use directly in components)
 $white: #FFFFFF;
 $black: #000000;
-$accent: #2086C4;
+$accent: #0882de;
 $error: #F2280C;
 $success: #4EE83E;
 
@@ -21,6 +21,7 @@ $clr-font: $dark-grey-1;
 $clr-font-dark: $dark-grey-1;
 $clr-font-light: $white;
 $clr-font-link: $accent;
+$clr-font-disabled: $light-grey-2;
 
 $clr-primary: $accent;
 $clr-primary-border: darken($clr-primary, 5%);
@@ -46,6 +47,8 @@ $clr-cancel: $error;
 $clr-cancel-border: darken($clr-cancel, 5%);
 $clr-cancel-hover: lighten($clr-cancel, 5%);
 $clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
+
+$clr-disabled: $light-grey-1;
 
 // focus outline
 $clr-focus-outline: $dark-grey-2;

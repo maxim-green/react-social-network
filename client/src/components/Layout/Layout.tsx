@@ -2,11 +2,11 @@ import React from 'react'
 import {StateType} from 'redux/store'
 import {useDispatch, useSelector} from 'react-redux'
 import classes from './Layout.module.scss'
-import Header from 'components/Header/Header'
+import Header from 'components/Layout/Header/Header'
 import {Card} from 'components/_shared/Card/Card'
 import LoginForm from 'components/_forms/LoginForm'
-import SidebarNavigation from 'components/SideBar/SidebarNavigation/SidebarNavigation'
-import SidebarSubscriptions from 'components/SideBar/SidebarSubscriptions/SidebarSubscriptions'
+import SidebarNavigation from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigation'
+import SidebarSubscriptions from 'components/Layout/SideBar/SidebarSubscriptions/SidebarSubscriptions'
 import {AvatarType, UserItemDataType} from 'types/types'
 import {logout} from 'redux/reducers/auth.reducer'
 import {useBreakpoint} from 'utils/hooks'
@@ -61,15 +61,6 @@ const Layout: React.FC<PropsType> = ({
         </div>
     )
 }
-
-export const Centered: React.FC = ({children}) => {
-    return (
-        <div className={classes.contentCentered}>
-            {children}
-        </div>
-    )
-}
-
 
 const Container: React.FC = ({children}) => <div className={classes.container}>
     {children}

@@ -11,7 +11,6 @@ type Props = {
     avatar?: string | null
 }
 
-// todo: alter when not authorized
 export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
     return <div className={classes.wrapper}>
         {authorized && <div className={classes.item}>

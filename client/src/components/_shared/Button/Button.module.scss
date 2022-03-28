@@ -39,9 +39,10 @@
   &.cancel {
     @include button-colors($clr-font-light, $clr-cancel);
   }
-  &:disabled {
-    // todo: maybe it's better to use color scheme for this
-    opacity: 50%;
+  &:disabled, &:disabled:hover, &:disabled:active {
+    cursor: auto;
+    background-color: $clr-disabled;
+    color: $clr-font-disabled;
   }
 
   border-radius: $ui-border-radius;

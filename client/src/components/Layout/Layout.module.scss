@@ -38,6 +38,7 @@
   z-index: 100;
   height: $appbar-height;
   background-color: $clr-appbar;
+  border-bottom: 1px solid darken($clr-appbar, 10%);
   color: $white;
   box-shadow: $bar-shadow;
   width: 100vw;
@@ -51,13 +52,6 @@
 
 .content {
   flex-grow: 1;
-}
-
-.contentCentered {
-  display: flex;
-  height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
-  justify-content: center;
-  align-items: center;
 }
 
 .sidebar {

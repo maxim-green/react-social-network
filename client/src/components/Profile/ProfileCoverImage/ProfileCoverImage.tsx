@@ -15,7 +15,6 @@ type PropsTypes = {
 }
 
 // todo need to figure out how scale cover image preserving aspect-ratio.
-
 const ProfileCoverImage: React.FC<PropsTypes> = ({
                                                      img = defaultCoverImage,
                                                      owner = false,
