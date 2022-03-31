@@ -75,11 +75,26 @@ export type PostType = {
     author: UserItemDataType,
     text: string
     likes: Array<UserItemDataType>
+    comments: Array<CommentType>
 }
 
 export type NewPostType = {
     newPostText: string
 }
+
+export type CommentType = {
+    _id: string
+    createdAt: string
+    author: UserItemDataType
+    text: string
+    likes: Array<UserItemDataType>
+}
+
+export type NewCommentType = {
+    text: string
+}
+
+
 
 
 

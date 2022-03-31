@@ -43,3 +43,24 @@ export const saveCoverImage = async (file: Express.Multer.File, crop: {x: number
 
     return `${process.env.URL}:${process.env.PORT}${uploadPath}`
 }
+
+export const savePostImage = async (
+    file: Express.Multer.File, postId: string, imageId: string | number
+) => {
+    const extension = path.extname(file.originalname)
+
+    const uploadPathOriginal = `/uploads/post/post${postId}-image${imageId}${extension}`
+    const uploadPathThumbnail = `/uploads/post/post${postId}-image${imageId}_thumbnail${extension}`
+
+    await sharp(file.buffer)
+        .toFile(path.join(__root, uploadPathOriginal))
+
+    await sharp(file.buffer)
+        .resize({fit: sharp.fit.cover, width: 720, height: 720})
+        .toFile(path.join(__root, uploadPathThumbnail))
+
+    return {
+        original: `${process.env.URL}:${process.env.PORT}${uploadPathOriginal}`,
+        thumbnail: `${process.env.URL}:${process.env.PORT}${uploadPathThumbnail}`
+    }
+}

@@ -40,5 +40,13 @@ export const postApi = {
     deleteLike: (id: string) => coreApi
         .delete(`/post/${id}/like`)
         .then(handleResponse())
+        .catch(handleError()),
+    addPostComment: (postId: string, text: string) => coreApi
+        .post(`post/${postId}/comment`, { text })
+        .then(handleResponse())
+        .catch(handleError()),
+    deletePostComment: (commentId: string) => coreApi
+        .delete(`post/comment/${commentId}`)
+        .then(handleResponse())
         .catch(handleError())
 }

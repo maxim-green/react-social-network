@@ -5,6 +5,7 @@ import {getFeedPosts} from 'redux/reducers/posts.reducer'
 import {getSortedPosts} from 'utils/selectors'
 import {useAuthCheck} from 'utils/hooks'
 import {Redirect} from 'react-router-dom'
+import {StateType} from 'redux/store'
 
 const FeedPage: React.FC = () => {
     const dispatch = useDispatch()

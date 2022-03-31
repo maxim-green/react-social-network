@@ -3,8 +3,9 @@ import {check, validationResult} from 'express-validator'
 
 import {auth, requireAuth} from 'middleware'
 import {
+    addComment,
     addLike,
-    createPost,
+    createPost, createPostNew, deleteComment,
     deleteLike,
     deletePost,
     getPost,
@@ -13,7 +14,10 @@ import {
     getUserPosts
 } from 'services'
 import {throwValidationError} from 'helpers'
+import multer from 'multer'
 
+const storage = multer.memoryStorage()
+const upload = multer({storage})
 const router = express.Router()
 
 router.get('/', async (req: Request & { query: { author: string } }, res: Response) => {
@@ -89,6 +93,39 @@ router.delete('/:id', auth, requireAuth, async (req: Request, res: Response) => 
         await deletePost(req.user, req.params.id)
 
         return res.status(200).json({resultCode: 0, message: 'Success'})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+// todo new version of create post route. with images
+router.post('/add', auth, requireAuth, upload.array('images', 10), async (req: Request, res: Response) => {
+    try {
+        const text = req.body.text
+        const images = req.files
+
+        const post = await createPostNew(req.user, text, images)
+        res.status(200).json({resultCode: 0, message: 'Success', data: {post}})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+router.post('/:postId/comment', auth, requireAuth, async (req: Request, res: Response) => {
+    try {
+        const comment = await addComment(req.params.postId, req.user, req.body.text)
+
+        res.status(200).json({resultCode: 0, message: 'Success', data: {comment}})
+    } catch (e) {
+        res.handleError(e)
+    }
+})
+
+router.delete('/comment/:commentId', auth, requireAuth, async (req: Request, res: Response) => {
+    try {
+        await deleteComment(req.user, req.params.commentId)
+
+        res.status(200).json({resultCode: 0, message: 'Success'})
     } catch (e) {
         res.handleError(e)
     }

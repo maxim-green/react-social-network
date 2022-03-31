@@ -4,7 +4,7 @@ import Post from 'components/Post/Post'
 import {PostType} from 'types/types'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from 'redux/store'
-import {addPostLike, deletePost, deletePostLike} from 'redux/reducers/posts.reducer'
+import {addPostComment, addPostLike, deletePost, deletePostComment, deletePostLike} from 'redux/reducers/posts.reducer'
 
 type Props = {
     posts: Array<PostType>
@@ -12,9 +12,19 @@ type Props = {
     onPostAddLike: (id: string) => void
     onPostDeleteLike: (id: string) => void
     authorizedUserId?: string
+    onAddComment: (postId: string, text: string) => void
+    onDeleteComment: (commentId: string) => void
 }
 
-const Feed: React.FC<Props> = ({posts, onPostDelete, onPostDeleteLike, authorizedUserId, onPostAddLike}) => {
+const Feed: React.FC<Props> = ({
+                                   posts,
+                                   onPostDelete,
+                                   onPostDeleteLike,
+                                   authorizedUserId,
+                                   onPostAddLike,
+                                   onAddComment,
+                                   onDeleteComment
+                               }) => {
     return <div className={classes.wrapper}>
         {
             posts.slice().reverse().map(post => <Post
@@ -24,6 +34,8 @@ const Feed: React.FC<Props> = ({posts, onPostDelete, onPostDeleteLike, authorize
                 onPostDeleteLike={onPostDeleteLike}
                 onPostAddLike={onPostAddLike}
                 authorizedUserId={authorizedUserId}
+                onAddComment={onAddComment}
+                onDeleteComment={onDeleteComment}
             />)
         }
     </div>
@@ -45,7 +57,23 @@ const FeedContainer: React.FC<{ posts: Array<PostType> }> = ({posts}) => {
         dispatch(deletePost(postId))
     }
 
-    return <Feed posts={posts} onPostAddLike={postAddLikeHandler} onPostDeleteLike={postDeleteLikeHandler} onPostDelete={postDeleteHandler} authorizedUserId={authorizedUserId}/>
+
+    const addCommentHandler = (postId: string, text: string) => {
+        dispatch(addPostComment(postId, text))
+    }
+    const deleteCommentHandler = (commentId: string) => {
+        dispatch(deletePostComment(commentId))
+    }
+
+
+    return <Feed posts={posts}
+                 onPostAddLike={postAddLikeHandler}
+                 onPostDeleteLike={postDeleteLikeHandler}
+                 onAddComment={addCommentHandler}
+                 onDeleteComment={deleteCommentHandler}
+                 onPostDelete={postDeleteHandler}
+                 authorizedUserId={authorizedUserId}
+    />
 }
 
 export default FeedContainer

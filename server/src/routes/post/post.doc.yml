@@ -13,7 +13,7 @@
       200:
         description: User profile data
         content:
-          application/json
+          application/json:
             schema:
               allOf:
                 - $ref: '#/components/schemas/SuccessfulResponse'
@@ -74,19 +74,19 @@
       200:
         description: Posts of subscriptions
         content:
-          application/json
-          schema:
-            allOf:
+          application/json:
+            schema:
+              allOf:
                 - $ref: '#/components/schemas/SuccessfulResponse'
-                  - type: object
-                    properties:
-                      data:
-                        type: object
-                        properties:
-                          posts:
-                            type: array
-                            items:
-                              $ref: '#/components/schemas/Post'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        posts:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Post'
       500:
         $ref: '#/components/responses/ServerError'
 

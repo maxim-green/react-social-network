@@ -7,9 +7,13 @@ const schema = new Schema<PostType>(
     {
         author: { type: Types.ObjectId, ref: 'User', required: true},
         text: {type: String, required: true},
-        likes: [{ type: Types.ObjectId, ref: 'User' }],
+        images: [{
+            original: {type: String, required: true},
+            thumbnail: {type: String, required: true}
+        }],
+        likes: {type: [{ type: Types.ObjectId, ref: 'User' }], default: []},
         comments: [{
-            creationDate: {type: Date, required: true},
+            createdAt: {type: Date, required: true},
             author: { type: Types.ObjectId, ref: 'User', required: true},
             text: {type: String, required: true},
             likes: [{ type: Types.ObjectId, ref: 'User' }],

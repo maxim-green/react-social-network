@@ -1,5 +1,5 @@
 // INITIAL STATE
-import {AuthUserDataType, PostType, UserItemDataType} from 'types/types'
+import {AuthUserDataType, CommentType, PostType, UserItemDataType} from 'types/types'
 import {InferActionsTypes, ThunkType} from '../store'
 import {postApi} from 'api/post.api'
 import {ResultCodes} from 'api/core.api'
@@ -64,6 +64,40 @@ const reducer = (state: PostsStateType = initialState, action: PostsActionType):
                 })
             }
         }
+        case 'rsn/post/ADD_POST_COMMENT': {
+            const author: UserItemDataType = {
+                _id: action.user._id,
+                username: action.user.username,
+                firstName: action.user.firstName,
+                lastName: action.user.lastName,
+                avatar: action.user.avatar,
+                subscriptions: action.user.subscriptions
+            }
+            // todo: refactor - receive new comment in server response instead of creating it in reducer
+            const comment: CommentType = {
+                _id: Date.now().toString(),
+                createdAt: (new Date()).toString(),
+                author,
+                text: action.text,
+                likes: []
+            }
+            return {
+                ...state,
+                posts: state.posts.map(post => (post._id !== action.postId) ? post : {
+                    ...post,
+                    comments: [...post.comments, comment]
+                })
+            }
+        }
+        case 'rsn/post/DELETE_POST_COMMENT': {
+            return {
+                ...state,
+                posts: state.posts.map(post => (!post.comments.map(comment => comment._id).includes(action.commentId)) ?
+                    post :
+                    {...post, comments: post.comments.filter(comment => comment._id !== action.commentId)}
+                )
+            }
+        }
         default: {
             return state
         }
@@ -81,7 +115,14 @@ export const postsActions = {
         type: 'rsn/post/DELETE_POST_LIKE',
         postId,
         user
-    } as const)
+    } as const),
+    addPostComment: (postId: string, user: AuthUserDataType, text: string) => ({
+        type: 'rsn/post/ADD_POST_COMMENT',
+        postId,
+        user,
+        text,
+    } as const),
+    deletePostComment: (commentId: string) => ({type: 'rsn/post/DELETE_POST_COMMENT', commentId} as const)
 }
 export type PostsActionType = ReturnType<InferActionsTypes<typeof postsActions>>
 
@@ -156,6 +197,27 @@ export const deletePostLike = (id: string): ThunkType<PostsActionType> => async 
     const res = await postApi.deleteLike(id)
     if ((res.resultCode === ResultCodes.success) && user) {
         dispatch(postsActions.deletePostLike(id, user))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const addPostComment = (postId: string, text: string): ThunkType<PostsActionType> => async (dispatch, getState) => {
+    const user = getState().auth.user
+    const res = await postApi.addPostComment(postId, text)
+    if ((res.resultCode === ResultCodes.success) && user) {
+        dispatch(postsActions.addPostComment(postId, user, text))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const deletePostComment = (commentId: string): ThunkType<PostsActionType> => async (dispatch) => {
+    const res = await postApi.deletePostComment(commentId)
+    if ((res.resultCode === ResultCodes.success)) {
+        dispatch(postsActions.deletePostComment(commentId))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

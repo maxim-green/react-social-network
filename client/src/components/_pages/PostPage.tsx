@@ -2,7 +2,14 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import {StateType} from 'redux/store'
-import {addPostLike, deletePost, deletePostLike, getPost} from 'redux/reducers/posts.reducer'
+import {
+    addPostComment,
+    addPostLike,
+    deletePost,
+    deletePostComment,
+    deletePostLike,
+    getPost
+} from 'redux/reducers/posts.reducer'
 import Post from 'components/Post/Post'
 
 
@@ -28,6 +35,13 @@ const PostPage: React.FC = () => {
         dispatch(deletePost(id))
     }
 
+    const addCommentHandler = (postId: string, text: string) => {
+        dispatch(addPostComment(postId, text))
+    }
+    const deleteCommentHandler = (commentId: string) => {
+        dispatch(deletePostComment(commentId))
+    }
+
     return <>
         {post && <Post
             key={post._id}
@@ -36,6 +50,8 @@ const PostPage: React.FC = () => {
             onPostAddLike={postAddLikeHandler}
             onPostDeleteLike={postDeleteLikeHandler}
             onPostDelete={onPostDelete}
+            onAddComment={addCommentHandler}
+            onDeleteComment={deleteCommentHandler}
         />}
     </>
 }
