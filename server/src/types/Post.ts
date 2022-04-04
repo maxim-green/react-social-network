@@ -6,7 +6,6 @@ export type PostCommentType = {
     createdAt: Date
     updatedAt: Date
     author: SchemaDefinitionProperty<Types.ObjectId>
-    post: SchemaDefinitionProperty<Types.ObjectId>
     text: string
     likes: Array<Types.ObjectId>
 }

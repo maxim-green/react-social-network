@@ -17,6 +17,7 @@ $light-blue-2: #BEE7FD;
 $clr-appbar: $accent;
 $clr-bottom-navigation: $dark-grey-1;
 $clr-background: $white;
+$clr-border: $light-grey-2;
 $clr-font: $dark-grey-1;
 $clr-font-dark: $dark-grey-1;
 $clr-font-light: $white;
@@ -67,8 +68,8 @@ $ui-border-radius: 4px;
 
 // shadows
 $card-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
+$avatar-shadow: rgba(99, 99, 99, 0.2) 0px 0px 20px 3px;
 $bar-shadow: rgba(99, 99, 99, 0.05) 0px 2px 12px 2px;
-//$bar-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
 
 // sizes
 $appbar-height: 40px;
@@ -78,6 +79,7 @@ $container-padding: 10px;
 $components-gap: 10px;
 $sidebar-width: 220px;
 $card-padding: 20px;
+$content-max-width: 720px;
 
 $modal-content-width: 600px;
 $modal-content-height: 90vh;
@@ -98,7 +100,10 @@ $input-small: 12px;
 $input-medium: 15px;
 $input-large: 18px;
 
-$content-max-width: 720px;
+
+
+$avatar-profile: 130px;
+$avatar-profile-phone-tablet: 100px;
 
 
 // breakpoints

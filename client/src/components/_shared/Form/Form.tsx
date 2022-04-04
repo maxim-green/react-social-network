@@ -1,4 +1,4 @@
-import React, {KeyboardEventHandler, useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import classes from 'components/_shared/Form/Form.module.scss'
 import classnames from 'classnames'
 import {useForm} from 'react-hook-form'
@@ -46,7 +46,7 @@ export const Form: React.FC<FormPropsType> = ({
     useEffect(() => {
         setFormError(errors.find(error => error.field === 'form') || null)
         errors.forEach(({field, message}) => setError(field, {type: 'server', message}))
-    }, [errors])
+    }, [errors, setError])
 
     const childrenWithProps = React.Children.map(children, child => {
         if (React.isValidElement(child)) {

@@ -5,7 +5,7 @@ import {getFeedPosts} from 'redux/reducers/posts.reducer'
 import {getSortedPosts} from 'utils/selectors'
 import {useAuthCheck} from 'utils/hooks'
 import {Redirect} from 'react-router-dom'
-import {StateType} from 'redux/store'
+import NewPostInputForm from 'components/_forms/NewPostInputForm/NewPostInputForm'
 
 const FeedPage: React.FC = () => {
     const dispatch = useDispatch()
@@ -13,11 +13,14 @@ const FeedPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(getFeedPosts())
-    }, [])
+    }, [dispatch])
 
     const authorized = useAuthCheck()
     if (!authorized) return <Redirect to={`/login`}/>
-    return <Feed posts={posts}/>
+    return <>
+        <NewPostInputForm/>
+        <Feed posts={posts}/>
+    </>
 }
 
 export default FeedPage

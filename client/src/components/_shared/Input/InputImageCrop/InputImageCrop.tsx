@@ -33,10 +33,6 @@ export const InputImageCrop: React.FC<InputImageCropPropsType> = ({
         name={name}
         rules={rules}
         render={({field, fieldState}) => {
-            const handleChange = (crop: Area) => {
-                onChange && onChange(crop)
-                field.onChange(crop)
-            }
             return <Item label={label} required={!!rules?.required} error={fieldState.error}
                          disabled={disabled}>
                 <ImageCrop aspect={aspect} srcFileUrl={srcFileUrl}

@@ -2,10 +2,9 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Redirect, useParams} from 'react-router-dom'
 import {getUserData, updateAvatar, updateCoverImage, updateStatus} from 'redux/reducers/profile.reducer'
-import {addPost, getUserPosts} from 'redux/reducers/posts.reducer'
+import {getUserPosts} from 'redux/reducers/posts.reducer'
 import {StateType} from 'redux/store'
 import {Area} from 'react-easy-crop/types'
-import {NewPostType} from 'types/types'
 import NewPostInputForm from 'components/_forms/NewPostInputForm/NewPostInputForm'
 import Feed from 'components/Feed/Feed'
 import Profile from 'components/Profile/Profile'
@@ -13,22 +12,19 @@ import Profile from 'components/Profile/Profile'
 
 const ProfilePage: React.FC = () => {
     let {username}: { username: string } = useParams()
-    const authorizedUsername = useSelector((state: StateType) => state.auth.user?.username)
-    const authorized = useSelector((state: StateType) => state.auth.authorized)
-    const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
-    const userProfileData = useSelector((state: StateType) => state.profile.user)
-    const posts = useSelector((state: StateType) => state.posts.posts)
-    const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
-    const isAuthorizedUserProfile = authorized && (authorizedUserId === userProfileData._id)
-
     const dispatch = useDispatch()
-
     useEffect(() => {
         if (username) {
             dispatch(getUserData(username))
             dispatch(getUserPosts(username))
         }
     }, [username, dispatch])
+
+
+    const authUser = useSelector((state: StateType) => state.auth.user)
+    const profileUser = useSelector((state: StateType) => state.profile.user)
+    const isOwner = authUser?._id === profileUser._id
+    const posts = useSelector((state: StateType) => state.posts.posts)
 
     const onAvatarSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()
@@ -44,31 +40,21 @@ const ProfilePage: React.FC = () => {
         dispatch(updateCoverImage(formData))
     }
 
-    const onNewPostSubmit = (newPostData: NewPostType) => {
-        const {newPostText} = newPostData
-        dispatch(addPost(newPostText))
-    }
-
     const onStatusUpdate = (status: string) => {
         dispatch(updateStatus(status))
     }
 
-    if (!username) return <Redirect to={`/profile/${authorizedUsername}`}/>
+    if (!authUser && !username) return <Redirect to={`/login`}/>
+    if (authUser && !username) return <Redirect to={`/profile/${authUser.username}`}/>
     return <>
         <Profile
-            profileData={userProfileData}
-            authorized={authorized}
-            authorizedUserId={authorizedUserId}
+            user={profileUser}
+            isOwner={isOwner}
             onAvatarSubmit={onAvatarSubmit}
             onCoverImageSubmit={onCoverImageSubmit}
             onStatusUpdate={onStatusUpdate}
         />
-
-        {isAuthorizedUserProfile && <NewPostInputForm
-            isAddPostPending={isAddPostPending}
-            onSubmit={onNewPostSubmit}
-        />}
-
+        {isOwner && <NewPostInputForm />}
         <Feed posts={posts}/>
     </>
 }

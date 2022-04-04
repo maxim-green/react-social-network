@@ -52,6 +52,7 @@
 
 .content {
   flex-grow: 1;
+  max-width: $content-max-width;
 }
 
 .sidebar {

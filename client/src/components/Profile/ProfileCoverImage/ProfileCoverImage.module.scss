@@ -1,24 +1,31 @@
 .coverImage {
   position: relative;
   padding: 15px 18px;
-  min-height: 200px;
+  height: 200px;
   overflow: hidden;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  @include mq('phone') {
-    min-height: 160px;
+  justify-content: center;
+  align-items: center;
+  @include mq('phone-tablet') {
+    height: 160px;
   }
 }
 
 .image {
   position: absolute;
   display: block;
-  object-fit: contain;
-  left: 0;
+  object-fit: cover;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   z-index: -1;
   @include mq('phone-tablet') {
-
+    height: 100%;
   }
+}
+
+.editCoverImageButton {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }

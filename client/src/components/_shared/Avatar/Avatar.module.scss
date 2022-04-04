@@ -12,6 +12,11 @@
       border: 3px solid $clr-background;
     }
   }
+  &.shadow {
+    .image {
+      box-shadow: $avatar-shadow;
+    }
+  }
 
   .image {
     position: relative;

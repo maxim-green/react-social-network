@@ -1,57 +1,71 @@
 @import "../../../assets/styles/variables";
 
-.profileInfoItems {
-  display: flex;
-  @include mq('phone-tablet') {
-    flex-wrap: wrap;
+.profileInfoData {
+  padding: 0  60px;
+  @include mq('phone') {
+    padding: 0  30px;
   }
 }
 
 .bio {
-  margin-bottom: 25px;
   font-size: 16px;
+  margin: 20px 0 30px 0;
+}
+
+.profileInfoItems {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  @include mq('phone-tablet') {
+flex-direction: column;
+  }
 }
 
 .item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 12px;
+  line-height: 14px;
+  max-width: 150px;
   width: 100%;
-  & + & {
-    margin-left: 20px;
-  }
   @include mq('phone-tablet') {
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-    &:last-child {
-      margin-bottom: 0;
-    }
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
     & + & {
-      margin-left: 0;
+      margin-top: 15px;
     }
   }
 }
 
-.birthDate {
+.itemTitle {
   display: flex;
   align-items: center;
-  span {
-    margin-left: 3px;
-    margin-top: 2px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  width: 80px;
+  @include mq('phone-tablet') {
+    margin-bottom: 0;
   }
 }
 
-.location {
+.itemIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
   display: flex;
   align-items: center;
-  span {
-    margin-left: 1px;
-    margin-top: 2px;
-  }
+  justify-content: center;
 }
 
-.website {
+.itemLabel {
+  margin-right: 5px;
+}
+
+.itemText {
   display: flex;
   align-items: center;
   font-size: 14px;
-  span {
-    margin-top: -2px;
-  }
 }

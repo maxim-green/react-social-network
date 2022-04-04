@@ -1,11 +1,8 @@
 import React from 'react'
 import classes from './TestPage.module.scss'
-import {Card} from "components/_shared/Card/Card";
+import {Card} from 'components/_shared/Card/Card'
 
-import {
-    Form,
-    FormRow
-} from 'components/_shared/Form/Form'
+import {Form, FormRow} from 'components/_shared/Form/Form'
 import {Button} from 'components/_shared/Button/Button'
 import {InputText} from 'components/_shared/Input/InputText/InputText'
 import {InputPassword} from 'components/_shared/Input/InputPassword/InputPassword'
@@ -14,7 +11,6 @@ import {InputCheckbox} from 'components/_shared/Input/InputCheckbox/InputCheckbo
 import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
 import {InputFile} from 'components/_shared/Input/InputFile/InputFile'
 import {InputRange} from 'components/_shared/Input/InputRange/InputRange'
-import Slider from 'rc-slider'
 
 const FormTestPage: React.FC = () => {
     return(

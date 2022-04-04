@@ -5,13 +5,10 @@ import classes from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigati
 import {Card} from 'components/_shared/Card/Card'
 import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide, HouseDoorFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
-import {useBreakpoint} from 'utils/hooks'
 
 type PropsType = {}
 
 const SidebarNavigation: React.FC<PropsType> = () => {
-    const {tablet} = useBreakpoint()
-
     return (
         <Card>
             <div className={classes.Navigation}>

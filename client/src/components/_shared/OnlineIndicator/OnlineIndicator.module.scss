@@ -1,11 +1,10 @@
 .onlineIndicator {
+  display: inline-block;
   background-color: $success;
-  text-transform: uppercase;
-  letter-spacing: .1em;
+  color: $clr-font;
+  font-weight: bold;
   border-radius: $ui-border-radius;
-  height: 2em;
-  line-height: 2em;
-  padding: 0 .5em;
+  padding: .3em .5em;
   font-size: 8px;
-  margin-left: 8px;
+  letter-spacing: .1em;
 }

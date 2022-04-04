@@ -14,19 +14,21 @@ type PropsType = {
     size?: number
     name?: string
     border?: boolean
+    shadow?: boolean
     online?: boolean
     onEdit?: (image: File, cropArea: Area) => void
 }
 
 export const Avatar: React.FC<PropsType> = ({
-                                         smallImg,
-                                         largeImg,
-                                         size = 90,
-                                         name,
-                                         online,
-                                         border = false,
-                                         onEdit
-                                     }) => {
+                                                smallImg,
+                                                largeImg,
+                                                size = 90,
+                                                name,
+                                                online,
+                                                border = false,
+                                                shadow = false,
+                                                onEdit
+                                            }) => {
     const zoomable = !!(smallImg && largeImg)
     const editable = !!onEdit
 
@@ -49,7 +51,8 @@ export const Avatar: React.FC<PropsType> = ({
         <div
             className={classnames(
                 classes.wrapper,
-                {[classes.border]: border}
+                {[classes.border]: border},
+                {[classes.shadow]: shadow}
             )}
             style={{width: size}}
         >
@@ -86,16 +89,15 @@ export const Avatar: React.FC<PropsType> = ({
 }
 
 
-
 type EditAvatarModalWindowPropsType = {
     open: boolean,
     onSubmit: (image: File, cropArea: Area) => void
     onClose: () => void
 }
 const EditAvatarModalWindow: React.FC<EditAvatarModalWindowPropsType> = ({
-    open,
-    onSubmit,
-    onClose
+                                                                             open,
+                                                                             onSubmit,
+                                                                             onClose
                                                                          }) => {
     return (
         <ModalWindow open={open}>
@@ -105,16 +107,15 @@ const EditAvatarModalWindow: React.FC<EditAvatarModalWindowPropsType> = ({
 }
 
 
-
 type ZoomAvatarModalWindowPropsType = {
     img: string,
     open: boolean,
     onClose: () => void
 }
 const ZoomAvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
-    img,
-    open,
-    onClose
+                                                                             img,
+                                                                             open,
+                                                                             onClose
                                                                          }) => {
     return (
         <ModalWindow open={open} close={onClose}>
@@ -122,7 +123,6 @@ const ZoomAvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
         </ModalWindow>
     )
 }
-
 
 
 type AvatarButtonsPropsType = {

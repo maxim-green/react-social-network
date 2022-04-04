@@ -65,27 +65,11 @@ const reducer = (state: PostsStateType = initialState, action: PostsActionType):
             }
         }
         case 'rsn/post/ADD_POST_COMMENT': {
-            const author: UserItemDataType = {
-                _id: action.user._id,
-                username: action.user.username,
-                firstName: action.user.firstName,
-                lastName: action.user.lastName,
-                avatar: action.user.avatar,
-                subscriptions: action.user.subscriptions
-            }
-            // todo: refactor - receive new comment in server response instead of creating it in reducer
-            const comment: CommentType = {
-                _id: Date.now().toString(),
-                createdAt: (new Date()).toString(),
-                author,
-                text: action.text,
-                likes: []
-            }
             return {
                 ...state,
                 posts: state.posts.map(post => (post._id !== action.postId) ? post : {
                     ...post,
-                    comments: [...post.comments, comment]
+                    comments: [...post.comments, action.comment]
                 })
             }
         }
@@ -116,11 +100,10 @@ export const postsActions = {
         postId,
         user
     } as const),
-    addPostComment: (postId: string, user: AuthUserDataType, text: string) => ({
+    addPostComment: (postId: string, comment: CommentType) => ({
         type: 'rsn/post/ADD_POST_COMMENT',
         postId,
-        user,
-        text,
+        comment
     } as const),
     deletePostComment: (commentId: string) => ({type: 'rsn/post/DELETE_POST_COMMENT', commentId} as const)
 }
@@ -207,7 +190,7 @@ export const addPostComment = (postId: string, text: string): ThunkType<PostsAct
     const user = getState().auth.user
     const res = await postApi.addPostComment(postId, text)
     if ((res.resultCode === ResultCodes.success) && user) {
-        dispatch(postsActions.addPostComment(postId, user, text))
+        dispatch(postsActions.addPostComment(postId, res.data.comment))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

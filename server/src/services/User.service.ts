@@ -78,7 +78,6 @@ export const createUser = async (payload: RegistrationPayload) => {
 
 
 export const loginUser = async (payload: LoginPayload) => {
-    console.log(payload)
     const user = await User.findOne({email: payload.email})
 
     const condition = user ? await bcrypt.compare(payload.password, user.password) : false

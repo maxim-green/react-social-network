@@ -1,56 +1,99 @@
 .profileHeader {
-  display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  min-height: $avatar-profile / 2 + 20px;
   @include mq('phone-tablet') {
     flex-wrap: wrap;
+    margin-bottom: 15px;
   }
 }
 
 .avatar {
-  margin-top: -60px;
-}
-
-.profileHeaderInfo {
-  margin-left: 24px;
-  max-width: 345px;
-  @include mq('phone-wide') {
-    width: 100%;
-    order: 3;
-    margin-left: 0;
-    margin-top: 15px;
+  position: absolute;
+  top: -$avatar-profile / 2;
+  left: 20px;
+  @include mq('phone-tablet') {
+    top: -$avatar-profile-phone-tablet / 2;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .onlineIndicator {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
+.profileHeaderInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0  auto 0 $avatar-profile + 40px;
+  max-width: 345px;
+  @include mq('phone-tablet') {
+    align-items: center;
+    margin: 0  auto;
+    padding-top: $avatar-profile-phone-tablet / 2;
+  }
+}
+
+.editProfile {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin-left: auto;
+}
+
 .name {
+  margin-top: 10px;
   display: flex;
   align-items: flex-end;
   font-size: 24px;
   line-height: 24px;
   font-weight: 700;
-  margin-bottom: 5px;
-  @include mq('phone') {
-    font-size: 18px;
-  }
+  margin-bottom: 10px;
 }
 
 .status {
   position: relative;
-}
-
-.statusText {
+  display: flex;
+  align-items: center;
+  width: 100%;
   font-size: 14px;
   color: $mid-grey-1;
+  border-radius: $ui-border-radius;
+  @include mq('phone-tablet') {
+    justify-content: center;
+  }
+}
+
+.statusEditable {
+  transition: $ui-transition;
+  &:hover {
+    color: $dark-grey-2;
+    cursor: pointer;
+  }
 }
 
 .editStatus {
   position: absolute;
+  width: 100%;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  border-radius: $ui-border-radius;
+  box-shadow: $card-shadow;
 }
 
-.editProfile {
-  margin-left: auto;
+.editStatusButton {
+  opacity: 0.5;
+  transition: $ui-transition;
+  &:hover {
+    opacity: 1;
+  }
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
 }
+

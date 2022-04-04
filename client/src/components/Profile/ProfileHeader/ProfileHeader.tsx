@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Area} from 'react-easy-crop/types'
 import Popup from 'reactjs-popup'
+import sizes from 'assets/styles/sizes.module.scss'
 import classes from 'components/Profile/ProfileHeader/ProfileHeader.module.scss'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {AvatarType} from 'types/types'
@@ -54,15 +55,21 @@ const ProfileHeader: React.FC<PropsType> = ({
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
-                <Avatar smallImg={avatar?.small} largeImg={avatar?.large} border size={!phoneTablet ? 128 : 80} onEdit={owner ? onAvatarSubmit : undefined }/>
+                <Avatar
+                    smallImg={avatar?.small}
+                    largeImg={avatar?.large}
+                    border shadow size={!phoneTablet ? Number.parseInt(sizes.avatarProfile) : Number.parseInt(sizes.avatarProfilePhoneTablet)}
+                    onEdit={owner ? onAvatarSubmit : undefined }/>
+                    <div className={classes.onlineIndicator}>
+                        <OnlineIndicator>Online</OnlineIndicator>
+                    </div>
             </div>
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>
                     {firstName} {lastName}
-                    <OnlineIndicator>online</OnlineIndicator>
                 </div>
                 {owner && <div className={classes.status}>
-                    {!statusEditMode && <div className={classes.statusText} onDoubleClick={statusClickHandler}>{statusValue}</div>}
+                    <div className={classes.statusEditable} onClick={statusClickHandler}>{statusValue}</div>
                     {statusEditMode && <div className={classes.editStatus}>
                         <EditStatusForm onSubmit={statusSubmitHandler} initialStatus={statusValue}/>
                     </div>}

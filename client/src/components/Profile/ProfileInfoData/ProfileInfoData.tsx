@@ -1,7 +1,7 @@
 import classes from 'components/Profile/ProfileInfoData/ProfileInfoData.module.scss'
 import React from 'react'
 import {ContactsType, LocationType} from 'types/types'
-import {GeoAlt, Link45deg, CalendarEvent} from 'react-bootstrap-icons'
+import {GeoAlt, Link45deg, CalendarEvent, Icon} from 'react-bootstrap-icons'
 import moment from 'moment'
 
 type PropsTypes = {
@@ -15,16 +15,18 @@ const ProfileInfoData: React.FC<PropsTypes> = ({
                                                    birthDate,
                                                    location,
                                                    contacts,
-                                                   bio,
+                                                   bio
                                                }) => {
     return (
-        <div className={classes.profileInfo}>
+        <div className={classes.profileInfoData}>
             {bio && <Bio bio={bio}/>}
             <div className={classes.profileInfoItems}>
-                {birthDate && <BirthDate birthDate={birthDate}/>}
-                {location?.country && location?.city && <Location city={location.city} country={location.country}/>}
-                {contacts?.website && <Website website={contacts.website}/>}
 
+                {birthDate && <BirthDate birthDate={birthDate}/>}
+
+                {location?.country && location?.city && <Location city={location.city} country={location.country}/>}
+
+                {contacts?.website && <Website website={contacts.website}/>}
 
             </div>
         </div>
@@ -36,20 +38,28 @@ const Bio: React.FC<BioPropsType> = ({bio}) => <div className={classes.bio}>
     {bio}
 </div>
 
+type InfoItemType = { icon?: Icon, label?: string, iconSize?: number, link?: string }
+const InfoItem: React.FC<InfoItemType> = ({icon, label, link, iconSize = 16, children}) => <div
+    className={classes.item}>
+    <div className={classes.itemTitle}>
+        {!!icon && <div className={classes.itemIcon}>{React.createElement(icon, {size: iconSize})}</div>}
+        {!!label && <div className={classes.itemLabel}>{label}</div>}
+    </div>
+    {!link && <span className={classes.itemText}>{children}</span>}
+    {!!link && <a href={link} className={classes.itemLink}>{children}</a>}
+</div>
+
 type BirthDatePropsType = { birthDate: string }
-const BirthDate: React.FC<BirthDatePropsType> = ({ birthDate }) => <div className={classes.birthDate + ' ' + classes.item}>
-    <CalendarEvent size={20}/><span>Birthday: {moment(birthDate).format("MMMM, D")}</span>
-</div>
+const BirthDate: React.FC<BirthDatePropsType> = ({birthDate}) => <InfoItem icon={CalendarEvent} iconSize={14}
+                                                                           label={'Birthday'}>{moment(birthDate).format('MMMM, D')}</InfoItem>
 
-type LocationProps = { country: string, city: string}
-const Location: React.FC<LocationProps> = ({country, city}) => <div className={classes.location + ' ' + classes.item}>
-    <GeoAlt size={20}/><span>{country}, {city}</span>
-</div>
+type LocationProps = { country: string, city: string }
+const Location: React.FC<LocationProps> = ({country, city}) => <InfoItem icon={GeoAlt} iconSize={15}
+                                                                         label={'Location'}>{country}, {city}</InfoItem>
 
-type WebsitePropsType = {website: string}
-const Website: React.FC<WebsitePropsType> = ({website}) => <a href={'http://' + website} className={classes.website + ' ' + classes.item}>
-    <Link45deg size={24}/><span>{website}</span>
-</a>
+type WebsitePropsType = { website: string }
+const Website: React.FC<WebsitePropsType> = ({website}) => <InfoItem icon={Link45deg} label={'Website'}
+                                                                     link={'http://' + website}>{website}</InfoItem>
 
 // @ts-ignore
 // const ProfileInfoSocialItem: React.FC<ProfileInfoSocialItemType> = ({Icon, href}) => <div className={classes.contactItem}>

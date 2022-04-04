@@ -116,27 +116,25 @@ export const addComment = async (postId: string, author: MongooseDocument<Popula
 
     const comment = await PostComment.create({
         author,
-        post,
         text
     })
 
     post.comments.push(comment)
     await post.save()
 
-    return comment
+    return comment.populate('author', 'username firstName lastName avatar')
 }
 
 export const deleteComment = async (
     initiator: MongooseDocument<PopulatedUserType>,
     commentId: Types.ObjectId | string
 ) => {
-    const comment = await PostComment.findById(commentId).populate('author').populate('post')
-    console.log(comment)
+    const comment = await PostComment.findById(commentId).populate('author')
     if (!comment) throw new HTTPError(404, {resultCode: 1, message: 'Comment not found'})
 
     // @ts-ignore
     if (!(initiator.id === comment.author.id)) throw new HTTPError(401, {resultCode: 1, message: 'Forbidden'})
     // @ts-ignore
-    await Post.findByIdAndUpdate(comment.post.id, {$pull: { comments: {_id: comment._id} }})
+    await Post.findOneAndUpdate({comments: comment}, {$pull: { comments: {_id: comment._id} }})
     await comment.delete()
 }

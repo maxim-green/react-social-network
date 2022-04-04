@@ -1,5 +1,5 @@
 import {InferActionsTypes, ThunkType} from '../store'
-import {DialogType, MessageType, UserItemDataType} from 'types/types'
+import {DialogType, MessageType} from 'types/types'
 import {socketApi} from 'api/socket.api'
 import {Dispatch} from 'react'
 import {dialogApi} from 'api/dialog.api'

@@ -11,7 +11,7 @@
   &::before {
     content: "";
     position: absolute;
-    border: 1px solid $light-grey-2;
+    border: 1px solid $clr-border;
     border-radius: 5px;
     z-index: -1;
     top: 0;

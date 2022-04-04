@@ -1,8 +1,9 @@
 import {coreApi, handleError, handleResponse} from './core.api'
-import {PostType} from 'types/types'
+import {CommentType, PostType} from 'types/types'
 
 export type PostsDataType = { posts: Array<PostType> }
 export type PostDataType = { post: PostType }
+export type PostCommentDataType = { comment: CommentType }
 
 export type NewPostDataType = {
     post: PostType
@@ -43,7 +44,7 @@ export const postApi = {
         .catch(handleError()),
     addPostComment: (postId: string, text: string) => coreApi
         .post(`post/${postId}/comment`, { text })
-        .then(handleResponse())
+        .then(handleResponse<PostCommentDataType>())
         .catch(handleError()),
     deletePostComment: (commentId: string) => coreApi
         .delete(`post/comment/${commentId}`)

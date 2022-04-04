@@ -1,13 +1,12 @@
-import React, {useEffect, Suspense, lazy} from 'react'
-import {Redirect, Route, Switch} from 'react-router-dom'
+import React, {lazy, Suspense, useEffect} from 'react'
+import {Route, Switch} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {StateType} from 'redux/store'
 import {deinitializeApp, initializeApp} from 'redux/reducers/app.reducer'
 import Layout from 'components/Layout/Layout'
-import Spinner from "components/_shared/Spinner/Spinner";
+import Spinner from 'components/_shared/Spinner/Spinner'
 import HomePage from 'components/_pages/HomePage'
-import {AuthCard} from 'components/AuthCard/AuthCard'
 
 const RegistrationPage = lazy(() => import('components/_pages/RegistrationPage'))
 const LoginPage = lazy(() => import('components/_pages/LoginPage'))
