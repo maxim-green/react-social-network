@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import {generateTokens, HTTPError, verifyToken} from 'helpers'
+import {deleteFile, generateTokens, HTTPError, verifyToken} from 'helpers'
 
 import {
     MongooseDocument,
@@ -115,7 +115,10 @@ export const updateAvatar = async (
     file: Express.Multer.File,
     crop: { x: number, y: number, width: number, height: number }
 ) => {
-    user.avatar = await saveAvatarImage(file, crop)
+    const avatar = await saveAvatarImage(file, crop)
+    await deleteFile(user.avatar.small)
+    await deleteFile(user.avatar.large)
+    user.avatar = avatar
     await user.save()
     return user.avatar
 }
@@ -126,7 +129,9 @@ export const updateCoverImage = async (
     file: Express.Multer.File,
     crop: { x: number, y: number, width: number, height: number }
 ) => {
-    user.coverImage = await saveCoverImage(file, crop)
+    const coverImage = await saveCoverImage(file, crop)
+    await deleteFile(user.coverImage)
+    user.coverImage = coverImage
     await user.save()
     return user.coverImage
 }

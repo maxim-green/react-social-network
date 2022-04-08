@@ -16,7 +16,7 @@
   border-radius: $ui-border-radius;
   font-size: 16px;
   line-height: 16px;
-  color: $dark-grey-2;
+  color: $text-color-dark;
   transition: $ui-transition;
   @include focus()
 }
@@ -59,20 +59,20 @@
     padding: 0;
     width: 28px;
     height: 28px;
-    color: $dark-grey-2;
+    color: $text-color-dark;
   }
 
   &__day {
     border-radius: $ui-border-radius;
     transition: $ui-transition;
-    @include button-colors($clr-font-dark, $clr-text);
+    @include button-colors($text-color-dark, transparent);
     &--selected {
-      @include button-colors($clr-font-light, $clr-primary);
+      @include button-colors($text-color-light, $primary-background-color);
     }
   }
 
   &--today {
-    border: 1px solid $dark-grey-2;
+    border: 1px solid $text-color-dark;
   }
 }
 

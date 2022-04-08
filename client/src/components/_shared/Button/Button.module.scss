@@ -22,27 +22,26 @@
   }
 
   &.primary {
-    @include button-colors($clr-font-light, $clr-primary);
+    @include button-colors($text-color-light, $primary-background-color);
   }
   &.secondary {
-    @include button-colors($clr-font-dark, $clr-secondary);
+    @include button-colors($text-color-dark, $secondary-background-color);
   }
   &.neutral {
-    @include button-colors($clr-font-dark, $clr-neutral);
+    @include button-colors($text-color-dark, $neutral-background-color);
   }
   &.text {
-    @include button-colors($clr-font-dark, $clr-text);
+    @include button-colors($text-color-dark, transparent);
   }
   &.link {
-    @include button-colors($clr-font-link, $clr-text);
+    @include button-colors($text-color-link, transparent);
   }
   &.cancel {
-    @include button-colors($clr-font-light, $clr-cancel);
+    @include button-colors($text-color-light, $cancel-background-color);
   }
   &:disabled, &:disabled:hover, &:disabled:active {
     cursor: auto;
-    background-color: $clr-disabled;
-    color: $clr-font-disabled;
+    opacity: 0.3;
   }
 
   border-radius: $ui-border-radius;

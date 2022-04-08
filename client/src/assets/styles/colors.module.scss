@@ -5,14 +5,14 @@
   error: $error;
   success: $success;
 
-  darkGrey1: $dark-grey-1;
-  darkGrey2: $dark-grey-2;
-  midGrey1: $mid-grey-1;
-  lightGrey1: $light-grey-1;
-  lightGrey2: $light-grey-2;
-  lightBlue1: $light-blue-1;
-  lightBlue2: $light-blue-2;
+  darkGrey: $dark-grey;
+  midGrey: $mid-grey;
+  darkGrey2: $text-color-dark;
+  lightGrey1: $light-grey;
+  lightGrey2: $light-grey;
+  lightBlue1: $light-grey;
+  lightBlue2: $light-grey;
 
-  fontLight: $clr-font-light;
-  fontDark: $clr-font-dark;
+  fontLight: $text-color-light;
+  fontDark: $text-color-dark;
 }

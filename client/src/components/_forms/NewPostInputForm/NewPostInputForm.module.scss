@@ -1,35 +1,7 @@
-.input {
-  border-bottom: 1px solid $light-grey-2;
-
-  textarea {
-    font-size: 18px;
-    color: $mid-grey-1;
-    padding: 10px;
-    background-color: transparent;
-    outline: none;
-
-    &::placeholder {
-      color: rgba($mid-grey-1, .5);
-    }
-  }
-}
-
 .controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
   height: 37px;
-}
-
-.button {
-  font-size: 16px;
-  padding: 8px 18px;
-  background: none;
-  color: $mid-grey-1;
-  border: none;
-  border-left: 1px solid $light-grey-2;
-  outline: none;
-  cursor: pointer;
-  height: 100%;
 }

@@ -62,7 +62,7 @@
   align-items: center;
   width: 100%;
   font-size: 14px;
-  color: $mid-grey-1;
+  color: $text-color-mid;
   border-radius: $ui-border-radius;
   @include mq('phone-tablet') {
     justify-content: center;
@@ -72,7 +72,7 @@
 .statusEditable {
   transition: $ui-transition;
   &:hover {
-    color: $dark-grey-2;
+    color: $text-color-dark;
     cursor: pointer;
   }
 }

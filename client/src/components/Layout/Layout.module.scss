@@ -37,8 +37,8 @@
   top: 0;
   z-index: 100;
   height: $appbar-height;
-  background-color: $clr-appbar;
-  border-bottom: 1px solid darken($clr-appbar, 10%);
+  background-color: $app-bar-color;
+  border-bottom: 1px solid darken($app-bar-color, 10%);
   color: $white;
   box-shadow: $bar-shadow;
   width: 100vw;

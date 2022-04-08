@@ -7,6 +7,7 @@ import path from 'path'
 
 import api from 'routes'
 import {withErrorHandler} from 'middleware'
+import router from 'routes'
 
 const expressApp = express()
 

@@ -72,7 +72,7 @@ const Post: React.FC<PropsType> = ({
         <Card>
             <div className={classes.header}>
                 <div className={classes.avatar}>
-                    <NavLink to="/profile/1"><Avatar smallImg={post.author.avatar.small} online
+                    <NavLink to={`/profile/${post.author.username}`}><Avatar smallImg={post.author.avatar.small} online
                                                      size={55}/></NavLink>
                 </div>
                 <div className={classes.info}>

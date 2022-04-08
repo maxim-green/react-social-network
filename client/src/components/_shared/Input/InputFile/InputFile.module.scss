@@ -6,17 +6,20 @@
   height: 100px;
   font-size: 18px;
   border-radius: 10px;
-  box-shadow: 0 0 0 2px rgba($dark-grey-1, 0) inset;
   transition: $ui-transition;
-  border: 2px dotted $clr-primary;
-  @include button-colors($clr-primary, $clr-text);
+  border: 2px dotted $primary-background-color;
+  @include button-colors($primary-background-color, transparent);
   cursor: pointer;
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba($dark-grey-1, 1) inset;
-  }
+
+  //box-shadow: 0 0 0 2px rgba($dark-grey, 0) inset;
+  //&:focus-visible {
+  //  outline: none;
+  //  box-shadow: 0 0 0 2px rgba($dark-grey, 1) inset;
+  //}
+  @include focus;
+
   &.dragActive {
-    background-color: $clr-secondary-hover;
+    background-color: lighten($secondary-background-color, 5%);
   }
 }
 

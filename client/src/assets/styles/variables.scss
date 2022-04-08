@@ -1,66 +1,51 @@
 // color definitions (don't use directly in components)
+// todo move color variables to separate file
+
+// palette
 $white: #FFFFFF;
 $black: #000000;
-$accent: #0882de;
-$error: #F2280C;
-$success: #4EE83E;
+$accent: #3F72AF;
+$accent-secondary: #BEE7FD; // todo pick that color and rename variable wisely
+$dark: #112D4E;
+$mid: #DBE2EF;
+$light: #F9F7F7;
+$error: #EF3E36;
+$success: #9CEC5B;
 
-$dark-grey-1: #373C42;
-$dark-grey-2: #54595D;
-$mid-grey-1: #909BA4;
-$light-grey-1: #F5F7F6;
-$light-grey-2: #E8E9E8;
-$light-blue-1: #7ECEFB;
-$light-blue-2: #BEE7FD;
+// greys
+$dark-grey: lighten($black, 25%);
+$mid-grey: lighten($black, 50%);
+$light-grey: lighten($black, 90%);
+$light-grey-2: #E8E9E8; // todo refactor usages and delete this variable
 
-// colors
-$clr-appbar: $accent;
-$clr-bottom-navigation: $dark-grey-1;
-$clr-background: $white;
-$clr-border: $light-grey-2;
-$clr-font: $dark-grey-1;
-$clr-font-dark: $dark-grey-1;
-$clr-font-light: $white;
-$clr-font-link: $accent;
-$clr-font-disabled: $light-grey-2;
+// text colors
+$text-color-dark: $dark-grey;
+$text-color-mid: $mid-grey;
+$text-color-light: $white;
+$text-color-link: $accent;
 
-$clr-primary: $accent;
-$clr-primary-border: darken($clr-primary, 5%);
-$clr-primary-hover: lighten($clr-primary, 5%);
-$clr-primary-active: darken($clr-primary, 5%);
+// global colors
+$app-background-color: $light;
+$app-bar-color: $accent;
+$app-bottom-nav-color: $dark;
+$app-border-color: $mid;
+$app-focus-color: $dark;
+$card-background-color: $white;
 
-$clr-secondary: $light-blue-2;
-$clr-secondary-border: darken($clr-secondary, 5%);
-$clr-secondary-hover: adjust-hue(lighten($clr-secondary, 3%), 7deg);
-$clr-secondary-active: adjust-hue(darken($clr-secondary, 3%), -7deg);
+// button colors
+$primary-background-color: $accent;
+$secondary-background-color: $accent-secondary;
+$neutral-background-color: $light-grey;
+$text-background-color: transparent;
+$cancel-background-color: $error;
 
-$clr-neutral: $light-grey-2;
-$clr-neutral-border: darken($clr-neutral, 5%);
-$clr-neutral-hover: adjust-hue(desaturate(lighten($clr-neutral, 2%), 2%), 3deg);
-$clr-neutral-active: adjust-hue(saturate(darken($clr-neutral, 2%), 2%), -3deg);
+// input colors
+$input-background-color: $white;
+$input-placeholder-color: lighten($text-color-dark, 50%);
+$input-border-color: $light-grey-2;
+$input-error-color: $error;
 
-$clr-text: transparent;
-$clr-text-border: darken($clr-neutral, 5%);
-$clr-text-hover: transparent;
-$clr-text-active: transparent;
 
-$clr-cancel: $error;
-$clr-cancel-border: darken($clr-cancel, 5%);
-$clr-cancel-hover: lighten($clr-cancel, 5%);
-$clr-cancel-active: adjust-hue(saturate(darken($clr-cancel, 10%), 20%), -3deg);
-
-$clr-disabled: $light-grey-1;
-
-// focus outline
-$clr-focus-outline: $dark-grey-2;
-
-// inputs
-$clr-input-font: $dark-grey-2;
-$clr-input-font-placeholder: $dark-grey-2;
-$clr-input-background: $white;
-$clr-input-background-disabled: $light-grey-1;
-$clr-input-border: $light-grey-2;
-$clr-input-invalid: $error;
 
 // ui
 $ui-transition: .2s;
