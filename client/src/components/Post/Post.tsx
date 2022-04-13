@@ -9,11 +9,11 @@ import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
 import {CommentType, PostType} from 'types/types'
-import moment from 'moment'
 import AddPostCommentForm from 'components/_forms/AddPostCommentForm/AddPostCommentForm'
+import {formatDate} from 'utils/functions'
+import {PostComment} from 'components/Post/PostComment/PostComment'
 
 // todo: destructure this component; consider connecting to store here.
-
 type PropsType = {
     post: PostType
     onPostAddLike: (id: string) => void
@@ -40,8 +40,7 @@ const Post: React.FC<PropsType> = ({
 
     const isAuthor = authorizedUserId === post.author._id
     const fullName = post.author.firstName + ' ' + post.author.lastName
-    // todo: move next line to formatDate helper
-    const date = moment(post.createdAt).format('DD.MM.YYYY')
+    const date = formatDate(post.createdAt)
     const isLiked = authorizedUserId ? post.likes.map(user => user._id).includes(authorizedUserId) : false
 
     const onDeleteClickHandler = () => {
@@ -135,18 +134,21 @@ const Post: React.FC<PropsType> = ({
                 {[classes.active]: commentSectionActive}
             )}>
                 <div className={classes.commentInput}>
-                    <AddPostCommentForm onAddComment={addCommentHandler}/>
+                    <AddPostCommentForm onAddComment={addCommentHandler} disabled={!commentSectionActive}/>
                 </div>
 
                 {!!post.comments.length && <div className={classes.commentsList}>
 
-                    {post.comments.slice().reverse().map(comment => <Comment key={comment._id} {...comment}
+                    {post.comments.slice().reverse().map(comment => <PostComment key={comment._id} {...comment}
                                                            authorizedUserId={authorizedUserId}
                                                            onDelete={deleteCommentHandler}
+                                                                             disabled={!commentSectionActive}
                     />)}
 
                     {post.comments.length > 3 && <div className={classes.commentsShowMore}>
-                        <Button type={'link'}><Button.Text>Show more</Button.Text></Button>
+                        <NavLink to={`/post/${post._id}`} tabIndex={!commentSectionActive ? -1 : undefined}>
+                            <Button type={'link'} disabled={!commentSectionActive}><Button.Text>Show more</Button.Text></Button>
+                        </NavLink>
                     </div>}
                 </div>}
 
@@ -155,52 +157,6 @@ const Post: React.FC<PropsType> = ({
     )
 }
 
-const Comment: React.FC<CommentType & {
-    authorizedUserId?: string
-    onDelete: (commentId: string) => void
-}> = ({_id, author, text, createdAt, likes, authorizedUserId, onDelete}) => {
-    const [open, setOpen] = useState(false)
-    const openModal = () => setOpen(true)
-    const closeModal = () => setOpen(false)
 
-    const deleteHandler = () => {
-        onDelete(_id)
-        setOpen(false)
-    }
-
-    const isAuthor = authorizedUserId === author._id
-
-    return <div className={classes.comment}>
-        <div className={classes.commentAvatar}>
-            <Avatar smallImg={author.avatar.small} size={40}/>
-        </div>
-        <div className={classes.commentContent}>
-            <div className={classes.commentText}>
-                <span className={classes.commentAuthor}>{author.firstName} {author.lastName}</span>
-                {text}
-            </div>
-            <div className={classes.commentDate}>{moment(createdAt).format('DD.MM.YYYY')}</div>
-        </div>
-        <div className={classes.commentControls}>
-            <Button type="text" size="sm">
-                <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
-            </Button>
-            {isAuthor && <Button type="text" size="sm" onClick={openModal}>
-                <Button.Icon>
-                    <TrashFill color={colors.midGrey1} size={16}/>
-                </Button.Icon>
-            </Button>}
-        </div>
-
-        <ConfirmPopup
-            open={open}
-            onConfirm={deleteHandler}
-            onDecline={closeModal}
-            important
-        >
-            Are you sure you want to delete comment?
-        </ConfirmPopup>
-    </div>
-}
 
 export default Post

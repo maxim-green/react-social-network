@@ -1,54 +1,5 @@
-// color definitions (don't use directly in components)
-// todo move color variables to separate file
-
-// palette
-$white: #FFFFFF;
-$black: #000000;
-$accent: #3F72AF;
-$accent-secondary: #BEE7FD; // todo pick that color and rename variable wisely
-$dark: #112D4E;
-$mid: #DBE2EF;
-$light: #F9F7F7;
-$error: #EF3E36;
-$success: #9CEC5B;
-
-// greys
-$dark-grey: lighten($black, 25%);
-$mid-grey: lighten($black, 50%);
-$light-grey: lighten($black, 90%);
-$light-grey-2: #E8E9E8; // todo refactor usages and delete this variable
-
-// text colors
-$text-color-dark: $dark-grey;
-$text-color-mid: $mid-grey;
-$text-color-light: $white;
-$text-color-link: $accent;
-
-// global colors
-$app-background-color: $light;
-$app-bar-color: $accent;
-$app-bottom-nav-color: $dark;
-$app-border-color: $mid;
-$app-focus-color: $dark;
-$card-background-color: $white;
-
-// button colors
-$primary-background-color: $accent;
-$secondary-background-color: $accent-secondary;
-$neutral-background-color: $light-grey;
-$text-background-color: transparent;
-$cancel-background-color: $error;
-
-// input colors
-$input-background-color: $white;
-$input-placeholder-color: lighten($text-color-dark, 50%);
-$input-border-color: $light-grey-2;
-$input-error-color: $error;
-
-
-
 // ui
-$ui-transition: .2s;
+$ui-transition: .3s;
 $ui-border-radius: 4px;
 
 // shadows

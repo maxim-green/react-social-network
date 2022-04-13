@@ -1,0 +1,26 @@
+.comment {
+  display: flex;
+  padding: 15px 30px;
+  align-items: center;
+  & + & {
+    border-top: 1px solid $app-border-color;
+  }
+}
+
+.avatar {
+  margin-right: 30px;
+}
+
+.author {
+  color: $accent;
+  margin-right: 8px;
+}
+
+.date {
+  font-size: 12px;
+  color: $text-color-mid;
+}
+
+.controls {
+  margin-left: auto;
+}

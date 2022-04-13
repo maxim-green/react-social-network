@@ -3,6 +3,7 @@ import React from 'react'
 import {ContactsType, LocationType} from 'types/types'
 import {GeoAlt, Link45deg, CalendarEvent, Icon} from 'react-bootstrap-icons'
 import moment from 'moment'
+import {formatDate} from 'utils/functions'
 
 type PropsTypes = {
     birthDate: string | null
@@ -51,7 +52,7 @@ const InfoItem: React.FC<InfoItemType> = ({icon, label, link, iconSize = 16, chi
 
 type BirthDatePropsType = { birthDate: string }
 const BirthDate: React.FC<BirthDatePropsType> = ({birthDate}) => <InfoItem icon={CalendarEvent} iconSize={14}
-                                                                           label={'Birthday'}>{moment(birthDate).format('MMMM, D')}</InfoItem>
+                                                                           label={'Birthday'}>{formatDate(birthDate, 'MMMM, D')}</InfoItem>
 
 type LocationProps = { country: string, city: string }
 const Location: React.FC<LocationProps> = ({country, city}) => <InfoItem icon={GeoAlt} iconSize={15}

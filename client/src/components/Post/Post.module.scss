@@ -44,7 +44,7 @@
 .controls {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid $light-grey-2;
+  border-top: 1px solid $app-border-color;
 }
 
 .controlsItem {
@@ -54,61 +54,29 @@
   justify-content: center;
   align-items: center;
   & + & {
-    border-left: 1px solid $light-grey-2;
+    border-left: 1px solid $app-border-color;
   }
 }
 
 .comments {
-  border-top: 1px solid $light-grey-2;
+  border-top: 1px solid $app-border-color;
   max-height: 0px;
   transition: .7s ease;
-  &.active {
-    max-height: 500px;
-  }
-}
 
-.comment {
-  display: flex;
-  padding: 15px 30px;
-  align-items: center;
-  & + & {
-    border-top: 1px solid $light-grey-2;
+  &.active, &:focus {
+    max-height: 500px;
+    display: block;
   }
 }
 
 .commentInput {
   padding: 15px 30px;
-  border-bottom: 1px solid $light-grey-2;
-}
-
-.commentAvatar {
-  margin-right: 30px;
-}
-
-.commentContent {
-}
-
-.commentText {
-  margin-bottom: 2px;
-}
-
-.commentAuthor {
-  color: $accent;
-  margin-right: 8px;
-}
-
-.commentDate {
-  font-size: 12px;
-  color: $text-color-mid;
-}
-
-.commentControls {
-  margin-left: auto;
+  border-bottom: 1px solid $app-border-color;
 }
 
 .commentsShowMore {
   display: flex;
   justify-content: center;
   padding: 5px;
-  border-top: 1px solid $light-grey-2;
+  border-top: 1px solid $app-border-color;
 }

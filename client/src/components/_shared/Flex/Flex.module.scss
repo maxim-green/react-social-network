@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  .rowItem {
+    display: flex;
+    flex-direction: column;
+  }
+  .rowItem:last-child {
+    margin-right: 0;
+  }
+}
+.space {
+  margin: auto;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  .colItem:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -5,22 +5,32 @@ import {InputText} from 'components/_shared/Input/InputText/InputText'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {NewCommentType} from 'types/types'
+import {useSelector} from 'react-redux'
+import {StateType} from 'redux/store'
+import {NavLink} from 'react-router-dom'
 
 type PropsType = {
-    avatar?: string | null
+    disabled?: boolean,
     onAddComment: (text: string) => void
 }
 
-const AddPostCommentForm: React.FC<PropsType> = ({avatar, onAddComment}) => {
+const AddPostCommentForm: React.FC<PropsType> = ({onAddComment, disabled= false}) => {
+    const authorizedUser = useSelector((state: StateType) => state.auth.user)
+
     const submitHandler = (data: NewCommentType) => {
         onAddComment(data.text)
     }
 
     return <Form onSubmit={submitHandler} initialValues={{text: ''}} resetAfterSubmit={true}>
         <FormRow>
-            <div className={classes.avatar}><Avatar smallImg={avatar} size={30}/></div>
-            <InputText name={'text'} placeholder={'Write a comment'}/>
-            <Button><Button.Text>Add</Button.Text></Button>
+            <div className={classes.avatar}>
+                {/*todo add component ButtonLink. Same button but with NavLink*/}
+                <NavLink to={`/profile/${authorizedUser?.username}`} tabIndex={disabled ? -1 : undefined}>
+                    <Avatar smallImg={authorizedUser?.avatar.small} size={30}/>
+                </NavLink>
+            </div>
+            <InputText name={'text'} placeholder={'Write a comment'} disabled={disabled}/>
+            <Button disabled={disabled}><Button.Text>Add</Button.Text></Button>
         </FormRow>
     </Form>
 }

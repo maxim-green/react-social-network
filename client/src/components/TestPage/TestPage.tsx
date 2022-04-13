@@ -4,6 +4,7 @@ import {Card} from "components/_shared/Card/Card";
 import {Button} from 'components/_shared/Button/Button'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Search} from 'react-bootstrap-icons'
+import {Col, Row} from 'components/_shared/Flex/Flex'
 
 
 const TestPage: React.FC = () => {
@@ -63,6 +64,15 @@ const TestPage: React.FC = () => {
                             </div>
 
                         </div>
+                    </Card>
+                    <Card>
+                        <Row padding={10} gap={10}>
+                            <div style={{background: 'red', padding: 20}}>Hello world</div>
+                            <div style={{background: 'red', padding: 5}}>Hello world</div>
+                            <Row>
+                                <div>Hello world</div>
+                            </Row>
+                        </Row>
                     </Card>
                 </div>
 

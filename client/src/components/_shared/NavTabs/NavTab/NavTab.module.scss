@@ -7,7 +7,7 @@
     cursor: pointer;
   }
   & + & {
-    border-left: 1px solid $light-grey-2;
+    border-left: 1px solid $app-border-color;
   }
   .active {
     color: $text-color-dark;
