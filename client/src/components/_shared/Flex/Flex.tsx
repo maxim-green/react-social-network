@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {CSSProperties} from 'react'
 import classes from 'components/_shared/Flex/Flex.module.scss'
 
 type RowProps = {
+    children?: Array<React.ReactElement | boolean>
     verticalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
     horizontalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
     padding?: number | string
@@ -11,61 +12,63 @@ type RowProps = {
 
 export const Row: React.FC<RowProps> = ({
                                             children,
-                                            verticalAlign= 'start',
-                                            horizontalAlign= 'start',
-    padding = 0,
-    margin = 0,
-    gap = 0
-}) => {
+                                            verticalAlign = 'start',
+                                            horizontalAlign = 'start',
+                                            padding = 0,
+                                            gap = 0
+                                        }) => {
     return <div className={classes.row} style={{
         alignItems: 'stretch',
         justifyContent: horizontalAlign,
-        padding,
-        margin
+        padding
     }}>
-        {/* todo: find a way to identify Space component here to insert a space between two flex items*/}
-        {React.Children.map(children, child => <div className={classes.rowItem} style={{
-            marginRight: gap,
-            justifyContent: verticalAlign
-        }}>
-            {console.log(child)}
+        {children && children.map((child, index) => {
+                if (typeof child === 'boolean') return
+                return React.cloneElement(child, {
+                    key: index,
+                    style: {
+                        marginRight: (index === children.length - 1) ? 0 : gap,
+                        justifyContent: verticalAlign,
+                    },
+                    className: classes.col
+                })
+            }
+        )}
+
+    </div>
+}
+
+type ColProps = {
+    verticalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
+    horizontalAlign?: 'start' | 'end' | 'center' | 'baseline' | 'stretch'
+    style?: CSSProperties,
+    padding?: number | string,
+    gap?: number,
+}
+
+export const Col: React.FC<ColProps> = ({
+                                            children,
+                                            style,
+                                            verticalAlign,
+                                            horizontalAlign = 'start',
+                                            padding= 0,
+                                            gap = 0
+
+                                        }) => {
+
+    return <div className={classes.col} style={{
+        padding,
+        marginRight: style?.marginRight,
+        alignItems: horizontalAlign,
+        justifyContent: verticalAlign ? verticalAlign : style?.justifyContent,
+    }}>
+
+        {React.Children.map(children, child => <div className={classes.item} style={{marginBottom: gap}}>
             {child}
         </div>)}
     </div>
 }
 
 export const Space: React.FC = () => {
-    return <div className={classes.space}></div>
-}
-Space.displayName = 'Space'
-
-type ColProps = {
-    verticalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
-    horizontalAlign?: 'start' | 'end' | 'center' | 'baseline' | 'stretch'
-    padding?: number | string
-    margin?: number | string
-    gap?: number
-}
-
-export const Col: React.FC<ColProps> = ({
-                                            children,
-                                            verticalAlign = 'start',
-                                            horizontalAlign = 'start',
-                                            padding = 0,
-                                            margin = 0,
-                                            gap = 0
-}) => {
-    return <div className={classes.col} style={{
-        alignItems: horizontalAlign,
-        justifyContent: verticalAlign,
-        padding,
-        margin,
-        gap
-    }}>
-        {React.Children.map(children, child => <div className={classes.colItem} style={{
-            marginBottom: gap,
-        }}>
-            {child}
-        </div>)}
-    </div>
+    return <div className={classes.space}/>
 }

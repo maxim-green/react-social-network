@@ -12,6 +12,7 @@ import {CommentType, PostType} from 'types/types'
 import AddPostCommentForm from 'components/_forms/AddPostCommentForm/AddPostCommentForm'
 import {formatDate} from 'utils/functions'
 import {PostComment} from 'components/Post/PostComment/PostComment'
+import {Col, Row, Space} from 'components/_shared/Flex/Flex'
 
 // todo: destructure this component; consider connecting to store here.
 type PropsType = {
@@ -69,37 +70,35 @@ const Post: React.FC<PropsType> = ({
 
     return (
         <Card>
-            <div className={classes.header}>
-                <div className={classes.avatar}>
-                    <NavLink to={`/profile/${post.author.username}`}><Avatar smallImg={post.author.avatar.small} online
-                                                     size={55}/></NavLink>
-                </div>
-                <div className={classes.info}>
+            <Row padding={20} gap={20}>
+                <NavLink to={`/profile/${post.author.username}`}>
+                    <Avatar smallImg={post.author.avatar.small} online size={50}/>
+                </NavLink>
+                <Col verticalAlign={'center'}>
                     <NavLink to="/">
                         <div className={classes.userName}>{fullName}</div>
                     </NavLink>
                     <NavLink to={`/post/${post._id}`}>
                         <div className={classes.date}>posted on {date}</div>
                     </NavLink>
-                </div>
-                <div className={classes.menu}>
-                    {isAuthor && onPostDelete && <div>
-                        <Button onClick={openModal} type="text" size="sm">
-                            <Button.Icon>
-                                <TrashFill color={colors.midGrey1} size={16}/>
-                            </Button.Icon>
-                        </Button>
-                        <ConfirmPopup
-                            open={open}
-                            onConfirm={onDeleteClickHandler}
-                            onDecline={closeModal}
-                            important
-                        >
-                            Are you sure you want to delete this post?
-                        </ConfirmPopup>
-                    </div>}
-                </div>
-            </div>
+                </Col>
+                <Space/>
+                {isAuthor && onPostDelete && <div>
+                    <Button onClick={openModal} type="text" size="sm">
+                        <Button.Icon>
+                            <TrashFill color={colors.midGrey1} size={16}/>
+                        </Button.Icon>
+                    </Button>
+                    <ConfirmPopup
+                        open={open}
+                        onConfirm={onDeleteClickHandler}
+                        onDecline={closeModal}
+                        important
+                    >
+                        Are you sure you want to delete this post?
+                    </ConfirmPopup>
+                </div>}
+            </Row>
 
             <div className={classes.content}>
                 <div className={classes.text}>
@@ -140,9 +139,9 @@ const Post: React.FC<PropsType> = ({
                 {!!post.comments.length && <div className={classes.commentsList}>
 
                     {post.comments.slice().reverse().map(comment => <PostComment key={comment._id} {...comment}
-                                                           authorizedUserId={authorizedUserId}
-                                                           onDelete={deleteCommentHandler}
-                                                                             disabled={!commentSectionActive}
+                                                                                 authorizedUserId={authorizedUserId}
+                                                                                 onDelete={deleteCommentHandler}
+                                                                                 disabled={!commentSectionActive}
                     />)}
 
                     {post.comments.length > 3 && <div className={classes.commentsShowMore}>
@@ -156,7 +155,6 @@ const Post: React.FC<PropsType> = ({
         </Card>
     )
 }
-
 
 
 export default Post
