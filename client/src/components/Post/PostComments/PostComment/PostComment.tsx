@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import classes from './PostComment.module.scss'
+import classes from 'components/Post/PostComments/PostComment/PostComment.module.scss'
 import {CommentType} from 'types/types'
 import {NavLink} from 'react-router-dom'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {formatDate} from 'utils/functions'
 import {Button} from 'components/_shared/Button/Button'
-import {Heart, TrashFill} from 'react-bootstrap-icons'
+import {Heart, PencilFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'
-import {ConfirmPopup} from 'components/_shared/ConfirmPopup/ConfirmPopup'
 import {Col, Row, Space} from 'components/_shared/Flex/Flex'
+import {DeleteButton} from 'components/_shared/Button/DeleteButton/DeleteButton'
 
 type PropsType = CommentType & {
     disabled: boolean,
@@ -16,6 +16,7 @@ type PropsType = CommentType & {
     onDelete: (commentId: string) => void
 }
 
+// todo connect to store here
 export const PostComment: React.FC<PropsType> = ({
                                                      _id,
                                                      author,
@@ -57,22 +58,15 @@ export const PostComment: React.FC<PropsType> = ({
                     <Button type="text" size="sm" disabled={disabled}>
                         <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
                     </Button>
-                    {isAuthor && <Button type="text" size="sm" onClick={openModal} disabled={disabled}>
-                        <Button.Icon>
-                            <TrashFill color={colors.midGrey1} size={16}/>
-                        </Button.Icon>
-                    </Button>}
+                    <Button type="text" size="sm" disabled={disabled}>
+                        <Button.Icon><PencilFill color={colors.textMid} size={16}/></Button.Icon>
+                    </Button>
+                    {isAuthor && <DeleteButton
+                        onDelete={deleteHandler}
+                        warningMessage={'Are you sure you want to delete comment?'}
+                    />}
                 </Row>
             </Col>
         </Row>
-
-        <ConfirmPopup
-            open={open}
-            onConfirm={deleteHandler}
-            onDecline={closeModal}
-            important
-        >
-            Are you sure you want to delete comment?
-        </ConfirmPopup>
     </div>
 }

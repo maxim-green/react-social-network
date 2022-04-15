@@ -1,8 +1,5 @@
 .button {
   position: relative;
-  & + & {
-    margin-left: 10px;
-  }
 
   &.sm {
     font-size: $btn-sm;

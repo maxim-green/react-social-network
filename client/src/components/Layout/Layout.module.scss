@@ -1,6 +1,6 @@
 .layout {
   padding-top: $appbar-height;
-  background-color: transparent;
+  background-color: $app-background-color;
 }
 
 .background {
@@ -38,7 +38,7 @@
   z-index: 100;
   height: $appbar-height;
   background-color: $app-bar-color;
-  border-bottom: 1px solid darken($app-bar-color, 10%);
+  border-bottom: 1px solid $dark;
   color: $white;
   box-shadow: $bar-shadow;
   width: 100vw;

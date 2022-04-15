@@ -19,7 +19,11 @@
   @include focus;
 
   &.dragActive {
-    background-color: lighten($secondary-background-color, 5%);
+    //background-color: lighten($secondary-background-color, 5%);
+    background-image: linear-gradient(
+                    0deg,
+                    rgba(255,255,255,0.5) 0%,
+                    rgba(255,255,255,0.5) 100%);
   }
 }
 

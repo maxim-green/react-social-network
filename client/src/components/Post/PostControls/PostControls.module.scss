@@ -1,0 +1,16 @@
+.controls {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid $app-border-color;
+}
+
+.controlsItem {
+  padding: 5px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & + & {
+    border-left: 1px solid $app-border-color;
+  }
+}

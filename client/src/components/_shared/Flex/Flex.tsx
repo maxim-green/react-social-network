@@ -2,7 +2,7 @@ import React, {CSSProperties} from 'react'
 import classes from 'components/_shared/Flex/Flex.module.scss'
 
 type RowProps = {
-    children?: Array<React.ReactElement | boolean>
+    children?: Array<React.ReactElement | boolean> | React.ReactElement | boolean
     verticalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
     horizontalAlign?: 'start' | 'end' | 'center' | 'space-between' | 'space-around'
     padding?: number | string
@@ -22,19 +22,28 @@ export const Row: React.FC<RowProps> = ({
         justifyContent: horizontalAlign,
         padding
     }}>
-        {children && children.map((child, index) => {
+        {(children instanceof Array) && children.map((child, index) => {
                 if (typeof child === 'boolean') return
                 return React.cloneElement(child, {
                     key: index,
                     style: {
                         marginRight: (index === children.length - 1) ? 0 : gap,
-                        justifyContent: verticalAlign,
+                        justifyContent: verticalAlign
                     },
-                    className: classes.col
+                    className: child.props.className + ' ' + classes.col
                 })
             }
         )}
 
+        {children && typeof children !== 'boolean' && !(children instanceof Array) &&
+            React.cloneElement(children, {
+                style: {
+                    marginRight: 0,
+                    justifyContent: verticalAlign
+                },
+                className: children.props.className + ' ' + classes.col
+            })
+        }
     </div>
 }
 
@@ -51,7 +60,7 @@ export const Col: React.FC<ColProps> = ({
                                             style,
                                             verticalAlign,
                                             horizontalAlign = 'start',
-                                            padding= 0,
+                                            padding = 0,
                                             gap = 0
 
                                         }) => {
@@ -60,7 +69,7 @@ export const Col: React.FC<ColProps> = ({
         padding,
         marginRight: style?.marginRight,
         alignItems: horizontalAlign,
-        justifyContent: verticalAlign ? verticalAlign : style?.justifyContent,
+        justifyContent: verticalAlign ? verticalAlign : style?.justifyContent
     }}>
 
         {React.Children.map(children, child => <div className={classes.item} style={{marginBottom: gap}}>

@@ -1,0 +1,22 @@
+.comments {
+  border-top: 1px solid $app-border-color;
+  max-height: 0px;
+  transition: .7s ease;
+
+  &.active, &:focus {
+    max-height: 500px;
+    display: block;
+  }
+}
+
+.commentInput {
+  padding: 15px 30px;
+  border-bottom: 1px solid $app-border-color;
+}
+
+.commentsShowMore {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  border-top: 1px solid $app-border-color;
+}

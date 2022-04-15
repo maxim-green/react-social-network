@@ -1,3 +1,97 @@
+
+body {
+  //palette
+  --white: #FFFFFF;
+  --black: #000000;
+  --accent: #3F72AF;
+  --dark: #112D4E;
+  --mid: #d3e5ff;
+  --mid-desaturated: #DEE7F4;
+  --light: #F9F7F7;
+  --error: #EF3E36;
+  --success: #9CEC5B;
+
+  // greys
+  --dark-grey: #404040;
+  --mid-grey: #808080;
+  --light-grey: #F2F2F2;
+
+  // text colors
+  --text-color-dark: var(--dark-grey);
+  --text-color-mid: var(--mid-grey);
+  --text-color-light: var(--white);
+  --text-color-link: var(--accent);
+
+  // global colors
+  --app-background-color: var(--light);
+  --app-bar-color: var(--accent);
+  --app-bottom-nav-color: var(--dark);
+  --app-border-color: var(--mid-desaturated);
+  --app-focus-color: var(--dark);
+  --card-background-color: var(--white);
+
+  // button colors
+  --primary-background-color: var(--accent);
+  --secondary-background-color: var(--mid);
+  --neutral-background-color: var(--light-grey);
+  --text-background-color: transparent;
+  --cancel-background-color: var(--error);
+
+  // input colors
+  --input-background-color: var(--white);
+  --input-background-color-disabled: var(--light-grey);
+  --input-placeholder-color: var(--text-color-mid);
+  --input-border-color: var(--mid-desaturated);
+  --input-error-color: var(--error);
+}
+
+// todo: pick colors for dark theme
+body.dark {
+  //palette
+  --white: #FFFFFF;
+  --black: #081b33;
+  --accent: #3F72AF;
+  --dark: #152642;
+  --mid: #2f4562;
+  --mid-desaturated: #DEE7F4;
+  --light: #F9F7F7;
+  --error: #2b2b2c;
+  --success: #9CEC5B;
+
+  // greys
+  --dark-grey: #404040;
+  --mid-grey: #808080;
+  --light-grey: #F2F2F2;
+
+  // text colors
+  --text-color-dark: var(--mid-desaturated);
+  --text-color-mid: var(--mid-desaturated);
+  --text-color-light: var(--white);
+  --text-color-link: var(--light);
+
+  // global colors
+  --app-background-color: var(--dark);
+  --app-bar-color: var(--black);
+  --app-bottom-nav-color: var(--dark);
+  --app-border-color: var(--mid);
+  --app-focus-color: var(--dark);
+  --card-background-color: var(--black);
+
+  // button colors
+  --primary-background-color: var(--accent);
+  --secondary-background-color: var(--mid);
+  --neutral-background-color: var(--light-grey);
+  --text-background-color: transparent;
+  --cancel-background-color: var(--error);
+
+  // input colors
+  --input-background-color: var(--black);
+  --input-background-color-disabled: var(--light-grey);
+  --input-placeholder-color: var(--text-color-mid);
+  --input-border-color: var(--mid-desaturated);
+  --input-error-color: var(--error);
+}
+
 // palette
 $white: #FFFFFF;
 $black: #000000;
@@ -9,33 +103,34 @@ $error: #EF3E36;
 $success: #9CEC5B;
 
 // greys
-$dark-grey: lighten($black, 25%);
-$mid-grey: lighten($black, 50%);
-$light-grey: lighten($black, 95%);
+$dark-grey: #404040;
+$mid-grey: #808080;
+$light-grey: #F2F2F2;
 
 // text colors
-$text-color-dark: $dark-grey;
-$text-color-mid: $mid-grey;
-$text-color-light: $white;
-$text-color-link: $accent;
+$text-color-dark: var(--text-color-dark);
+$text-color-mid: var(--text-color-mid);
+$text-color-light: var(--text-color-light);
+$text-color-link: var(--text-color-link);
 
 // global colors
-$app-background-color: $light;
-$app-bar-color: $accent;
-$app-bottom-nav-color: $dark;
-$app-border-color: desaturate($mid, 50%);
-$app-focus-color: $dark;
-$card-background-color: $white;
+$app-background-color: var(--app-background-color);
+$app-bar-color: var(--app-bar-color);
+$app-bottom-nav-color: var(--app-bottom-nav-color);
+$app-border-color: var(--app-border-color);
+$app-focus-color: var(--app-focus-color);
+$card-background-color: var(--card-background-color);
 
 // button colors
-$primary-background-color: $accent;
-$secondary-background-color: $mid;
-$neutral-background-color: $light-grey;
-$text-background-color: transparent;
-$cancel-background-color: $error;
+$primary-background-color: var(--primary-background-color);
+$secondary-background-color: var(--secondary-background-color);
+$neutral-background-color: var(--neutral-background-color);
+$text-background-color: var(--text-background-color);
+$cancel-background-color: var(--cancel-background-color);
 
 // input colors
-$input-background-color: $white;
-$input-placeholder-color: lighten($text-color-dark, 50%);
-$input-border-color: desaturate($mid, 50%);
-$input-error-color: $error;
+$input-background-color: var(--input-background-color);
+$input-background-color-disabled: var(--input-background-color-disabled);
+$input-placeholder-color: var(--input-placeholder-color);
+$input-border-color: var(--input-border-color);
+$input-error-color: var(--input-error-color);

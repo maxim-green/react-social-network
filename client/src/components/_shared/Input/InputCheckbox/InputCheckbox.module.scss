@@ -34,7 +34,7 @@
       background-repeat: no-repeat;
     }
     &:disabled + .box {
-      background-color: darken($input-background-color, 5%);
+      background-color: $input-background-color-disabled;
     }
     @include focus-checkbox;
   }

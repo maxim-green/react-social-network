@@ -2,17 +2,18 @@
   white: $white;
   black: $black;
   accent: $accent;
+  dark: $dark;
+  mid: $mid;
+  light: $light;
   error: $error;
   success: $success;
 
   darkGrey: $dark-grey;
   midGrey: $mid-grey;
-  darkGrey2: $text-color-dark;
-  lightGrey1: $light-grey;
-  lightGrey2: $light-grey;
-  lightBlue1: $light-grey;
-  lightBlue2: $light-grey;
+  lightGrey: $light-grey;
 
-  fontLight: $text-color-light;
-  fontDark: $text-color-dark;
+  textDark: $text-color-dark;
+  textMid: $text-color-mid;
+  textLight: $text-color-light;
+  textLink: $text-color-link;
 }

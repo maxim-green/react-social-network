@@ -60,7 +60,9 @@ const TestPage: React.FC = () => {
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '300px'}}>
                                 <Button type={'primary'} size={'sm'} spinner><Button.Text>small</Button.Text></Button>
                                 <Button type={'primary'} size={'md'} spinner><Button.Text>medium</Button.Text></Button>
-                                <Button type={'primary'} size={'lg'} spinner><Button.Text>large</Button.Text></Button>
+                                <Button type={'primary'} size={'lg'} spinner>
+                                    <Button.Text>large</Button.Text>
+                                </Button>
                             </div>
 
                         </div>
