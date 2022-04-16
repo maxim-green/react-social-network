@@ -9,7 +9,6 @@
 
 .bio {
   font-size: 16px;
-  margin: 20px 0 30px 0;
 }
 
 .profileInfoItems {
@@ -44,7 +43,9 @@ flex-direction: column;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 10px;
+  font-size: 12px;
+  letter-spacing: .5px;
+  font-weight: 700;
   width: 80px;
   @include mq('phone-tablet') {
     margin-bottom: 0;

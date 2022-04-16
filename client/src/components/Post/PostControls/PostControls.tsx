@@ -4,6 +4,7 @@ import {Button} from 'components/_shared/Button/Button'
 import {ChatSquareTextFill, Heart, HeartFill, ShareFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'
 import {UserItemDataType} from 'types/types'
+import {Col, Row} from '../../_shared/Flex/Flex'
 
 type PropsType = {
     likes: UserItemDataType[]
@@ -20,23 +21,23 @@ export const PostControls: React.FC<PropsType> = ({
     onCommentClick,
     onShareClick
                                                   }) => {
-    return <div className={classes.controls}>
-        <div className={classes.controlsItem}>
-            <div>{likes.length}</div>
+    return <Row verticalAlign={'center'}>
+        <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
             <Button type="text" size="sm" onClick={onLikeClick}>
+                <Button.Text>{likes.length}</Button.Text>
                 {!isLiked && <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>}
                 {isLiked && <Button.Icon><HeartFill color={colors.accent} size={16}/></Button.Icon>}
             </Button>
-        </div>
-        <div className={classes.controlsItem}>
+        </Col>
+        <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
             <Button type="text" size="sm" onClick={onCommentClick}>
                 <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
             </Button>
-        </div>
-        <div className={classes.controlsItem}>
+        </Col>
+        <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
             <Button type="text" size="sm" onClick={onShareClick}>
                 <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>
             </Button>
-        </div>
-    </div>
+        </Col>
+    </Row>
 }

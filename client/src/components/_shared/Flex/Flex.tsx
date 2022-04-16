@@ -1,5 +1,6 @@
 import React, {CSSProperties} from 'react'
 import classes from 'components/_shared/Flex/Flex.module.scss'
+import classnames from 'classnames'
 
 type RowProps = {
     children?: Array<React.ReactElement | boolean> | React.ReactElement | boolean
@@ -8,6 +9,7 @@ type RowProps = {
     padding?: number | string
     margin?: number | string
     gap?: number
+    bordered?: boolean
 }
 
 export const Row: React.FC<RowProps> = ({
@@ -15,13 +17,20 @@ export const Row: React.FC<RowProps> = ({
                                             verticalAlign = 'start',
                                             horizontalAlign = 'start',
                                             padding = 0,
-                                            gap = 0
+                                            gap = 0,
+                                            bordered
                                         }) => {
-    return <div className={classes.row} style={{
-        alignItems: 'stretch',
-        justifyContent: horizontalAlign,
-        padding
-    }}>
+    return <div
+        className={classnames(
+            classes.row,
+            {[classes.bordered]: bordered})
+        }
+        style={{
+            alignItems: 'stretch',
+            justifyContent: horizontalAlign,
+            padding
+        }}
+    >
         {(children instanceof Array) && children.map((child, index) => {
                 if (typeof child === 'boolean') return
                 return React.cloneElement(child, {
@@ -53,6 +62,8 @@ type ColProps = {
     style?: CSSProperties,
     padding?: number | string,
     gap?: number,
+    bordered?: boolean,
+    stretch?: boolean,
 }
 
 export const Col: React.FC<ColProps> = ({
@@ -61,15 +72,17 @@ export const Col: React.FC<ColProps> = ({
                                             verticalAlign,
                                             horizontalAlign = 'start',
                                             padding = 0,
-                                            gap = 0
-
+                                            gap = 0,
+                                            bordered,
+    stretch= false
                                         }) => {
 
-    return <div className={classes.col} style={{
+    return <div className={classnames(classes.col, {[classes.bordered]: bordered})} style={{
         padding,
         marginRight: style?.marginRight,
         alignItems: horizontalAlign,
-        justifyContent: verticalAlign ? verticalAlign : style?.justifyContent
+        justifyContent: verticalAlign ? verticalAlign : style?.justifyContent,
+        flex: stretch ? 1 : undefined
     }}>
 
         {React.Children.map(children, child => <div className={classes.item} style={{marginBottom: gap}}>

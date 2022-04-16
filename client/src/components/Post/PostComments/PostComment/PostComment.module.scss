@@ -1,9 +1,3 @@
-.comment {
-  & + & {
-    border-top: 1px solid $app-border-color;
-  }
-}
-
 .author {
   color: $accent;
   margin-right: 8px;

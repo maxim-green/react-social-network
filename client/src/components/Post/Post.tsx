@@ -91,5 +91,4 @@ const Post: React.FC<PropsType> = ({
     )
 }
 
-
 export default Post

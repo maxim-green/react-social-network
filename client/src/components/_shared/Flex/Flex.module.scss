@@ -2,6 +2,12 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  &.bordered {
+    border-bottom: 1px solid $app-border-color;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }
 
 .col {
@@ -9,6 +15,12 @@
   flex-direction: column;
   .item:last-child {
     margin-bottom: 0 !important;
+  }
+  &.bordered {
+    border-right: 1px solid $app-border-color;
+    &:last-child {
+      border-right: none;
+    }
   }
 }
 

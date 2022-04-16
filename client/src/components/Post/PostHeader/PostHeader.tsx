@@ -5,6 +5,9 @@ import {NavLink} from 'react-router-dom'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Col, Row, Space} from 'components/_shared/Flex/Flex'
 import {DeleteButton} from 'components/_shared/Button/DeleteButton/DeleteButton'
+import {Button} from '../../_shared/Button/Button'
+import {PencilFill} from 'react-bootstrap-icons'
+import colors from '../../../assets/styles/colors.module.scss'
 
 type PropsType = {
     id: string
@@ -14,12 +17,12 @@ type PropsType = {
     onDelete: () => void
 }
 export const PostHeader: React.FC<PropsType> = ({
-                                                  id,
-                                                  date,
-                                                  author,
-                                                  isAuthor,
-                                                  onDelete
-                                              }) => {
+                                                    id,
+                                                    date,
+                                                    author,
+                                                    isAuthor,
+                                                    onDelete
+                                                }) => {
     return <Row padding={20} gap={20}>
         <NavLink to={`/profile/${author.username}`}>
             <Avatar smallImg={author.avatar.small} online size={50}/>
@@ -33,9 +36,16 @@ export const PostHeader: React.FC<PropsType> = ({
             </NavLink>
         </Col>
         <Space/>
-        {isAuthor && onDelete && <DeleteButton
-            onDelete={onDelete}
-            warningMessage={'Are you sure you want to delete this post?'}
-        />}
+        {isAuthor && <Col>
+            <Row>
+                <Button type="text" size="sm">
+                    <Button.Icon><PencilFill color={colors.textMid} size={16}/></Button.Icon>
+                </Button>
+                <DeleteButton
+                    onDelete={onDelete}
+                    warningMessage={'Are you sure you want to delete this post?'}
+                />
+            </Row>
+        </Col>}
     </Row>
 }

@@ -16,7 +16,6 @@ type PropsType = CommentType & {
     onDelete: (commentId: string) => void
 }
 
-// todo connect to store here
 export const PostComment: React.FC<PropsType> = ({
                                                      _id,
                                                      author,
@@ -27,19 +26,13 @@ export const PostComment: React.FC<PropsType> = ({
                                                      onDelete,
                                                      disabled = false
                                                  }) => {
-    const [open, setOpen] = useState(false)
-    const openModal = () => setOpen(true)
-    const closeModal = () => setOpen(false)
-
     const deleteHandler = () => {
         onDelete(_id)
-        setOpen(false)
     }
 
     const isAuthor = authorizedUserId === author._id
 
-    return <div className={classes.comment}>
-        <Row padding={'10px 20px'} verticalAlign={'center'} gap={10}>
+    return <Row padding={'10px 20px'} verticalAlign={'center'} gap={10} bordered={true}>
             <NavLink to={`/profile/${author.username}`} tabIndex={disabled ? -1 : undefined}>
                 <Avatar smallImg={author.avatar.small} size={40}/>
             </NavLink>
@@ -58,15 +51,15 @@ export const PostComment: React.FC<PropsType> = ({
                     <Button type="text" size="sm" disabled={disabled}>
                         <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
                     </Button>
-                    <Button type="text" size="sm" disabled={disabled}>
+                    {isAuthor && <Button type="text" size="sm" disabled={disabled}>
                         <Button.Icon><PencilFill color={colors.textMid} size={16}/></Button.Icon>
-                    </Button>
+                    </Button>}
                     {isAuthor && <DeleteButton
                         onDelete={deleteHandler}
                         warningMessage={'Are you sure you want to delete comment?'}
+                        disabled={disabled}
                     />}
                 </Row>
             </Col>
         </Row>
-    </div>
 }
