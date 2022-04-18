@@ -1,5 +1,4 @@
 import React from 'react'
-import classes from './PostControls.module.scss'
 import {Button} from 'components/_shared/Button/Button'
 import {ChatSquareTextFill, Heart, HeartFill, ShareFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'

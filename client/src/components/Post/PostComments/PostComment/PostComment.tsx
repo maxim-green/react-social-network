@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import classes from 'components/Post/PostComments/PostComment/PostComment.module.scss'
 import {CommentType} from 'types/types'
 import {NavLink} from 'react-router-dom'

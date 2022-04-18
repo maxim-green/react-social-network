@@ -2,7 +2,7 @@
   position: relative;
   justify-content: space-between;
   align-items: flex-start;
-  min-height: $avatar-profile / 2 + 20px;
+  min-height: div($avatar-profile, (2 + 20px));
   @include mq('phone-tablet') {
     flex-wrap: wrap;
     margin-bottom: 15px;
@@ -11,10 +11,10 @@
 
 .avatar {
   position: absolute;
-  top: -$avatar-profile / 2;
+  top: div(-$avatar-profile, 2);
   left: 20px;
   @include mq('phone-tablet') {
-    top: -$avatar-profile-phone-tablet / 2;
+    top: div(-$avatar-profile-phone-tablet, 2);
     left: 50%;
     transform: translateX(-50%);
   }
@@ -35,7 +35,7 @@
   @include mq('phone-tablet') {
     align-items: center;
     margin: 0  auto;
-    padding-top: $avatar-profile-phone-tablet / 2;
+    padding-top: div($avatar-profile-phone-tablet, 2);
   }
 }
 

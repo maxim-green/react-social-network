@@ -14,7 +14,7 @@ const server = http.createServer(expressApp)
 const start = async () => {
     try {
         // connecting to database
-        await mongoose.connect(process.env.DB_URI)
+        await mongoose.connect(process.env.DB_URI_LOCAL)
 
         // starting http server (express)
         server.listen(PORT, () => {

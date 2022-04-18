@@ -1,8 +1,7 @@
 import classes from 'components/Profile/ProfileInfoData/ProfileInfoData.module.scss'
 import React from 'react'
 import {ContactsType, LocationType} from 'types/types'
-import {GeoAlt, Link45deg, CalendarEvent, Icon} from 'react-bootstrap-icons'
-import moment from 'moment'
+import {CalendarEvent, GeoAlt, Icon, Link45deg} from 'react-bootstrap-icons'
 import {formatDate} from 'utils/functions'
 import {Row} from '../../_shared/Flex/Flex'
 

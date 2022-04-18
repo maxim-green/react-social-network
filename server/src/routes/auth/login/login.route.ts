@@ -17,7 +17,7 @@ router.post('/',
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) throwValidationError(errors.array())
-
+            console.log(req.body)
             const {accessToken, refreshToken} = await loginUser(req.body)
 
             res

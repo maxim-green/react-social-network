@@ -53,10 +53,14 @@ export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActio
 //endregion
 
 //region THUNK CREATORS
+// todo: need to test and debug dialogs. sometimes messages not added to state immediately after sending.
 let _messageHandler: ((message: MessageType) => void) | null = null
 const messageHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => {
+
     if (_messageHandler) return _messageHandler
-    return (message: MessageType) => dispatch(dialogsActions.addMessage(message))
+    return (message: MessageType) => {
+        dispatch(dialogsActions.addMessage(message))
+    }
 }
 
 export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {StateType} from 'redux/store'
 import {useDispatch, useSelector} from 'react-redux'
 import classes from './Layout.module.scss'
@@ -32,7 +32,6 @@ const Layout: React.FC<PropsType> = ({
                                          authUserAvatar,
                                          onLogout
                                      }) => {
-    const [theme, setTheme] = useState('light')
     const toggleTheme = () => {
         document.body.classList.toggle('dark')
     }

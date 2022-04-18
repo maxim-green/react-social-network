@@ -32,7 +32,7 @@ export const Row: React.FC<RowProps> = ({
         }}
     >
         {(children instanceof Array) && children.map((child, index) => {
-                if (typeof child === 'boolean') return
+                if (typeof child === 'boolean') return false
                 return React.cloneElement(child, {
                     key: index,
                     style: {
