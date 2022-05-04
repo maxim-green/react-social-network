@@ -7,7 +7,6 @@ import path from 'path'
 
 import api from 'routes'
 import {withErrorHandler} from 'middleware'
-import router from 'routes'
 
 const expressApp = express()
 
@@ -22,6 +21,7 @@ expressApp.use(bodyParser.json())
 expressApp.use(cookieParser())
 expressApp.use(withErrorHandler)
 
+expressApp.use('/', serveStatic(path.join(__dirname, '../../public')))
 expressApp.use('/uploads', serveStatic(path.join(__dirname, '../../uploads')))
 expressApp.use('/api', api)
 

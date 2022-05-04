@@ -7,14 +7,18 @@
   "author": "mgeorgievsky <max.georgievsky@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"yarn server\" \"yarn client\"",
     "client": "yarn --cwd client start",
     "server": "yarn --cwd server dev",
     "client:test": "yarn --cwd client test",
     "server:install": "yarn --cwd server install",
     "client:install": "yarn --cwd client install",
+    "client:build": "yarn --cwd client build && cp -r client/build server/public",
+    "server:build": "yarn --cwd server build",
+    "build": "yarn client:build && yarn server:build",
     "i": "yarn install && yarn server:install && yarn client:install",
-    "dev": "concurrently \"yarn server\" \"yarn client\""
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "deploy": "yarn i && yarn build && yarn server",
+    "start": "concurrently \"yarn server\" \"yarn client\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

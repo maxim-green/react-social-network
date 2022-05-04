@@ -4,16 +4,16 @@ import 'assets/styles/normalize.scss'
 import 'assets/styles/global.scss'
 import App from './components/App'
 import reportWebVitals from './reportWebVitals'
-import {BrowserRouter} from 'react-router-dom'
+import {HashRouter} from 'react-router-dom'
 import store from './redux/store'
 import {Provider} from 'react-redux'
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
+            <HashRouter>
                 <App/>
-            </BrowserRouter>
+            </HashRouter>
         </Provider>
     </React.StrictMode>
     , document.getElementById('root')
