@@ -9,32 +9,32 @@ import {PostComment} from 'models/PostComment'
 // TODO: resolve ts-ignore in this file
 
 export const getPosts = async () => {
-    return Post.find().populate('author', 'username firstName lastName avatar')
-        .populate('likes', 'username firstName lastName avatar')
-        .populate('comments.author', 'username firstName lastName avatar')
+    return Post.find().populate('author', 'username firstName lastName avatar updatedAt')
+        .populate('likes', 'username firstName lastName avatar updatedAt')
+        .populate('comments.author', 'username firstName lastName avatar updatedAt')
 }
 
 export const getUserPosts = async (username: string) => {
     const user = await findUser({'username': username})
     return Post.find({'author': user.id})
-        .populate('author', 'username firstName lastName avatar')
-        .populate('likes', 'username firstName lastName avatar')
-        .populate('comments.author', 'username firstName lastName avatar')
+        .populate('author', 'username firstName lastName avatar updatedAt')
+        .populate('likes', 'username firstName lastName avatar updatedAt')
+        .populate('comments.author', 'username firstName lastName avatar updatedAt')
 }
 
 export const getSubscriptionsPosts = async (user: MongooseDocument<PopulatedUserType>) => {
     return Post.find({author: {$in: user.subscriptions}})
-        .populate('author', 'username firstName lastName avatar')
-        .populate('likes', 'username firstName lastName avatar')
-        .populate('comments.author', 'username firstName lastName avatar')
+        .populate('author', 'username firstName lastName avatar updatedAt')
+        .populate('likes', 'username firstName lastName avatar updatedAt')
+        .populate('comments.author', 'username firstName lastName avatar updatedAt')
 }
 
 
 export const getPost = async (postId: Types.ObjectId | string) => {
     const post = await Post.findById(postId)
-        .populate('author', 'username firstName lastName avatar')
-        .populate('likes', 'username firstName lastName avatar')
-        .populate('comments.author', 'username firstName lastName avatar')
+        .populate('author', 'username firstName lastName avatar updatedAt')
+        .populate('likes', 'username firstName lastName avatar updatedAt')
+        .populate('comments.author', 'username firstName lastName avatar updatedAt')
     if (!post) throw new HTTPError(404, {resultCode: 1, message: 'Post not found'})
     return post
 }
@@ -44,7 +44,7 @@ export const createPost = async (
     text: string
 ) => {
     const post = await Post.create({author, text})
-    await Post.populate(post, {path: 'author', model: 'User', select: 'username firstName lastName avatar'})
+    await Post.populate(post, {path: 'author', model: 'User', select: 'username firstName lastName avatar updatedAt'})
 
     return post
 }
@@ -63,7 +63,7 @@ export const createPostNew = async (
     }
     await post.save()
 
-    await Post.populate(post, {path: 'author', model: 'User', select: 'username firstName lastName avatar'})
+    await Post.populate(post, {path: 'author', model: 'User', select: 'username firstName lastName avatar updatedAt'})
     return post
 }
 
@@ -122,7 +122,7 @@ export const addComment = async (postId: string, author: MongooseDocument<Popula
     post.comments.push(comment)
     await post.save()
 
-    return comment.populate('author', 'username firstName lastName avatar')
+    return comment.populate('author', 'username firstName lastName avatar updatedAt')
 }
 
 export const deleteComment = async (

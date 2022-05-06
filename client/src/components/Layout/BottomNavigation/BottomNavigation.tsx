@@ -16,21 +16,21 @@ export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
         {authorized && <div className={classes.item}>
             <NavLink to={'/feed'}>
                 <Button type={'link'} size={'lg'}>
-                    <Button.Icon><HouseDoorFill color={colors.fontLight}/></Button.Icon>
+                    <Button.Icon><HouseDoorFill color={colors.textLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>}
         <div className={classes.item}>
             <NavLink to={'/users'}>
                 <Button type={'link'} size={'lg'}>
-                    <Button.Icon><PeopleFill color={colors.fontLight}/></Button.Icon>
+                    <Button.Icon><PeopleFill color={colors.textLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>
         {authorized && <div className={classes.item}>
             <NavLink to={'/dialogs'}>
                 <Button type={'link'} size={'lg'}>
-                    <Button.Icon><ChatLeftTextFill color={colors.fontLight}/></Button.Icon>
+                    <Button.Icon><ChatLeftTextFill color={colors.textLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>}
@@ -44,7 +44,7 @@ export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
         {!authorized && <div className={classes.item}>
             <NavLink to={'/login'}>
                 <Button type={'link'} size={'lg'}>
-                    <Button.Icon><DoorOpenFill color={colors.fontLight}/></Button.Icon>
+                    <Button.Icon><DoorOpenFill color={colors.textLight}/></Button.Icon>
                 </Button>
             </NavLink>
         </div>}

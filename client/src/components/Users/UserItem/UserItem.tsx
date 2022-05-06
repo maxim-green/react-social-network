@@ -6,6 +6,7 @@ import {UserItemDataType} from 'types/types'
 import {Button} from 'components/_shared/Button/Button'
 import {ChatLeftTextFill, GearFill} from 'react-bootstrap-icons'
 import colors from 'assets/styles/colors.module.scss'
+import {checkOnline} from 'utils/functions'
 
 type PropsType = {
     authorized: boolean
@@ -44,7 +45,7 @@ const UserItem: React.FC<PropsType> = ({
     return (
         <div className={classes.userItem}>
             <div className={classes.avatar}>
-                <NavLink to={`/profile/${user.username}`}><Avatar smallImg={user.avatar && user.avatar.small} online
+                <NavLink to={`/profile/${user.username}`}><Avatar smallImg={user.avatar && user.avatar.small} online={checkOnline(user.updatedAt)}
                                                                    size={70}/></NavLink>
             </div>
             <div className={classes.info}>

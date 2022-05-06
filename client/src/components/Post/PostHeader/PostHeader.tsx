@@ -8,6 +8,7 @@ import {DeleteButton} from 'components/_shared/Button/DeleteButton/DeleteButton'
 import {Button} from '../../_shared/Button/Button'
 import {PencilFill} from 'react-bootstrap-icons'
 import colors from '../../../assets/styles/colors.module.scss'
+import {checkOnline} from 'utils/functions'
 
 type PropsType = {
     id: string
@@ -25,7 +26,7 @@ export const PostHeader: React.FC<PropsType> = ({
                                                 }) => {
     return <Row padding={20} gap={20}>
         <NavLink to={`/profile/${author.username}`}>
-            <Avatar smallImg={author.avatar.small} online size={50}/>
+            <Avatar smallImg={author.avatar.small} online={checkOnline(author.updatedAt)} size={50}/>
         </NavLink>
         <Col verticalAlign={'center'}>
             <NavLink to="/">

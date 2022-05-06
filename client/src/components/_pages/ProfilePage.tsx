@@ -8,6 +8,7 @@ import {Area} from 'react-easy-crop/types'
 import NewPostInputForm from 'components/_forms/NewPostInputForm/NewPostInputForm'
 import Feed from 'components/Feed/Feed'
 import Profile from 'components/Profile/Profile'
+import {Helmet} from 'react-helmet'
 
 
 const ProfilePage: React.FC = () => {
@@ -47,6 +48,9 @@ const ProfilePage: React.FC = () => {
     if (!authUser && !username) return <Redirect to={`/login`}/>
     if (authUser && !username) return <Redirect to={`/profile/${authUser.username}`}/>
     return <>
+        {profileUser.firstName && profileUser.lastName && <Helmet>
+            <title>{profileUser.firstName} {profileUser.lastName}</title>
+        </Helmet>}
         <Profile
             user={profileUser}
             isOwner={isOwner}

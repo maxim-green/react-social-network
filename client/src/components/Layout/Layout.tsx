@@ -11,8 +11,7 @@ import {AvatarType, UserItemDataType} from 'types/types'
 import {logout} from 'redux/reducers/auth.reducer'
 import {useBreakpoint} from 'utils/hooks'
 import {BottomNavigation} from 'components/Layout/BottomNavigation/BottomNavigation'
-import {Button} from 'components/_shared/Button/Button'
-import {Row} from 'components/_shared/Flex/Flex'
+import {checkOnline} from 'utils/functions'
 
 type PropsType = {
     sidebar?: boolean
@@ -30,12 +29,8 @@ const Layout: React.FC<PropsType> = ({
                                          subscriptions,
                                          authUserName,
                                          authUserAvatar,
-                                         onLogout
+                                         onLogout,
                                      }) => {
-    const toggleTheme = () => {
-        document.body.classList.toggle('dark')
-    }
-
     const authorized = useSelector((state: StateType) => state.auth.authorized)
     const {tablet} = useBreakpoint()
     return (
@@ -47,11 +42,6 @@ const Layout: React.FC<PropsType> = ({
 
             <Main>
                 {sidebar && !tablet && <Sidebar>
-                    <Card>
-                        <Row padding={10} horizontalAlign={'center'}>
-                            <Button onClick={toggleTheme}>Toggle theme</Button>
-                        </Row>
-                    </Card>
                     {!authorized && <Card>
                         <div style={{padding: '10px'}}><LoginForm/></div>
                     </Card>}

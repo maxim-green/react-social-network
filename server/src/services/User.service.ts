@@ -22,11 +22,11 @@ export const findUser = async (filter: FilterQuery<Document>) => {
 }
 
 export const getUsers = async () => {
-    return await User.find().select('username firstName lastName avatar subscriptions').lean()
+    return await User.find().select('username firstName lastName avatar subscriptions updatedAt').lean()
 }
 
 export const getUserSubscriptions = async (user: MongooseDocument<PopulatedUserType>) => {
-    return await User.find({_id: {$in: user.subscriptions}}).select('username firstName lastName avatar subscriptions').lean()
+    return await User.find({_id: {$in: user.subscriptions}}).select('username firstName lastName avatar subscriptions updatedAt').lean()
 }
 
 export const getUserProfile = async (username: string) => {
@@ -36,11 +36,11 @@ export const getUserProfile = async (username: string) => {
 }
 
 export const getUserByAccessToken = async (accessToken: string): Promise<MongooseDocument<PopulatedUserType>> => {
-    const {userId} = await verifyToken<{ userId: string }>(accessToken)    // validating RT
+    const {userId} = await verifyToken<{ userId: string }>(accessToken)    // validating AT
 
     const user = await User.findById(userId)
         .select('-refreshToken -password')
-        .populate<{ subscriptions: Array<UserType> }>('subscriptions', 'username firstName lastName avatar subscriptions')
+        .populate<{ subscriptions: Array<UserType> }>('subscriptions', 'username firstName lastName avatar subscriptions updatedAt')
 
     if (!user) throw new HTTPError(401, {resultCode: 1, message: 'Invalid token'})
 
@@ -52,7 +52,7 @@ export const getUserByRefreshToken = async (refreshToken: string) => {
 
     const candidate = await User.findById(userId)
         .select('-password')
-        .populate<{ subscriptions: Array<UserType> }>('subscriptions', 'username firstName lastName avatar subscriptions')
+        .populate<{ subscriptions: Array<UserType> }>('subscriptions', 'username firstName lastName avatar subscriptions updatedAt')
 
     if (!candidate) throw new HTTPError(401, {resultCode: 1, message: 'Invalid token'})
 

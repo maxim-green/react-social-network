@@ -26,6 +26,7 @@ export type ServerValidationErrorType = {
 // type for user profile data
 export type UserDataType = {
     _id: string
+    updatedAt: string
     registrationDate: Date
     username: string
     firstName: string
@@ -48,6 +49,7 @@ export type UserItemDataType = {
     username: string
     firstName: string
     lastName: string
+    updatedAt: string
     avatar: AvatarType
     subscriptions: Array<UserItemDataType>
 }

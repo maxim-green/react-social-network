@@ -5,6 +5,7 @@ import ProfileInfoHeader from 'components/Profile/ProfileHeader/ProfileHeader'
 import ProfileInfoData from 'components/Profile/ProfileInfoData/ProfileInfoData'
 import {Card} from 'components/_shared/Card/Card'
 import {UserDataType} from 'types/types'
+import {checkOnline} from 'utils/functions'
 
 type PropsType = {
     user: UserDataType
@@ -30,6 +31,7 @@ const Profile: React.FC<PropsType> = ({
                 onCoverImageSubmit={onCoverImageSubmit}
             />
             <ProfileInfoHeader
+                online={checkOnline(user.updatedAt)}
                 owner={isOwner}
                 firstName={user.firstName}
                 lastName={user.lastName}

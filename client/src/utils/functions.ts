@@ -8,3 +8,9 @@ export const formatDate = (date: Date | string, format: string = 'DD.MM.YYYY') =
     return moment(date).format(format)
 }
 
+export const checkOnline = (lastSeenDate?: string) => {
+    if (!lastSeenDate) return false
+    const currentDate = new Date()
+    const date = new Date(lastSeenDate)
+    return currentDate.getTime() - date.getTime() < 5 * 60 * 1000
+}

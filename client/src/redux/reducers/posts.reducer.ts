@@ -45,7 +45,8 @@ const reducer = (state: PostsStateType = initialState, action: PostsActionType):
                 firstName: action.user.firstName,
                 lastName: action.user.lastName,
                 avatar: action.user.avatar,
-                subscriptions: action.user.subscriptions
+                subscriptions: action.user.subscriptions,
+                updatedAt: Date.now().toString()
             }
             return {
                 ...state,

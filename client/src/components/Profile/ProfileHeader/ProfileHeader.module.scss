@@ -3,9 +3,9 @@
   justify-content: space-between;
   align-items: flex-start;
   min-height: div($avatar-profile, (2 + 20px));
+  margin-bottom: 30px;
   @include mq('phone-tablet') {
     flex-wrap: wrap;
-    margin-bottom: 15px;
   }
 }
 

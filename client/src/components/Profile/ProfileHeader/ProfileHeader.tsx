@@ -13,6 +13,7 @@ import {OnlineIndicator} from 'components/_shared/OnlineIndicator/OnlineIndicato
 import {useBreakpoint} from 'utils/hooks'
 
 type PropsType = {
+    online?: boolean
     owner?: boolean
     firstName: string,
     lastName: string,
@@ -23,6 +24,7 @@ type PropsType = {
 }
 
 const ProfileHeader: React.FC<PropsType> = ({
+    online= false,
                                                 owner = false,
                                                 firstName,
                                                 lastName,
@@ -60,9 +62,9 @@ const ProfileHeader: React.FC<PropsType> = ({
                     largeImg={avatar?.large}
                     border shadow size={!phoneTablet ? Number.parseInt(sizes.avatarProfile) : Number.parseInt(sizes.avatarProfilePhoneTablet)}
                     onEdit={owner ? onAvatarSubmit : undefined }/>
-                    <div className={classes.onlineIndicator}>
-                        <OnlineIndicator>Online</OnlineIndicator>
-                    </div>
+                {online && <div className={classes.onlineIndicator}>
+                    <OnlineIndicator>Online</OnlineIndicator>
+                </div>}
             </div>
             <div className={classes.profileHeaderInfo}>
                 <div className={classes.name}>
