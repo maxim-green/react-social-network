@@ -8,6 +8,7 @@ export type MessageType = {
     dialog: SchemaDefinitionProperty<Types.ObjectId>
     author: SchemaDefinitionProperty<Types.ObjectId>
     text: string
+    isRead: boolean
 }
 
 export type PopulatedMessageType = Override<MessageType, {

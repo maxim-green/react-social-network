@@ -91,14 +91,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 18px;
-  height: 18px;
-  left: -18px;
+  width: 22px;
+  height: 22px;
+  left: -20px;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 10px;
   background-color: $success;
-  color: $white;
-  border-radius: 9px;
+  color: $text-color-dark;
+  border-radius: 11px;
   z-index: 5;
 }

@@ -16,6 +16,9 @@ socket.on('server-message', handleServerMessage)
 socket.on('connect', () => console.log('Socket connection opened'))
 socket.on('disconnect', () => console.log('Socket connection closed'))
 
+// todo dispatch unread messages data to store and display it in UI
+socket.on('unread-messages', (data) => console.log(data))
+
 export const socketApi = {
     connect() {
         if (!socket.connected) socket.connect()

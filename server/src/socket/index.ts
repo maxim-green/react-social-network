@@ -6,12 +6,7 @@ import {Dialog, Message} from 'models'
 import {MessageType, MongooseDocument, PopulatedUserType, SocketWithUser} from 'types'
 import {ioConfig} from 'configs'
 import {socketAuth} from 'middleware'
-
-
-
-const getUserDialogs = async (userId: string) => {
-    return Dialog.find({users: userId})
-}
+import {findUserDialogs, getUnreadMessagesCount, getUserDialogs} from '../services'
 
 const connectUser = async (user: MongooseDocument<PopulatedUserType>) => {
     console.log(`${user.username} connected`)
@@ -47,6 +42,13 @@ export const ioServer = (server: HTTPServer) => {
 
         const dialogs = await getUserDialogs(user.id)
         socket.join(dialogs.map(d => d.id))    // room id is dialog id
+        socket.join(user.id)
+
+        io.to(user.id).emit('unread-messages', {
+            dialogId: user.id,
+            message: 'Connected to dialogs server',
+            unreadMessagesCount: await getUnreadMessagesCount(user.id)
+        })
 
         socket.on('disconnect', async () => {
             await disconnectUser(user)
@@ -55,12 +57,23 @@ export const ioServer = (server: HTTPServer) => {
         socket.on('client-message', async (text, dialogId) => {
             const message = await createMessage(user, text, dialogId)
 
-            await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: message}})
+            const dialog = await Dialog.findByIdAndUpdate(dialogId, {$push: {messages: message}})
+            console.log(user.id)
+            const companionUserId = dialog.users.find(u => u.toString() !== user.id.toString())._id.toString()
 
             const responseMessage = await message
-                .populate<{author: PopulatedUserType}>('author', 'username firstName lastName avatar')
+                .populate<{ author: PopulatedUserType }>('author', 'username firstName lastName avatar')
 
-            io.to(dialogId).emit('server-message', {dialogId, message: responseMessage})
+            io.to(dialogId)
+                .emit('server-message', {dialogId, message: responseMessage})
+
+            console.log(companionUserId)
+            io.to(companionUserId)
+                .emit('unread-messages', {
+                    dialogId: companionUserId,
+                    message: 'New message',
+                    unreadMessagesCount: await getUnreadMessagesCount(companionUserId)
+                })
         })
     })
 }

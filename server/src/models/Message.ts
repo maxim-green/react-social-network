@@ -4,7 +4,8 @@ import {MessageType} from 'types'
 const schema = new Schema<MessageType>({
     author: { type: Types.ObjectId, ref: 'User', required: true},
     dialog: { type: Types.ObjectId, ref: 'Dialog', required: true},
-    text: {type: String, required: true}
+    text: {type: String, required: true},
+    isRead: {type: Boolean, required: true, default: false}
 }, {
     timestamps: true,
     collection: 'messages'
