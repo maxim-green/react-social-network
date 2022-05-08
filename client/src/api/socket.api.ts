@@ -1,23 +1,27 @@
 import {MessageType} from '../types/types'
 import {io} from 'socket.io-client'
 
-let subscribers = [] as Array<(message: MessageType) => void>
+let serverMessageSubscribers = [] as Array<(message: MessageType) => void>
+let unreadMessagesSubscribers = [] as Array<(unreadMessagesCount: number) => void>
 
 let socket = io('http://localhost:5000', {withCredentials: true, autoConnect: false})
 
+// handle dialog message from server
 type ServerMessageResponseType = { dialogId: string, message: MessageType }
 const handleServerMessage = (serverMessageResponse: ServerMessageResponseType) => {
-    console.log('Message from server ', serverMessageResponse.message)
-    subscribers.forEach(s => s(serverMessageResponse.message))
+    serverMessageSubscribers.forEach(s => s(serverMessageResponse.message))
 }
-
 socket.on('server-message', handleServerMessage)
+
+// handle unread messages notification from server
+type UnreadMessagesResponseType = { unreadMessagesCount: number }
+const handleUnreadMessages = (unreadMessagesResponse: UnreadMessagesResponseType) => {
+    unreadMessagesSubscribers.forEach(s => s(unreadMessagesResponse.unreadMessagesCount))
+}
+socket.on('unread-messages', handleUnreadMessages)
 
 socket.on('connect', () => console.log('Socket connection opened'))
 socket.on('disconnect', () => console.log('Socket connection closed'))
-
-// todo dispatch unread messages data to store and display it in UI
-socket.on('unread-messages', (data) => console.log(data))
 
 export const socketApi = {
     connect() {
@@ -26,18 +30,26 @@ export const socketApi = {
     disconnect() {
         if (socket.connected) {
             socket.disconnect()
-            subscribers = []
+            serverMessageSubscribers = []
         }
     },
-    subscribe(callback: (message: MessageType) => void) {
-        subscribers.push(callback)
-        return () => {
-            subscribers = subscribers.filter(s => s !== callback)
-        }
+
+    subscribe(
+        serverMessageCallback: (message: MessageType) => void,
+        unreadMessagesCallback: (unreadMessagesCount: number) => void
+    ) {
+        serverMessageSubscribers.push(serverMessageCallback)
+        unreadMessagesSubscribers.push(unreadMessagesCallback)
     },
-    unsubscribe(callback: (message: MessageType) => void) {
-        subscribers = subscribers.filter(s => s !== callback)
+
+    unsubscribe(
+        serverMessageCallback: (message: MessageType) => void,
+        unreadMessagesCallback: (unreadMessagesCount: number) => void
+    ) {
+        serverMessageSubscribers = serverMessageSubscribers.filter(s => s !== serverMessageCallback)
+        unreadMessagesSubscribers = unreadMessagesSubscribers.filter(s => s !== unreadMessagesCallback)
     },
+
     sendMessage(message: string, dialogId: string) {
         socket.emit('client-message', message, dialogId)
     },

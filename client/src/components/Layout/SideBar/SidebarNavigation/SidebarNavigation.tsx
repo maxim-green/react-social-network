@@ -5,10 +5,14 @@ import classes from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigati
 import {Card} from 'components/_shared/Card/Card'
 import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide, HouseDoorFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
+import {useSelector} from 'react-redux'
+import {StateType} from '../../../../redux/store'
 
 type PropsType = {}
 
 const SidebarNavigation: React.FC<PropsType> = () => {
+    const unreadMessagesCount = useSelector((state: StateType) => state.dialogs.unreadMessagesCount)
+
     return (
         <Card>
             <div className={classes.Navigation}>
@@ -29,7 +33,7 @@ const SidebarNavigation: React.FC<PropsType> = () => {
                         <Button type={'link'} size={'lg'}>
                             <Button.Icon><ChatLeftTextFill/></Button.Icon>
                             <Button.Text>Dialogs</Button.Text>
-                            <Button.Badge>12</Button.Badge>
+                            {!!unreadMessagesCount && <Button.Badge>{unreadMessagesCount}</Button.Badge>}
                         </Button>
                     </Item>
                     <Item to='/users'>

@@ -10,7 +10,8 @@ import {ResultCodes} from 'api/core.api'
 const initialState = {
     currentDialogId: null as string | null,
     messages: [] as Array<MessageType>,
-    dialogs: [] as Array<DialogType>
+    dialogs: [] as Array<DialogType>,
+    unreadMessagesCount: 0
 }
 type DialogsStateType = typeof initialState
 
@@ -37,6 +38,12 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
                 dialogs: action.dialogs
             }
         }
+        case 'rsn/chat/SET_UNREAD_MESSAGES_COUNT': {
+            return {
+                ...state,
+                unreadMessagesCount: action.unreadMessagesCount
+            }
+        }
         default: {
             return state
         }
@@ -48,6 +55,7 @@ export const dialogsActions = {
     setDialog: (currentDialogId: string, messages: Array<MessageType>) => ({type: 'rsn/chat/SET_DIALOG', currentDialogId, messages} as const),
     setDialogs: (dialogs: Array<DialogType>) => ({type: 'rsn/chat/SET_DIALOGS', dialogs} as const),
     addMessage: (message: MessageType) => ({type: 'rsn/chat/ADD_MESSAGE', message} as const),
+    setUnreadMessagesCount: (unreadMessagesCount: number) => ({type: 'rsn/chat/SET_UNREAD_MESSAGES_COUNT', unreadMessagesCount} as const)
 }
 export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActions>>
 //endregion
@@ -56,20 +64,33 @@ export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActio
 // todo: need to test and debug dialogs. sometimes messages not added to state immediately after sending.
 let _messageHandler: ((message: MessageType) => void) | null = null
 const messageHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => {
-
     if (_messageHandler) return _messageHandler
     return (message: MessageType) => {
         dispatch(dialogsActions.addMessage(message))
     }
 }
 
+let _unreadMessagesHandler: ((unreadMessagesCount: number) => void) | null = null
+const unreadMessagesHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => {
+    if (_unreadMessagesHandler) return _unreadMessagesHandler
+    return (unreadMessagesCount: number) => {
+        dispatch(dialogsActions.setUnreadMessagesCount(unreadMessagesCount))
+    }
+}
+
 export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {
     socketApi.connect()
     socketApi.joinDialogs()
-    socketApi.subscribe(messageHandlerCreator(dispatch))
+    socketApi.subscribe(
+        messageHandlerCreator(dispatch),
+        unreadMessagesHandlerCreator(dispatch)
+    )
 }
 export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {
-    socketApi.unsubscribe(messageHandlerCreator(dispatch))
+    socketApi.unsubscribe(
+        messageHandlerCreator(dispatch),
+        unreadMessagesHandlerCreator(dispatch)
+    )
     socketApi.disconnect()
 }
 export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
