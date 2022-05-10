@@ -56,8 +56,5 @@ export const socketApi = {
     },
     sendMessage(message: string, dialogId: string) {
         socket.emit('client-message', message, dialogId)
-    },
-    joinDialogs() {
-        socket.emit('client-join-dialogs')
     }
 }

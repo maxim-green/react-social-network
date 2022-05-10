@@ -105,7 +105,6 @@ const unreadMessagesHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => 
 
 export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {
     socketApi.connect()
-    socketApi.joinDialogs()
     socketApi.subscribe(
         messageHandlerCreator(dispatch),
         unreadMessagesHandlerCreator(dispatch)

@@ -35,7 +35,14 @@ export const ioServer = (server: HTTPServer) => {
 
     io.use(socketAuth)
 
-    io.sockets.on('connection', async (socket: SocketWithUser) => {
+    io.on('connection', async (socket: SocketWithUser) => {
+
+        socket.use((packet, next) => {
+            if (packet[0] === 'client-message') {
+                // todo do auth check here (with refresh token)
+                // send error event if failed
+            }
+        })
 
         const {user} = socket
         await connectUser(user)
