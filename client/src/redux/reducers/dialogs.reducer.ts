@@ -22,7 +22,10 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
             return {
                 ...state,
                 messages: [...state.messages, action.message],
-                dialogs: state.dialogs.map(dialog => (dialog._id === action.message.dialogId) ? {...dialog, updated: action.message.date} : dialog)
+                dialogs: state.dialogs.map(dialog => (dialog._id === action.message.dialog) ? {
+                    ...dialog,
+                    updated: action.message.date
+                } : dialog)
             }
         }
         case 'rsn/chat/SET_DIALOG': {
@@ -30,6 +33,13 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
                 ...state,
                 currentDialogId: action.currentDialogId,
                 messages: action.messages
+            }
+        }
+        case 'rsn/chat/UNSET_DIALOG': {
+            return {
+                ...state,
+                currentDialogId: null,
+                messages: []
             }
         }
         case 'rsn/chat/SET_DIALOGS': {
@@ -44,6 +54,12 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
                 unreadMessagesCount: action.unreadMessagesCount
             }
         }
+        case 'rsn/chat/MARK_MESSAGE_AS_READ': {
+            return {
+                ...state,
+                messages: state.messages.map(message => message._id !== action.messageId ? message : {...message, isRead: true})
+            }
+        }
         default: {
             return state
         }
@@ -52,16 +68,25 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
 
 //region ACTION CREATORS
 export const dialogsActions = {
-    setDialog: (currentDialogId: string, messages: Array<MessageType>) => ({type: 'rsn/chat/SET_DIALOG', currentDialogId, messages} as const),
+    setDialog: (currentDialogId: string, messages: Array<MessageType>) => ({
+        type: 'rsn/chat/SET_DIALOG',
+        currentDialogId,
+        messages
+    } as const),
+    unsetDialog: () => ({type: 'rsn/chat/UNSET_DIALOG'} as const),
     setDialogs: (dialogs: Array<DialogType>) => ({type: 'rsn/chat/SET_DIALOGS', dialogs} as const),
     addMessage: (message: MessageType) => ({type: 'rsn/chat/ADD_MESSAGE', message} as const),
-    setUnreadMessagesCount: (unreadMessagesCount: number) => ({type: 'rsn/chat/SET_UNREAD_MESSAGES_COUNT', unreadMessagesCount} as const)
+    setUnreadMessagesCount: (unreadMessagesCount: number) => ({
+        type: 'rsn/chat/SET_UNREAD_MESSAGES_COUNT',
+        unreadMessagesCount
+    } as const),
+    markMessageAsRead: (messageId: string) => ({type: 'rsn/chat/MARK_MESSAGE_AS_READ', messageId} as const)
 }
 export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActions>>
 //endregion
 
 //region THUNK CREATORS
-// todo: need to test and debug dialogs. sometimes messages not added to state immediately after sending.
+// todo: need to test and debug dialogs. sometimes message not added to state immediately after sending.
 let _messageHandler: ((message: MessageType) => void) | null = null
 const messageHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => {
     if (_messageHandler) return _messageHandler
@@ -93,13 +118,14 @@ export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (
     )
     socketApi.disconnect()
 }
+
+// todo should refresh tokens if not authorized + add authorization verification on backend
 export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
     socketApi.sendMessage(message, dialogId)
-    dispatch(getDialogs())
 }
 
 export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) => {
-    const res =  await dialogApi.getDialogs()
+    const res = await dialogApi.getDialogs()
 
     if (res.resultCode === ResultCodes.success) {
         dispatch(dialogsActions.setDialogs(res.data.dialogs))
@@ -113,6 +139,26 @@ export const openDialog = (username: string): ThunkType<DialogsActionType> => as
     const res = await dialogApi.getMessages(username)
     if (res.resultCode === ResultCodes.success) {
         dispatch(dialogsActions.setDialog(res.data.dialog._id, res.data.dialog.messages))
+    }
+    if (res.resultCode === ResultCodes.error) {
+        console.log(res)
+    }
+}
+
+export const closeDialog = (): ThunkType<DialogsActionType> => async (dispatch) => {
+    dispatch(dialogsActions.unsetDialog())
+}
+
+export const readMessages = (dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
+    console.log(dialogId)
+    socketApi.readMessages(dialogId)
+}
+
+export const readMessage = (messageId: string): ThunkType<DialogsActionType> => async (dispatch) => {
+    const res = await dialogApi.markMessageAsRead(messageId)
+    if (res.resultCode === ResultCodes.success) {
+        dispatch(dialogsActions.markMessageAsRead(res.data.message._id))
+        dispatch(dialogsActions.setUnreadMessagesCount(res.data.unreadMessagesCount))
     }
     if (res.resultCode === ResultCodes.error) {
         console.log(res)

@@ -1,7 +1,8 @@
 import {Dialog, Message} from '../models'
 import {Types} from 'mongoose'
-import {MongooseDocument, PopulatedDialogType} from '../types'
+import {MessageType, MongooseDocument, PopulatedDialogType, PopulatedMessageType, PopulatedUserType} from '../types'
 import { Document } from 'mongodb'
+import {HTTPError} from '../helpers'
 
 export const getUserDialogs = async (userId: string) => {
     return Dialog.find({users: userId})
@@ -11,7 +12,7 @@ export const findUserDialogs = async (userId: string) => {
     // TODO consider refactoring using generic in populate() like it described here: https://mongoosejs.com/docs/typescript/populate.html
     const dialogs = await Dialog
         .find({users: userId})
-        .select('-messages')
+        .select('-message')
         .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar'])
 
     return dialogs.map(dialog => ({
@@ -34,9 +35,6 @@ export const findDialog = async (requestUser: Types.ObjectId, targetUser: Types.
             path: 'messages',
             populate: {path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar']}
         })
-    markMessagesAsRead(dialog.id, targetUser)
-
-
     return dialog
 }
 
@@ -47,6 +45,22 @@ export const markMessagesAsRead = async (dialogId: Types.ObjectId, authorId: Typ
             {author: authorId}
         ]
     }, {isRead: true})
+}
+
+export const markMessageAsRead = async (messageId: string, user: MongooseDocument<PopulatedUserType>) => {
+    const message = await Message.findById(messageId).exec()
+    const dialog = await Dialog.findById(message.dialog)
+    // todo. seems like it works that way, but i need to figure out type error (remove ts-ignore)
+    // @ts-ignore
+    const readerUser = dialog.users.find(u => u._id.toString() !== message.author._id.toString())
+
+    if (readerUser._id.toString() === user._id.toString()) {
+        message.isRead = true
+        await message.save()
+        return message.populate({path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar']})
+    } else {
+        throw new HTTPError(401, {resultCode: 1, message: 'Not authorized'})
+    }
 }
 
 export const getUnreadMessagesCount = async (userId: string) => {

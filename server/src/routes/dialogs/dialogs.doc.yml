@@ -38,7 +38,7 @@
         description: Username parameter.
     responses:
       200:
-        description: Success. Data contains dialog id and array with dialog messages.
+        description: Success. Data contains dialog id and array with dialog message.
         content:
           application/json:
             schema:

@@ -3,7 +3,7 @@ import React, {useEffect} from 'react'
 import {Redirect, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from 'redux/store'
-import {getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
+import {closeDialog, getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
 import {useAuthCheck} from 'utils/hooks'
 
 
@@ -30,11 +30,19 @@ const DialogsPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(openDialog(username))
+        return () => {
+            dispatch(closeDialog())
+        }
     }, [username, dispatch])
 
     useEffect(() => {
         dispatch(getDialogs())
     }, [dispatch])
+
+    useEffect(() => {
+        // console.log('message updated')
+        // if (currentDialogId) dispatch(readMessages(currentDialogId))
+    }, [messages, dispatch])
 
 
     const authorized = useAuthCheck()

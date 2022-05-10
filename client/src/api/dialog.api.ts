@@ -23,5 +23,9 @@ export const dialogApi = {
     getMessages: (username: string) => coreApi
         .get(`/dialog/${username}`)
         .then(handleResponse<DialogDataType>())
+        .catch(handleError()),
+    markMessageAsRead: (messageId: string) => coreApi
+        .patch(`/message/${messageId}`)
+        .then(handleResponse<{message: MessageType, unreadMessagesCount: number}>())
         .catch(handleError())
 }

@@ -8,7 +8,7 @@ import postsRouter from './post/index'
 import profileRouter from './profile/index'
 import subscriptionRouter from './subscription/index'
 import usersRouter from './users/index'
-import {expressApp} from 'configs'
+import messageRouter from './message/index'
 import {deleteFile} from 'helpers'
 
 
@@ -21,6 +21,7 @@ router.use('/dialog', dialogsRouter)
 router.use('/user', usersRouter)
 router.use('/post', postsRouter)
 router.use('/subscription', subscriptionRouter)
+router.use('/message', messageRouter)
 
 router.get('/img', (req: Request, res: Response) => {
     const url = 'https://source.unsplash.com/random/1920x1080/?nature'

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {NavLink} from 'react-router-dom'
 import classes from './Dialogs.module.scss'
 import {AvatarType, DialogType, MessageType, UserItemDataType} from 'types/types'
@@ -8,6 +8,9 @@ import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {ArrowLeft, List} from 'react-bootstrap-icons'
 import classnames from 'classnames'
+import VisibilitySensor from 'react-visibility-sensor'
+import {readMessage} from '../../redux/reducers/dialogs.reducer'
+import {useDispatch} from 'react-redux'
 
 type PropsType = {
     messages: Array<MessageType>
@@ -57,7 +60,7 @@ const Dialogs: React.FC<PropsType> = ({messages, dialogs, authUser, onNewMessage
                 </div>
 
                 <div className={classes.messages}>
-                    {messages.slice().reverse().map((message, index) => <Message key={index} message={message}
+                    {messages.slice().reverse().map((message) => <Message key={message._id} message={message}
                                                                                  authUser={authUser}/>)}
                 </div>
 
@@ -80,16 +83,31 @@ const DialogButton: React.FC<DialogButtonType> = ({username, firstName, avatar})
 }
 
 const Message: React.FC<{ message: MessageType, authUser: string }> = ({message, authUser}) => {
+    const isAuthor = authUser === message.author.username
+    const dispatch = useDispatch()
+    const [visible, setVisible] = useState(false)
+
+    // todo think better way to read message. for example send 'read-message' event and handle it on server
+    const visibilityChangeHandler = (isVisible: boolean) => {
+        setVisible(isVisible)
+        if (visible && !message.isRead) dispatch(readMessage(message.dialog))
+    }
+
+    useEffect(() => {
+        if (visible && !message.isRead && !isAuthor) dispatch(readMessage(message._id))
+    }, [visible])
     return (
-        <div className={(authUser === message.author.username) ? classes.messageSelf : classes.messageOther}>
-            <div className={classes.messageAvatar}>
-                <Avatar online smallImg={message.author.avatar.small} size={30}/>
+        <VisibilitySensor onChange={visibilityChangeHandler}>
+            <div className={isAuthor ? classes.messageSelf : classes.messageOther}>
+                <div className={classes.messageAvatar}>
+                    <Avatar online smallImg={message.author.avatar.small} size={30}/>
+                </div>
+                <div>
+                    <div className={classes.messageAuthorName}>{message.author.firstName}</div>
+                    <div>{message.text}</div>
+                </div>
             </div>
-            <div>
-                <div className={classes.messageAuthorName}>{message.author.firstName}</div>
-                <div>{message.text}</div>
-            </div>
-        </div>
+        </VisibilitySensor>
     )
 }
 

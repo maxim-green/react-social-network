@@ -13,12 +13,13 @@ const handleServerMessage = (serverMessageResponse: ServerMessageResponseType) =
 }
 socket.on('server-message', handleServerMessage)
 
-// handle unread messages notification from server
+// handle unread message notification from server
+// todo needs to be finished. notifications not clearing when dialog is opened.
 type UnreadMessagesResponseType = { unreadMessagesCount: number }
 const handleUnreadMessages = (unreadMessagesResponse: UnreadMessagesResponseType) => {
     unreadMessagesSubscribers.forEach(s => s(unreadMessagesResponse.unreadMessagesCount))
 }
-socket.on('unread-messages', handleUnreadMessages)
+socket.on('unread-message', handleUnreadMessages)
 
 socket.on('connect', () => console.log('Socket connection opened'))
 socket.on('disconnect', () => console.log('Socket connection closed'))
@@ -49,7 +50,10 @@ export const socketApi = {
         serverMessageSubscribers = serverMessageSubscribers.filter(s => s !== serverMessageCallback)
         unreadMessagesSubscribers = unreadMessagesSubscribers.filter(s => s !== unreadMessagesCallback)
     },
-
+    readMessages(dialogId: string) {
+        console.log('read message')
+        socket.emit('read-message', dialogId)
+    },
     sendMessage(message: string, dialogId: string) {
         socket.emit('client-message', message, dialogId)
     },

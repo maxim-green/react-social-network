@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0"
+  },
+  "dependencies": {
+    "react-visibility-sensor": "^5.1.1"
   }
 }

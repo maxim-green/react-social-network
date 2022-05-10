@@ -6,7 +6,7 @@ const findUserDialogs = async (userId) => {
     // TODO consider refactoring using generic in populate() like it described here: https://mongoosejs.com/docs/typescript/populate.html
     const dialogs = await models_1.Dialog
         .find({ users: userId })
-        .select('-messages')
+        .select('-message')
         .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar']);
     return dialogs.map(dialog => ({
         _id: dialog._id,

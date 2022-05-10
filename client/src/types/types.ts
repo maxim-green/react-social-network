@@ -54,12 +54,14 @@ export type UserItemDataType = {
     subscriptions: Array<UserItemDataType>
 }
 
-// type for dialogs messages
+// type for dialogs message
 export type MessageType = {
-    dialogId: string
+    _id: string
+    dialog: string
     date: Date
     author: UserItemDataType,
     text: string
+    isRead: boolean
 }
 
 // type for items in dialogs list
