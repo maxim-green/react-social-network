@@ -1,9 +1,10 @@
-import {InferActionsTypes, ThunkType} from '../store'
+import {InferActionsTypes, StateType, ThunkType} from '../store'
 import {DialogType, MessageType} from 'types/types'
 import {socketApi} from 'api/socket.api'
 import {Dispatch} from 'react'
 import {dialogApi} from 'api/dialog.api'
 import {ResultCodes} from 'api/core.api'
+import {authApi} from 'api/auth.api'
 
 
 // INITIAL STATE
@@ -11,6 +12,7 @@ const initialState = {
     currentDialogId: null as string | null,
     messages: [] as Array<MessageType>,
     dialogs: [] as Array<DialogType>,
+    cachedMessage: null as { text: string, dialogId: string } | null,
     unreadMessagesCount: 0
 }
 type DialogsStateType = typeof initialState
@@ -60,6 +62,18 @@ export const dialogsReducer = (state: DialogsStateType = initialState, action: D
                 messages: state.messages.map(message => message._id !== action.messageId ? message : {...message, isRead: true})
             }
         }
+        case 'rsn/chat/SET_CACHED_MESSAGE': {
+            return {
+                ...state,
+                cachedMessage: {text: action.text, dialogId: action.dialogId}
+            }
+        }
+        case 'rsn/chat/CLEAR_CACHED_MESSAGE': {
+            return {
+                ...state,
+                cachedMessage: null
+            }
+        }
         default: {
             return state
         }
@@ -80,7 +94,9 @@ export const dialogsActions = {
         type: 'rsn/chat/SET_UNREAD_MESSAGES_COUNT',
         unreadMessagesCount
     } as const),
-    markMessageAsRead: (messageId: string) => ({type: 'rsn/chat/MARK_MESSAGE_AS_READ', messageId} as const)
+    markMessageAsRead: (messageId: string) => ({type: 'rsn/chat/MARK_MESSAGE_AS_READ', messageId} as const),
+    setCachedMessage: (text: string, dialogId: string) => ({type: 'rsn/chat/SET_CACHED_MESSAGE', text, dialogId} as const),
+    clearCachedMessage: () => ({type: 'rsn/chat/CLEAR_CACHED_MESSAGE'} as const)
 }
 export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActions>>
 //endregion
@@ -103,23 +119,45 @@ const unreadMessagesHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => 
     }
 }
 
-export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {
+let _notAuthorizedHandler: (() => null) | null = null
+const notAuthorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>, getState: () => StateType) => {
+    if (_notAuthorizedHandler) return _notAuthorizedHandler
+    return async () => {
+        console.log('dispatch not authorized')
+        dispatch(stopMessagesListening())
+        const res = await authApi.refreshToken()
+        dispatch(startMessagesListening())
+        const {cachedMessage} = getState().dialogs
+        if (res.resultCode === ResultCodes.success && cachedMessage) {
+            const {text, dialogId} = cachedMessage
+            console.log(cachedMessage)
+            // todo looks like there is not enough time for connection.
+            dispatch(sendMessage(text, dialogId))
+        }
+        dispatch(dialogsActions.clearCachedMessage())
+    }
+}
+
+export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch, getState) => {
     socketApi.connect()
     socketApi.subscribe(
         messageHandlerCreator(dispatch),
-        unreadMessagesHandlerCreator(dispatch)
+        unreadMessagesHandlerCreator(dispatch),
+        notAuthorizedHandlerCreator(dispatch, getState)
     )
 }
-export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch) => {
+export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch, getState) => {
     socketApi.unsubscribe(
         messageHandlerCreator(dispatch),
-        unreadMessagesHandlerCreator(dispatch)
+        unreadMessagesHandlerCreator(dispatch),
+        notAuthorizedHandlerCreator(dispatch, getState)
     )
     socketApi.disconnect()
 }
 
 // todo should refresh tokens if not authorized + add authorization verification on backend
 export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
+    dispatch(dialogsActions.setCachedMessage(message, dialogId))
     socketApi.sendMessage(message, dialogId)
 }
 

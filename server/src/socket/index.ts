@@ -1,12 +1,11 @@
 import {Server as SocketIOServer} from 'socket.io'
 import {Server as HTTPServer} from 'http'
 import {Types} from 'mongoose'
-
 import {Dialog, Message} from 'models'
 import {MessageType, MongooseDocument, PopulatedUserType, SocketWithUser} from 'types'
 import {ioConfig} from 'configs'
-import {socketAuth} from 'middleware'
-import {findUserDialogs, getUnreadMessagesCount, getUserDialogs, markMessagesAsRead} from '../services'
+import {socketConnectionAuth, socketEventAuth} from 'middleware'
+import {getUnreadMessagesCount, getUserDialogs, markMessagesAsRead} from '../services'
 
 const connectUser = async (user: MongooseDocument<PopulatedUserType>) => {
     console.log(`${user.username} connected`)
@@ -33,14 +32,16 @@ const createMessage = async (author: MongooseDocument<PopulatedUserType>, text: 
 export const ioServer = (server: HTTPServer) => {
     const io = new SocketIOServer(server, ioConfig)
 
-    io.use(socketAuth)
+    io.use(socketConnectionAuth)
 
     io.on('connection', async (socket: SocketWithUser) => {
 
-        socket.use((packet, next) => {
+        socket.use(async (packet, next) => {
             if (packet[0] === 'client-message') {
                 // todo do auth check here (with refresh token)
                 // send error event if failed
+                const res = await socketEventAuth(socket)
+                if (res) next()
             }
         })
 
