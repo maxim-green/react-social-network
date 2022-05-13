@@ -5,6 +5,8 @@ import {Button} from 'components/_shared/Button/Button'
 import {ChatLeftTextFill, PeopleFill, HouseDoorFill, DoorOpenFill} from 'react-bootstrap-icons'
 import {NavLink} from 'react-router-dom'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
+import {useSelector} from 'react-redux'
+import {StateType} from 'redux/store'
 
 type Props = {
     authorized: boolean
@@ -12,6 +14,7 @@ type Props = {
 }
 
 export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
+    const unreadMessagesCount = useSelector((state: StateType) => state.dialogs.unreadMessagesCount)
     return <div className={classes.wrapper}>
         {authorized && <div className={classes.item}>
             <NavLink to={'/feed'}>
@@ -31,6 +34,7 @@ export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
             <NavLink to={'/dialogs'}>
                 <Button type={'link'} size={'lg'}>
                     <Button.Icon><ChatLeftTextFill color={colors.textLight}/></Button.Icon>
+                    {!!unreadMessagesCount && <Button.Badge>{unreadMessagesCount}</Button.Badge>}
                 </Button>
             </NavLink>
         </div>}

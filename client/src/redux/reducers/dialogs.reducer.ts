@@ -103,6 +103,19 @@ export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActio
 
 //region THUNK CREATORS
 // todo: need to test and debug dialogs. sometimes message not added to state immediately after sending.
+let _connectHandler: (() => void) | null = null
+const connectHandlerCreator = (dispatch: Dispatch<DialogsActionType | ThunkType<DialogsActionType>>, getState: () => StateType) => {
+    if (_connectHandler) return _connectHandler
+    return () => {
+        console.log('connect handler')
+        const {cachedMessage} = getState().dialogs
+        if (cachedMessage) {
+            dispatch(sendMessage(cachedMessage.text, cachedMessage.dialogId))
+            dispatch(dialogsActions.clearCachedMessage())
+        }
+    }
+}
+
 let _messageHandler: ((message: MessageType) => void) | null = null
 const messageHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => {
     if (_messageHandler) return _messageHandler
@@ -120,43 +133,47 @@ const unreadMessagesHandlerCreator = (dispatch: Dispatch<DialogsActionType>) => 
 }
 
 let _notAuthorizedHandler: (() => null) | null = null
-const notAuthorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>, getState: () => StateType) => {
+const notAuthorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>) => {
     if (_notAuthorizedHandler) return _notAuthorizedHandler
     return async () => {
-        console.log('dispatch not authorized')
+        console.log('dispatch not authorized websocket event')
         dispatch(stopMessagesListening())
         const res = await authApi.refreshToken()
-        dispatch(startMessagesListening())
-        const {cachedMessage} = getState().dialogs
-        if (res.resultCode === ResultCodes.success && cachedMessage) {
-            const {text, dialogId} = cachedMessage
-            console.log(cachedMessage)
-            // todo looks like there is not enough time for connection.
-            dispatch(sendMessage(text, dialogId))
-        }
-        dispatch(dialogsActions.clearCachedMessage())
+        if (res.resultCode === ResultCodes.success) dispatch(startMessagesListening())
+    }
+}
+
+let _authorizedHandler: (() => null) | null = null
+const authorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>, getState: () => StateType) => {
+    if (_authorizedHandler) return _authorizedHandler
+    return async () => {
+
     }
 }
 
 export const startMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch, getState) => {
     socketApi.connect()
     socketApi.subscribe(
+        connectHandlerCreator(dispatch, getState),
         messageHandlerCreator(dispatch),
         unreadMessagesHandlerCreator(dispatch),
-        notAuthorizedHandlerCreator(dispatch, getState)
+        notAuthorizedHandlerCreator(dispatch),
+        authorizedHandlerCreator(dispatch, getState)
     )
 }
 export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (dispatch, getState) => {
     socketApi.unsubscribe(
+        connectHandlerCreator(dispatch, getState),
         messageHandlerCreator(dispatch),
         unreadMessagesHandlerCreator(dispatch),
-        notAuthorizedHandlerCreator(dispatch, getState)
+        notAuthorizedHandlerCreator(dispatch),
+        authorizedHandlerCreator(dispatch, getState)
     )
     socketApi.disconnect()
 }
 
 // todo should refresh tokens if not authorized + add authorization verification on backend
-export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
+export const sendMessage = (message: string, dialogId: string): ThunkType<DialogsActionType> => async (dispatch, getState) => {
     dispatch(dialogsActions.setCachedMessage(message, dialogId))
     socketApi.sendMessage(message, dialogId)
 }
@@ -184,11 +201,6 @@ export const openDialog = (username: string): ThunkType<DialogsActionType> => as
 
 export const closeDialog = (): ThunkType<DialogsActionType> => async (dispatch) => {
     dispatch(dialogsActions.unsetDialog())
-}
-
-export const readMessages = (dialogId: string): ThunkType<DialogsActionType> => async (dispatch) => {
-    console.log(dialogId)
-    socketApi.readMessages(dialogId)
 }
 
 export const readMessage = (messageId: string): ThunkType<DialogsActionType> => async (dispatch) => {

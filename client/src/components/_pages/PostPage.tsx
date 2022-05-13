@@ -44,6 +44,7 @@ const PostPage: React.FC = () => {
 
     return <>
         {post && <Post
+            comments={'shown'}
             key={post._id}
             post={post}
             authorizedUserId={authorizedUserId}

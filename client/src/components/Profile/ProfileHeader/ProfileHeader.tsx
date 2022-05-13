@@ -57,6 +57,7 @@ const ProfileHeader: React.FC<PropsType> = ({
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
+
                 <Avatar
                     smallImg={avatar?.small}
                     largeImg={avatar?.large}

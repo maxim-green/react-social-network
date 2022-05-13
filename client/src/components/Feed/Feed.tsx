@@ -30,6 +30,7 @@ const Feed: React.FC<Props> = ({
             posts.slice().reverse().map(post => <Post
                 key={post._id}
                 post={post}
+                commentsShown={3}
                 onPostDelete={onPostDelete}
                 onPostDeleteLike={onPostDeleteLike}
                 onPostAddLike={onPostAddLike}

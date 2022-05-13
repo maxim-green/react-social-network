@@ -37,12 +37,10 @@ export const ioServer = (server: HTTPServer) => {
     io.on('connection', async (socket: SocketWithUser) => {
 
         socket.use(async (packet, next) => {
-            if (packet[0] === 'client-message') {
-                // todo do auth check here (with refresh token)
-                // send error event if failed
-                const res = await socketEventAuth(socket)
-                if (res) next()
-            }
+            // todo do auth check here (with refresh token)
+            // send error event if failed
+            const res = await socketEventAuth(socket)
+            if (res) next()
         })
 
         const {user} = socket
@@ -79,7 +77,7 @@ export const ioServer = (server: HTTPServer) => {
             const companionUserId = dialog.users.find(u => u.toString() !== user.id.toString())._id.toString()
 
             const responseMessage = await message
-                .populate<{ author: PopulatedUserType }>('author', 'username firstName lastName avatar')
+                .populate<{ author: PopulatedUserType }>('author', 'username firstName lastName avatar updatedAt')
 
             io.to(dialogId)
                 .emit('server-message', {dialogId, message: responseMessage})

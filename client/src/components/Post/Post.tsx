@@ -10,6 +10,8 @@ import {PostComments} from 'components/Post/PostComments/PostComments'
 // todo: consider connecting to store here.
 type PropsType = {
     post: PostType
+    comments?: 'shown' | 'folded'
+    commentsShown?: number
     onPostAddLike: (id: string) => void
     onPostDeleteLike: (id: string) => void
     onPostDelete: (id: string) => void
@@ -20,6 +22,8 @@ type PropsType = {
 
 const Post: React.FC<PropsType> = ({
                                        post,
+    comments = 'folded',
+                                       commentsShown = 3,
                                        onPostDelete,
                                        onPostAddLike,
                                        onPostDeleteLike,
@@ -27,7 +31,7 @@ const Post: React.FC<PropsType> = ({
                                        onAddComment,
                                        onDeleteComment
                                    }) => {
-    const [commentSectionActive, setCommentSectionActive] = useState(false)
+    const [commentSectionActive, setCommentSectionActive] = useState(comments === 'shown')
     const isAuthor = authorizedUserId === post.author._id
     const date = formatDate(post.createdAt)
     const isLiked = authorizedUserId ? post.likes.map(user => user._id).includes(authorizedUserId) : false
@@ -74,7 +78,7 @@ const Post: React.FC<PropsType> = ({
                 likes={post.likes}
                 isLiked={isLiked}
                 onLikeClick={toggleLike}
-                onCommentClick={toggleCommentSection}
+                onCommentClick={(comments === 'folded') ? toggleCommentSection : undefined}
                 onShareClick={() => console.log('share clicked')}
             />
 
@@ -82,6 +86,7 @@ const Post: React.FC<PropsType> = ({
                 postId={post._id}
                 authorizedUserId={authorizedUserId}
                 comments={post.comments}
+                commentsShown={comments === 'shown' ? 0 : commentsShown}
                 active={commentSectionActive}
                 onAddCommentClick={addCommentHandler}
                 onDeleteCommentClick={deleteCommentHandler}

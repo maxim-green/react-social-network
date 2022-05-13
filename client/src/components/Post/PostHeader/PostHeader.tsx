@@ -29,7 +29,7 @@ export const PostHeader: React.FC<PropsType> = ({
             <Avatar smallImg={author.avatar.small} online={checkOnline(author.updatedAt)} size={50}/>
         </NavLink>
         <Col verticalAlign={'center'}>
-            <NavLink to="/">
+            <NavLink to={`/profile/${author.username}`}>
                 <div className={classes.userName}>{author.firstName + ' ' + author.lastName}</div>
             </NavLink>
             <NavLink to={`/post/${id}`}>

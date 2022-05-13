@@ -6,11 +6,13 @@ import NewMessageForm from 'components/_forms/NewMessageForm/NewMessageForm'
 import {Card} from 'components/_shared/Card/Card'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
-import {ArrowLeft, List} from 'react-bootstrap-icons'
+import {ArrowLeft, List, Check, CheckAll} from 'react-bootstrap-icons'
 import classnames from 'classnames'
 import VisibilitySensor from 'react-visibility-sensor'
 import {readMessage} from '../../redux/reducers/dialogs.reducer'
 import {useDispatch} from 'react-redux'
+import {Row, Space} from 'components/_shared/Flex/Flex'
+import {checkOnline} from 'utils/functions'
 
 type PropsType = {
     messages: Array<MessageType>
@@ -99,13 +101,19 @@ const Message: React.FC<{ message: MessageType, authUser: string }> = ({message,
     return (
         <VisibilitySensor onChange={visibilityChangeHandler}>
             <div className={isAuthor ? classes.messageSelf : classes.messageOther}>
-                <div className={classes.messageAvatar}>
-                    <Avatar online smallImg={message.author.avatar.small} size={30}/>
-                </div>
-                <div>
-                    <div className={classes.messageAuthorName}>{message.author.firstName}</div>
-                    <div>{message.text}</div>
-                </div>
+                <Row gap={10}>
+                    <div className={classes.messageAvatar}>
+                        <Avatar online={checkOnline(message.author.updatedAt)} smallImg={message.author.avatar.small} size={30}/>
+                    </div>
+                    <div>
+                        <div className={classes.messageAuthorName}>{message.author.firstName}</div>
+                        <div>{message.text}</div>
+                    </div>
+                    <Space/>
+                    <div>
+                        {message.isRead ? <CheckAll/> : <Check/>}
+                    </div>
+                </Row>
             </div>
         </VisibilitySensor>
     )

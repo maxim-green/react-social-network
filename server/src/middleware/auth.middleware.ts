@@ -71,6 +71,7 @@ export const socketEventAuth = async (socket: SocketWithUser):Promise<null | 'OK
             return null
         }
         await getUserByAccessToken(accessToken)
+        socket.emit('authorized')
         return 'OK'
     } catch (e) {
         if (e instanceof jwt.JsonWebTokenError) console.log('Invalid access token')

@@ -2,6 +2,7 @@
 
 .Navigation {
   padding: 30px;
+  width: $sidebar-width;
   @include mq('tablet') {
     padding: 10px;
   }

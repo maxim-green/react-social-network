@@ -9,7 +9,7 @@ type PropsType = {
     likes: UserItemDataType[]
     isLiked: boolean,
     onLikeClick: () => void
-    onCommentClick: () => void
+    onCommentClick?: () => void
     onShareClick: () => void
 }
 
@@ -28,11 +28,11 @@ export const PostControls: React.FC<PropsType> = ({
                 {isLiked && <Button.Icon><HeartFill color={colors.accent} size={16}/></Button.Icon>}
             </Button>
         </Col>
-        <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
+        {!!onCommentClick && <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
             <Button type="text" size="sm" onClick={onCommentClick}>
                 <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
             </Button>
-        </Col>
+        </Col>}
         <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
             <Button type="text" size="sm" onClick={onShareClick}>
                 <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>

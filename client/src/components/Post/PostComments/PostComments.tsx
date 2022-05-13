@@ -11,6 +11,7 @@ type PropsType = {
     postId: string
     authorizedUserId?: string
     comments: CommentType[]
+    commentsShown?: number
     onAddCommentClick: (text: string) => void
     onDeleteCommentClick: (commentId: string) => void
 }
@@ -18,6 +19,7 @@ type PropsType = {
 export const PostComments: React.FC<PropsType> = ({
                                                       active,
                                                       postId,
+    commentsShown= 3,
                                                       authorizedUserId,
                                                       comments,
                                                       onAddCommentClick,
@@ -34,6 +36,7 @@ export const PostComments: React.FC<PropsType> = ({
         <PostCommentsList
             active={active}
             comments={comments}
+            commentsShown={commentsShown}
             postId={postId}
             authorizedUserId={authorizedUserId}
             onDelete={onDeleteCommentClick}

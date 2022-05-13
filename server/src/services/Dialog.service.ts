@@ -13,7 +13,7 @@ export const findUserDialogs = async (userId: string) => {
     const dialogs = await Dialog
         .find({users: userId})
         .select('-message')
-        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar'])
+        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar', 'updatedAt'])
 
     return dialogs.map(dialog => ({
         _id: dialog._id,
@@ -30,10 +30,10 @@ export const findDialog = async (requestUser: Types.ObjectId, targetUser: Types.
                 {users: {$size: 2}}
             ]
         })
-        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar'])
+        .populate('users', ['_id', 'username', 'firstName', 'lastName', 'avatar', 'updatedAt'])
         .populate({
             path: 'messages',
-            populate: {path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar']}
+            populate: {path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar', 'updatedAt']}
         })
     return dialog
 }
@@ -57,7 +57,7 @@ export const markMessageAsRead = async (messageId: string, user: MongooseDocumen
     if (readerUser._id.toString() === user._id.toString()) {
         message.isRead = true
         await message.save()
-        return message.populate({path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar']})
+        return message.populate({path: 'author', model: 'User', select: ['_id', 'username', 'firstName', 'lastName', 'avatar', 'updatedAt']})
     } else {
         throw new HTTPError(401, {resultCode: 1, message: 'Not authorized'})
     }

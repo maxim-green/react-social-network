@@ -7,6 +7,7 @@ import {Row} from '../../../_shared/Flex/Flex'
 type PostCommentsType = {
     active: boolean
     postId: string
+    commentsShown?: number
     authorizedUserId?: string
     onDelete: (commentId: string) => void
     comments: CommentType[]
@@ -14,6 +15,7 @@ type PostCommentsType = {
 export const PostCommentsList: React.FC<PostCommentsType> = ({
                                                                  active,
                                                                  comments,
+                                                                 commentsShown= 3,
                                                                  postId,
                                                                  authorizedUserId,
                                                                  onDelete
@@ -22,7 +24,7 @@ export const PostCommentsList: React.FC<PostCommentsType> = ({
         {comments
             .slice()
             .reverse()
-            .slice(0, 3)
+            .slice(!!commentsShown ? 0 : undefined, commentsShown ? commentsShown : undefined)
             .map(comment => <PostComment
                 key={comment._id}
                 {...comment}
@@ -31,7 +33,7 @@ export const PostCommentsList: React.FC<PostCommentsType> = ({
                 disabled={!active}
             />)}
 
-        {comments.length > 3 && <Row padding={5} horizontalAlign={'center'} bordered={true}>
+        {!!commentsShown && comments.length > commentsShown && <Row padding={5} horizontalAlign={'center'} bordered={true}>
             <ShowMoreButton route={`/post/${postId}`} disabled={!active}/>
         </Row>}
     </>
