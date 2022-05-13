@@ -6,6 +6,9 @@ import {PostHeader} from 'components/Post/PostHeader/PostHeader'
 import {PostText} from 'components/Post/PostText/PostText'
 import {PostControls} from 'components/Post/PostControls/PostControls'
 import {PostComments} from 'components/Post/PostComments/PostComments'
+import {ErrorBoundary} from 'components/ErrorBoundary'
+import {Button} from 'components/_shared/Button/Button'
+import {Runtime} from 'inspector'
 
 // todo: consider connecting to store here.
 type PropsType = {
@@ -61,38 +64,39 @@ const Post: React.FC<PropsType> = ({
     }
 
     return (
-        <Card>
-            <PostHeader
-                id={post._id}
-                date={date}
-                isAuthor={isAuthor}
-                author={post.author}
-                onDelete={postDeleteHandler}
-            />
+        <ErrorBoundary>
+            <Card>
+                <PostHeader
+                    id={post._id}
+                    date={date}
+                    isAuthor={isAuthor}
+                    author={post.author}
+                    onDelete={postDeleteHandler}
+                />
 
-            <PostText>
-                {post.text}
-            </PostText>
+                <PostText>
+                    {post.text}
+                </PostText>
 
-            <PostControls
-                likes={post.likes}
-                isLiked={isLiked}
-                onLikeClick={toggleLike}
-                onCommentClick={(comments === 'folded') ? toggleCommentSection : undefined}
-                onShareClick={() => console.log('share clicked')}
-            />
+                <PostControls
+                    likes={post.likes}
+                    isLiked={isLiked}
+                    onLikeClick={toggleLike}
+                    onCommentClick={(comments === 'folded') ? toggleCommentSection : undefined}
+                    onShareClick={() => console.log('share clicked')}
+                />
+                <PostComments
+                    postId={post._id}
+                    authorizedUserId={authorizedUserId}
+                    comments={post.comments}
+                    commentsShown={comments === 'shown' ? 0 : commentsShown}
+                    active={commentSectionActive}
+                    onAddCommentClick={addCommentHandler}
+                    onDeleteCommentClick={deleteCommentHandler}
+                />
 
-            <PostComments
-                postId={post._id}
-                authorizedUserId={authorizedUserId}
-                comments={post.comments}
-                commentsShown={comments === 'shown' ? 0 : commentsShown}
-                active={commentSectionActive}
-                onAddCommentClick={addCommentHandler}
-                onDeleteCommentClick={deleteCommentHandler}
-            />
-
-        </Card>
+            </Card>
+        </ErrorBoundary>
     )
 }
 
