@@ -22,7 +22,18 @@ export class ErrorBoundary extends React.Component<{},{
 
     render() {
         if (this.state.hasError) {
-            return <div style={{padding: 10, color: 'red', border: '1px solid red'}}>{this.state.error}</div>
+            return <div style={{
+                padding: 10,
+                color: 'red',
+                border: '1px solid red',
+                borderRadius: 5,
+                backgroundColor: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'}}
+            >
+                {this.state.error}
+            </div>
         }
         return this.props.children
     }

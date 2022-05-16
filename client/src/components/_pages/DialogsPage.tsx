@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {StateType} from 'redux/store'
 import {closeDialog, getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
 import {useAuthCheck} from 'utils/hooks'
+import {Helmet} from 'react-helmet'
 
 
 const DialogsPage: React.FC = () => {
@@ -54,13 +55,17 @@ const DialogsPage: React.FC = () => {
         to={`/dialogs/${dialogs[0].companion.username}`}/>
 
 
-    return <Dialogs
+    return <>
+        {currentCompanion && <Helmet>
+            <title>Dialog - {currentCompanion.firstName} {currentCompanion.lastName}</title>
+        </Helmet>}
+        <Dialogs
         messages={messages}
         dialogs={dialogs}
         currentCompanion={currentCompanion}
         authUser={authUser || ''}
         onNewMessageSubmit={onNewMessageSubmit}
-    />
+    /></>
 }
 
 

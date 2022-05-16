@@ -1,0 +1,13 @@
+.visible, .hidden {
+  transition: $ui-transition;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}

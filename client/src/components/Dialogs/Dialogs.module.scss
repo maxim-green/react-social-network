@@ -1,4 +1,4 @@
-@import "../../assets/styles/variables";
+
 
 .dialogs {
   height: calc(100vh - #{$appbar-height} - #{$components-gap * 2});
@@ -6,56 +6,49 @@
     height: calc(100vh - #{$appbar-height} - #{$bottom-navigation-height} - #{$components-gap * 2});
   }
   display: grid;
-  grid-template-areas: "list header" "list messages" "input input";
+  grid-template-areas: "header header" "list messages" "input input";
   grid-template-columns: 0 1fr;
   grid-template-rows: 75px 1fr 100px;
   transition: $ui-transition;
+  .dialogsList {
+    padding-top: 10px;
+    grid-area: list;
+    border-right: 1px solid $app-border-color;
+    border-bottom: 1px solid $app-border-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: $ui-transition;
+  }
   &.listActive {
-    grid-template-columns: 70px 1fr;
+    grid-template-columns: 80px 1fr;
     .dialogsList {
-      transform: scaleX(1) translateX(0);
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 }
 
+.dialogsListSwitch {
+  flex-basis: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .header {
   grid-area: header;
-  padding: 5px;
   border-bottom: 1px solid $app-border-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.dialogsList {
-  grid-area: list;
-  border-right: 1px solid $app-border-color;
-  border-bottom: 1px solid $app-border-color;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  overflow: auto;
-  padding: 5px;
-  transform: scaleX(0) translateX(-100%);
-  transition: $ui-transition;
-}
 
-.dialogButton {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  border-radius: $ui-border-radius;
-  &.active {
-    background-color: $accent;
-    color: $white;
-    a {
-      color: $white;
-    }
-  }
-}
-a.dialogButton {
-  outline: none;
-}
 
 .newMessageForm {
   padding: 10px;
@@ -70,41 +63,4 @@ a.dialogButton {
   scrollbar-width: thin;
   display: flex;
   flex-direction: column-reverse;
-}
-
-.messageOther, .messageSelf {
-  display: flex;
-  align-items: flex-start;
-  padding: 10px;
-  border: 1px solid $app-border-color;
-  white-space: pre-line;
-
-  & + & {
-    margin-bottom: 10px;
-  }
-
-  .messageAvatar {
-    margin-right: 10px;
-  }
-
-  .messageAuthorName {
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .messageText {
-
-  }
-
-  &.self {
-
-  }
-}
-
-.messageOther {
-  border-radius: 5px 5px 0 5px;
-}
-
-.messageSelf {
-  border-radius: 5px 5px 5px 0;
 }

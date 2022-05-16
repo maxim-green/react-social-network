@@ -13,9 +13,14 @@ type PropsType = {
 export const UserControl: React.FC<PropsType> = (props) => {
     const [isOpened, setIsOpened] = useState(false)
 
-    const clickHandler = () => {
+    const clickHandler = (e: React.MouseEvent) => {
+        e.stopPropagation()
         setIsOpened(!isOpened)
     }
+
+    window.addEventListener('click', () => {
+        setIsOpened(false)
+    })
 
     return (
         <div className={classes.userControl}>

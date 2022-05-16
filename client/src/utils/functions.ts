@@ -14,3 +14,7 @@ export const checkOnline = (lastSeenDate?: string) => {
     const date = new Date(lastSeenDate)
     return currentDate.getTime() - date.getTime() < 5 * 60 * 1000
 }
+
+export const trimString = (s: string, length: number = 5) => {
+    return (s.length > length) ? s.slice(0, length) + '...' : s
+}
