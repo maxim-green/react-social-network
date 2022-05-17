@@ -34,7 +34,7 @@
   "scripts": {
     "start": "npx serve -s build",
     "dev": "craco start",
-    "build": "craco build",
+    "build": "craco --max_old_space_size=512 build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
