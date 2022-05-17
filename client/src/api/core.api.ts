@@ -1,6 +1,8 @@
 import axios, {AxiosError, AxiosResponse} from 'axios'
 import {ServerValidationErrorType} from 'types/types'
 
+
+
 export const coreApi = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
