@@ -31,7 +31,7 @@ jobs:
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env.test
+          script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env
 
       - name: Write Hello world
         uses: appleboy/ssh-action@master
