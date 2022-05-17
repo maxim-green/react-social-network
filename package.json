@@ -4,7 +4,7 @@
   "description": "Bind is just another social network",
   "main": "index.js",
   "repository": "https://github.com/mgeorgievsky/react-social-network.git",
-  "homepage": "http://maxim-green.github.io/react-social-network/",
+  "homepage": "https://maxim-green.github.io/react-social-network/",
   "author": "mgeorgievsky <max.georgievsky@gmail.com>",
   "license": "MIT",
   "scripts": {
