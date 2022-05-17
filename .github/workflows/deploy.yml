@@ -24,23 +24,23 @@ jobs:
           source: "."
           target: "/home/georgievsky/bind"
 
-      - name: Write .env file
+      - name: Write server .env file
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env
+          script: echo -e "${{ secrets.DEPLOY_SERVER_ENV }}" > /home/georgievsky/bind/server/.env
 
-      - name: Install dependencies
+      - name: Write client .env file
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: cd /home/georgievsky/bind && yarn i
+          script: echo -e "${{ secrets.DEPLOY_CLIENT_ENV }}" > /home/georgievsky/bind/client/.env
 
       - name: Install dependencies
         uses: appleboy/ssh-action@master

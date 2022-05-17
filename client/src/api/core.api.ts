@@ -2,7 +2,7 @@ import axios, {AxiosError, AxiosResponse} from 'axios'
 import {ServerValidationErrorType} from 'types/types'
 
 export const coreApi = axios.create({
-    baseURL: 'http://localhost:5000/api/',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
     // validateStatus: status => status < 500
 })
