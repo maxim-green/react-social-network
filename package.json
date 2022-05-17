@@ -19,7 +19,7 @@
     "client:build": "yarn --cwd client build",
     "server:build": "yarn --cwd server build",
     "build": "yarn client:build",
-    "deploy": "yarn i && yarn build && yarn start",
+    "deploy": "yarn i && yarn start",
     "start": "concurrently \"yarn server\" \"yarn client\""
   },
   "devDependencies": {
