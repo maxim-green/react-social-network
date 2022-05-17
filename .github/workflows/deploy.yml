@@ -24,11 +24,20 @@ jobs:
           source: "."
           target: "/home/georgievsky/bind"
 
-      - name: Executing remote command
+      - name: Write .env file
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo Hello world! >> /home/georgievsky/bind/hello.txt
+          script: echo ${{ secrets.DEPLOY_ENV }} > /home/georgievsky/bind/server/.env
+
+      - name: Write Hello world
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          PORT: 22
+          KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          script: echo Hello world again! >> /home/georgievsky/bind/hello.txt
