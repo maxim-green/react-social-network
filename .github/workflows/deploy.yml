@@ -33,11 +33,20 @@ jobs:
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env
 
-      - name: Run deploy script
+      - name: Install dependencies
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: cd /home/georgievsky/bind && yarn deploy
+          script: cd /home/georgievsky/bind && yarn i
+
+      - name: Install dependencies
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          PORT: 22
+          KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          script: cd /home/georgievsky/bind && yarn i
