@@ -2,6 +2,7 @@ import {coreApi, handleError, handleResponse} from './core.api'
 import {EditProfileDataType} from './profile.api'
 import {AuthUserDataType} from '../types/types'
 
+
 //region DATA TYPES
 // GET /auth/me/ response
 // contains userId, email and username of currently logged in user
