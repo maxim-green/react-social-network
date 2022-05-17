@@ -50,3 +50,12 @@ jobs:
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           script: cd /home/georgievsky/bind && yarn i
+
+      - name: Build client
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          PORT: 22
+          KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          script: cd /home/georgievsky/bind && yarn client:build
