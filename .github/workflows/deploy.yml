@@ -1,10 +1,13 @@
 name: Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
-
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -28,4 +31,4 @@ jobs:
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo Hello world!
+          script: echo Hello world! >> /home/georgievsky/bind/hello.txt
