@@ -31,13 +31,13 @@ jobs:
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env.test
+          script: echo -e "${{ secrets.DEPLOY_ENV }}" > /home/georgievsky/bind/server/.env
 
-      - name: Write Hello world
+      - name: Run deploy script
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           PORT: 22
           KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          script: echo Hello world again! >> /home/georgievsky/bind/hello.txt
+          script: cd /home/georgievsky/bind && yarn deploy
