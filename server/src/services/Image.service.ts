@@ -21,8 +21,8 @@ export const saveAvatarImage = async (file: Express.Multer.File, crop: {x: numbe
         .toFile(path.join(__root, smUploadPath))
 
     return {
-        small: `${process.env.URL}:${process.env.PORT}${smUploadPath}`,
-        large: `${process.env.URL}:${process.env.PORT}${lgUploadPath}`
+        small: `${process.env.URL}${smUploadPath}`,
+        large: `${process.env.URL}${lgUploadPath}`
     }
 }
 
@@ -41,7 +41,7 @@ export const saveCoverImage = async (file: Express.Multer.File, crop: {x: number
         .resize({fit: sharp.fit.contain, width: 720})
         .toFile(path.join(__root, uploadPath))
 
-    return `${process.env.URL}:${process.env.PORT}${uploadPath}`
+    return `${process.env.URL}${uploadPath}`
 }
 
 export const savePostImage = async (
@@ -60,7 +60,7 @@ export const savePostImage = async (
         .toFile(path.join(__root, uploadPathThumbnail))
 
     return {
-        original: `${process.env.URL}:${process.env.PORT}${uploadPathOriginal}`,
-        thumbnail: `${process.env.URL}:${process.env.PORT}${uploadPathThumbnail}`
+        original: `${process.env.URL}${uploadPathOriginal}`,
+        thumbnail: `${process.env.URL}${uploadPathThumbnail}`
     }
 }
