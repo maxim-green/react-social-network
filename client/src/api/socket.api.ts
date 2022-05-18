@@ -7,7 +7,7 @@ let notAuthorizedSubscribers = [] as Array<() => void>
 let authorizedSubscribers = [] as Array<() => void>
 let connectSubscribers = [] as Array<() => void>
 
-let socket = io(process.env.REACT_APP_API_URL + '/socket' || 'http://localhost:5000/socket', {withCredentials: true, autoConnect: false, reconnection: true})
+let socket = io(process.env.REACT_APP_API_URL || 'http://localhost:5000/', {withCredentials: true, autoConnect: false, reconnection: true})
 
 // handle dialog message from server
 type ServerMessageResponseType = { dialogId: string, message: MessageType }
