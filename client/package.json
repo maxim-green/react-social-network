@@ -1,7 +1,6 @@
 {
   "name": "react-social-network",
   "version": "0.1.0",
-  "homepage": "https://maxim-green.github.io/react-social-network/",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
