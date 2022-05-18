@@ -10,10 +10,8 @@ import {withErrorHandler} from 'middleware'
 
 const expressApp = express()
 
-console.log('Access-Control-Allow-Origin: ', process.env.URL + ':3000')
-
 expressApp.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.URL + ':3000')
+    res.setHeader('Access-Control-Allow-Origin', process.env.URL + ':' + process.env.CLIENT_PORT)
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'content-type')
     res.setHeader('Access-Control-Allow-Credentials', 'true')
