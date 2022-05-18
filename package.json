@@ -19,7 +19,7 @@
     "client:build": "yarn --cwd client build",
     "server:build": "yarn --cwd server build",
     "build": "yarn client:build",
-    "deploy": "yarn i && yarn start",
+    "deploy": "git switch main && yarn i && yarn build && git add . && git commit -m \"Deploy commit\" && git push -u origin main && git switch -",
     "start": "concurrently \"yarn server\" \"yarn client\""
   },
   "devDependencies": {
