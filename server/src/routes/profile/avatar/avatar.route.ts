@@ -23,6 +23,7 @@ router.put(
                 data: {avatar}
             })
         } catch (e) {
+            console.log(e)
             res.handleError(e)
         }
     }
