@@ -13,7 +13,7 @@ export const removeItem = <T = any>(array: Array<T>, value: T) => {
     }
 }
 
-const stripUrl = (url: string, baseUrl: string = `${process.env.URL}:${process.env.PORT}/`) => {
+const stripUrl = (url: string, baseUrl: string = `${process.env.URL}/`) => {
     return url.replace(baseUrl, '')
 }
 
