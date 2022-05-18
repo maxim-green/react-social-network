@@ -17,7 +17,7 @@ expressApp.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 })
-expressApp.use(bodyParser.json())
+expressApp.use(bodyParser.json({limit: '10mb'}))
 expressApp.use(cookieParser())
 expressApp.use(withErrorHandler)
 

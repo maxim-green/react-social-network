@@ -5,7 +5,7 @@ import { auth, requireAuth } from 'middleware'
 import {updateAvatar} from 'services'
 
 const storage = multer.memoryStorage()
-const upload = multer({storage})
+const upload = multer({storage, limits: {fileSize: 10000000, fieldSize: 10000000}})
 const router = express.Router()
 
 router.put(
