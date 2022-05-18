@@ -19,9 +19,7 @@ const stripUrl = (url: string, baseUrl: string = `${process.env.URL}/`) => {
 
 export const deleteFile = async (url: string) => {
     try {
-        console.log(url)
         const filePath = path.join(__root, ...stripUrl(url).split('/'))
-        console.log(filePath)
         await unlink(filePath)
     } catch(e) {
         console.log(e)
