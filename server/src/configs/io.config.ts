@@ -1,6 +1,6 @@
 export const ioConfig = {
     cors: {
-        origin: process.env.URL + ':' + process.env.CLIENT_PORT,
+        origin: process.env.CLIENT_URL,
         credentials: true
     }
 }
