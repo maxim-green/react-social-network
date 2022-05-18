@@ -44,7 +44,7 @@ export const authApi = {
         .catch(handleError()),
 
     refreshToken: () => coreApi
-        .post('http://localhost:5000/api/auth/refresh-tokens')
+        .post('/auth/refresh-tokens')
         .then(handleResponse())
         .catch(handleError()),
 
