@@ -32,7 +32,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "npx serve -s build",
+    "start": "npx serve -s -l 4000 build",
     "dev": "craco start",
     "build": "craco --max_old_space_size=512 build",
     "test": "craco test",
