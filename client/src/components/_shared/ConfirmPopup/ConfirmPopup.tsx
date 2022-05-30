@@ -2,6 +2,7 @@ import React from 'react'
 import classes from './ConfirmPopup.module.scss'
 import {Button} from 'components/_shared/Button/Button'
 import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
+import {Row} from 'components/_shared/Flex/Flex'
 
 type ConfirmPopupPropsType = {
     open: boolean
@@ -23,14 +24,14 @@ export const ConfirmPopup: React.FC<ConfirmPopupPropsType> = ({
     return (<ModalWindow open={open}>
         <div>
             <div className={classes.question}>{children}</div>
-            <div className={classes.buttons}>
+            <Row horizontalAlign={'center'} gap={10}>
                 <Button type={important ? 'cancel' : 'primary'} onClick={onConfirm}>
                     <Button.Text>{confirmButtonText}</Button.Text>
                 </Button>
                 <Button type={important ? 'primary' : 'secondary'} onClick={onDecline}>
                     <Button.Text>{declineButtonText}</Button.Text>
                 </Button>
-            </div>
+            </Row>
         </div>
     </ModalWindow>)
 }

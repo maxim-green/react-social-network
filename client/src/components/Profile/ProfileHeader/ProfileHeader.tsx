@@ -57,12 +57,14 @@ const ProfileHeader: React.FC<PropsType> = ({
     return (
         <div className={classes.profileHeader}>
             <div className={classes.avatar}>
-
-                <Avatar
-                    smallImg={avatar?.small}
-                    largeImg={avatar?.large}
-                    border shadow size={!phoneTablet ? Number.parseInt(sizes.avatarProfile) : Number.parseInt(sizes.avatarProfilePhoneTablet)}
-                    onEdit={owner ? onAvatarSubmit : undefined }/>
+                <button>
+                    <Avatar
+                        smallImg={avatar?.small}
+                        largeImg={avatar?.large}
+                        border shadow size={!phoneTablet ? Number.parseInt(sizes.avatarProfile) : Number.parseInt(sizes.avatarProfilePhoneTablet)}
+                        onEdit={owner ? onAvatarSubmit : undefined }
+                    />
+                </button>
                 {online && <div className={classes.onlineIndicator}>
                     <OnlineIndicator>Online</OnlineIndicator>
                 </div>}
@@ -88,8 +90,8 @@ const ProfileHeader: React.FC<PropsType> = ({
                     {tablet && <Button type="secondary" onClick={openModal} size={'lg'}>
                         <Button.Icon><PencilFill width={!tablet ? 15 : 20} height={!tablet ? 15 : 20}/></Button.Icon>
                     </Button>}
-                    <Popup open={open} modal nested  contentStyle={{borderRadius: 5, padding: '20px'}} closeOnDocumentClick={false}>
-                        <EditProfileForm closeModal={closeModal}/>
+                    <Popup open={open} modal nested  contentStyle={{borderRadius: 5, }} closeOnDocumentClick={false} lockScroll={true}>
+                            <EditProfileForm closeModal={closeModal}/>
                     </Popup>
                 </div>
                 }

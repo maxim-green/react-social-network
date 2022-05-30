@@ -2,14 +2,17 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {StateType} from 'redux/store'
-import {useAuthCheck} from 'utils/hooks'
+import {useAuthCheck, useBreakpoint, useWindowDimensions} from 'utils/hooks'
 import {EditProfileDataType} from 'api/profile.api'
 import {ProfileActionType, updateProfile} from 'redux/reducers/profile.reducer'
 import Spinner from 'components/_shared/Spinner/Spinner'
 import {Button} from 'components/_shared/Button/Button'
-import {Form, FormRow} from 'components/_shared/Form/Form'
+import {Form, FormRow, FormSection} from 'components/_shared/Form/Form'
 import {InputText} from 'components/_shared/Input/InputText/InputText'
 import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
+import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
+import {Row} from 'components/_shared/Flex/Flex'
+import sizes from '../../assets/styles/sizes.module.scss'
 
 type PropsType = {
     initialValues: EditProfileDataType
@@ -18,6 +21,10 @@ type PropsType = {
 }
 
 const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeModal}) => {
+    const [windowWidth, windowHeight] = useWindowDimensions()
+    // @ts-ignore  // todo get rid of ts-ignore
+    const viewPortHeight = windowHeight - sizes.appBarHeight - sizes.bottomNavHeight
+    const formInputsSectionHeight = viewPortHeight < 600 ? viewPortHeight : 600
 
     const submit = (data: EditProfileDataType) => {
         onSubmit(data)
@@ -31,45 +38,49 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
 
     return (
         <Form onSubmit={submit} initialValues={initialValues}>
-            <FormRow>
-                <Button size="md">
-                    <Button.Text>
-                        Save
-                    </Button.Text>
-                </Button>
-                <div style={{marginLeft: 'auto'}}>
-                    <Button onClick={backButtonClickHandler} size="md" type='cancel'>
+            <div style={{background: 'white', paddingBottom: 5}}>
+                <Row horizontalAlign={'space-between'}>
+                    <Button size="md">
                         <Button.Text>
-                            Cancel
+                            Save
                         </Button.Text>
                     </Button>
-                </div>
-            </FormRow>
-            <FormRow>
-                <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
-            </FormRow>
-            <FormRow>
-                <InputDate name={'birthDate'} label={'Birth date'}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'location.country'} label={'Country'}/>
-                <InputText name={'location.city'} label={'City'}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'bio'} label={'Bio'}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'contacts.website'} label={'Website'}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'contacts.vkontakte'} label={'Vkontakte'}/>
-            </FormRow>
-            <FormRow>
-                <InputText name={'contacts.github'} label={'Github'}/>
-            </FormRow>
+                    <div style={{marginLeft: 'auto'}}>
+                        <Button onClick={backButtonClickHandler} size="md" type='cancel'>
+                            <Button.Text>
+                                Cancel
+                            </Button.Text>
+                        </Button>
+                    </div>
+                </Row>
+            </div>
+            <FormSection height={formInputsSectionHeight}>
+                <FormRow>
+                    <InputText name={'firstName'} label={'First name'} rules={{required: true}}/>
+                </FormRow>
+                <FormRow>
+                    <InputText name={'lastName'} label={'Last name'} rules={{required: true}}/>
+                </FormRow>
+                <FormRow>
+                    <InputDate name={'birthDate'} label={'Birth date'}/>
+                </FormRow>
+                <FormRow>
+                    <InputText name={'location.country'} label={'Country'}/>
+                    <InputText name={'location.city'} label={'City'}/>
+                </FormRow>
+                <FormRow>
+                    <InputTextarea name={'bio'} label={'Bio'} rows={5}/>
+                </FormRow>
+                <FormRow>
+                    <InputText name={'contacts.website'} label={'Website'}/>
+                </FormRow>
+                <FormRow>
+                    <InputText name={'contacts.vkontakte'} label={'Vkontakte'}/>
+                </FormRow>
+                <FormRow>
+                    <InputText name={'contacts.github'} label={'Github'}/>
+                </FormRow>
+            </FormSection>
         </Form>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Card} from 'components/_shared/Card/Card'
 import {PostType} from 'types/types'
 import {formatDate} from 'utils/functions'
@@ -7,8 +7,6 @@ import {PostText} from 'components/Post/PostText/PostText'
 import {PostControls} from 'components/Post/PostControls/PostControls'
 import {PostComments} from 'components/Post/PostComments/PostComments'
 import {ErrorBoundary} from 'components/ErrorBoundary'
-import {Button} from 'components/_shared/Button/Button'
-import {Runtime} from 'inspector'
 
 // todo: consider connecting to store here.
 type PropsType = {
@@ -63,6 +61,13 @@ const Post: React.FC<PropsType> = ({
         commentSectionActive ? setCommentSectionActive(false) : setCommentSectionActive(true)
     }
 
+    const addPostFormRef = useRef(null)
+
+    useEffect(() => {
+        // @ts-ignore
+        if (addPostFormRef?.current && active) addPostFormRef.current.scrollIntoView()
+    }, [commentSectionActive])
+
     return (
         <ErrorBoundary>
             <Card>
@@ -83,7 +88,6 @@ const Post: React.FC<PropsType> = ({
                     isLiked={isLiked}
                     onLikeClick={toggleLike}
                     onCommentClick={(comments === 'folded') ? toggleCommentSection : undefined}
-                    onShareClick={() => console.log('share clicked')}
                 />
                 <PostComments
                     postId={post._id}

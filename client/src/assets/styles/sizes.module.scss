@@ -5,4 +5,7 @@
 
   avatarProfile: strip-unit($avatar-profile);
   avatarProfilePhoneTablet: strip-unit($avatar-profile-phone-tablet);
+
+  appBarHeight: strip-unit($appbar-height);
+  bottomNavHeight: strip-unit($bottom-navigation-height);
 }

@@ -1,10 +1,15 @@
 .wrapper {
     width: 100%;
+  position: relative;
 }
 
 .formError {
   font-size: 16px;
   color: $error;
+}
+
+.section {
+  overflow: auto;
 }
 
 .row {

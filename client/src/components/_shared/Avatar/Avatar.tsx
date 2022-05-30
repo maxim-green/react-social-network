@@ -5,8 +5,9 @@ import defaultAvatarImage from 'assets/images/avatar-default.jpg'
 import {Area} from 'react-easy-crop/types'
 import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
 import {Button} from 'components/_shared/Button/Button'
-import {PencilFill, ZoomIn} from 'react-bootstrap-icons'
+import {PencilFill, XLg, ZoomIn, ArrowLeft} from 'react-bootstrap-icons'
 import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
+import {Row, Space} from 'components/_shared/Flex/Flex'
 
 type PropsType = {
     smallImg?: string | null
@@ -32,20 +33,13 @@ export const Avatar: React.FC<PropsType> = ({
     const zoomable = !!(smallImg && largeImg)
     const editable = !!onEdit
 
-    const [editModalOpened, setEditModalOpened] = useState(false)
-    const [zoomModalOpened, setZoomModalOpened] = useState(false)
+    const [modalActive, setModalActive] = useState(false)
 
     useEffect(() => {
-        setEditModalOpened(false)
-    }, [smallImg])
-    const openEditModal = () => setEditModalOpened(true)
-    const closeEditModal = () => setEditModalOpened(false)
-
-    useEffect(() => {
-        setZoomModalOpened(false)
+        setModalActive(false)
     }, [])
-    const openZoomModal = () => setZoomModalOpened(true)
-    const closeZoomModal = () => setZoomModalOpened(false)
+    const openModal = () => setModalActive(true)
+    const closeModal = () => setModalActive(false)
 
     return (
         <div
@@ -58,10 +52,8 @@ export const Avatar: React.FC<PropsType> = ({
         >
 
             <div className={classes.image} style={{width: size, height: size}}>
-
-                {(editable || zoomable) && <AvatarButtons
-                    onEditClick={editable ? openEditModal : undefined}
-                    onZoomClick={zoomable ? openZoomModal : undefined}
+                {(editable || zoomable) && <AvatarButton
+                    onZoomClick={zoomable ? openModal : undefined}
                 />}
 
                 <div className={classes.photo}>
@@ -73,78 +65,73 @@ export const Avatar: React.FC<PropsType> = ({
 
             {name && <div className={classes.name}>{name}</div>}
 
-            {editable && onEdit && <EditAvatarModalWindow
-                open={editModalOpened}
-                onSubmit={onEdit}
-                onClose={closeEditModal}
-            />}
-
-            {zoomable && largeImg && <ZoomAvatarModalWindow
+            {zoomable && largeImg && <AvatarModalWindow
                 img={largeImg}
-                open={zoomModalOpened}
-                onClose={closeZoomModal}
+                open={modalActive}
+                onClose={closeModal}
+                onSubmit={onEdit}
             />}
         </div>
     )
 }
-
-
-type EditAvatarModalWindowPropsType = {
-    open: boolean,
-    onSubmit: (image: File, cropArea: Area) => void
-    onClose: () => void
-}
-const EditAvatarModalWindow: React.FC<EditAvatarModalWindowPropsType> = ({
-                                                                             open,
-                                                                             onSubmit,
-                                                                             onClose
-                                                                         }) => {
-    return (
-        <ModalWindow open={open}>
-            <ImageUploadForm aspect={1} onSubmit={onSubmit} closeModal={onClose}/>
-        </ModalWindow>
-    )
-}
-
 
 type ZoomAvatarModalWindowPropsType = {
     img: string,
     open: boolean,
     onClose: () => void
+    onSubmit?: (image: File, cropArea: Area) => void
 }
-const ZoomAvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
+const AvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
                                                                              img,
                                                                              open,
-                                                                             onClose
+                                                                             onClose,
+                                                                             onSubmit
                                                                          }) => {
+    const [editMode, setEditMode] = useState(false)
+    const editHandler = () => {
+        setEditMode(true)
+    }
+    const closeHandler = () => {
+        setEditMode(false)
+        onClose()
+    }
+    const backHandler = () => {
+        setEditMode(false)
+    }
+    const submitHandler = (image: File, cropArea: Area) => {
+        !!onSubmit && onSubmit(image, cropArea)
+        closeHandler()
+    }
     return (
-        <ModalWindow open={open} close={onClose}>
-            {img && <img src={img} alt=""/>}
+        <ModalWindow open={open}>
+            <Row horizontalAlign={'center'}>
+                {!editMode && !!onSubmit && <Button onClick={editHandler}>Change avatar</Button>}
+                {editMode && !!onSubmit &&
+                <Button onClick={backHandler}><Button.Icon><ArrowLeft/></Button.Icon></Button>}
+                <Space/>
+                <Button type={'cancel'} size='md' onClick={closeHandler}>
+                    <Button.Icon><XLg/></Button.Icon>
+                </Button>
+            </Row>
+            {!editMode && <div style={{marginTop: 10}}>
+                {img && <img src={img} alt=""/>}
+            </div>}
+            {editMode && !!onSubmit && <ImageUploadForm aspect={1} onSubmit={submitHandler}/>}
         </ModalWindow>
     )
 }
 
-
 type AvatarButtonsPropsType = {
-    onEditClick?: () => void
     onZoomClick?: () => void
 }
-const AvatarButtons: React.FC<AvatarButtonsPropsType> = ({
-                                                             onEditClick,
+const AvatarButton: React.FC<AvatarButtonsPropsType> = ({
                                                              onZoomClick
                                                          }) => {
     return (
-        <div className={classes.buttons}>
-            {onZoomClick && <Button onClick={onZoomClick} type={'text'} size={'lg'} style={{color: 'white'}}>
-                <Button.Icon>
-                    <ZoomIn color={'white'}/>
-                </Button.Icon>
-            </Button>}
-            {onEditClick && <Button onClick={onEditClick} type={'text'} size={'lg'} style={{color: 'white'}}>
-                <Button.Icon>
-                    <PencilFill color={'white'}/>
-                </Button.Icon>
-            </Button>}
-        </div>
+        <button className={classes.buttons} onClick={onZoomClick}>
+            <div className={classes.icon}>
+                <ZoomIn color={'white'} size={20}/>
+            </div>
+        </button>
     )
 }

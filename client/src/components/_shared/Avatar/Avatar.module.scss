@@ -31,13 +31,12 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-
-    button {
+    cursor: pointer;
+    .icon {
       transition: $ui-transition;
       z-index: 2;
       opacity: 0;
     }
-
     &::before {
       position: absolute;
       content: "";
@@ -54,10 +53,10 @@
   }
 
   &:hover {
-    .buttons button {
+    .buttons::before {
       opacity: 1;
     }
-    .buttons::before {
+    .buttons .icon {
       opacity: 1;
     }
   }

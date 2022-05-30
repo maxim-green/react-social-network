@@ -1,5 +1,8 @@
 .layout {
   padding-top: $appbar-height;
+  @include mq('tablet') {
+    padding-bottom: $bottom-navigation-height;
+  }
 }
 
 .background {
@@ -47,6 +50,4 @@
   max-width: $sidebar-width;
   width: 100%;
   margin-right: $components-gap;
-  @include mq('tablet') {
-  }
 }

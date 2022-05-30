@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import classes from './PostComments.module.scss'
 import classnames from 'classnames'
 import AddPostCommentForm from 'components/_forms/AddPostCommentForm/AddPostCommentForm'
@@ -16,10 +16,12 @@ type PropsType = {
     onDeleteCommentClick: (commentId: string) => void
 }
 
+// const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
+
 export const PostComments: React.FC<PropsType> = ({
                                                       active,
                                                       postId,
-    commentsShown= 3,
+                                                      commentsShown = 3,
                                                       authorizedUserId,
                                                       comments,
                                                       onAddCommentClick,
@@ -30,7 +32,7 @@ export const PostComments: React.FC<PropsType> = ({
         {[classes.active]: active}
     )}>
         <Row padding={'15px 30px'} bordered={true}>
-            <AddPostCommentForm onAddComment={onAddCommentClick} disabled={!active}/>
+                <AddPostCommentForm onAddComment={onAddCommentClick} disabled={!active}/>
         </Row>
 
         <PostCommentsList

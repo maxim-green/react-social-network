@@ -19,6 +19,10 @@ type RowPropsType = {
     control?: Control,
     align?: 'fill' | 'left' | 'right' | 'center'
 }
+type SectionPropsType = {
+    control?: Control,
+    height?: number | string,
+}
 type ItemPropsType = {
     label?: string,
     labelPosition?: 'top' | 'left' | 'right'
@@ -88,7 +92,24 @@ export const Form: React.FC<FormPropsType> = ({
     </form>
 }
 
+export const FormSection: React.FC<SectionPropsType> = ({
+                                                    children,
+                                                    control,
+    height
+                                                }) => {
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, {control})
+        }
+        return child
+    })
 
+    return <div className={classnames(
+        classes.section,
+    )} style={{height}}>
+        {childrenWithProps}
+    </div>
+}
 
 export const FormRow: React.FC<RowPropsType> = ({
                                                      children,

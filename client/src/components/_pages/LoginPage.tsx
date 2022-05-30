@@ -6,7 +6,7 @@ import {AuthCard} from 'components/AuthCard/AuthCard'
 
 const LoginPage: React.FC = () => {
     const authorized = useAuthCheck()
-    if (authorized) return <Redirect to={`/profile`}/>
+    if (authorized) return <Redirect to={`/feed`}/>
 
     return <AuthCard>
         <LoginForm/>
