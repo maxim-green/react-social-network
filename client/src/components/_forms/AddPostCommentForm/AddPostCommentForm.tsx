@@ -24,7 +24,6 @@ const AddPostCommentForm: React.FC<PropsType> = ({onAddComment, disabled= false}
     return <Form onSubmit={submitHandler} initialValues={{text: ''}} resetAfterSubmit={true}>
         <FormRow>
             <div className={classes.avatar}>
-                {/*todo add component ButtonLink. Same button but with NavLink*/}
                 <NavLink to={`/profile/${authorizedUser?.username}`} tabIndex={disabled ? -1 : undefined}>
                     <Avatar smallImg={authorizedUser?.avatar.small} size={30}/>
                 </NavLink>

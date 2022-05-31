@@ -32,28 +32,22 @@ export const PostComment: React.FC<PropsType> = ({
 
     const isAuthor = authorizedUserId === author._id
 
-    return <Row padding={'10px 20px'} verticalAlign={'center'} gap={10} bordered={true}>
+    return <Row padding={'10px 10px'} verticalAlign={'start'} gap={10} bordered={true}>
             <NavLink to={`/profile/${author.username}`} tabIndex={disabled ? -1 : undefined}>
-                <Avatar smallImg={author.avatar.small} size={40}/>
+                <Avatar smallImg={author.avatar.small} size={30}/>
             </NavLink>
             <Col gap={2}>
                 <NavLink to={`/profile/${author.username}`} tabIndex={disabled ? -1 : undefined}>
                     <div className={classes.author}>{author.firstName} {author.lastName}</div>
                 </NavLink>
                 <div className={classes.date}>{formatDate(createdAt)}</div>
+                <div className={classes.text}>
+                    {text}
+                </div>
             </Col>
-            <div className={classes.text}>
-                {text}
-            </div>
             <Space/>
             <Col>
                 <Row>
-                    <Button type="text" size="sm" disabled={disabled}>
-                        <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>
-                    </Button>
-                    {isAuthor && <Button type="text" size="sm" disabled={disabled}>
-                        <Button.Icon><PencilFill color={colors.textMid} size={16}/></Button.Icon>
-                    </Button>}
                     {isAuthor && <DeleteButton
                         onDelete={deleteHandler}
                         warningMessage={'Are you sure you want to delete comment?'}

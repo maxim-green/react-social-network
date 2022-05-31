@@ -22,8 +22,7 @@ type PropsType = {
 
 const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeModal}) => {
     const [windowWidth, windowHeight] = useWindowDimensions()
-    // @ts-ignore  // todo get rid of ts-ignore
-    const viewPortHeight = windowHeight - sizes.appBarHeight - sizes.bottomNavHeight
+    const viewPortHeight = windowHeight - Number(sizes.appBarHeight) - Number(sizes.bottomNavHeight)
     const formInputsSectionHeight = viewPortHeight < 600 ? viewPortHeight : 600
 
     const submit = (data: EditProfileDataType) => {

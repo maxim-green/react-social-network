@@ -31,7 +31,7 @@ export const PostComments: React.FC<PropsType> = ({
         classes.comments,
         {[classes.active]: active}
     )}>
-        <Row padding={'15px 30px'} bordered={true}>
+        <Row padding={'10px 10px'} bordered={true}>
                 <AddPostCommentForm onAddComment={onAddCommentClick} disabled={!active}/>
         </Row>
 

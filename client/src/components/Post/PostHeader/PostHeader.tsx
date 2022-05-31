@@ -39,9 +39,6 @@ export const PostHeader: React.FC<PropsType> = ({
         <Space/>
         {isAuthor && <Col>
             <Row>
-                <Button type="text" size="sm">
-                    <Button.Icon><PencilFill color={colors.textMid} size={16}/></Button.Icon>
-                </Button>
                 <DeleteButton
                     onDelete={onDelete}
                     warningMessage={'Are you sure you want to delete this post?'}
