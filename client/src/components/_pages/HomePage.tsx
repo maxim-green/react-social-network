@@ -1,9 +1,9 @@
 import React from 'react'
-import {useAuthCheck} from 'utils/hooks'
 import {Redirect} from 'react-router-dom'
+import {useAuth} from '../../hooks/useAuth'
 
 const HomePage = () => {
-    const authorized = useAuthCheck()
+    const authorized = useAuth()
     if (authorized) {
         return <Redirect to={`/feed`}/>
     } else {

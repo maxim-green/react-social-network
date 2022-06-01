@@ -1,10 +1,9 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
-import {StateType} from 'redux/store'
-import {useAuthCheck, useBreakpoint, useWindowDimensions} from 'utils/hooks'
+import {RootState} from 'store/store'
 import {EditProfileDataType} from 'api/profile.api'
-import {ProfileActionType, updateProfile} from 'redux/reducers/profile.reducer'
+import {ProfileActionType, updateProfile} from 'store/reducers/profile.reducer'
 import Spinner from 'components/_shared/Spinner/Spinner'
 import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow, FormSection} from 'components/_shared/Form/Form'
@@ -13,6 +12,9 @@ import {InputDate} from 'components/_shared/Input/InputDate/InputDate'
 import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
 import {Row} from 'components/_shared/Flex/Flex'
 import sizes from '../../assets/styles/sizes.module.scss'
+import {useWindowDimensions} from '../../hooks/useWindowDimensions'
+import {useBreakpoint} from '../../hooks/useBreakpoint'
+import {useAuth} from '../../hooks/useAuth'
 
 type PropsType = {
     initialValues: EditProfileDataType
@@ -85,7 +87,7 @@ const EditProfileForm: React.FC<PropsType> = ({initialValues, onSubmit, closeMod
 }
 
 const EditProfileFormContainer: React.FC<{ closeModal?: () => void }> = ({closeModal}) => {
-    const editProfileData: EditProfileDataType = useSelector((state: StateType) => ({
+    const editProfileData: EditProfileDataType = useSelector((state: RootState) => ({
         firstName: state.profile.user?.firstName,
         lastName: state.profile.user?.lastName,
         birthDate: state.profile.user?.birthDate,
@@ -93,9 +95,9 @@ const EditProfileFormContainer: React.FC<{ closeModal?: () => void }> = ({closeM
         location: state.profile.user?.location,
         contacts: state.profile.user?.contacts
     }))
-    const dispatch: ThunkDispatch<StateType, EditProfileDataType, ProfileActionType> = useDispatch()
+    const dispatch: ThunkDispatch<RootState, EditProfileDataType, ProfileActionType> = useDispatch()
 
-    useAuthCheck()
+    useAuth()
 
     const onSubmit = (profileData: EditProfileDataType) => {
         dispatch(updateProfile(profileData))

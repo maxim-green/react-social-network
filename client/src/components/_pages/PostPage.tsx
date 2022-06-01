@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 import {
     addPostComment,
     addPostLike,
@@ -9,15 +9,15 @@ import {
     deletePostComment,
     deletePostLike,
     getPost
-} from 'redux/reducers/posts.reducer'
+} from 'store/reducers/posts.reducer'
 import Post from 'components/Post/Post'
 
 
 const PostPage: React.FC = () => {
     const {id}: { id: string } = useParams()
     const dispatch = useDispatch()
-    const post = useSelector((state: StateType) => state.posts.posts[0])
-    const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
+    const post = useSelector((state: RootState) => state.posts.posts[0])
+    const authorizedUserId = useSelector((state: RootState) => state.auth.user?._id)
 
     useEffect(() => {
         dispatch(getPost(id))

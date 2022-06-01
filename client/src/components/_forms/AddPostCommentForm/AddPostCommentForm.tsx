@@ -6,7 +6,7 @@ import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {Button} from 'components/_shared/Button/Button'
 import {NewCommentType} from 'types/types'
 import {useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 import {NavLink} from 'react-router-dom'
 
 type PropsType = {
@@ -15,7 +15,7 @@ type PropsType = {
 }
 
 const AddPostCommentForm: React.FC<PropsType> = ({onAddComment, disabled= false}) => {
-    const authorizedUser = useSelector((state: StateType) => state.auth.user)
+    const authorizedUser = useSelector((state: RootState) => state.auth.user)
 
     const submitHandler = (data: NewCommentType) => {
         onAddComment(data.text)

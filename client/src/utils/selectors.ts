@@ -1,6 +1,6 @@
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 
-export const getSortedPosts = (state: StateType) => state.posts.posts.sort((a, b) => {
+export const getSortedPosts = (state: RootState) => state.posts.posts.sort((a, b) => {
     if (a.createdAt < b.createdAt) {
         return -1
     }

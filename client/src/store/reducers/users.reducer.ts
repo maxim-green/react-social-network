@@ -2,7 +2,7 @@ import {UserItemDataType} from 'types/types'
 import {userApi} from 'api/user.api'
 import {ResultCodes} from 'api/core.api'
 import {InferActionsTypes, ThunkType} from '../store'
-import {getAuthUserData} from 'redux/reducers/auth.reducer'
+import {getAuthUserData} from 'store/reducers/auth.reducer'
 
 // INITIAL STATE
 const initialState = {

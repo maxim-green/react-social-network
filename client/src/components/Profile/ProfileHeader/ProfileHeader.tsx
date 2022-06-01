@@ -10,7 +10,7 @@ import EditProfileForm from 'components/_forms/EditProfileForm'
 import {PencilFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
 import {OnlineIndicator} from 'components/_shared/OnlineIndicator/OnlineIndicator'
-import {useBreakpoint} from 'utils/hooks'
+import {useBreakpoint} from '../../../hooks/useBreakpoint'
 
 type PropsType = {
     online?: boolean

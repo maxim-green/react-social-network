@@ -2,24 +2,24 @@ import Dialogs from 'components/Dialogs/Dialogs'
 import React, {useEffect} from 'react'
 import {Redirect, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
-import {closeDialog, getDialogs, openDialog, sendMessage} from 'redux/reducers/dialogs.reducer'
-import {useAuthCheck} from 'utils/hooks'
+import {RootState} from 'store/store'
+import {closeDialog, getDialogs, openDialog, sendMessage} from 'store/reducers/dialogs.reducer'
 import {Helmet} from 'react-helmet'
+import {useAuth} from '../../hooks/useAuth'
 
 
 const DialogsPage: React.FC = () => {
     const {username}: { username: string } = useParams()
-    const dialogs = useSelector((state: StateType) => state.dialogs.dialogs.slice().sort((a, b) => {
+    const dialogs = useSelector((state: RootState) => state.dialogs.dialogs.slice().sort((a, b) => {
         const dateA = new Date(a.updatedAt)
         const dateB = new Date(b.updatedAt)
         if (dateA > dateB) return -1
         if (dateA < dateB) return 1
         return 0
     }))
-    const currentDialogId = useSelector((state: StateType) => state.dialogs.currentDialogId)
-    const authUser = useSelector((state: StateType) => state.auth.user?.username)
-    const messages = useSelector((state: StateType) => state.dialogs.messages)
+    const currentDialogId = useSelector((state: RootState) => state.dialogs.currentDialogId)
+    const authUser = useSelector((state: RootState) => state.auth.user?.username)
+    const messages = useSelector((state: RootState) => state.dialogs.messages)
     const currentCompanion = dialogs.find(dialog => dialog.companion.username === username)?.companion
 
 
@@ -46,7 +46,7 @@ const DialogsPage: React.FC = () => {
     }, [messages, dispatch])
 
 
-    const authorized = useAuthCheck()
+    const authorized = useAuth()
     if (!authorized) return <Redirect to={'/login'}/>
 
 

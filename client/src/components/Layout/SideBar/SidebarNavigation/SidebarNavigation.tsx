@@ -6,12 +6,12 @@ import {Card} from 'components/_shared/Card/Card'
 import {PersonLinesFill, ChatLeftTextFill, PeopleFill, GearWide, HouseDoorFill} from 'react-bootstrap-icons'
 import {Button} from 'components/_shared/Button/Button'
 import {useSelector} from 'react-redux'
-import {StateType} from '../../../../redux/store'
+import {RootState} from '../../../../store/store'
 
 type PropsType = {}
 
 const SidebarNavigation: React.FC<PropsType> = () => {
-    const unreadMessagesCount = useSelector((state: StateType) => state.dialogs.unreadMessagesCount)
+    const unreadMessagesCount = useSelector((state: RootState) => state.dialogs.unreadMessagesCount)
 
     return (
         <Card>
@@ -40,12 +40,6 @@ const SidebarNavigation: React.FC<PropsType> = () => {
                         <Button type={'link'} size={'lg'}>
                             <Button.Icon><PeopleFill/></Button.Icon>
                             <Button.Text>Users</Button.Text>
-                        </Button>
-                    </Item>
-                    <Item to='/settings'>
-                        <Button type={'link'} size={'lg'}>
-                            <Button.Icon><GearWide/></Button.Icon>
-                            <Button.Text>Settings</Button.Text>
                         </Button>
                     </Item>
                 </List>

@@ -6,7 +6,7 @@ import defaultCoverImage from 'assets/images/cover-default.jpg'
 import {Button} from 'components/_shared/Button/Button'
 import ImageUploadForm from 'components/_forms/ImageUploadForm/ImageUploadForm'
 import {ModalWindow} from 'components/_shared/ModalWindow/ModalWindow'
-import {useBreakpoint} from 'utils/hooks'
+import {useBreakpoint} from '../../../hooks/useBreakpoint'
 
 type PropsTypes = {
     img: string | null

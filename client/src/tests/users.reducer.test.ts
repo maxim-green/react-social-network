@@ -1,4 +1,4 @@
-import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
+import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from '../store/reducers/users.reducer'
 
 import {APIResponseType, ResultCodes} from '../api/core.api'
 
@@ -15,40 +15,42 @@ beforeEach(() => {
     dummyState = {
         users: [
             {
-                userId: '1',
+                _id: '1',
                 avatar: {large: null, small: null},
                 lastName: 'Ivanov',
                 firstName: 'Ivan',
                 username: 'ivanov.i',
-                isSubscription: false
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             },
             {
-                userId: '2',
+                _id: '2',
                 avatar: {large: null, small: null},
                 lastName: 'Petrov',
                 firstName: 'Petr',
                 username: 'petrov.p',
-                isSubscription: false
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             },
             {
-                userId: '3',
+                _id: '3',
                 avatar: {large: null, small: null},
                 lastName: 'Smirnov',
                 firstName: 'Anton',
                 username: 'smirnov.a',
-                isSubscription: true
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             },
             {
-                userId: '4',
+                _id: '4',
                 avatar: {large: null, small: null},
                 lastName: 'Smirnov',
                 firstName: 'Anton',
                 username: 'smirnov.a',
-                isSubscription: true
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             }
         ],
-        outgoingFriendshipRequests: [],
-        incomingFriendshipRequests: []
     }
 
     dispatchMock.mockClear()

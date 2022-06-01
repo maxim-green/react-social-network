@@ -4,15 +4,15 @@ import 'assets/styles/normalize.scss'
 import 'assets/styles/global.scss'
 import App from './components/App'
 import reportWebVitals from './reportWebVitals'
-import {HashRouter} from 'react-router-dom'
-import store from './redux/store'
+import {BrowserRouter} from 'react-router-dom'
+import store from './store/store'
 import {Provider} from 'react-redux'
 
 ReactDOM.render(
         <Provider store={store}>
-            <HashRouter>
+            <BrowserRouter>
                 <App/>
-            </HashRouter>
+            </BrowserRouter>
         </Provider>
     , document.getElementById('root')
 )
