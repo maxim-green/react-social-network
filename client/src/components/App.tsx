@@ -8,7 +8,6 @@ import AppRouter from './AppRouter'
 const App: React.FC = () => {
     const initialized = useSelector((state: RootState) => state.app.initialized)
 
-
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(initializeApp())
