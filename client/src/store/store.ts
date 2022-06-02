@@ -1,12 +1,12 @@
-import {applyMiddleware, combineReducers, createStore, Action} from 'redux'
-import {AuthActionType, authReducer} from './reducers/auth.reducer'
-
-import profileReducer, {ProfileActionType} from './reducers/profile.reducer'
-import postsReducer, {PostsActionType} from './reducers/posts.reducer'
-import {AppActionType, appReducer} from './reducers/app.reducer'
-import {UsersActionType, usersReducer} from './reducers/users.reducer'
+import {Action, applyMiddleware, combineReducers, createStore} from 'redux'
+import {authReducer} from './reducers/auth.reducer'
+import profileReducer from './reducers/profile.reducer'
+import postsReducer from './reducers/posts.reducer'
+import {appReducer} from './reducers/app.reducer'
+import {usersReducer} from './reducers/users.reducer'
 import thunkMiddleware, {ThunkAction} from 'redux-thunk'
 import {dialogsReducer} from './reducers/dialogs.reducer'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -14,16 +14,12 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     users: usersReducer,
     posts: postsReducer,
-    dialogs: dialogsReducer,
+    dialogs: dialogsReducer
 })
 
 const store = createStore(
-    rootReducer,
-    applyMiddleware(thunkMiddleware)
+    rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware))
 )
-
-// @ts-ignore added temporarily until redux dev tools not installed
-window.s = store
 
 export default store
 
