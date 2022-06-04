@@ -1,4 +1,4 @@
-import {InferActionsTypes, StateType, ThunkType} from '../store'
+import {InferActionsTypes, RootState, ThunkType} from '../store'
 import {DialogType, MessageType} from 'types/types'
 import {socketApi} from 'api/socket.api'
 import {Dispatch} from 'react'
@@ -104,7 +104,7 @@ export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActio
 //region THUNK CREATORS
 // todo: need to test and debug dialogs. sometimes message not added to state immediately after sending.
 let _connectHandler: (() => void) | null = null
-const connectHandlerCreator = (dispatch: Dispatch<DialogsActionType | ThunkType<DialogsActionType>>, getState: () => StateType) => {
+const connectHandlerCreator = (dispatch: Dispatch<DialogsActionType | ThunkType<DialogsActionType>>, getState: () => RootState) => {
     if (_connectHandler) return _connectHandler
     return () => {
         console.log('connect handler')
@@ -144,7 +144,7 @@ const notAuthorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionT
 }
 
 let _authorizedHandler: (() => null) | null = null
-const authorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>, getState: () => StateType) => {
+const authorizedHandlerCreator = (dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>, getState: () => RootState) => {
     if (_authorizedHandler) return _authorizedHandler
     return async () => {
 

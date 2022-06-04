@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import classes from "components/Layout/Header/UserControl/UserControl.module.scss";
 import {Avatar} from "components/_shared/Avatar/Avatar";
 import {Button} from 'components/_shared/Button/Button'
+import {Row} from '../../../_shared/Flex/Flex'
 
 type PropsType = {
     username?: string
@@ -11,29 +12,16 @@ type PropsType = {
 }
 
 export const UserControl: React.FC<PropsType> = (props) => {
-    const [isOpened, setIsOpened] = useState(false)
-
-    const clickHandler = (e: React.MouseEvent) => {
-        e.stopPropagation()
-        setIsOpened(!isOpened)
-    }
-
-    window.addEventListener('click', () => {
-        setIsOpened(false)
-    })
-
     return (
         <div className={classes.userControl}>
-            <NavLink to={`/profile/${props.username}`}><Avatar smallImg={props.avatar} online size={30}/></NavLink>
-            <div className={classes.userControlDropdown}>
-                <button className={classes.userControlUsername} onClick={clickHandler}>{props.username}</button>
-                {isOpened && <div className={classes.userControlList}>
-                    <ul>
-                        <li><NavLink to='/settings'><Button type="text">Settings</Button></NavLink></li>
-                        <li><Button type="text" onClick={() => props.logout()}>Logout</Button></li>
-                    </ul>
-                </div>}
-            </div>
+            <NavLink to={`/profile/${props.username}`} style={{color: 'white'}}>
+                <Row verticalAlign={'center'} gap={10}>
+                    <div>
+                        <Avatar smallImg={props.avatar} online size={25}/>
+                    </div>
+                    <div >{props.username}</div>
+                </Row>
+            </NavLink>
         </div>
     )
 }

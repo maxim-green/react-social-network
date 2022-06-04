@@ -1,5 +1,5 @@
 import React from 'react'
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 import {useDispatch, useSelector} from 'react-redux'
 import classes from './Layout.module.scss'
 import Header from 'components/Layout/Header/Header'
@@ -8,10 +8,9 @@ import LoginForm from 'components/_forms/LoginForm'
 import SidebarNavigation from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigation'
 import SidebarSubscriptions from 'components/Layout/SideBar/SidebarSubscriptions/SidebarSubscriptions'
 import {AvatarType, UserItemDataType} from 'types/types'
-import {logout} from 'redux/reducers/auth.reducer'
-import {useBreakpoint} from 'utils/hooks'
+import {logout} from 'store/reducers/auth.reducer'
 import {BottomNavigation} from 'components/Layout/BottomNavigation/BottomNavigation'
-import {checkOnline} from 'utils/functions'
+import {useBreakpoint} from '../../hooks/useBreakpoint'
 
 type PropsType = {
     sidebar?: boolean
@@ -31,7 +30,7 @@ const Layout: React.FC<PropsType> = ({
                                          authUserAvatar,
                                          onLogout,
                                      }) => {
-    const authorized = useSelector((state: StateType) => state.auth.authorized)
+    const authorized = useSelector((state: RootState) => state.auth.authorized)
     const {tablet} = useBreakpoint()
     return (
         <div className={classes.layout}>
@@ -106,9 +105,9 @@ const Sidebar: React.FC = ({children}) => {
 
 const LayoutContainer: React.FC<{ sidebar?: boolean, background?: boolean }> = (props) => {
     const dispatch = useDispatch()
-    const authUserSubscriptions = useSelector((state: StateType) => state.auth.user?.subscriptions || [])
-    const authUserName = useSelector((state: StateType) => state.auth.user?.username)
-    const authUserAvatar = useSelector((state: StateType) => state.auth.user?.avatar)
+    const authUserSubscriptions = useSelector((state: RootState) => state.auth.user?.subscriptions || [])
+    const authUserName = useSelector((state: RootState) => state.auth.user?.username)
+    const authUserAvatar = useSelector((state: RootState) => state.auth.user?.avatar)
 
     const onLogout = () => {
         dispatch(logout())

@@ -1,9 +1,12 @@
-import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from '../redux/reducers/users.reducer'
+import {subscribe, unsubscribe, usersActions, usersReducer, UsersStateType} from '../store/reducers/users.reducer'
+import {getAuthUserData} from 'store/reducers/auth.reducer'
 
 import {APIResponseType, ResultCodes} from '../api/core.api'
 
-jest.mock('../api/users.api')
-import {userApi} from '../api/user.api'
+import {userApi} from 'api/user.api'
+jest.mock('api/user.api')
+
+
 const mockUsersApi = userApi as jest.Mocked<typeof userApi>
 
 const dispatchMock = jest.fn()  // фейковый dispatch
@@ -15,40 +18,62 @@ beforeEach(() => {
     dummyState = {
         users: [
             {
-                userId: '1',
+                _id: '1',
                 avatar: {large: null, small: null},
                 lastName: 'Ivanov',
                 firstName: 'Ivan',
                 username: 'ivanov.i',
-                isSubscription: false
+                updatedAt: (new Date()).toString(),
+                subscriptions: [
+                    {
+                        _id: '2',
+                        avatar: {large: null, small: null},
+                        lastName: 'Petrov',
+                        firstName: 'Petr',
+                        username: 'petrov.p',
+                        updatedAt: (new Date()).toString(),
+                        subscriptions: []
+                    },
+                    {
+                        _id: '4',
+                        avatar: {large: null, small: null},
+                        lastName: 'Smirnov',
+                        firstName: 'Anton',
+                        username: 'smirnov.a',
+                        updatedAt: (new Date()).toString(),
+                        subscriptions: []
+                    }
+                ]
             },
             {
-                userId: '2',
+                _id: '2',
                 avatar: {large: null, small: null},
                 lastName: 'Petrov',
                 firstName: 'Petr',
                 username: 'petrov.p',
-                isSubscription: false
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             },
             {
-                userId: '3',
+                _id: '3',
                 avatar: {large: null, small: null},
                 lastName: 'Smirnov',
                 firstName: 'Anton',
                 username: 'smirnov.a',
-                isSubscription: true
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             },
             {
-                userId: '4',
+                _id: '4',
                 avatar: {large: null, small: null},
                 lastName: 'Smirnov',
                 firstName: 'Anton',
                 username: 'smirnov.a',
-                isSubscription: true
+                updatedAt: (new Date()).toString(),
+                subscriptions: []
             }
         ],
-        outgoingFriendshipRequests: [],
-        incomingFriendshipRequests: []
+        subscribePendingUserIds: []
     }
 
     dispatchMock.mockClear()
@@ -61,20 +86,6 @@ beforeEach(() => {
 
 describe('Users reducer is OK', () => {
 
-    test('Follow action success', () => {
-        const newState = usersReducer(dummyState, usersActions.setIsSubscription('2', true))
-
-        expect(newState.users[0].isSubscription).toBeFalsy()
-        expect(newState.users[1].isSubscription).toBeTruthy()
-    })
-
-    test('Unfollow action success', () => {
-        const newState = usersReducer(dummyState, usersActions.setIsSubscription('3', false))
-
-        expect(newState.users[2].isSubscription).toBeFalsy()
-        expect(newState.users[3].isSubscription).toBeTruthy()
-    })
-
     test('Follow thunk success', async () => {
         const ApiResponse: APIResponseType<{}> = {
             resultCode: ResultCodes.success,
@@ -84,11 +95,13 @@ describe('Users reducer is OK', () => {
 
         mockUsersApi.subscribe.mockResolvedValue(ApiResponse)
 
-        const thunk = subscribe('1')
+        const userId = '1'
+        const thunk = subscribe(userId)
         await thunk(dispatchMock, getStateMock, {})
 
-        expect(dispatchMock).toBeCalledTimes(1)
-        expect(dispatchMock).toBeCalledWith(usersActions.setIsSubscription('1', true))
+        expect(dispatchMock).toBeCalledTimes(3)
+        expect(dispatchMock).toBeCalledWith(usersActions.addSubscribePendingUserId(userId))
+        expect(dispatchMock).toBeCalledWith(usersActions.deleteSubscribePendingUserId(userId))
     })
 
     test('Unfollow thunk success', async () => {
@@ -100,11 +113,13 @@ describe('Users reducer is OK', () => {
 
         mockUsersApi.unsubscribe.mockResolvedValue(ApiResponse)
 
-        const thunk = unsubscribe('1')
+        const userId = '1'
+        const thunk = unsubscribe(userId)
         await thunk(dispatchMock, getStateMock, {})
 
-        expect(dispatchMock).toBeCalledTimes(1)
-        expect(dispatchMock).toBeCalledWith(usersActions.setIsSubscription('1', false))
+        expect(dispatchMock).toBeCalledTimes(3)
+        expect(dispatchMock).toBeCalledWith(usersActions.addSubscribePendingUserId(userId))
+        expect(dispatchMock).toBeCalledWith(usersActions.deleteSubscribePendingUserId(userId))
     })
 
 })

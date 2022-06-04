@@ -1,10 +1,10 @@
 import React from 'react'
-import {login} from 'redux/reducers/auth.reducer'
+import {login} from 'store/reducers/auth.reducer'
 import {LoginDataType} from 'api/auth.api'
 import {useDispatch, useSelector} from 'react-redux'
 import {ThunkDispatch} from 'redux-thunk'
-import {StateType} from 'redux/store'
-import {AuthActionType} from 'redux/reducers/auth.reducer'
+import {RootState} from 'store/store'
+import {AuthActionType} from 'store/reducers/auth.reducer'
 import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow} from 'components/_shared/Form/Form'
 import {InputText} from 'components/_shared/Input/InputText/InputText'
@@ -40,8 +40,8 @@ const LoginForm: React.FC<PropsType> = ({onSubmit, errors}) => {
 
 
 const LoginFormContainer: React.FC = () => {
-    const errors = useSelector((state: StateType) => state.auth.loginErrors)
-    const dispatch: ThunkDispatch<StateType, LoginDataType, AuthActionType> = useDispatch()
+    const errors = useSelector((state: RootState) => state.auth.loginErrors)
+    const dispatch: ThunkDispatch<RootState, LoginDataType, AuthActionType> = useDispatch()
 
     const onSubmit = (loginFormData: LoginDataType) => {
         dispatch(login(loginFormData))

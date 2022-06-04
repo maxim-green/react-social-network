@@ -6,15 +6,15 @@ import {Card} from 'components/_shared/Card/Card'
 import {Button} from 'components/_shared/Button/Button'
 import {Form} from 'components/_shared/Form/Form'
 import {InputTextarea} from 'components/_shared/Input/InputTextarea/InputTextarea'
-import {addPost} from 'redux/reducers/posts.reducer'
+import {addPost} from 'store/reducers/posts.reducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 
 type PropsType = {
 }
 
 const NewPostInputForm: React.FC<PropsType> = () => {
-    const isAddPostPending = useSelector((state: StateType) => state.posts.isAddPostPending)
+    const isAddPostPending = useSelector((state: RootState) => state.posts.isAddPostPending)
 
     const dispatch = useDispatch()
     const onAttachFileButtonClick = (e: React.MouseEvent) => {

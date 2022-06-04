@@ -3,8 +3,8 @@ import classes from './Feed.module.scss'
 import Post from 'components/Post/Post'
 import {PostType} from 'types/types'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
-import {addPostComment, addPostLike, deletePost, deletePostComment, deletePostLike} from 'redux/reducers/posts.reducer'
+import {RootState} from 'store/store'
+import {addPostComment, addPostLike, deletePost, deletePostComment, deletePostLike} from 'store/reducers/posts.reducer'
 
 type Props = {
     posts: Array<PostType>
@@ -44,7 +44,7 @@ const Feed: React.FC<Props> = ({
 
 const FeedContainer: React.FC<{ posts: Array<PostType> }> = ({posts}) => {
     const dispatch = useDispatch()
-    const authorizedUserId = useSelector((state: StateType) => state.auth.user?._id)
+    const authorizedUserId = useSelector((state: RootState) => state.auth.user?._id)
 
     const postAddLikeHandler = (postId: string) => {
         dispatch(addPostLike(postId))

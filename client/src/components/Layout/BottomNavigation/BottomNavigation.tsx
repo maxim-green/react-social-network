@@ -6,7 +6,7 @@ import {ChatLeftTextFill, PeopleFill, HouseDoorFill, DoorOpenFill} from 'react-b
 import {NavLink} from 'react-router-dom'
 import {Avatar} from 'components/_shared/Avatar/Avatar'
 import {useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
+import {RootState} from 'store/store'
 
 type Props = {
     authorized: boolean
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const BottomNavigation: React.FC<Props> = ({avatar, authorized}) => {
-    const unreadMessagesCount = useSelector((state: StateType) => state.dialogs.unreadMessagesCount)
+    const unreadMessagesCount = useSelector((state: RootState) => state.dialogs.unreadMessagesCount)
     return <div className={classes.wrapper}>
         {authorized && <div className={classes.item}>
             <NavLink to={'/feed'}>

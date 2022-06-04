@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Redirect, useParams} from 'react-router-dom'
-import {getUserData, updateAvatar, updateCoverImage, updateStatus} from 'redux/reducers/profile.reducer'
-import {getUserPosts} from 'redux/reducers/posts.reducer'
-import {StateType} from 'redux/store'
+import {getUserData, updateAvatar, updateCoverImage, updateStatus} from 'store/reducers/profile.reducer'
+import {getUserPosts} from 'store/reducers/posts.reducer'
+import {RootState} from 'store/store'
 import {Area} from 'react-easy-crop/types'
 import NewPostInputForm from 'components/_forms/NewPostInputForm/NewPostInputForm'
 import Feed from 'components/Feed/Feed'
@@ -22,10 +22,10 @@ const ProfilePage: React.FC = () => {
     }, [username, dispatch])
 
 
-    const authUser = useSelector((state: StateType) => state.auth.user)
-    const profileUser = useSelector((state: StateType) => state.profile.user)
+    const authUser = useSelector((state: RootState) => state.auth.user)
+    const profileUser = useSelector((state: RootState) => state.profile.user)
     const isOwner = authUser?._id === profileUser._id
-    const posts = useSelector((state: StateType) => state.posts.posts)
+    const posts = useSelector((state: RootState) => state.posts.posts)
 
     const onAvatarSubmit = (image: File, cropArea: Area) => {
         const formData = new FormData()

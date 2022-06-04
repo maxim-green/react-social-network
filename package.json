@@ -23,7 +23,8 @@
     "start": "concurrently \"yarn server\" \"yarn client\""
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "redux-devtools-extension": "^2.13.9"
   },
   "dependencies": {
     "react-visibility-sensor": "^5.1.1"

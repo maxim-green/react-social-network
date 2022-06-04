@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {ThunkDispatch} from 'redux-thunk'
 import {useDispatch, useSelector} from 'react-redux'
-import {StateType} from 'redux/store'
-import {authActions, AuthActionType, register} from 'redux/reducers/auth.reducer'
+import {RootState} from 'store/store'
+import {authActions, AuthActionType, register} from 'store/reducers/auth.reducer'
 import {RegistrationDataType} from 'api/auth.api'
 import {Button} from 'components/_shared/Button/Button'
 import {Form, FormRow} from 'components/_shared/Form/Form'
@@ -51,9 +51,9 @@ const RegistrationForm: React.FC<PropsType> = ({registrationErrors, registration
 
 const {setRegistrationSuccessful} = authActions
 const RegistrationFormContainer: React.FC = () => {
-    const registrationSuccessful = useSelector((state: StateType) => state.auth.registrationSuccessful)
-    const registrationErrors = useSelector((state: StateType) => state.auth.registrationErrors)
-    const dispatch: ThunkDispatch<StateType, RegistrationDataType | boolean, AuthActionType> = useDispatch()
+    const registrationSuccessful = useSelector((state: RootState) => state.auth.registrationSuccessful)
+    const registrationErrors = useSelector((state: RootState) => state.auth.registrationErrors)
+    const dispatch: ThunkDispatch<RootState, RegistrationDataType | boolean, AuthActionType> = useDispatch()
 
     const onSubmit = async (registrationFormData: RegistrationDataType) => {
         dispatch(register(registrationFormData))
