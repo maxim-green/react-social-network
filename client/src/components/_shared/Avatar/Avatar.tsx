@@ -53,7 +53,7 @@ export const Avatar: React.FC<PropsType> = ({
 
             <div className={classes.image} style={{width: size, height: size}}>
                 {(editable || zoomable) && <AvatarButton
-                    onZoomClick={zoomable ? openModal : undefined}
+                    onZoomClick={openModal}
                 />}
 
                 <div className={classes.photo}>
@@ -65,19 +65,21 @@ export const Avatar: React.FC<PropsType> = ({
 
             {name && <div className={classes.name}>{name}</div>}
 
-            {zoomable && largeImg && <AvatarModalWindow
+            <AvatarModalWindow
                 img={largeImg}
                 open={modalActive}
+                openInEditMode={!smallImg}
                 onClose={closeModal}
                 onSubmit={onEdit}
-            />}
+            />
         </div>
     )
 }
 
 type ZoomAvatarModalWindowPropsType = {
-    img: string,
+    img?: string | null,
     open: boolean,
+    openInEditMode?: boolean,
     onClose: () => void
     onSubmit?: (image: File, cropArea: Area) => void
 }
@@ -85,14 +87,19 @@ const AvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
                                                                              img,
                                                                              open,
                                                                              onClose,
-                                                                             onSubmit
+                                                                             onSubmit,
+                                                                         openInEditMode = false
                                                                          }) => {
-    const [editMode, setEditMode] = useState(false)
+    const [editMode, setEditMode] = useState(openInEditMode)
+    useEffect(() => {
+        setEditMode(openInEditMode)
+    }, [openInEditMode])
+
     const editHandler = () => {
         setEditMode(true)
     }
     const closeHandler = () => {
-        setEditMode(false)
+        setEditMode(openInEditMode)
         onClose()
     }
     const backHandler = () => {
@@ -106,7 +113,7 @@ const AvatarModalWindow: React.FC<ZoomAvatarModalWindowPropsType> = ({
         <ModalWindow open={open}>
             <Row horizontalAlign={'center'}>
                 {!editMode && !!onSubmit && <Button onClick={editHandler}>Change avatar</Button>}
-                {editMode && !!onSubmit &&
+                {editMode && !!onSubmit && !!img &&
                 <Button onClick={backHandler}><Button.Icon><ArrowLeft/></Button.Icon></Button>}
                 <Space/>
                 <Button type={'cancel'} size='md' onClick={closeHandler}>
