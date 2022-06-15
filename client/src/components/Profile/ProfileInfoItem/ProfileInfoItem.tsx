@@ -1,6 +1,6 @@
-import classes from 'components/Profile/ProfileInfoItem/ProfileInfoItem.module.scss'
-import React from 'react'
-import {Icon} from 'react-bootstrap-icons'
+import classes from 'components/Profile/ProfileInfoItem/ProfileInfoItem.module.scss';
+import React from 'react';
+import { Icon } from 'react-bootstrap-icons';
 
 type PropsType = {
     Icon?: Icon
@@ -8,16 +8,14 @@ type PropsType = {
 }
 
 const ProfileInfoItem: React.FC<PropsType> = ({
-                                                  value,
-                                                  children,
-                                                  Icon
-                                              }) => {
-    return (
-        <div className={classes.wrapper}>
-            {Icon && <div className={classes.icon}><Icon size={18}/></div>}
-            <div className={classes.value}>{value}</div>
-        </div>
-    )
-}
+  value,
+  children,
+  Icon,
+}) => (
+  <div className={classes.wrapper}>
+    {Icon && <div className={classes.icon}><Icon size={18} /></div>}
+    <div className={classes.value}>{value}</div>
+  </div>
+);
 
-export default ProfileInfoItem
+export default ProfileInfoItem;

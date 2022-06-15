@@ -1,9 +1,8 @@
-import {coreApi, handleError, handleResponse} from './core.api'
-import {EditProfileDataType} from './profile.api'
-import {AuthUserDataType} from '../types/types'
+import { coreApi, handleError, handleResponse } from './core.api';
+import { EditProfileDataType } from './profile.api';
+import { AuthUserDataType } from '../types/types';
 
-
-//region DATA TYPES
+// region DATA TYPES
 // GET /auth/me/ response
 // contains userId, email and username of currently logged in user
 export type AuthorizedUserDataType = {
@@ -30,47 +29,44 @@ export type RegistrationDataType = {
     email: string
     password: string
 }
-//endregion
+// endregion
 
 export const authApi = {
-    login: (loginData: LoginDataType) => coreApi
-        .post('/auth/login', loginData)
-        .then(handleResponse())
-        .catch(handleError()),
+  login: (loginData: LoginDataType) => coreApi
+    .post('/auth/login', loginData)
+    .then(handleResponse())
+    .catch(handleError()),
 
-    me: () => coreApi
-        .get('/auth/me')
-        .then(handleResponse<AuthUserDataType>())
-        .catch(handleError()),
+  me: () => coreApi
+    .get('/auth/me')
+    .then(handleResponse<AuthUserDataType>())
+    .catch(handleError()),
 
-    refreshToken: () => coreApi
-        .post('/auth/refresh-tokens')
-        .then(handleResponse())
-        .catch(handleError()),
+  refreshToken: () => coreApi
+    .post('/auth/refresh-tokens')
+    .then(handleResponse())
+    .catch(handleError()),
 
-    logout: () => coreApi
-        .delete('/auth/logout')
-        .then(handleResponse())
-        .catch(handleError()),
+  logout: () => coreApi
+    .delete('/auth/logout')
+    .then(handleResponse())
+    .catch(handleError()),
 
-    register: (registrationData: RegistrationDataType) => coreApi
-        .post('/auth/register', registrationData)
-        .then(handleResponse())
-        .catch(handleError())
-}
-
+  register: (registrationData: RegistrationDataType) => coreApi
+    .post('/auth/register', registrationData)
+    .then(handleResponse())
+    .catch(handleError()),
+};
 
 coreApi.interceptors.response.use(
-    (res) => {
-        return res
-    },
-    async (err) => {
-        const originalConfig = err.config
-        if (err.response.status === 401 && !originalConfig._retry && err.response.data.message !== 'Invalid token') {
-            originalConfig._retry = true
-            await authApi.refreshToken()
-            return coreApi(originalConfig);
-        }
-        return Promise.reject(err)
+  (res) => res,
+  async (err) => {
+    const originalConfig = err.config;
+    if (err.response.status === 401 && !originalConfig._retry && err.response.data.message !== 'Invalid token') {
+      originalConfig._retry = true;
+      await authApi.refreshToken();
+      return coreApi(originalConfig);
     }
-)
+    return Promise.reject(err);
+  },
+);

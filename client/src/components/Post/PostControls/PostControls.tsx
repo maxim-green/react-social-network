@@ -1,9 +1,11 @@
-import React from 'react'
-import {Button} from 'components/_shared/Button/Button'
-import {ChatSquareTextFill, Heart, HeartFill, ShareFill} from 'react-bootstrap-icons'
-import colors from 'assets/styles/colors.module.scss'
-import {UserItemDataType} from 'types/types'
-import {Col, Row} from '../../_shared/Flex/Flex'
+import React from 'react';
+import { Button } from 'components/_shared/Button/Button';
+import {
+  ChatSquareTextFill, Heart, HeartFill, ShareFill,
+} from 'react-bootstrap-icons';
+import colors from 'assets/styles/colors.module.scss';
+import { UserItemDataType } from 'types/types';
+import { Col, Row } from '../../_shared/Flex/Flex';
 
 type PropsType = {
     likes: UserItemDataType[]
@@ -14,29 +16,33 @@ type PropsType = {
 }
 
 export const PostControls: React.FC<PropsType> = ({
-    likes,
-    isLiked,
-    onLikeClick,
-    onCommentClick,
-    onShareClick
-                                                  }) => {
-    return <Row verticalAlign={'center'}>
-        <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
-            <Button type="text" size="sm" onClick={onLikeClick}>
-                <Button.Text>{likes.length}</Button.Text>
-                {!isLiked && <Button.Icon><Heart color={colors.accent} size={16}/></Button.Icon>}
-                {isLiked && <Button.Icon><HeartFill color={colors.accent} size={16}/></Button.Icon>}
-            </Button>
-        </Col>
-        {!!onCommentClick && <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
-            <Button type="text" size="sm" onClick={onCommentClick}>
-                <Button.Icon><ChatSquareTextFill color={colors.accent} size={16}/></Button.Icon>
-            </Button>
-        </Col>}
-        {!!onShareClick && <Col bordered={true} padding={5} horizontalAlign={'center'} stretch>
-            <Button type="text" size="sm" onClick={onShareClick}>
-                <Button.Icon><ShareFill color={colors.accent} size={16}/></Button.Icon>
-            </Button>
-        </Col>}
-    </Row>
-}
+  likes,
+  isLiked,
+  onLikeClick,
+  onCommentClick,
+  onShareClick,
+}) => (
+  <Row verticalAlign="center">
+    <Col bordered padding={5} horizontalAlign="center" stretch>
+      <Button type="text" size="sm" onClick={onLikeClick}>
+        <Button.Text>{likes.length}</Button.Text>
+        {!isLiked && <Button.Icon><Heart color={colors.accent} size={16} /></Button.Icon>}
+        {isLiked && <Button.Icon><HeartFill color={colors.accent} size={16} /></Button.Icon>}
+      </Button>
+    </Col>
+    {!!onCommentClick && (
+    <Col bordered padding={5} horizontalAlign="center" stretch>
+      <Button type="text" size="sm" onClick={onCommentClick}>
+        <Button.Icon><ChatSquareTextFill color={colors.accent} size={16} /></Button.Icon>
+      </Button>
+    </Col>
+    )}
+    {!!onShareClick && (
+    <Col bordered padding={5} horizontalAlign="center" stretch>
+      <Button type="text" size="sm" onClick={onShareClick}>
+        <Button.Icon><ShareFill color={colors.accent} size={16} /></Button.Icon>
+      </Button>
+    </Col>
+    )}
+  </Row>
+);

@@ -1,16 +1,16 @@
-import React from 'react'
-import RegistrationForm from 'components/_forms/RegistrationForm'
-import {Redirect} from 'react-router-dom'
-import {AuthCard} from 'components/AuthCard/AuthCard'
-import {useAuth} from '../../hooks/useAuth'
+import React from 'react';
+import { RegistrationFormContainer } from 'components/_forms/RegistrationForm';
+import { Redirect } from 'react-router-dom';
+import { AuthCard } from 'components/AuthCard/AuthCard';
+import { useAuth } from 'hooks/useAuth';
 
-const RegistrationPage: React.FC = () => {
-    const authorized = useAuth()
-    if (authorized) return <Redirect to={`/profile`}/>
+export const RegistrationPage: React.FC = () => {
+  const authorized = useAuth();
+  if (authorized) return <Redirect to="/profile" />;
 
-    return <AuthCard>
-        <RegistrationForm/>
+  return (
+    <AuthCard>
+      <RegistrationFormContainer />
     </AuthCard>
-}
-
-export default RegistrationPage
+  );
+};

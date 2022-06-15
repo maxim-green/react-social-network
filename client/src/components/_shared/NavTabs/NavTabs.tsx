@@ -1,12 +1,10 @@
-import classes from './NavTabs.module.scss'
-import React from 'react'
+import React from 'react';
+import classes from './NavTabs.module.scss';
 
 type PropsType = {}
 
-const NavTabs: React.FC<PropsType> = ({children}) => {
-    return (<div className={classes.tabs}>
-        {children}
-    </div>)
-}
-
-export default NavTabs
+export const NavTabs: React.FC<PropsType> = ({ children }) => (
+  <div className={classes.tabs}>
+    {children}
+  </div>
+);

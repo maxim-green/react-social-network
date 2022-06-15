@@ -1,7 +1,6 @@
 // don't know if it is right to do so, but it works ;)
-import {EditProfileDataType} from '../api/profile.api'
 
-const formData = new FormData()
+const formData = new FormData();
 export type FormDataType = typeof formData
 
 export type LocationType = { country: string | null, city: string | null }
@@ -12,15 +11,21 @@ export type ContactsType = {
 }
 export type AvatarType = { large: string | null, small: string | null }
 
-// type for current user data
-export type AuthUserDataType = UserDataType & {
-    email: string
-}
-
 //
 export type ServerValidationErrorType = {
     field: string,
     message: string
+}
+
+// type for user-items shown on users page
+export type UserItemDataType = {
+  _id: string
+  username: string
+  firstName: string
+  lastName: string
+  updatedAt: string
+  avatar: AvatarType
+  subscriptions: Array<UserItemDataType>
 }
 
 // type for user profile data
@@ -42,16 +47,9 @@ export type UserDataType = {
     subscriptions: Array<UserItemDataType>
 }
 
-
-// type for user-items shown on users page
-export type UserItemDataType = {
-    _id: string
-    username: string
-    firstName: string
-    lastName: string
-    updatedAt: string
-    avatar: AvatarType
-    subscriptions: Array<UserItemDataType>
+// type for current user data
+export type AuthUserDataType = UserDataType & {
+  email: string
 }
 
 // type for dialogs message
@@ -72,6 +70,14 @@ export type DialogType = {
     companion: UserItemDataType
 }
 
+export type CommentType = {
+  _id: string
+  createdAt: string
+  author: UserItemDataType
+  text: string
+  likes: Array<UserItemDataType>
+}
+
 // type for post-items
 export type PostType = {
     _id: string,
@@ -86,19 +92,6 @@ export type NewPostType = {
     newPostText: string
 }
 
-export type CommentType = {
-    _id: string
-    createdAt: string
-    author: UserItemDataType
-    text: string
-    likes: Array<UserItemDataType>
-}
-
 export type NewCommentType = {
     text: string
 }
-
-
-
-
-
