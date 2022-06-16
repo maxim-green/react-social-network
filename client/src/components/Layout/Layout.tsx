@@ -57,7 +57,7 @@ const Layout: React.FC<PropsType> = ({
             {tablet && !authUserAvatar && <BottomNavigation authorized={authorized}/>}
 
             {background && <div className={classes.background}>
-                <img src="https://source.unsplash.com/random/1920x1080/?nature" alt=""/>
+                <img src="https://source.unsplash.com/random/3840x2160/?nature" alt=""/>
             </div>}
         </div>
     )
