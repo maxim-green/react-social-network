@@ -18,4 +18,4 @@ __exportStar(require("./User.service"), exports);
 __exportStar(require("./Dialog.service"), exports);
 __exportStar(require("./Post.service"), exports);
 __exportStar(require("./Subscription.service"), exports);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

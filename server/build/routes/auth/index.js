@@ -21,4 +21,4 @@ exports.default = void 0;
 var auth_route_1 = require("./auth.route");
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(auth_route_1).default; } });
 __exportStar(require("./auth.route"), exports);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

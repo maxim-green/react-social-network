@@ -17,4 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./swagger.config"), exports);
 __exportStar(require("./express.config"), exports);
 __exportStar(require("./io.config"), exports);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

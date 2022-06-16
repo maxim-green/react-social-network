@@ -42,4 +42,4 @@ const deleteFile = async (url) => {
     }
 };
 exports.deleteFile = deleteFile;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

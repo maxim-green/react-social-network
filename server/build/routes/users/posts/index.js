@@ -6,4 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = void 0;
 var posts_route_1 = require("./posts.route");
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(posts_route_1).default; } });
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

@@ -21,4 +21,4 @@ exports.default = void 0;
 __exportStar(require("./api.route"), exports);
 var api_route_1 = require("./api.route");
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(api_route_1).default; } });
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

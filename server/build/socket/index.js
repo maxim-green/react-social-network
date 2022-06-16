@@ -49,4 +49,4 @@ const ioServer = (server) => {
     });
 };
 exports.ioServer = ioServer;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

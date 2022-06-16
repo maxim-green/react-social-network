@@ -21,4 +21,4 @@ exports.default = void 0;
 var post_route_1 = require("routes/post/post.route");
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(post_route_1).default; } });
 __exportStar(require("routes/post/post.route"), exports);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map

@@ -27,4 +27,4 @@ var Dialog_service_2 = require("../../services/Dialog.service");
 Object.defineProperty(exports, "findDialog", { enumerable: true, get: function () { return Dialog_service_2.findDialog; } });
 var Dialog_service_3 = require("../../services/Dialog.service");
 Object.defineProperty(exports, "createDialog", { enumerable: true, get: function () { return Dialog_service_3.createDialog; } });
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.tsx.map
