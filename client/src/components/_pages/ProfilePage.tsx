@@ -8,7 +8,7 @@ import { getUserPosts } from 'store/reducers/posts.reducer';
 import { RootState } from 'store/store';
 import { Area } from 'react-easy-crop/types';
 import { NewPostInputForm } from 'components/_forms/NewPostInputForm/NewPostInputForm';
-import { FeedContainer } from 'components/Feed/Feed';
+import { Feed } from 'components/Feed/Feed';
 import { Profile } from 'components/Profile/Profile';
 import { Helmet } from 'react-helmet';
 
@@ -66,7 +66,7 @@ export const ProfilePage: React.FC = () => {
         onStatusUpdate={onStatusUpdate}
       />
       {isOwner && <NewPostInputForm />}
-      <FeedContainer posts={posts} />
+      <Feed posts={posts} />
     </>
   );
 };

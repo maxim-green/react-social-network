@@ -9,33 +9,8 @@ import { Form, FormRow } from 'components/_shared/Form/Form';
 import { InputText } from 'components/_shared/Input/InputText/InputText';
 import { InputPassword } from 'components/_shared/Input/InputPassword/InputPassword';
 import { InputCheckbox } from 'components/_shared/Input/InputCheckbox/InputCheckbox';
-import { ServerValidationErrorType } from 'types/types';
 
-type PropsType = {
-    onSubmit: (loginFormData: LoginDataType) => void
-    errors?: Array<ServerValidationErrorType>
-}
-
-const LoginForm: React.FC<PropsType> = ({ onSubmit, errors }) => (
-  <Form onSubmit={onSubmit} errors={errors}>
-    <FormRow>
-      <InputText name="email" label="E-mail" rules={{ required: true }} />
-    </FormRow>
-    <FormRow>
-      <InputPassword name="password" label="Password" rules={{ required: true }} />
-    </FormRow>
-    <FormRow>
-      <InputCheckbox name="rememberMe" label="Remember me" />
-    </FormRow>
-    <FormRow>
-      <Button type="primary" size="lg">
-        <Button.Text>Log in</Button.Text>
-      </Button>
-    </FormRow>
-  </Form>
-);
-
-export const LoginFormContainer: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const errors = useSelector((state: RootState) => state.auth.loginErrors);
   const dispatch: ThunkDispatch<RootState, LoginDataType, AuthActionType> = useDispatch();
 
@@ -43,5 +18,22 @@ export const LoginFormContainer: React.FC = () => {
     dispatch(login(loginFormData));
   };
 
-  return <LoginForm onSubmit={onSubmit} errors={errors} />;
+  return (
+    <Form onSubmit={onSubmit} errors={errors}>
+      <FormRow>
+        <InputText name="email" label="E-mail" rules={{ required: true }} />
+      </FormRow>
+      <FormRow>
+        <InputPassword name="password" label="Password" rules={{ required: true }} />
+      </FormRow>
+      <FormRow>
+        <InputCheckbox name="rememberMe" label="Remember me" />
+      </FormRow>
+      <FormRow>
+        <Button type="primary" size="lg" submit>
+          <Button.Text>Log in</Button.Text>
+        </Button>
+      </FormRow>
+    </Form>
+  );
 };

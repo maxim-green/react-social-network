@@ -59,7 +59,7 @@ export const ImageUploadForm: React.FC<PropsType> = ({ aspect, onSubmit, closeMo
 
         <Row gap={10}>
           {!!srcFileUrl && (
-            <Button size="lg">
+            <Button size="lg" submit>
               <Button.Text>
                 Save
               </Button.Text>

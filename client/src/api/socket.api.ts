@@ -4,7 +4,6 @@ import { MessageType } from 'types/types';
 let serverMessageSubscribers = [] as Array<(message: MessageType) => void>;
 let unreadMessagesSubscribers = [] as Array<(unreadMessagesCount: number) => void>;
 let notAuthorizedSubscribers = [] as Array<() => void>;
-let authorizedSubscribers = [] as Array<() => void>;
 let connectSubscribers = [] as Array<() => void>;
 
 const socket = io(
@@ -34,11 +33,6 @@ const handleNotAuthorized = () => {
 };
 socket.on('not-authorized', handleNotAuthorized);
 
-const handleAuthorized = () => {
-  authorizedSubscribers.forEach((s) => s());
-};
-socket.on('authorized', handleAuthorized);
-
 const handleConnect = () => {
   console.log('Socket connection opened');
   connectSubscribers.forEach((s) => s());
@@ -57,7 +51,6 @@ export const socketApi = {
       serverMessageSubscribers = [];
       unreadMessagesSubscribers = [];
       notAuthorizedSubscribers = [];
-      authorizedSubscribers = [];
     }
   },
 
@@ -66,13 +59,11 @@ export const socketApi = {
     serverMessageCallback: (message: MessageType) => void,
     unreadMessagesCallback: (unreadMessagesCount: number) => void,
     notAuthorizedCallback: () => void,
-    authorizedCallback: () => void,
   ) {
     connectSubscribers.push(connectCallback);
     serverMessageSubscribers.push(serverMessageCallback);
     unreadMessagesSubscribers.push(unreadMessagesCallback);
     notAuthorizedSubscribers.push(notAuthorizedCallback);
-    authorizedSubscribers.push(authorizedCallback);
   },
 
   unsubscribe(
@@ -80,18 +71,14 @@ export const socketApi = {
     serverMessageCallback: (message: MessageType) => void,
     unreadMessagesCallback: (unreadMessagesCount: number) => void,
     notAuthorizedCallback: () => void,
-    authorizedCallback: () => void,
   ) {
     connectSubscribers = connectSubscribers.filter((s) => s !== connectCallback);
-
     serverMessageSubscribers = serverMessageSubscribers
       .filter((s) => s !== serverMessageCallback);
     unreadMessagesSubscribers = unreadMessagesSubscribers
       .filter((s) => s !== unreadMessagesCallback);
     notAuthorizedSubscribers = notAuthorizedSubscribers
       .filter((s) => s !== notAuthorizedCallback);
-    authorizedSubscribers = authorizedSubscribers
-      .filter((s) => s !== authorizedCallback);
   },
   sendMessage(message: string, dialogId: string) {
     socket.emit('client-message', message, dialogId);

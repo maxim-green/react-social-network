@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FeedContainer } from 'components/Feed/Feed';
+import { Feed } from 'components/Feed/Feed';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFeedPosts } from 'store/reducers/posts.reducer';
 import { getSortedPosts } from 'utils/selectors';
@@ -20,7 +20,7 @@ export const FeedPage: React.FC = () => {
   return (
     <>
       <NewPostInputForm />
-      <FeedContainer posts={posts} />
+      <Feed posts={posts} />
     </>
   );
 };

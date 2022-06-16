@@ -15,6 +15,7 @@ type ButtonPropsType = {
   disabled?: boolean
   spinner?: boolean
   style?: CSSProperties
+  submit?: boolean
 }
 
 export const Button: React.FC<ButtonPropsType> & {
@@ -30,9 +31,10 @@ export const Button: React.FC<ButtonPropsType> & {
   disabled = false,
   spinner = false,
   style,
+  submit = false,
 }: React.PropsWithChildren<ButtonPropsType>) => (
   <button
-    type="button"
+    type={submit ? 'submit' : 'button'}
     onClick={onClick}
     disabled={disabled || spinner}
     style={style}

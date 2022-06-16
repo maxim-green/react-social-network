@@ -30,7 +30,7 @@ export const AddPostCommentForm: React.FC<PropsType> = ({ onAddComment, disabled
           </NavLink>
         </div>
         <InputText name="text" placeholder="Write a comment" disabled={disabled} />
-        <Button disabled={disabled}><Button.Text>Add</Button.Text></Button>
+        <Button disabled={disabled} submit><Button.Text>Add</Button.Text></Button>
       </FormRow>
     </Form>
   );

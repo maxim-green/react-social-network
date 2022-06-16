@@ -32,7 +32,7 @@ export const NewPostInputForm: React.FC = () => {
           <Button onClick={onAttachFileButtonClick} type="text" size="sm">
             <Button.Icon><Image color="#909BA4" size={18} /></Button.Icon>
           </Button>
-          <Button type="primary" size="sm" spinner={isAddPostPending}>
+          <Button type="primary" size="sm" spinner={isAddPostPending} submit>
             <Button.Text>Send</Button.Text>
           </Button>
         </div>

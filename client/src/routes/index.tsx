@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { LayoutContainer } from 'components/Layout/Layout';
+import { Layout } from 'components/Layout/Layout';
 import { Redirect } from 'react-router-dom';
 
 const RegistrationPage = lazy(() => import('components/_pages/RegistrationPage').then(
@@ -44,27 +44,27 @@ export enum Routes {
 export const publicRoutes: RouteType[] = [
   {
     path: Routes.POST,
-    component: () => <LayoutContainer sidebar><PostPage /></LayoutContainer>,
+    component: () => <Layout sidebar><PostPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.PROFILE,
-    component: () => <LayoutContainer sidebar><ProfilePage /></LayoutContainer>,
+    component: () => <Layout sidebar><ProfilePage /></Layout>,
     exact: false,
   },
   {
     path: Routes.USERS,
-    component: () => <LayoutContainer sidebar><UsersPage /></LayoutContainer>,
+    component: () => <Layout sidebar><UsersPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.LOGIN,
-    component: () => <LayoutContainer background><LoginPage /></LayoutContainer>,
+    component: () => <Layout background><LoginPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.REGISTER,
-    component: () => <LayoutContainer background><RegistrationPage /></LayoutContainer>,
+    component: () => <Layout background><RegistrationPage /></Layout>,
     exact: false,
   },
   { path: Routes.HOME, component: () => <Redirect to="/login" />, exact: false },
@@ -73,27 +73,27 @@ export const publicRoutes: RouteType[] = [
 export const privateRoutes: RouteType[] = [
   {
     path: Routes.FEED,
-    component: () => <LayoutContainer sidebar><FeedPage /></LayoutContainer>,
+    component: () => <Layout sidebar><FeedPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.DIALOGS,
-    component: () => <LayoutContainer sidebar><DialogsPage /></LayoutContainer>,
+    component: () => <Layout sidebar><DialogsPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.POST,
-    component: () => <LayoutContainer sidebar><PostPage /></LayoutContainer>,
+    component: () => <Layout sidebar><PostPage /></Layout>,
     exact: false,
   },
   {
     path: Routes.PROFILE,
-    component: () => <LayoutContainer sidebar><ProfilePage /></LayoutContainer>,
+    component: () => <Layout sidebar><ProfilePage /></Layout>,
     exact: false,
   },
   {
     path: Routes.USERS,
-    component: () => <LayoutContainer sidebar><UsersPage /></LayoutContainer>,
+    component: () => <Layout sidebar><UsersPage /></Layout>,
     exact: false,
   },
   { path: Routes.HOME, component: () => <Redirect to="/feed" />, exact: false },

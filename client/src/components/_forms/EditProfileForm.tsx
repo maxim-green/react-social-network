@@ -16,15 +16,31 @@ import { useAuth } from 'hooks/useAuth';
 import sizes from '../../assets/styles/sizes.module.scss';
 
 type PropsType = {
-  initialValues: EditProfileDataType
-  onSubmit: (profileData: EditProfileDataType) => void
   closeModal?: () => void
 }
 
-const EditProfileForm: React.FC<PropsType> = ({ initialValues, onSubmit, closeModal }) => {
+export const EditProfileForm: React.FC<PropsType> = ({ closeModal }) => {
   const { height: windowHeight } = useWindowDimensions();
   const viewPortHeight = windowHeight - Number(sizes.appBarHeight) - Number(sizes.bottomNavHeight);
   const formInputsSectionHeight = viewPortHeight < 600 ? viewPortHeight : 600;
+
+  const initialValues: EditProfileDataType = useSelector((state: RootState) => ({
+    firstName: state.profile.user?.firstName,
+    lastName: state.profile.user?.lastName,
+    birthDate: state.profile.user?.birthDate,
+    bio: state.profile.user?.bio,
+    location: state.profile.user?.location,
+    contacts: state.profile.user?.contacts,
+  }));
+  const dispatch: ThunkDispatch<RootState, EditProfileDataType, ProfileActionType> = useDispatch();
+
+  useAuth();
+
+  const onSubmit = (profileData: EditProfileDataType) => {
+    dispatch(updateProfile(profileData));
+  };
+
+  if (!initialValues) return <Spinner />;
 
   const submit = (data: EditProfileDataType) => {
     onSubmit(data);
@@ -40,7 +56,7 @@ const EditProfileForm: React.FC<PropsType> = ({ initialValues, onSubmit, closeMo
     <Form onSubmit={submit} initialValues={initialValues}>
       <div style={{ background: 'white', paddingBottom: 5 }}>
         <Row horizontalAlign="space-between">
-          <Button size="md">
+          <Button size="md" submit>
             <Button.Text>
               Save
             </Button.Text>
@@ -82,33 +98,5 @@ const EditProfileForm: React.FC<PropsType> = ({ initialValues, onSubmit, closeMo
         </FormRow>
       </FormSection>
     </Form>
-  );
-};
-
-export const EditProfileFormContainer: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
-  const editProfileData: EditProfileDataType = useSelector((state: RootState) => ({
-    firstName: state.profile.user?.firstName,
-    lastName: state.profile.user?.lastName,
-    birthDate: state.profile.user?.birthDate,
-    bio: state.profile.user?.bio,
-    location: state.profile.user?.location,
-    contacts: state.profile.user?.contacts,
-  }));
-  const dispatch: ThunkDispatch<RootState, EditProfileDataType, ProfileActionType> = useDispatch();
-
-  useAuth();
-
-  const onSubmit = (profileData: EditProfileDataType) => {
-    dispatch(updateProfile(profileData));
-  };
-
-  if (!editProfileData) return <Spinner />;
-
-  return (
-    <EditProfileForm
-      closeModal={closeModal}
-      initialValues={editProfileData}
-      onSubmit={onSubmit}
-    />
   );
 };

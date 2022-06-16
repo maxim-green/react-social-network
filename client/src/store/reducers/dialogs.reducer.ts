@@ -171,17 +171,6 @@ const notAuthorizedHandlerCreator = (
   };
 };
 
-const _authorizedHandler: (() => null) | null = null;
-const authorizedHandlerCreator = (
-  dispatch: Dispatch<ThunkType<DialogsActionType> | DialogsActionType>,
-  getState: () => RootState,
-) => {
-  if (_authorizedHandler) return _authorizedHandler;
-  return async () => {
-
-  };
-};
-
 export const startMessagesListening = (): ThunkType<DialogsActionType> => async (
   dispatch,
   getState,
@@ -192,7 +181,6 @@ export const startMessagesListening = (): ThunkType<DialogsActionType> => async 
     messageHandlerCreator(dispatch),
     unreadMessagesHandlerCreator(dispatch),
     notAuthorizedHandlerCreator(dispatch),
-    authorizedHandlerCreator(dispatch, getState),
   );
 };
 export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (
@@ -204,7 +192,6 @@ export const stopMessagesListening = (): ThunkType<DialogsActionType> => async (
     messageHandlerCreator(dispatch),
     unreadMessagesHandlerCreator(dispatch),
     notAuthorizedHandlerCreator(dispatch),
-    authorizedHandlerCreator(dispatch, getState),
   );
   socketApi.disconnect();
 };

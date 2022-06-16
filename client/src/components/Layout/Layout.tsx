@@ -3,11 +3,11 @@ import { RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from 'components/Layout/Header/Header';
 import { Card } from 'components/_shared/Card/Card';
-import { LoginFormContainer } from 'components/_forms/LoginForm';
+import { LoginForm } from 'components/_forms/LoginForm';
 import { SidebarNavigation } from 'components/Layout/SideBar/SidebarNavigation/SidebarNavigation';
-import { SidebarSubscriptions }
-  from 'components/Layout/SideBar/SidebarSubscriptions/SidebarSubscriptions';
-import { AvatarType, UserItemDataType } from 'types/types';
+import {
+  SidebarSubscriptions,
+} from 'components/Layout/SideBar/SidebarSubscriptions/SidebarSubscriptions';
 import { logout } from 'store/reducers/auth.reducer';
 import { BottomNavigation } from 'components/Layout/BottomNavigation/BottomNavigation';
 import { useBreakpoint } from 'hooks/useBreakpoint';
@@ -16,10 +16,6 @@ import classes from './Layout.module.scss';
 type PropsType = {
     sidebar?: boolean
     background?: boolean
-    authUserName?: string
-    authUserAvatar?: AvatarType
-    subscriptions: Array<UserItemDataType>
-    onLogout: () => void
 }
 
 const Container: React.FC = ({ children }) => (
@@ -56,17 +52,25 @@ const Sidebar: React.FC = ({ children }) => (
   </div>
 );
 
-const Layout: React.FC<PropsType> = ({
+export const Layout: React.FC<PropsType> = ({
   children,
   sidebar = false,
   background = false,
-  subscriptions,
-  authUserName,
-  authUserAvatar,
-  onLogout,
 }) => {
-  const authorized = useSelector((state: RootState) => state.auth.authorized);
+  const dispatch = useDispatch();
   const { tablet } = useBreakpoint();
+
+  const authorized = useSelector((state: RootState) => state.auth.authorized);
+  const subscriptions = useSelector(
+    (state: RootState) => state.auth.user?.subscriptions || [],
+  );
+  const authUserName = useSelector((state: RootState) => state.auth.user?.username);
+  const authUserAvatar = useSelector((state: RootState) => state.auth.user?.avatar);
+
+  const onLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className={classes.layout}>
       <AppBar>
@@ -83,7 +87,7 @@ const Layout: React.FC<PropsType> = ({
         <Sidebar>
           {!authorized && (
           <Card>
-            <div style={{ padding: '10px' }}><LoginFormContainer /></div>
+            <div style={{ padding: '10px' }}><LoginForm /></div>
           </Card>
           )}
           {authorized && <SidebarNavigation />}
@@ -110,35 +114,5 @@ const Layout: React.FC<PropsType> = ({
       </div>
       )}
     </div>
-  );
-};
-
-export const LayoutContainer: React.FC<{
-  sidebar?: boolean,
-  background?: boolean
-}> = ({
-  sidebar,
-  background,
-}) => {
-  const dispatch = useDispatch();
-  const authUserSubscriptions = useSelector(
-    (state: RootState) => state.auth.user?.subscriptions || [],
-  );
-  const authUserName = useSelector((state: RootState) => state.auth.user?.username);
-  const authUserAvatar = useSelector((state: RootState) => state.auth.user?.avatar);
-
-  const onLogout = () => {
-    dispatch(logout());
-  };
-
-  return (
-    <Layout
-      sidebar={sidebar}
-      background={background}
-      subscriptions={authUserSubscriptions}
-      authUserName={authUserName}
-      authUserAvatar={authUserAvatar}
-      onLogout={onLogout}
-    />
   );
 };

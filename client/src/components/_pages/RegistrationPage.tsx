@@ -1,5 +1,5 @@
 import React from 'react';
-import { RegistrationFormContainer } from 'components/_forms/RegistrationForm';
+import { RegistrationForm } from 'components/_forms/RegistrationForm';
 import { Redirect } from 'react-router-dom';
 import { AuthCard } from 'components/AuthCard/AuthCard';
 import { useAuth } from 'hooks/useAuth';
@@ -10,7 +10,7 @@ export const RegistrationPage: React.FC = () => {
 
   return (
     <AuthCard>
-      <RegistrationFormContainer />
+      <RegistrationForm />
     </AuthCard>
   );
 };

@@ -6,7 +6,7 @@ import classes from 'components/Profile/ProfileHeader/ProfileHeader.module.scss'
 import { Avatar } from 'components/_shared/Avatar/Avatar';
 import { AvatarType } from 'types/types';
 import { EditStatusForm } from 'components/_forms/EditStatusForm';
-import { EditProfileFormContainer } from 'components/_forms/EditProfileForm';
+import { EditProfileForm } from 'components/_forms/EditProfileForm';
 import { PencilFill } from 'react-bootstrap-icons';
 import { Button } from 'components/_shared/Button/Button';
 import { OnlineIndicator } from 'components/_shared/OnlineIndicator/OnlineIndicator';
@@ -132,7 +132,7 @@ export const ProfileHeader: React.FC<PropsType> = ({
               closeOnDocumentClick={false}
               lockScroll
             >
-              <EditProfileFormContainer closeModal={closeModal} />
+              <EditProfileForm closeModal={closeModal} />
             </Popup>
           </div>
         )}

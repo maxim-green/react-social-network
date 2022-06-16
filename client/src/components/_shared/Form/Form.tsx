@@ -137,7 +137,6 @@ export const Form: React.FC<FormPropsType> = ({
   };
 
   const onKeyDownHandler = (e: any) => {
-    // handle 'Enter' key
     if (e.key === 'Enter') {
       if (submitOnEnter && e.ctrlKey) {
         const elementName = e.target.name;
