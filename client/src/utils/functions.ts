@@ -19,3 +19,5 @@ export const checkOnline = (lastSeenDate?: string) => {
 export const trimString = (s: string, length: number = 5) => (
   (s.length > length) ? `${s.slice(0, length)}...` : s
 );
+
+export const getLastItem = (array: any[]): any => array[array.length - 1];

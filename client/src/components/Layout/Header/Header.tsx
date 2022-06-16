@@ -25,7 +25,7 @@ export const Header: React.FC<PropsType> = ({
     <Space />
     {authorized && (
     <div className={classes.userControl}>
-      <UserControl username={username} avatar={avatar} logout={logout} />
+      <UserControl username={username} avatar={avatar} />
     </div>
     )}
     {authorized && (

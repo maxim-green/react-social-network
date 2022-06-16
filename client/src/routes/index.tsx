@@ -2,13 +2,27 @@ import React, { lazy } from 'react';
 import { LayoutContainer } from 'components/Layout/Layout';
 import { Redirect } from 'react-router-dom';
 
-const RegistrationPage = lazy(() => import('components/_pages/RegistrationPage'));
-const LoginPage = lazy(() => import('components/_pages/LoginPage'));
-const ProfilePage = lazy(() => import('components/_pages/ProfilePage'));
-const UsersPage = lazy(() => import('components/_pages/UsersPage'));
-const DialogsPage = lazy(() => import('components/_pages/DialogsPage'));
-const PostPage = lazy(() => import('components/_pages/PostPage'));
-const FeedPage = lazy(() => import('components/_pages/FeedPage'));
+const RegistrationPage = lazy(() => import('components/_pages/RegistrationPage').then(
+  (module) => ({ default: module.RegistrationPage }),
+));
+const LoginPage = lazy(() => import('components/_pages/LoginPage').then(
+  (module) => ({ default: module.LoginPage }),
+));
+const ProfilePage = lazy(() => import('components/_pages/ProfilePage').then(
+  (module) => ({ default: module.ProfilePage }),
+));
+const UsersPage = lazy(() => import('components/_pages/UsersPage').then(
+  (module) => ({ default: module.UsersPage }),
+));
+const DialogsPage = lazy(() => import('components/_pages/DialogsPage').then(
+  (module) => ({ default: module.DialogsPage }),
+));
+const PostPage = lazy(() => import('components/_pages/PostPage').then(
+  (module) => ({ default: module.PostPage }),
+));
+const FeedPage = lazy(() => import('components/_pages/FeedPage').then(
+  (module) => ({ default: module.FeedPage }),
+));
 
 export type RouteType = {
   path: string

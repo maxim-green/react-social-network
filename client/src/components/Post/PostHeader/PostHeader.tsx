@@ -4,18 +4,15 @@ import { NavLink } from 'react-router-dom';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
 import { Col, Row, Space } from 'components/_shared/Flex/Flex';
 import { DeleteButton } from 'components/_shared/Button/DeleteButton/DeleteButton';
-import { PencilFill } from 'react-bootstrap-icons';
 import { checkOnline } from 'utils/functions';
-import { Button } from '../../_shared/Button/Button';
-import colors from '../../../assets/styles/colors.module.scss';
 import classes from './PostHeader.module.scss';
 
 type PropsType = {
-    id: string
-    date: string
-    author: UserItemDataType
-    isAuthor: boolean
-    onDelete: () => void
+  id: string
+  date: string
+  author: UserItemDataType
+  isAuthor: boolean
+  onDelete: () => void
 }
 export const PostHeader: React.FC<PropsType> = ({
   id,

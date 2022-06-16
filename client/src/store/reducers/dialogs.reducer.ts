@@ -113,14 +113,11 @@ export type DialogsActionType = ReturnType<InferActionsTypes<typeof dialogsActio
 // endregion
 
 // region THUNK CREATORS
-// todo: need to test and debug dialogs. sometimes message not added to state immediately after
-// sending.
 export const sendMessage = (
   message: string,
   dialogId: string,
 ): ThunkType<DialogsActionType> => async (
   dispatch,
-  getState,
 ) => {
   dispatch(dialogsActions.setCachedMessage(message, dialogId));
   socketApi.sendMessage(message, dialogId);
@@ -164,9 +161,12 @@ const notAuthorizedHandlerCreator = (
 ) => {
   if (_notAuthorizedHandler) return _notAuthorizedHandler;
   return async () => {
-    console.log('dispatch not authorized websocket event');
+    // Seems like there is architectural problem here. Need to discover a better way to
+    // interact with socket.io
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     dispatch(stopMessagesListening());
     const res = await authApi.refreshToken();
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (res.resultCode === ResultCodes.success) dispatch(startMessagesListening());
   };
 };

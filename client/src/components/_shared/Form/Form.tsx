@@ -28,7 +28,6 @@ type ItemPropsType = {
   required?: boolean,
   disabled?: boolean,
   error?: FieldError,
-  align?: 'fill' | 'left' | 'right' | 'center'
 }
 
 export const FormSection: React.FC<SectionPropsType> = ({
@@ -84,7 +83,7 @@ export const Item: React.FC<ItemPropsType> = ({
   labelPosition = 'top',
   required = false,
   disabled = false,
-  error, align = 'fill',
+  error,
 }) => (
   <label className={classnames(classes.item, { [classes[labelPosition]]: labelPosition })}>
     <div className={classnames(classes.label, { [classes.disabled]: disabled })}>
@@ -158,17 +157,21 @@ export const Form: React.FC<FormPropsType> = ({
       className={classes.wrapper}
       onSubmit={handleSubmit(submit)}
       onBlur={onBlurHandler}
-      onKeyDown={onKeyDownHandler}
     >
-      {formError
-        && (
-          <FormRow>
-            <span className={classes.formError}>
-              {formError.message}
-            </span>
-          </FormRow>
-        )}
-      {childrenWithProps}
+      <div
+        role="presentation"
+        onKeyDown={onKeyDownHandler}
+      >
+        {formError
+          && (
+            <FormRow>
+              <span className={classes.formError}>
+                {formError.message}
+              </span>
+            </FormRow>
+          )}
+        {childrenWithProps}
+      </div>
     </form>
   );
 };

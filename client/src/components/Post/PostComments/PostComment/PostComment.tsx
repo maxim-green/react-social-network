@@ -4,16 +4,13 @@ import { CommentType } from 'types/types';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
 import { formatDate } from 'utils/functions';
-import { Button } from 'components/_shared/Button/Button';
-import { Heart, PencilFill } from 'react-bootstrap-icons';
-import colors from 'assets/styles/colors.module.scss';
 import { Col, Row, Space } from 'components/_shared/Flex/Flex';
 import { DeleteButton } from 'components/_shared/Button/DeleteButton/DeleteButton';
 
 type PropsType = CommentType & {
-    disabled: boolean,
-    authorizedUserId?: string
-    onDelete: (commentId: string) => void
+  disabled: boolean,
+  authorizedUserId?: string
+  onDelete: (commentId: string) => void
 }
 
 export const PostComment: React.FC<PropsType> = ({
@@ -21,7 +18,6 @@ export const PostComment: React.FC<PropsType> = ({
   author,
   text,
   createdAt,
-  likes,
   authorizedUserId,
   onDelete,
   disabled = false,
