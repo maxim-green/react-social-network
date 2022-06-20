@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Space } from 'components/_shared/Flex/Flex';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 import { UserItemDataType } from 'types/types';
 
 type Props = {

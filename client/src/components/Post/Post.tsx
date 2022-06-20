@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card } from 'components/_shared/Card/Card';
 import { PostType } from 'types/types';
-import { formatDate } from 'utils/functions';
+import { formatDate } from 'utils/functions/functions';
 import { PostHeader } from 'components/Post/PostHeader/PostHeader';
 import { PostText } from 'components/Post/PostText/PostText';
 import { PostControls } from 'components/Post/PostControls/PostControls';

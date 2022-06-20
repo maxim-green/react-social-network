@@ -16,7 +16,6 @@ export const NewPostInputForm: React.FC = () => {
   const dispatch = useDispatch();
   const onAttachFileButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log('Attach file button clicked');
   };
 
   const onNewPostSubmit = (newPostData: NewPostType) => {

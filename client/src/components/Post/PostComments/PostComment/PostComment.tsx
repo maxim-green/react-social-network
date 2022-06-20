@@ -3,7 +3,7 @@ import classes from 'components/Post/PostComments/PostComment/PostComment.module
 import { CommentType } from 'types/types';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
-import { formatDate } from 'utils/functions';
+import { formatDate } from 'utils/functions/functions';
 import { Col, Row, Space } from 'components/_shared/Flex/Flex';
 import { DeleteButton } from 'components/_shared/Button/DeleteButton/DeleteButton';
 

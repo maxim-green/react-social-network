@@ -5,7 +5,7 @@ import { Card } from 'components/_shared/Card/Card';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
 import { NavLink } from 'react-router-dom';
 import { UserItemDataType } from 'types/types';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 
 type PropsType = {
   subscriptions: Array<UserItemDataType>

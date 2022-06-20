@@ -5,7 +5,7 @@ import { ProfileHeader } from 'components/Profile/ProfileHeader/ProfileHeader';
 import { ProfileInfoData } from 'components/Profile/ProfileInfoData/ProfileInfoData';
 import { Card } from 'components/_shared/Card/Card';
 import { UserDataType } from 'types/types';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 
 type PropsType = {
     user: UserDataType

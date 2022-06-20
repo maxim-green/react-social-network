@@ -106,12 +106,8 @@ export type ProfileActionType = ReturnType<InferActionsTypes<typeof profileActio
 // region THUNK CREATORS
 export const getUserData = (username: string): ThunkType<ProfileActionType> => async (dispatch) => {
   const res = await profileApi.getProfile(username);
-
   if (res.resultCode === ResultCodes.success) {
     dispatch(profileActions.setProfile(res.data.user));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -119,12 +115,8 @@ export const updateStatus = (
   status: string,
 ): ThunkType<ProfileActionType> => async (dispatch) => {
   const res = await profileApi.updateStatus(status);
-
   if (res.resultCode === ResultCodes.success) {
     dispatch(profileActions.setStatus(status));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -132,12 +124,8 @@ export const updateProfile = (
   profileData: EditProfileDataType,
 ): ThunkType<ProfileActionType> => async (dispatch) => {
   const res = await profileApi.updateProfile(profileData);
-
   if (res.resultCode === ResultCodes.success) {
     dispatch(profileActions.updateProfile(profileData));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -148,9 +136,6 @@ export const updateAvatar = (
   if (res.resultCode === ResultCodes.success) {
     dispatch(profileActions.setAvatar(res.data.avatar));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const updateCoverImage = (
@@ -159,9 +144,6 @@ export const updateCoverImage = (
   const res = await profileApi.updateCoverImage(formData);
   if (res.resultCode === ResultCodes.success) {
     dispatch(profileActions.setCoverImage(res.data.coverImage));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 

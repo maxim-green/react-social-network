@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
 import { Col, Row, Space } from 'components/_shared/Flex/Flex';
 import { DeleteButton } from 'components/_shared/Button/DeleteButton/DeleteButton';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 import classes from './PostHeader.module.scss';
 
 type PropsType = {

@@ -4,8 +4,9 @@ import { ContactsType, LocationType } from 'types/types';
 import {
   CalendarEvent, GeoAlt, Icon, Link45deg,
 } from 'react-bootstrap-icons';
-import { formatDate } from 'utils/functions';
+import { formatDate } from 'utils/functions/functions';
 import { Row } from 'components/_shared/Flex/Flex';
+import { normalizeUrl } from 'utils/functions/normalizeUrl';
 
 type BioPropsType = { bio: string }
 const Bio: React.FC<BioPropsType> = ({ bio }) => (
@@ -29,7 +30,11 @@ const InfoItem: React.FC<InfoItemType> = ({
       {!!label && <div className={classes.itemLabel}>{label}</div>}
     </div>
     {!link && <span className={classes.itemText}>{children}</span>}
-    {!!link && <a href={link} className={classes.itemLink}>{children}</a>}
+    {!!link && (
+    <a href={link} className={classes.itemLink} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+    )}
   </div>
 );
 
@@ -72,17 +77,39 @@ export const ProfileInfoData: React.FC<PropsTypes> = ({
         {location.city}
       </InfoItem>
       )}
+    </div>
 
+    <div className={classes.profileInfoItems}>
       {!!contacts?.website && (
       <InfoItem
         icon={Link45deg}
         label="Website"
-        link={`http://${contacts.website}`}
+        link={`https://${normalizeUrl(contacts.website)}`}
       >
-        {contacts.website}
+        {normalizeUrl(contacts.website)}
       </InfoItem>
       )}
 
+      {!!contacts?.github && (
+      <InfoItem
+        icon={Link45deg}
+        label="GitHub"
+        link={`https://${normalizeUrl(contacts.github)}`}
+      >
+        {normalizeUrl(contacts.github)}
+      </InfoItem>
+      )}
+
+      {!!contacts?.vkontakte && (
+      <InfoItem
+        icon={Link45deg}
+        label="VK"
+        link={`https://${normalizeUrl(contacts.vkontakte)}`}
+      >
+        {normalizeUrl(contacts.vkontakte)}
+      </InfoItem>
+      )}
     </div>
+
   </div>
 );

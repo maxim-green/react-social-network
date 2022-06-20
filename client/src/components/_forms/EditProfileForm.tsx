@@ -37,7 +37,23 @@ export const EditProfileForm: React.FC<PropsType> = ({ closeModal }) => {
   useAuth();
 
   const onSubmit = (profileData: EditProfileDataType) => {
-    dispatch(updateProfile(profileData));
+    const normalizedProfileData: EditProfileDataType = {
+      ...profileData,
+      firstName: profileData.firstName.trim(),
+      lastName: profileData.lastName.trim(),
+      birthDate: profileData.birthDate?.trim() || null,
+      bio: profileData.bio?.trim() || null,
+      location: {
+        country: profileData.location?.country?.trim() || '',
+        city: profileData.location?.city?.trim() || '',
+      },
+      contacts: {
+        website: profileData.contacts?.website?.trim() || '',
+        github: profileData.contacts?.github?.trim() || '',
+        vkontakte: profileData.contacts?.vkontakte?.trim() || '',
+      },
+    };
+    dispatch(updateProfile(normalizedProfileData));
   };
 
   if (!initialValues) return <Spinner />;

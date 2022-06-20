@@ -11,7 +11,6 @@ type InputRangePropsType = {
     label?: string,
     rules?: RegisterOptions,
     control?: Control,
-    rows?: number,
     disabled?: boolean
     min: number,
     max: number,
@@ -25,7 +24,6 @@ export const InputRange: React.FC<InputRangePropsType> = ({
   label,
   rules,
   control,
-  rows = 2,
   disabled = false,
 }) => (
   <Controller
@@ -42,9 +40,9 @@ export const InputRange: React.FC<InputRangePropsType> = ({
         <div className={classes.inputRange}>
           <Slider
             value={field.value}
-            min={1}
-            max={3}
-            step={0.01}
+            min={min}
+            max={max}
+            step={step}
             onChange={field.onChange}
           />
         </div>

@@ -34,11 +34,9 @@ const handleNotAuthorized = () => {
 socket.on('not-authorized', handleNotAuthorized);
 
 const handleConnect = () => {
-  console.log('Socket connection opened');
   connectSubscribers.forEach((s) => s());
 };
 socket.on('connect', handleConnect);
-socket.on('disconnect', () => console.log('Socket connection closed'));
 
 export const socketApi = {
   connect() {

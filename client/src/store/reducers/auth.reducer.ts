@@ -91,13 +91,6 @@ export const getAuthUserData = (): ThunkType<AuthActionType> => async (dispatch)
     dispatch(stopMessagesListening());
     dispatch(authActions.clearUser());
   }
-
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
-  if (res.resultCode === ResultCodes.expiredToken) {
-    console.log(res);
-  }
 };
 
 export const login = (
@@ -118,9 +111,6 @@ export const logout = (): ThunkType<AuthActionType> => async (dispatch) => {
   if (res.resultCode === ResultCodes.success) {
     dispatch(getAuthUserData());
     dispatch(stopMessagesListening());
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 

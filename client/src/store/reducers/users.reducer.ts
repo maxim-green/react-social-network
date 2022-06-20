@@ -64,9 +64,6 @@ export const getUsers = (): ThunkType<UsersActionType> => async (dispatch) => {
   if (res.resultCode === ResultCodes.success) {
     dispatch(usersActions.setUsers(res.data.users));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const subscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
@@ -76,9 +73,6 @@ export const subscribe = (userId: string): ThunkType<UsersActionType> => async (
   if (res.resultCode === ResultCodes.success) {
     dispatch(getAuthUserData());
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const unsubscribe = (userId: string): ThunkType<UsersActionType> => async (dispatch) => {
@@ -87,9 +81,6 @@ export const unsubscribe = (userId: string): ThunkType<UsersActionType> => async
   dispatch(usersActions.deleteSubscribePendingUserId(userId));
   if (res.resultCode === ResultCodes.success) {
     dispatch(getAuthUserData());
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 // endregion

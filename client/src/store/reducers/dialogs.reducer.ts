@@ -130,7 +130,6 @@ const connectHandlerCreator = (
 ) => {
   if (_connectHandler) return _connectHandler;
   return () => {
-    console.log('connect handler');
     const { cachedMessage } = getState().dialogs;
     if (cachedMessage) {
       dispatch(sendMessage(cachedMessage.text, cachedMessage.dialogId));
@@ -204,18 +203,12 @@ export const getDialogs = (): ThunkType<DialogsActionType> => async (dispatch) =
   if (res.resultCode === ResultCodes.success) {
     dispatch(dialogsActions.setDialogs(res.data.dialogs));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const openDialog = (username: string): ThunkType<DialogsActionType> => async (dispatch) => {
   const res = await dialogApi.getMessages(username);
   if (res.resultCode === ResultCodes.success) {
     dispatch(dialogsActions.setDialog(res.data.dialog._id, res.data.dialog.messages));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -230,9 +223,6 @@ export const readMessage = (
   if (res.resultCode === ResultCodes.success) {
     dispatch(dialogsActions.markMessageAsRead(res.data.message._id));
     dispatch(dialogsActions.setUnreadMessagesCount(res.data.unreadMessagesCount));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 // endregion

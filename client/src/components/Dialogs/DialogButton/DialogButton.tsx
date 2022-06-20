@@ -2,7 +2,7 @@ import React from 'react';
 import { AvatarType } from 'types/types';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
-import { trimString } from 'utils/functions';
+import { trimString } from 'utils/functions/functions';
 import classes from './DialogButton.module.scss';
 
 type Props = { username: string, firstName: string, lastName: string, avatar: AvatarType }

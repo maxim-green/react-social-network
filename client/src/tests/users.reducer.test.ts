@@ -1,10 +1,9 @@
-import { getAuthUserData } from 'store/reducers/auth.reducer';
 import { userApi } from 'api/user.api';
 import {
-  subscribe, unsubscribe, usersActions, usersReducer, UsersStateType,
-} from '../store/reducers/users.reducer';
+  subscribe, unsubscribe, usersActions,
+} from 'store/reducers/users.reducer';
 
-import { APIResponseType, ResultCodes } from '../api/core.api';
+import { APIResponseType, ResultCodes } from 'api/core.api';
 
 jest.mock('api/user.api');
 
@@ -13,70 +12,8 @@ const mockUsersApi = userApi as jest.Mocked<typeof userApi>;
 const dispatchMock = jest.fn(); // фейковый dispatch
 const getStateMock = jest.fn(); // фейковая функция getState
 
-let dummyState: UsersStateType;
 // Т.к. тесты могут менять стейт инициализируем стейт заново перед каждым тестом
 beforeEach(() => {
-  dummyState = {
-    users: [
-      {
-        _id: '1',
-        avatar: { large: null, small: null },
-        lastName: 'Ivanov',
-        firstName: 'Ivan',
-        username: 'ivanov.i',
-        updatedAt: (new Date()).toString(),
-        subscriptions: [
-          {
-            _id: '2',
-            avatar: { large: null, small: null },
-            lastName: 'Petrov',
-            firstName: 'Petr',
-            username: 'petrov.p',
-            updatedAt: (new Date()).toString(),
-            subscriptions: [],
-          },
-          {
-            _id: '4',
-            avatar: { large: null, small: null },
-            lastName: 'Smirnov',
-            firstName: 'Anton',
-            username: 'smirnov.a',
-            updatedAt: (new Date()).toString(),
-            subscriptions: [],
-          },
-        ],
-      },
-      {
-        _id: '2',
-        avatar: { large: null, small: null },
-        lastName: 'Petrov',
-        firstName: 'Petr',
-        username: 'petrov.p',
-        updatedAt: (new Date()).toString(),
-        subscriptions: [],
-      },
-      {
-        _id: '3',
-        avatar: { large: null, small: null },
-        lastName: 'Smirnov',
-        firstName: 'Anton',
-        username: 'smirnov.a',
-        updatedAt: (new Date()).toString(),
-        subscriptions: [],
-      },
-      {
-        _id: '4',
-        avatar: { large: null, small: null },
-        lastName: 'Smirnov',
-        firstName: 'Anton',
-        username: 'smirnov.a',
-        updatedAt: (new Date()).toString(),
-        subscriptions: [],
-      },
-    ],
-    subscribePendingUserIds: [],
-  };
-
   dispatchMock.mockClear();
   getStateMock.mockClear();
   mockUsersApi.subscribe.mockClear();

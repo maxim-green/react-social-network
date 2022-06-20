@@ -5,7 +5,7 @@ import { UserItemDataType } from 'types/types';
 import { Button } from 'components/_shared/Button/Button';
 import { ChatLeftTextFill, GearFill } from 'react-bootstrap-icons';
 import colors from 'assets/styles/colors.module.scss';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 import classes from './UserItem.module.scss';
 
 type PropsType = {

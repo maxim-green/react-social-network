@@ -5,7 +5,7 @@ import { dialogsActions } from 'store/reducers/dialogs.reducer';
 import { authActions } from 'store/reducers/auth.reducer';
 import { appActions } from 'store/reducers/app.reducer';
 
-const actionCreators = {
+export const actionCreators = {
   ...usersActions,
   ...profileActions,
   ...postsActions,
@@ -13,5 +13,3 @@ const actionCreators = {
   ...authActions,
   ...appActions,
 };
-
-export default actionCreators;

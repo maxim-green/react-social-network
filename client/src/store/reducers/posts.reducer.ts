@@ -133,9 +133,6 @@ export const getPost = (postId: string): ThunkType<PostsActionType> => async (di
   if (res.resultCode === ResultCodes.success) {
     dispatch(postsActions.setPosts([res.data.post]));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const getFeedPosts = (): ThunkType<PostsActionType> => async (dispatch) => {
@@ -143,19 +140,12 @@ export const getFeedPosts = (): ThunkType<PostsActionType> => async (dispatch) =
   if (res.resultCode === ResultCodes.success) {
     dispatch(postsActions.setPosts(res.data.posts));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const getUserPosts = (username: string): ThunkType<PostsActionType> => async (dispatch) => {
   const res = await postApi.getUserPosts(username);
-
   if (res.resultCode === ResultCodes.success) {
     dispatch(postsActions.setPosts(res.data.posts));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 export const addPost = (
@@ -165,23 +155,16 @@ export const addPost = (
   const res = await postApi.addPost(text);
   dispatch(postsActions.setAddPostPending(false));
   if (res.resultCode === ResultCodes.success) {
-    console.log(res);
     dispatch(postsActions.addPost(res.data.post));
   }
   if (res.resultCode === ResultCodes.authError) {
     dispatch(authActions.clearUser());
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 export const deletePost = (id: string): ThunkType<PostsActionType> => async (dispatch) => {
   const res = await postApi.deletePost(id);
   if (res.resultCode === ResultCodes.success) {
     dispatch(postsActions.deletePost(id));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -194,9 +177,6 @@ export const addPostLike = (id: string): ThunkType<PostsActionType> => async (
   if ((res.resultCode === ResultCodes.success) && user) {
     dispatch(postsActions.addPostLike(id, user));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const deletePostLike = (id: string): ThunkType<PostsActionType> => async (
@@ -207,9 +187,6 @@ export const deletePostLike = (id: string): ThunkType<PostsActionType> => async 
   const res = await postApi.deleteLike(id);
   if ((res.resultCode === ResultCodes.success) && user) {
     dispatch(postsActions.deletePostLike(id, user));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };
 
@@ -225,9 +202,6 @@ export const addPostComment = (
   if ((res.resultCode === ResultCodes.success) && user) {
     dispatch(postsActions.addPostComment(postId, res.data.comment));
   }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
-  }
 };
 
 export const deletePostComment = (
@@ -236,8 +210,5 @@ export const deletePostComment = (
   const res = await postApi.deletePostComment(commentId);
   if ((res.resultCode === ResultCodes.success)) {
     dispatch(postsActions.deletePostComment(commentId));
-  }
-  if (res.resultCode === ResultCodes.error) {
-    console.log(res);
   }
 };

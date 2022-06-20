@@ -5,7 +5,7 @@ import { readMessage } from 'store/reducers/dialogs.reducer';
 import VisibilitySensor from 'react-visibility-sensor';
 import { Row, Space } from 'components/_shared/Flex/Flex';
 import { Avatar } from 'components/_shared/Avatar/Avatar';
-import { checkOnline } from 'utils/functions';
+import { checkOnline } from 'utils/functions/functions';
 import { Check, CheckAll } from 'react-bootstrap-icons';
 import classes from './Message.module.scss';
 
