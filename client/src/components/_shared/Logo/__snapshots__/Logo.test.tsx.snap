@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<div
+  class="logo"
+  data-testid="logo"
+>
+  <a
+    aria-current="page"
+    class="active"
+    href="/"
+  >
+    <img
+      alt="Bind"
+      src="logo.svg"
+    />
+  </a>
+</div>
+`;
